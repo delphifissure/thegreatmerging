@@ -200,12 +200,17 @@ async function runInterpreter() {
   }
   let outputs: Map<string, InterpreterOutput>;
   if (process.env.LLM_USE_BATCH !== "0" && LLM_CONFIG.interpreter.batchable) {
-    const { batch_id } = await submitBatch(items);
-    if (batch_id) {
-      console.log(`interpreter batch ${batch_id} submitted (${items.length} requests); polling…`);
-      while ((await batchStatus(batch_id)) !== "ended") await new Promise((r) => setTimeout(r, 30_000));
+    try {
+      const { batch_id } = await submitBatch(items);
+      if (batch_id) {
+        console.log(`interpreter batch ${batch_id} submitted (${items.length} requests); polling…`);
+        while ((await batchStatus(batch_id)) !== "ended") await new Promise((r) => setTimeout(r, 30_000));
+      }
+      outputs = await collectBatch(batch_id, items);
+    } catch (err) {
+      record({ suite: "interpreter", id: "batch", ok: false, detail: String(err).slice(0, 300) });
+      return;
     }
-    outputs = await collectBatch(batch_id, items);
   } else {
     outputs = new Map();
     for (const it of items) {

@@ -20,7 +20,7 @@ import Anthropic from "@anthropic-ai/sdk";
 import { z } from "zod";
 import { LLM_CONFIG, LLM_CONFIG_VERSION, MODEL_CAPABILITIES, type Role } from "@/config/llm";
 import { checkOutput, checkOutputDeterministic, formatViolations, type ModelCheck } from "@/lib/guardrails";
-import { hashInput, stableStringify } from "@/lib/hash";
+import { hashInput, sha256Hex, stableStringify } from "@/lib/hash";
 import { loadRolePrompt } from "@/lib/prompts";
 import { GuardrailOutputSchema } from "@/lib/llm/schemas";
 import { staticContextFor } from "@/lib/llm/static_context";
@@ -116,9 +116,50 @@ export class LlmRefusalError extends Error {
   }
 }
 
+/**
+ * JSON Schema keywords the API's strict tool mode does not accept. Zod still enforces every one of
+ * them locally when the tool input is parsed, so stripping them from the wire schema loses nothing.
+ */
+const UNSUPPORTED_SCHEMA_KEYWORDS = new Set([
+  "minimum",
+  "maximum",
+  "exclusiveMinimum",
+  "exclusiveMaximum",
+  "multipleOf",
+  "minLength",
+  "maxLength",
+  "pattern",
+  "format",
+  "minItems",
+  "maxItems",
+  "uniqueItems",
+  "minProperties",
+  "maxProperties",
+]);
+
+export function stripUnsupportedKeywords(node: unknown): unknown {
+  if (Array.isArray(node)) return node.map(stripUnsupportedKeywords);
+  if (node && typeof node === "object") {
+    const out: Record<string, unknown> = {};
+    for (const [k, v] of Object.entries(node as Record<string, unknown>)) {
+      if (UNSUPPORTED_SCHEMA_KEYWORDS.has(k)) continue;
+      out[k] = stripUnsupportedKeywords(v);
+    }
+    return out;
+  }
+  return node;
+}
+
+/** Batch custom_ids must match ^[a-zA-Z0-9_-]{1,64}$; keep them readable and collision-resistant. */
+export function batchCustomId(id: string): string {
+  const safe = id.replace(/[^a-zA-Z0-9_-]/g, "_");
+  if (safe === id && id.length <= 64) return id;
+  return `${safe.slice(0, 50)}_${sha256Hex(id).slice(0, 12)}`;
+}
+
 function toolFor<T>(role: Role, schema: z.ZodType<T>): Anthropic.Beta.BetaTool {
   const cfg = LLM_CONFIG[role];
-  const json = z.toJSONSchema(schema, { target: "draft-07", unrepresentable: "any" }) as Record<string, unknown>;
+  const json = stripUnsupportedKeywords(z.toJSONSchema(schema, { target: "draft-07", unrepresentable: "any" })) as Record<string, unknown>;
   delete json.$schema;
   return {
     name: cfg.tool_name,
@@ -347,7 +388,7 @@ export async function submitBatch(items: Array<BatchItem<unknown>>): Promise<{ b
     // fallbacks are rejected on the Batches API; batchable roles never configure one.
     delete params.betas;
     delete params.fallbacks;
-    requests.push({ custom_id: item.custom_id, params });
+    requests.push({ custom_id: batchCustomId(item.custom_id), params });
   }
   if (requests.length === 0) return { batch_id: "", skipped };
   const batch = await client.beta.messages.batches.create({ requests: requests as never });
@@ -366,9 +407,9 @@ export async function collectBatch<T>(batchId: string, items: Array<BatchItem<T>
   const client = getDeps().client;
   if (!client) throw new Error("ANTHROPIC_API_KEY is not set and no client was configured");
   const { memo } = getDeps();
-  const byId = new Map(items.map((i) => [i.custom_id, i]));
+  const byId = new Map(items.map((i) => [batchCustomId(i.custom_id), i]));
   const out = new Map<string, T>();
-  const pending = new Set(byId.keys());
+  const pending = new Set(items.map((i) => i.custom_id));
   if (batchId) {
     for await (const result of await client.beta.messages.batches.results(batchId)) {
       const item = byId.get(result.custom_id);
@@ -394,7 +435,7 @@ export async function collectBatch<T>(batchId: string, items: Array<BatchItem<T>
     }
   }
   for (const id of pending) {
-    const item = byId.get(id)!;
+    const item = byId.get(batchCustomId(id))!;
     out.set(id, await callRole(item.role, item.input, item.schema, item.ctx));
   }
   return out;
