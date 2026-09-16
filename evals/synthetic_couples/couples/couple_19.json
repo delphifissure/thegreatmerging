@@ -1,0 +1,3659 @@
+{
+  "id": "couple_19",
+  "description": "Both partners flag cooking (who_does_what_2) from different sides: each says they do it all (now 1) and wants it shared (ideal 5), so both gaps fire and the mirrored 'now' ratings disagree by 8.",
+  "has_children": true,
+  "a": {
+    "mini_ipip": [
+      {
+        "item_id": "mini_ipip_1",
+        "value": 3
+      },
+      {
+        "item_id": "mini_ipip_2",
+        "value": 3
+      },
+      {
+        "item_id": "mini_ipip_3",
+        "value": 3
+      },
+      {
+        "item_id": "mini_ipip_4",
+        "value": 3
+      },
+      {
+        "item_id": "mini_ipip_5",
+        "value": 3
+      },
+      {
+        "item_id": "mini_ipip_6",
+        "value": 3
+      },
+      {
+        "item_id": "mini_ipip_7",
+        "value": 3
+      },
+      {
+        "item_id": "mini_ipip_8",
+        "value": 3
+      },
+      {
+        "item_id": "mini_ipip_9",
+        "value": 3
+      },
+      {
+        "item_id": "mini_ipip_10",
+        "value": 3
+      },
+      {
+        "item_id": "mini_ipip_11",
+        "value": 3
+      },
+      {
+        "item_id": "mini_ipip_12",
+        "value": 3
+      },
+      {
+        "item_id": "mini_ipip_13",
+        "value": 3
+      },
+      {
+        "item_id": "mini_ipip_14",
+        "value": 3
+      },
+      {
+        "item_id": "mini_ipip_15",
+        "value": 3
+      },
+      {
+        "item_id": "mini_ipip_16",
+        "value": 3
+      },
+      {
+        "item_id": "mini_ipip_17",
+        "value": 3
+      },
+      {
+        "item_id": "mini_ipip_18",
+        "value": 3
+      },
+      {
+        "item_id": "mini_ipip_19",
+        "value": 3
+      },
+      {
+        "item_id": "mini_ipip_20",
+        "value": 3
+      }
+    ],
+    "ecr_r": [
+      {
+        "item_id": "ecr_r_1",
+        "value": 4
+      },
+      {
+        "item_id": "ecr_r_2",
+        "value": 4
+      },
+      {
+        "item_id": "ecr_r_3",
+        "value": 4
+      },
+      {
+        "item_id": "ecr_r_4",
+        "value": 4
+      },
+      {
+        "item_id": "ecr_r_5",
+        "value": 4
+      },
+      {
+        "item_id": "ecr_r_6",
+        "value": 4
+      },
+      {
+        "item_id": "ecr_r_7",
+        "value": 4
+      },
+      {
+        "item_id": "ecr_r_8",
+        "value": 4
+      },
+      {
+        "item_id": "ecr_r_9",
+        "value": 4
+      },
+      {
+        "item_id": "ecr_r_10",
+        "value": 4
+      },
+      {
+        "item_id": "ecr_r_11",
+        "value": 4
+      },
+      {
+        "item_id": "ecr_r_12",
+        "value": 4
+      },
+      {
+        "item_id": "ecr_r_13",
+        "value": 4
+      },
+      {
+        "item_id": "ecr_r_14",
+        "value": 4
+      },
+      {
+        "item_id": "ecr_r_15",
+        "value": 4
+      },
+      {
+        "item_id": "ecr_r_16",
+        "value": 4
+      },
+      {
+        "item_id": "ecr_r_17",
+        "value": 4
+      },
+      {
+        "item_id": "ecr_r_18",
+        "value": 4
+      },
+      {
+        "item_id": "ecr_r_19",
+        "value": 4
+      },
+      {
+        "item_id": "ecr_r_20",
+        "value": 4
+      },
+      {
+        "item_id": "ecr_r_21",
+        "value": 4
+      },
+      {
+        "item_id": "ecr_r_22",
+        "value": 4
+      },
+      {
+        "item_id": "ecr_r_23",
+        "value": 4
+      },
+      {
+        "item_id": "ecr_r_24",
+        "value": 4
+      },
+      {
+        "item_id": "ecr_r_25",
+        "value": 4
+      },
+      {
+        "item_id": "ecr_r_26",
+        "value": 4
+      },
+      {
+        "item_id": "ecr_r_27",
+        "value": 4
+      },
+      {
+        "item_id": "ecr_r_28",
+        "value": 4
+      },
+      {
+        "item_id": "ecr_r_29",
+        "value": 4
+      },
+      {
+        "item_id": "ecr_r_30",
+        "value": 4
+      },
+      {
+        "item_id": "ecr_r_31",
+        "value": 4
+      },
+      {
+        "item_id": "ecr_r_32",
+        "value": 4
+      },
+      {
+        "item_id": "ecr_r_33",
+        "value": 4
+      },
+      {
+        "item_id": "ecr_r_34",
+        "value": 4
+      },
+      {
+        "item_id": "ecr_r_35",
+        "value": 4
+      },
+      {
+        "item_id": "ecr_r_36",
+        "value": 4
+      }
+    ],
+    "phq9": [
+      {
+        "item_id": "phq9_1",
+        "value": 0
+      },
+      {
+        "item_id": "phq9_2",
+        "value": 0
+      },
+      {
+        "item_id": "phq9_3",
+        "value": 0
+      },
+      {
+        "item_id": "phq9_4",
+        "value": 0
+      },
+      {
+        "item_id": "phq9_5",
+        "value": 0
+      },
+      {
+        "item_id": "phq9_6",
+        "value": 0
+      },
+      {
+        "item_id": "phq9_7",
+        "value": 0
+      },
+      {
+        "item_id": "phq9_8",
+        "value": 0
+      },
+      {
+        "item_id": "phq9_9",
+        "value": 0
+      }
+    ],
+    "gad7": [
+      {
+        "item_id": "gad7_1",
+        "value": 0
+      },
+      {
+        "item_id": "gad7_2",
+        "value": 0
+      },
+      {
+        "item_id": "gad7_3",
+        "value": 0
+      },
+      {
+        "item_id": "gad7_4",
+        "value": 0
+      },
+      {
+        "item_id": "gad7_5",
+        "value": 0
+      },
+      {
+        "item_id": "gad7_6",
+        "value": 0
+      },
+      {
+        "item_id": "gad7_7",
+        "value": 0
+      }
+    ],
+    "sis_ses_sf": [
+      {
+        "item_id": "sis_ses_sf_1",
+        "value": 3
+      },
+      {
+        "item_id": "sis_ses_sf_2",
+        "value": 3
+      },
+      {
+        "item_id": "sis_ses_sf_3",
+        "value": 3
+      },
+      {
+        "item_id": "sis_ses_sf_4",
+        "value": 3
+      },
+      {
+        "item_id": "sis_ses_sf_5",
+        "value": 3
+      },
+      {
+        "item_id": "sis_ses_sf_6",
+        "value": 3
+      },
+      {
+        "item_id": "sis_ses_sf_7",
+        "value": 3
+      },
+      {
+        "item_id": "sis_ses_sf_8",
+        "value": 3
+      },
+      {
+        "item_id": "sis_ses_sf_9",
+        "value": 3
+      },
+      {
+        "item_id": "sis_ses_sf_10",
+        "value": 3
+      },
+      {
+        "item_id": "sis_ses_sf_11",
+        "value": 3
+      },
+      {
+        "item_id": "sis_ses_sf_12",
+        "value": 3
+      },
+      {
+        "item_id": "sis_ses_sf_13",
+        "value": 3
+      },
+      {
+        "item_id": "sis_ses_sf_14",
+        "value": 3
+      }
+    ],
+    "sdi2": [
+      {
+        "item_id": "sdi2_1",
+        "value": 4
+      },
+      {
+        "item_id": "sdi2_2",
+        "value": 4
+      },
+      {
+        "item_id": "sdi2_3",
+        "value": 4
+      },
+      {
+        "item_id": "sdi2_4",
+        "value": 4
+      },
+      {
+        "item_id": "sdi2_5",
+        "value": 4
+      },
+      {
+        "item_id": "sdi2_6",
+        "value": 4
+      },
+      {
+        "item_id": "sdi2_7",
+        "value": 4
+      },
+      {
+        "item_id": "sdi2_8",
+        "value": 4
+      },
+      {
+        "item_id": "sdi2_9",
+        "value": 4
+      },
+      {
+        "item_id": "sdi2_10",
+        "value": 4
+      },
+      {
+        "item_id": "sdi2_11",
+        "value": 4
+      },
+      {
+        "item_id": "sdi2_12",
+        "value": 4
+      },
+      {
+        "item_id": "sdi2_13",
+        "value": 4
+      },
+      {
+        "item_id": "sdi2_14",
+        "value": 4
+      }
+    ],
+    "csi16": [
+      {
+        "item_id": "csi16_1",
+        "value": 6
+      },
+      {
+        "item_id": "csi16_2",
+        "value": 5
+      },
+      {
+        "item_id": "csi16_3",
+        "value": 5
+      },
+      {
+        "item_id": "csi16_4",
+        "value": 5
+      },
+      {
+        "item_id": "csi16_5",
+        "value": 5
+      },
+      {
+        "item_id": "csi16_6",
+        "value": 5
+      },
+      {
+        "item_id": "csi16_7",
+        "value": 5
+      },
+      {
+        "item_id": "csi16_8",
+        "value": 5
+      },
+      {
+        "item_id": "csi16_9",
+        "value": 5
+      },
+      {
+        "item_id": "csi16_10",
+        "value": 5
+      },
+      {
+        "item_id": "csi16_11",
+        "value": 5
+      },
+      {
+        "item_id": "csi16_12",
+        "value": 5
+      },
+      {
+        "item_id": "csi16_13",
+        "value": 5
+      },
+      {
+        "item_id": "csi16_14",
+        "value": 5
+      },
+      {
+        "item_id": "csi16_15",
+        "value": 5
+      },
+      {
+        "item_id": "csi16_16",
+        "value": 5
+      }
+    ],
+    "rdas": [
+      {
+        "item_id": "rdas_1",
+        "value": 5
+      },
+      {
+        "item_id": "rdas_2",
+        "value": 5
+      },
+      {
+        "item_id": "rdas_3",
+        "value": 5
+      },
+      {
+        "item_id": "rdas_4",
+        "value": 5
+      },
+      {
+        "item_id": "rdas_5",
+        "value": 5
+      },
+      {
+        "item_id": "rdas_6",
+        "value": 5
+      },
+      {
+        "item_id": "rdas_7",
+        "value": 5
+      },
+      {
+        "item_id": "rdas_8",
+        "value": 5
+      },
+      {
+        "item_id": "rdas_9",
+        "value": 5
+      },
+      {
+        "item_id": "rdas_10",
+        "value": 5
+      },
+      {
+        "item_id": "rdas_11",
+        "value": 4
+      },
+      {
+        "item_id": "rdas_12",
+        "value": 5
+      },
+      {
+        "item_id": "rdas_13",
+        "value": 5
+      },
+      {
+        "item_id": "rdas_14",
+        "value": 5
+      }
+    ],
+    "cpq_sf": [
+      {
+        "item_id": "cpq_sf_1",
+        "value": 5
+      },
+      {
+        "item_id": "cpq_sf_2",
+        "value": 5
+      },
+      {
+        "item_id": "cpq_sf_3",
+        "value": 5
+      },
+      {
+        "item_id": "cpq_sf_4",
+        "value": 5
+      },
+      {
+        "item_id": "cpq_sf_5",
+        "value": 5
+      },
+      {
+        "item_id": "cpq_sf_6",
+        "value": 5
+      },
+      {
+        "item_id": "cpq_sf_7",
+        "value": 5
+      },
+      {
+        "item_id": "cpq_sf_8",
+        "value": 5
+      },
+      {
+        "item_id": "cpq_sf_9",
+        "value": 5
+      },
+      {
+        "item_id": "cpq_sf_10",
+        "value": 5
+      },
+      {
+        "item_id": "cpq_sf_11",
+        "value": 5
+      }
+    ],
+    "acq": [
+      {
+        "item_id": "acq_1",
+        "value": 0,
+        "pass": "self"
+      },
+      {
+        "item_id": "acq_2",
+        "value": 0,
+        "pass": "self"
+      },
+      {
+        "item_id": "acq_3",
+        "value": 0,
+        "pass": "self"
+      },
+      {
+        "item_id": "acq_4",
+        "value": 0,
+        "pass": "self"
+      },
+      {
+        "item_id": "acq_5",
+        "value": 0,
+        "pass": "self"
+      },
+      {
+        "item_id": "acq_6",
+        "value": 0,
+        "pass": "self"
+      },
+      {
+        "item_id": "acq_7",
+        "value": 0,
+        "pass": "self"
+      },
+      {
+        "item_id": "acq_8",
+        "value": 0,
+        "pass": "self"
+      },
+      {
+        "item_id": "acq_9",
+        "value": 0,
+        "pass": "self"
+      },
+      {
+        "item_id": "acq_10",
+        "value": 0,
+        "pass": "self"
+      },
+      {
+        "item_id": "acq_11",
+        "value": 0,
+        "pass": "self"
+      },
+      {
+        "item_id": "acq_12",
+        "value": 0,
+        "pass": "self"
+      },
+      {
+        "item_id": "acq_13",
+        "value": 0,
+        "pass": "self"
+      },
+      {
+        "item_id": "acq_14",
+        "value": 0,
+        "pass": "self"
+      },
+      {
+        "item_id": "acq_15",
+        "value": 0,
+        "pass": "self"
+      },
+      {
+        "item_id": "acq_16",
+        "value": 0,
+        "pass": "self"
+      },
+      {
+        "item_id": "acq_17",
+        "value": 0,
+        "pass": "self"
+      },
+      {
+        "item_id": "acq_18",
+        "value": 0,
+        "pass": "self"
+      },
+      {
+        "item_id": "acq_19",
+        "value": 0,
+        "pass": "self"
+      },
+      {
+        "item_id": "acq_20",
+        "value": 0,
+        "pass": "self"
+      },
+      {
+        "item_id": "acq_21",
+        "value": 0,
+        "pass": "self"
+      },
+      {
+        "item_id": "acq_22",
+        "value": 0,
+        "pass": "self"
+      },
+      {
+        "item_id": "acq_23",
+        "value": 0,
+        "pass": "self"
+      },
+      {
+        "item_id": "acq_24",
+        "value": 0,
+        "pass": "self"
+      },
+      {
+        "item_id": "acq_25",
+        "value": 0,
+        "pass": "self"
+      },
+      {
+        "item_id": "acq_26",
+        "value": 0,
+        "pass": "self"
+      },
+      {
+        "item_id": "acq_27",
+        "value": 0,
+        "pass": "self"
+      },
+      {
+        "item_id": "acq_28",
+        "value": 0,
+        "pass": "self"
+      },
+      {
+        "item_id": "acq_29",
+        "value": 0,
+        "pass": "self"
+      },
+      {
+        "item_id": "acq_30",
+        "value": 0,
+        "pass": "self"
+      },
+      {
+        "item_id": "acq_31",
+        "value": 0,
+        "pass": "self"
+      },
+      {
+        "item_id": "acq_32",
+        "value": 0,
+        "pass": "self"
+      },
+      {
+        "item_id": "acq_33",
+        "value": 0,
+        "pass": "self"
+      },
+      {
+        "item_id": "acq_34",
+        "value": 0,
+        "pass": "self"
+      },
+      {
+        "item_id": "acq_1",
+        "value": 0,
+        "pass": "partner_wants"
+      },
+      {
+        "item_id": "acq_2",
+        "value": 0,
+        "pass": "partner_wants"
+      },
+      {
+        "item_id": "acq_3",
+        "value": 0,
+        "pass": "partner_wants"
+      },
+      {
+        "item_id": "acq_4",
+        "value": 0,
+        "pass": "partner_wants"
+      },
+      {
+        "item_id": "acq_5",
+        "value": 0,
+        "pass": "partner_wants"
+      },
+      {
+        "item_id": "acq_6",
+        "value": 0,
+        "pass": "partner_wants"
+      },
+      {
+        "item_id": "acq_7",
+        "value": 0,
+        "pass": "partner_wants"
+      },
+      {
+        "item_id": "acq_8",
+        "value": 0,
+        "pass": "partner_wants"
+      },
+      {
+        "item_id": "acq_9",
+        "value": 0,
+        "pass": "partner_wants"
+      },
+      {
+        "item_id": "acq_10",
+        "value": 0,
+        "pass": "partner_wants"
+      },
+      {
+        "item_id": "acq_11",
+        "value": 0,
+        "pass": "partner_wants"
+      },
+      {
+        "item_id": "acq_12",
+        "value": 0,
+        "pass": "partner_wants"
+      },
+      {
+        "item_id": "acq_13",
+        "value": 0,
+        "pass": "partner_wants"
+      },
+      {
+        "item_id": "acq_14",
+        "value": 0,
+        "pass": "partner_wants"
+      },
+      {
+        "item_id": "acq_15",
+        "value": 0,
+        "pass": "partner_wants"
+      },
+      {
+        "item_id": "acq_16",
+        "value": 0,
+        "pass": "partner_wants"
+      },
+      {
+        "item_id": "acq_17",
+        "value": 0,
+        "pass": "partner_wants"
+      },
+      {
+        "item_id": "acq_18",
+        "value": 0,
+        "pass": "partner_wants"
+      },
+      {
+        "item_id": "acq_19",
+        "value": 0,
+        "pass": "partner_wants"
+      },
+      {
+        "item_id": "acq_20",
+        "value": 0,
+        "pass": "partner_wants"
+      },
+      {
+        "item_id": "acq_21",
+        "value": 0,
+        "pass": "partner_wants"
+      },
+      {
+        "item_id": "acq_22",
+        "value": 0,
+        "pass": "partner_wants"
+      },
+      {
+        "item_id": "acq_23",
+        "value": 0,
+        "pass": "partner_wants"
+      },
+      {
+        "item_id": "acq_24",
+        "value": 0,
+        "pass": "partner_wants"
+      },
+      {
+        "item_id": "acq_25",
+        "value": 0,
+        "pass": "partner_wants"
+      },
+      {
+        "item_id": "acq_26",
+        "value": 0,
+        "pass": "partner_wants"
+      },
+      {
+        "item_id": "acq_27",
+        "value": 0,
+        "pass": "partner_wants"
+      },
+      {
+        "item_id": "acq_28",
+        "value": 0,
+        "pass": "partner_wants"
+      },
+      {
+        "item_id": "acq_29",
+        "value": 0,
+        "pass": "partner_wants"
+      },
+      {
+        "item_id": "acq_30",
+        "value": 0,
+        "pass": "partner_wants"
+      },
+      {
+        "item_id": "acq_31",
+        "value": 0,
+        "pass": "partner_wants"
+      },
+      {
+        "item_id": "acq_32",
+        "value": 0,
+        "pass": "partner_wants"
+      },
+      {
+        "item_id": "acq_33",
+        "value": 0,
+        "pass": "partner_wants"
+      },
+      {
+        "item_id": "acq_34",
+        "value": 0,
+        "pass": "partner_wants"
+      }
+    ],
+    "fapbi": [
+      {
+        "item_id": "fapbi_1",
+        "value": 5,
+        "pass": "frequency"
+      },
+      {
+        "item_id": "fapbi_2",
+        "value": 5,
+        "pass": "frequency"
+      },
+      {
+        "item_id": "fapbi_3",
+        "value": 5,
+        "pass": "frequency"
+      },
+      {
+        "item_id": "fapbi_4",
+        "value": 5,
+        "pass": "frequency"
+      },
+      {
+        "item_id": "fapbi_5",
+        "value": 5,
+        "pass": "frequency"
+      },
+      {
+        "item_id": "fapbi_6",
+        "value": 5,
+        "pass": "frequency"
+      },
+      {
+        "item_id": "fapbi_7",
+        "value": 5,
+        "pass": "frequency"
+      },
+      {
+        "item_id": "fapbi_8",
+        "value": 5,
+        "pass": "frequency"
+      },
+      {
+        "item_id": "fapbi_9",
+        "value": 5,
+        "pass": "frequency"
+      },
+      {
+        "item_id": "fapbi_10",
+        "value": 5,
+        "pass": "frequency"
+      },
+      {
+        "item_id": "fapbi_11",
+        "value": 5,
+        "pass": "frequency"
+      },
+      {
+        "item_id": "fapbi_12",
+        "value": 5,
+        "pass": "frequency"
+      },
+      {
+        "item_id": "fapbi_13",
+        "value": 5,
+        "pass": "frequency"
+      },
+      {
+        "item_id": "fapbi_14",
+        "value": 5,
+        "pass": "frequency"
+      },
+      {
+        "item_id": "fapbi_15",
+        "value": 5,
+        "pass": "frequency"
+      },
+      {
+        "item_id": "fapbi_16",
+        "value": 5,
+        "pass": "frequency"
+      },
+      {
+        "item_id": "fapbi_17",
+        "value": 5,
+        "pass": "frequency"
+      },
+      {
+        "item_id": "fapbi_18",
+        "value": 5,
+        "pass": "frequency"
+      },
+      {
+        "item_id": "fapbi_19",
+        "value": 5,
+        "pass": "frequency"
+      },
+      {
+        "item_id": "fapbi_20",
+        "value": 5,
+        "pass": "frequency"
+      },
+      {
+        "item_id": "fapbi_1",
+        "value": 9,
+        "pass": "acceptability"
+      },
+      {
+        "item_id": "fapbi_2",
+        "value": 9,
+        "pass": "acceptability"
+      },
+      {
+        "item_id": "fapbi_3",
+        "value": 9,
+        "pass": "acceptability"
+      },
+      {
+        "item_id": "fapbi_4",
+        "value": 9,
+        "pass": "acceptability"
+      },
+      {
+        "item_id": "fapbi_5",
+        "value": 9,
+        "pass": "acceptability"
+      },
+      {
+        "item_id": "fapbi_6",
+        "value": 9,
+        "pass": "acceptability"
+      },
+      {
+        "item_id": "fapbi_7",
+        "value": 9,
+        "pass": "acceptability"
+      },
+      {
+        "item_id": "fapbi_8",
+        "value": 9,
+        "pass": "acceptability"
+      },
+      {
+        "item_id": "fapbi_9",
+        "value": 9,
+        "pass": "acceptability"
+      },
+      {
+        "item_id": "fapbi_10",
+        "value": 9,
+        "pass": "acceptability"
+      },
+      {
+        "item_id": "fapbi_11",
+        "value": 9,
+        "pass": "acceptability"
+      },
+      {
+        "item_id": "fapbi_12",
+        "value": 9,
+        "pass": "acceptability"
+      },
+      {
+        "item_id": "fapbi_13",
+        "value": 9,
+        "pass": "acceptability"
+      },
+      {
+        "item_id": "fapbi_14",
+        "value": 9,
+        "pass": "acceptability"
+      },
+      {
+        "item_id": "fapbi_15",
+        "value": 9,
+        "pass": "acceptability"
+      },
+      {
+        "item_id": "fapbi_16",
+        "value": 9,
+        "pass": "acceptability"
+      },
+      {
+        "item_id": "fapbi_17",
+        "value": 9,
+        "pass": "acceptability"
+      },
+      {
+        "item_id": "fapbi_18",
+        "value": 9,
+        "pass": "acceptability"
+      },
+      {
+        "item_id": "fapbi_19",
+        "value": 9,
+        "pass": "acceptability"
+      },
+      {
+        "item_id": "fapbi_20",
+        "value": 9,
+        "pass": "acceptability"
+      }
+    ],
+    "who_does_what": [
+      {
+        "item_id": "who_does_what_1",
+        "value": 5,
+        "pass": "now"
+      },
+      {
+        "item_id": "who_does_what_2",
+        "value": 1,
+        "pass": "now"
+      },
+      {
+        "item_id": "who_does_what_3",
+        "value": 5,
+        "pass": "now"
+      },
+      {
+        "item_id": "who_does_what_4",
+        "value": 5,
+        "pass": "now"
+      },
+      {
+        "item_id": "who_does_what_5",
+        "value": 5,
+        "pass": "now"
+      },
+      {
+        "item_id": "who_does_what_6",
+        "value": 5,
+        "pass": "now"
+      },
+      {
+        "item_id": "who_does_what_7",
+        "value": 5,
+        "pass": "now"
+      },
+      {
+        "item_id": "who_does_what_8",
+        "value": 5,
+        "pass": "now"
+      },
+      {
+        "item_id": "who_does_what_9",
+        "value": 5,
+        "pass": "now"
+      },
+      {
+        "item_id": "who_does_what_10",
+        "value": 5,
+        "pass": "now"
+      },
+      {
+        "item_id": "who_does_what_11",
+        "value": 5,
+        "pass": "now"
+      },
+      {
+        "item_id": "who_does_what_12",
+        "value": 5,
+        "pass": "now"
+      },
+      {
+        "item_id": "who_does_what_13",
+        "value": 5,
+        "pass": "now"
+      },
+      {
+        "item_id": "who_does_what_14",
+        "value": 5,
+        "pass": "now"
+      },
+      {
+        "item_id": "who_does_what_15",
+        "value": 5,
+        "pass": "now"
+      },
+      {
+        "item_id": "who_does_what_16",
+        "value": 5,
+        "pass": "now"
+      },
+      {
+        "item_id": "who_does_what_17",
+        "value": 5,
+        "pass": "now"
+      },
+      {
+        "item_id": "who_does_what_18",
+        "value": 5,
+        "pass": "now"
+      },
+      {
+        "item_id": "who_does_what_19",
+        "value": 5,
+        "pass": "now"
+      },
+      {
+        "item_id": "who_does_what_20",
+        "value": 5,
+        "pass": "now"
+      },
+      {
+        "item_id": "who_does_what_21",
+        "value": 5,
+        "pass": "now"
+      },
+      {
+        "item_id": "who_does_what_22",
+        "value": 5,
+        "pass": "now"
+      },
+      {
+        "item_id": "who_does_what_23",
+        "value": 5,
+        "pass": "now"
+      },
+      {
+        "item_id": "who_does_what_24",
+        "value": 5,
+        "pass": "now"
+      },
+      {
+        "item_id": "who_does_what_1",
+        "value": 5,
+        "pass": "ideal"
+      },
+      {
+        "item_id": "who_does_what_2",
+        "value": 5,
+        "pass": "ideal"
+      },
+      {
+        "item_id": "who_does_what_3",
+        "value": 5,
+        "pass": "ideal"
+      },
+      {
+        "item_id": "who_does_what_4",
+        "value": 5,
+        "pass": "ideal"
+      },
+      {
+        "item_id": "who_does_what_5",
+        "value": 5,
+        "pass": "ideal"
+      },
+      {
+        "item_id": "who_does_what_6",
+        "value": 5,
+        "pass": "ideal"
+      },
+      {
+        "item_id": "who_does_what_7",
+        "value": 5,
+        "pass": "ideal"
+      },
+      {
+        "item_id": "who_does_what_8",
+        "value": 5,
+        "pass": "ideal"
+      },
+      {
+        "item_id": "who_does_what_9",
+        "value": 5,
+        "pass": "ideal"
+      },
+      {
+        "item_id": "who_does_what_10",
+        "value": 5,
+        "pass": "ideal"
+      },
+      {
+        "item_id": "who_does_what_11",
+        "value": 5,
+        "pass": "ideal"
+      },
+      {
+        "item_id": "who_does_what_12",
+        "value": 5,
+        "pass": "ideal"
+      },
+      {
+        "item_id": "who_does_what_13",
+        "value": 5,
+        "pass": "ideal"
+      },
+      {
+        "item_id": "who_does_what_14",
+        "value": 5,
+        "pass": "ideal"
+      },
+      {
+        "item_id": "who_does_what_15",
+        "value": 5,
+        "pass": "ideal"
+      },
+      {
+        "item_id": "who_does_what_16",
+        "value": 5,
+        "pass": "ideal"
+      },
+      {
+        "item_id": "who_does_what_17",
+        "value": 5,
+        "pass": "ideal"
+      },
+      {
+        "item_id": "who_does_what_18",
+        "value": 5,
+        "pass": "ideal"
+      },
+      {
+        "item_id": "who_does_what_19",
+        "value": 5,
+        "pass": "ideal"
+      },
+      {
+        "item_id": "who_does_what_20",
+        "value": 5,
+        "pass": "ideal"
+      },
+      {
+        "item_id": "who_does_what_21",
+        "value": 5,
+        "pass": "ideal"
+      },
+      {
+        "item_id": "who_does_what_22",
+        "value": 5,
+        "pass": "ideal"
+      },
+      {
+        "item_id": "who_does_what_23",
+        "value": 5,
+        "pass": "ideal"
+      },
+      {
+        "item_id": "who_does_what_24",
+        "value": 5,
+        "pass": "ideal"
+      }
+    ],
+    "map": [
+      {
+        "item_id": "map_1",
+        "value": 0,
+        "pass": "intensity"
+      },
+      {
+        "item_id": "map_2",
+        "value": 0,
+        "pass": "intensity"
+      },
+      {
+        "item_id": "map_3",
+        "value": 0,
+        "pass": "intensity"
+      },
+      {
+        "item_id": "map_4",
+        "value": 0,
+        "pass": "intensity"
+      },
+      {
+        "item_id": "map_5",
+        "value": 0,
+        "pass": "intensity"
+      },
+      {
+        "item_id": "map_6",
+        "value": 0,
+        "pass": "intensity"
+      },
+      {
+        "item_id": "map_7",
+        "value": 0,
+        "pass": "intensity"
+      },
+      {
+        "item_id": "map_8",
+        "value": 0,
+        "pass": "intensity"
+      },
+      {
+        "item_id": "map_9",
+        "value": 0,
+        "pass": "intensity"
+      },
+      {
+        "item_id": "map_10",
+        "value": 0,
+        "pass": "intensity"
+      },
+      {
+        "item_id": "map_1",
+        "value": 100,
+        "pass": "efficacy"
+      },
+      {
+        "item_id": "map_2",
+        "value": 100,
+        "pass": "efficacy"
+      },
+      {
+        "item_id": "map_3",
+        "value": 100,
+        "pass": "efficacy"
+      },
+      {
+        "item_id": "map_4",
+        "value": 100,
+        "pass": "efficacy"
+      },
+      {
+        "item_id": "map_5",
+        "value": 100,
+        "pass": "efficacy"
+      },
+      {
+        "item_id": "map_6",
+        "value": 100,
+        "pass": "efficacy"
+      },
+      {
+        "item_id": "map_7",
+        "value": 100,
+        "pass": "efficacy"
+      },
+      {
+        "item_id": "map_8",
+        "value": 100,
+        "pass": "efficacy"
+      },
+      {
+        "item_id": "map_9",
+        "value": 100,
+        "pass": "efficacy"
+      },
+      {
+        "item_id": "map_10",
+        "value": 100,
+        "pass": "efficacy"
+      }
+    ],
+    "polarization": [
+      {
+        "item_id": "polarization_1",
+        "value": 4,
+        "pass": "self_alone"
+      },
+      {
+        "item_id": "polarization_2",
+        "value": 4,
+        "pass": "self_alone"
+      },
+      {
+        "item_id": "polarization_3",
+        "value": 4,
+        "pass": "self_alone"
+      },
+      {
+        "item_id": "polarization_4",
+        "value": 4,
+        "pass": "self_alone"
+      },
+      {
+        "item_id": "polarization_5",
+        "value": 4,
+        "pass": "self_alone"
+      },
+      {
+        "item_id": "polarization_6",
+        "value": 4,
+        "pass": "self_alone"
+      },
+      {
+        "item_id": "polarization_7",
+        "value": 4,
+        "pass": "self_alone"
+      },
+      {
+        "item_id": "polarization_8",
+        "value": 4,
+        "pass": "self_alone"
+      },
+      {
+        "item_id": "polarization_9",
+        "value": 4,
+        "pass": "self_alone"
+      },
+      {
+        "item_id": "polarization_10",
+        "value": 4,
+        "pass": "self_alone"
+      },
+      {
+        "item_id": "polarization_1",
+        "value": 4,
+        "pass": "self_with_partner"
+      },
+      {
+        "item_id": "polarization_2",
+        "value": 4,
+        "pass": "self_with_partner"
+      },
+      {
+        "item_id": "polarization_3",
+        "value": 4,
+        "pass": "self_with_partner"
+      },
+      {
+        "item_id": "polarization_4",
+        "value": 4,
+        "pass": "self_with_partner"
+      },
+      {
+        "item_id": "polarization_5",
+        "value": 4,
+        "pass": "self_with_partner"
+      },
+      {
+        "item_id": "polarization_6",
+        "value": 4,
+        "pass": "self_with_partner"
+      },
+      {
+        "item_id": "polarization_7",
+        "value": 4,
+        "pass": "self_with_partner"
+      },
+      {
+        "item_id": "polarization_8",
+        "value": 4,
+        "pass": "self_with_partner"
+      },
+      {
+        "item_id": "polarization_9",
+        "value": 4,
+        "pass": "self_with_partner"
+      },
+      {
+        "item_id": "polarization_10",
+        "value": 4,
+        "pass": "self_with_partner"
+      },
+      {
+        "item_id": "polarization_1",
+        "value": 4,
+        "pass": "partner_becomes"
+      },
+      {
+        "item_id": "polarization_2",
+        "value": 4,
+        "pass": "partner_becomes"
+      },
+      {
+        "item_id": "polarization_3",
+        "value": 4,
+        "pass": "partner_becomes"
+      },
+      {
+        "item_id": "polarization_4",
+        "value": 4,
+        "pass": "partner_becomes"
+      },
+      {
+        "item_id": "polarization_5",
+        "value": 4,
+        "pass": "partner_becomes"
+      },
+      {
+        "item_id": "polarization_6",
+        "value": 4,
+        "pass": "partner_becomes"
+      },
+      {
+        "item_id": "polarization_7",
+        "value": 4,
+        "pass": "partner_becomes"
+      },
+      {
+        "item_id": "polarization_8",
+        "value": 4,
+        "pass": "partner_becomes"
+      },
+      {
+        "item_id": "polarization_9",
+        "value": 4,
+        "pass": "partner_becomes"
+      },
+      {
+        "item_id": "polarization_10",
+        "value": 4,
+        "pass": "partner_becomes"
+      }
+    ],
+    "brief_crs": [
+      {
+        "item_id": "brief_crs_1",
+        "value": 6
+      },
+      {
+        "item_id": "brief_crs_2",
+        "value": 6
+      },
+      {
+        "item_id": "brief_crs_3",
+        "value": 6
+      },
+      {
+        "item_id": "brief_crs_4",
+        "value": 6
+      },
+      {
+        "item_id": "brief_crs_5",
+        "value": 0
+      },
+      {
+        "item_id": "brief_crs_6",
+        "value": 0
+      },
+      {
+        "item_id": "brief_crs_7",
+        "value": 6
+      },
+      {
+        "item_id": "brief_crs_8",
+        "value": 6
+      },
+      {
+        "item_id": "brief_crs_9",
+        "value": 0
+      },
+      {
+        "item_id": "brief_crs_10",
+        "value": 0
+      },
+      {
+        "item_id": "brief_crs_11",
+        "value": 6
+      },
+      {
+        "item_id": "brief_crs_12",
+        "value": 6
+      },
+      {
+        "item_id": "brief_crs_13",
+        "value": 6
+      },
+      {
+        "item_id": "brief_crs_14",
+        "value": 6
+      }
+    ],
+    "psdq_sf": [
+      {
+        "item_id": "psdq_sf_1",
+        "value": 3
+      },
+      {
+        "item_id": "psdq_sf_2",
+        "value": 3
+      },
+      {
+        "item_id": "psdq_sf_3",
+        "value": 3
+      },
+      {
+        "item_id": "psdq_sf_4",
+        "value": 3
+      },
+      {
+        "item_id": "psdq_sf_5",
+        "value": 3
+      },
+      {
+        "item_id": "psdq_sf_6",
+        "value": 3
+      },
+      {
+        "item_id": "psdq_sf_7",
+        "value": 3
+      },
+      {
+        "item_id": "psdq_sf_8",
+        "value": 3
+      },
+      {
+        "item_id": "psdq_sf_9",
+        "value": 3
+      },
+      {
+        "item_id": "psdq_sf_10",
+        "value": 3
+      },
+      {
+        "item_id": "psdq_sf_11",
+        "value": 3
+      },
+      {
+        "item_id": "psdq_sf_12",
+        "value": 3
+      },
+      {
+        "item_id": "psdq_sf_13",
+        "value": 3
+      },
+      {
+        "item_id": "psdq_sf_14",
+        "value": 3
+      },
+      {
+        "item_id": "psdq_sf_15",
+        "value": 3
+      },
+      {
+        "item_id": "psdq_sf_16",
+        "value": 3
+      },
+      {
+        "item_id": "psdq_sf_17",
+        "value": 3
+      },
+      {
+        "item_id": "psdq_sf_18",
+        "value": 3
+      },
+      {
+        "item_id": "psdq_sf_19",
+        "value": 3
+      },
+      {
+        "item_id": "psdq_sf_20",
+        "value": 3
+      },
+      {
+        "item_id": "psdq_sf_21",
+        "value": 3
+      },
+      {
+        "item_id": "psdq_sf_22",
+        "value": 3
+      },
+      {
+        "item_id": "psdq_sf_23",
+        "value": 3
+      },
+      {
+        "item_id": "psdq_sf_24",
+        "value": 3
+      },
+      {
+        "item_id": "psdq_sf_25",
+        "value": 3
+      },
+      {
+        "item_id": "psdq_sf_26",
+        "value": 3
+      },
+      {
+        "item_id": "psdq_sf_27",
+        "value": 3
+      },
+      {
+        "item_id": "psdq_sf_28",
+        "value": 3
+      },
+      {
+        "item_id": "psdq_sf_29",
+        "value": 3
+      },
+      {
+        "item_id": "psdq_sf_30",
+        "value": 3
+      },
+      {
+        "item_id": "psdq_sf_31",
+        "value": 3
+      },
+      {
+        "item_id": "psdq_sf_32",
+        "value": 3
+      }
+    ]
+  },
+  "b": {
+    "mini_ipip": [
+      {
+        "item_id": "mini_ipip_1",
+        "value": 3
+      },
+      {
+        "item_id": "mini_ipip_2",
+        "value": 3
+      },
+      {
+        "item_id": "mini_ipip_3",
+        "value": 3
+      },
+      {
+        "item_id": "mini_ipip_4",
+        "value": 3
+      },
+      {
+        "item_id": "mini_ipip_5",
+        "value": 3
+      },
+      {
+        "item_id": "mini_ipip_6",
+        "value": 3
+      },
+      {
+        "item_id": "mini_ipip_7",
+        "value": 3
+      },
+      {
+        "item_id": "mini_ipip_8",
+        "value": 3
+      },
+      {
+        "item_id": "mini_ipip_9",
+        "value": 3
+      },
+      {
+        "item_id": "mini_ipip_10",
+        "value": 3
+      },
+      {
+        "item_id": "mini_ipip_11",
+        "value": 3
+      },
+      {
+        "item_id": "mini_ipip_12",
+        "value": 3
+      },
+      {
+        "item_id": "mini_ipip_13",
+        "value": 3
+      },
+      {
+        "item_id": "mini_ipip_14",
+        "value": 3
+      },
+      {
+        "item_id": "mini_ipip_15",
+        "value": 3
+      },
+      {
+        "item_id": "mini_ipip_16",
+        "value": 3
+      },
+      {
+        "item_id": "mini_ipip_17",
+        "value": 3
+      },
+      {
+        "item_id": "mini_ipip_18",
+        "value": 3
+      },
+      {
+        "item_id": "mini_ipip_19",
+        "value": 3
+      },
+      {
+        "item_id": "mini_ipip_20",
+        "value": 3
+      }
+    ],
+    "ecr_r": [
+      {
+        "item_id": "ecr_r_1",
+        "value": 4
+      },
+      {
+        "item_id": "ecr_r_2",
+        "value": 4
+      },
+      {
+        "item_id": "ecr_r_3",
+        "value": 4
+      },
+      {
+        "item_id": "ecr_r_4",
+        "value": 4
+      },
+      {
+        "item_id": "ecr_r_5",
+        "value": 4
+      },
+      {
+        "item_id": "ecr_r_6",
+        "value": 4
+      },
+      {
+        "item_id": "ecr_r_7",
+        "value": 4
+      },
+      {
+        "item_id": "ecr_r_8",
+        "value": 4
+      },
+      {
+        "item_id": "ecr_r_9",
+        "value": 4
+      },
+      {
+        "item_id": "ecr_r_10",
+        "value": 4
+      },
+      {
+        "item_id": "ecr_r_11",
+        "value": 4
+      },
+      {
+        "item_id": "ecr_r_12",
+        "value": 4
+      },
+      {
+        "item_id": "ecr_r_13",
+        "value": 4
+      },
+      {
+        "item_id": "ecr_r_14",
+        "value": 4
+      },
+      {
+        "item_id": "ecr_r_15",
+        "value": 4
+      },
+      {
+        "item_id": "ecr_r_16",
+        "value": 4
+      },
+      {
+        "item_id": "ecr_r_17",
+        "value": 4
+      },
+      {
+        "item_id": "ecr_r_18",
+        "value": 4
+      },
+      {
+        "item_id": "ecr_r_19",
+        "value": 4
+      },
+      {
+        "item_id": "ecr_r_20",
+        "value": 4
+      },
+      {
+        "item_id": "ecr_r_21",
+        "value": 4
+      },
+      {
+        "item_id": "ecr_r_22",
+        "value": 4
+      },
+      {
+        "item_id": "ecr_r_23",
+        "value": 4
+      },
+      {
+        "item_id": "ecr_r_24",
+        "value": 4
+      },
+      {
+        "item_id": "ecr_r_25",
+        "value": 4
+      },
+      {
+        "item_id": "ecr_r_26",
+        "value": 4
+      },
+      {
+        "item_id": "ecr_r_27",
+        "value": 4
+      },
+      {
+        "item_id": "ecr_r_28",
+        "value": 4
+      },
+      {
+        "item_id": "ecr_r_29",
+        "value": 4
+      },
+      {
+        "item_id": "ecr_r_30",
+        "value": 4
+      },
+      {
+        "item_id": "ecr_r_31",
+        "value": 4
+      },
+      {
+        "item_id": "ecr_r_32",
+        "value": 4
+      },
+      {
+        "item_id": "ecr_r_33",
+        "value": 4
+      },
+      {
+        "item_id": "ecr_r_34",
+        "value": 4
+      },
+      {
+        "item_id": "ecr_r_35",
+        "value": 4
+      },
+      {
+        "item_id": "ecr_r_36",
+        "value": 4
+      }
+    ],
+    "phq9": [
+      {
+        "item_id": "phq9_1",
+        "value": 0
+      },
+      {
+        "item_id": "phq9_2",
+        "value": 0
+      },
+      {
+        "item_id": "phq9_3",
+        "value": 0
+      },
+      {
+        "item_id": "phq9_4",
+        "value": 0
+      },
+      {
+        "item_id": "phq9_5",
+        "value": 0
+      },
+      {
+        "item_id": "phq9_6",
+        "value": 0
+      },
+      {
+        "item_id": "phq9_7",
+        "value": 0
+      },
+      {
+        "item_id": "phq9_8",
+        "value": 0
+      },
+      {
+        "item_id": "phq9_9",
+        "value": 0
+      }
+    ],
+    "gad7": [
+      {
+        "item_id": "gad7_1",
+        "value": 0
+      },
+      {
+        "item_id": "gad7_2",
+        "value": 0
+      },
+      {
+        "item_id": "gad7_3",
+        "value": 0
+      },
+      {
+        "item_id": "gad7_4",
+        "value": 0
+      },
+      {
+        "item_id": "gad7_5",
+        "value": 0
+      },
+      {
+        "item_id": "gad7_6",
+        "value": 0
+      },
+      {
+        "item_id": "gad7_7",
+        "value": 0
+      }
+    ],
+    "sis_ses_sf": [
+      {
+        "item_id": "sis_ses_sf_1",
+        "value": 3
+      },
+      {
+        "item_id": "sis_ses_sf_2",
+        "value": 3
+      },
+      {
+        "item_id": "sis_ses_sf_3",
+        "value": 3
+      },
+      {
+        "item_id": "sis_ses_sf_4",
+        "value": 3
+      },
+      {
+        "item_id": "sis_ses_sf_5",
+        "value": 3
+      },
+      {
+        "item_id": "sis_ses_sf_6",
+        "value": 3
+      },
+      {
+        "item_id": "sis_ses_sf_7",
+        "value": 3
+      },
+      {
+        "item_id": "sis_ses_sf_8",
+        "value": 3
+      },
+      {
+        "item_id": "sis_ses_sf_9",
+        "value": 3
+      },
+      {
+        "item_id": "sis_ses_sf_10",
+        "value": 3
+      },
+      {
+        "item_id": "sis_ses_sf_11",
+        "value": 3
+      },
+      {
+        "item_id": "sis_ses_sf_12",
+        "value": 3
+      },
+      {
+        "item_id": "sis_ses_sf_13",
+        "value": 3
+      },
+      {
+        "item_id": "sis_ses_sf_14",
+        "value": 3
+      }
+    ],
+    "sdi2": [
+      {
+        "item_id": "sdi2_1",
+        "value": 4
+      },
+      {
+        "item_id": "sdi2_2",
+        "value": 4
+      },
+      {
+        "item_id": "sdi2_3",
+        "value": 4
+      },
+      {
+        "item_id": "sdi2_4",
+        "value": 4
+      },
+      {
+        "item_id": "sdi2_5",
+        "value": 4
+      },
+      {
+        "item_id": "sdi2_6",
+        "value": 4
+      },
+      {
+        "item_id": "sdi2_7",
+        "value": 4
+      },
+      {
+        "item_id": "sdi2_8",
+        "value": 4
+      },
+      {
+        "item_id": "sdi2_9",
+        "value": 4
+      },
+      {
+        "item_id": "sdi2_10",
+        "value": 4
+      },
+      {
+        "item_id": "sdi2_11",
+        "value": 4
+      },
+      {
+        "item_id": "sdi2_12",
+        "value": 4
+      },
+      {
+        "item_id": "sdi2_13",
+        "value": 4
+      },
+      {
+        "item_id": "sdi2_14",
+        "value": 4
+      }
+    ],
+    "csi16": [
+      {
+        "item_id": "csi16_1",
+        "value": 6
+      },
+      {
+        "item_id": "csi16_2",
+        "value": 5
+      },
+      {
+        "item_id": "csi16_3",
+        "value": 5
+      },
+      {
+        "item_id": "csi16_4",
+        "value": 5
+      },
+      {
+        "item_id": "csi16_5",
+        "value": 5
+      },
+      {
+        "item_id": "csi16_6",
+        "value": 5
+      },
+      {
+        "item_id": "csi16_7",
+        "value": 5
+      },
+      {
+        "item_id": "csi16_8",
+        "value": 5
+      },
+      {
+        "item_id": "csi16_9",
+        "value": 5
+      },
+      {
+        "item_id": "csi16_10",
+        "value": 5
+      },
+      {
+        "item_id": "csi16_11",
+        "value": 5
+      },
+      {
+        "item_id": "csi16_12",
+        "value": 5
+      },
+      {
+        "item_id": "csi16_13",
+        "value": 5
+      },
+      {
+        "item_id": "csi16_14",
+        "value": 5
+      },
+      {
+        "item_id": "csi16_15",
+        "value": 5
+      },
+      {
+        "item_id": "csi16_16",
+        "value": 5
+      }
+    ],
+    "rdas": [
+      {
+        "item_id": "rdas_1",
+        "value": 5
+      },
+      {
+        "item_id": "rdas_2",
+        "value": 5
+      },
+      {
+        "item_id": "rdas_3",
+        "value": 5
+      },
+      {
+        "item_id": "rdas_4",
+        "value": 5
+      },
+      {
+        "item_id": "rdas_5",
+        "value": 5
+      },
+      {
+        "item_id": "rdas_6",
+        "value": 5
+      },
+      {
+        "item_id": "rdas_7",
+        "value": 5
+      },
+      {
+        "item_id": "rdas_8",
+        "value": 5
+      },
+      {
+        "item_id": "rdas_9",
+        "value": 5
+      },
+      {
+        "item_id": "rdas_10",
+        "value": 5
+      },
+      {
+        "item_id": "rdas_11",
+        "value": 4
+      },
+      {
+        "item_id": "rdas_12",
+        "value": 5
+      },
+      {
+        "item_id": "rdas_13",
+        "value": 5
+      },
+      {
+        "item_id": "rdas_14",
+        "value": 5
+      }
+    ],
+    "cpq_sf": [
+      {
+        "item_id": "cpq_sf_1",
+        "value": 5
+      },
+      {
+        "item_id": "cpq_sf_2",
+        "value": 5
+      },
+      {
+        "item_id": "cpq_sf_3",
+        "value": 5
+      },
+      {
+        "item_id": "cpq_sf_4",
+        "value": 5
+      },
+      {
+        "item_id": "cpq_sf_5",
+        "value": 5
+      },
+      {
+        "item_id": "cpq_sf_6",
+        "value": 5
+      },
+      {
+        "item_id": "cpq_sf_7",
+        "value": 5
+      },
+      {
+        "item_id": "cpq_sf_8",
+        "value": 5
+      },
+      {
+        "item_id": "cpq_sf_9",
+        "value": 5
+      },
+      {
+        "item_id": "cpq_sf_10",
+        "value": 5
+      },
+      {
+        "item_id": "cpq_sf_11",
+        "value": 5
+      }
+    ],
+    "acq": [
+      {
+        "item_id": "acq_1",
+        "value": 0,
+        "pass": "self"
+      },
+      {
+        "item_id": "acq_2",
+        "value": 0,
+        "pass": "self"
+      },
+      {
+        "item_id": "acq_3",
+        "value": 0,
+        "pass": "self"
+      },
+      {
+        "item_id": "acq_4",
+        "value": 0,
+        "pass": "self"
+      },
+      {
+        "item_id": "acq_5",
+        "value": 0,
+        "pass": "self"
+      },
+      {
+        "item_id": "acq_6",
+        "value": 0,
+        "pass": "self"
+      },
+      {
+        "item_id": "acq_7",
+        "value": 0,
+        "pass": "self"
+      },
+      {
+        "item_id": "acq_8",
+        "value": 0,
+        "pass": "self"
+      },
+      {
+        "item_id": "acq_9",
+        "value": 0,
+        "pass": "self"
+      },
+      {
+        "item_id": "acq_10",
+        "value": 0,
+        "pass": "self"
+      },
+      {
+        "item_id": "acq_11",
+        "value": 0,
+        "pass": "self"
+      },
+      {
+        "item_id": "acq_12",
+        "value": 0,
+        "pass": "self"
+      },
+      {
+        "item_id": "acq_13",
+        "value": 0,
+        "pass": "self"
+      },
+      {
+        "item_id": "acq_14",
+        "value": 0,
+        "pass": "self"
+      },
+      {
+        "item_id": "acq_15",
+        "value": 0,
+        "pass": "self"
+      },
+      {
+        "item_id": "acq_16",
+        "value": 0,
+        "pass": "self"
+      },
+      {
+        "item_id": "acq_17",
+        "value": 0,
+        "pass": "self"
+      },
+      {
+        "item_id": "acq_18",
+        "value": 0,
+        "pass": "self"
+      },
+      {
+        "item_id": "acq_19",
+        "value": 0,
+        "pass": "self"
+      },
+      {
+        "item_id": "acq_20",
+        "value": 0,
+        "pass": "self"
+      },
+      {
+        "item_id": "acq_21",
+        "value": 0,
+        "pass": "self"
+      },
+      {
+        "item_id": "acq_22",
+        "value": 0,
+        "pass": "self"
+      },
+      {
+        "item_id": "acq_23",
+        "value": 0,
+        "pass": "self"
+      },
+      {
+        "item_id": "acq_24",
+        "value": 0,
+        "pass": "self"
+      },
+      {
+        "item_id": "acq_25",
+        "value": 0,
+        "pass": "self"
+      },
+      {
+        "item_id": "acq_26",
+        "value": 0,
+        "pass": "self"
+      },
+      {
+        "item_id": "acq_27",
+        "value": 0,
+        "pass": "self"
+      },
+      {
+        "item_id": "acq_28",
+        "value": 0,
+        "pass": "self"
+      },
+      {
+        "item_id": "acq_29",
+        "value": 0,
+        "pass": "self"
+      },
+      {
+        "item_id": "acq_30",
+        "value": 0,
+        "pass": "self"
+      },
+      {
+        "item_id": "acq_31",
+        "value": 0,
+        "pass": "self"
+      },
+      {
+        "item_id": "acq_32",
+        "value": 0,
+        "pass": "self"
+      },
+      {
+        "item_id": "acq_33",
+        "value": 0,
+        "pass": "self"
+      },
+      {
+        "item_id": "acq_34",
+        "value": 0,
+        "pass": "self"
+      },
+      {
+        "item_id": "acq_1",
+        "value": 0,
+        "pass": "partner_wants"
+      },
+      {
+        "item_id": "acq_2",
+        "value": 0,
+        "pass": "partner_wants"
+      },
+      {
+        "item_id": "acq_3",
+        "value": 0,
+        "pass": "partner_wants"
+      },
+      {
+        "item_id": "acq_4",
+        "value": 0,
+        "pass": "partner_wants"
+      },
+      {
+        "item_id": "acq_5",
+        "value": 0,
+        "pass": "partner_wants"
+      },
+      {
+        "item_id": "acq_6",
+        "value": 0,
+        "pass": "partner_wants"
+      },
+      {
+        "item_id": "acq_7",
+        "value": 0,
+        "pass": "partner_wants"
+      },
+      {
+        "item_id": "acq_8",
+        "value": 0,
+        "pass": "partner_wants"
+      },
+      {
+        "item_id": "acq_9",
+        "value": 0,
+        "pass": "partner_wants"
+      },
+      {
+        "item_id": "acq_10",
+        "value": 0,
+        "pass": "partner_wants"
+      },
+      {
+        "item_id": "acq_11",
+        "value": 0,
+        "pass": "partner_wants"
+      },
+      {
+        "item_id": "acq_12",
+        "value": 0,
+        "pass": "partner_wants"
+      },
+      {
+        "item_id": "acq_13",
+        "value": 0,
+        "pass": "partner_wants"
+      },
+      {
+        "item_id": "acq_14",
+        "value": 0,
+        "pass": "partner_wants"
+      },
+      {
+        "item_id": "acq_15",
+        "value": 0,
+        "pass": "partner_wants"
+      },
+      {
+        "item_id": "acq_16",
+        "value": 0,
+        "pass": "partner_wants"
+      },
+      {
+        "item_id": "acq_17",
+        "value": 0,
+        "pass": "partner_wants"
+      },
+      {
+        "item_id": "acq_18",
+        "value": 0,
+        "pass": "partner_wants"
+      },
+      {
+        "item_id": "acq_19",
+        "value": 0,
+        "pass": "partner_wants"
+      },
+      {
+        "item_id": "acq_20",
+        "value": 0,
+        "pass": "partner_wants"
+      },
+      {
+        "item_id": "acq_21",
+        "value": 0,
+        "pass": "partner_wants"
+      },
+      {
+        "item_id": "acq_22",
+        "value": 0,
+        "pass": "partner_wants"
+      },
+      {
+        "item_id": "acq_23",
+        "value": 0,
+        "pass": "partner_wants"
+      },
+      {
+        "item_id": "acq_24",
+        "value": 0,
+        "pass": "partner_wants"
+      },
+      {
+        "item_id": "acq_25",
+        "value": 0,
+        "pass": "partner_wants"
+      },
+      {
+        "item_id": "acq_26",
+        "value": 0,
+        "pass": "partner_wants"
+      },
+      {
+        "item_id": "acq_27",
+        "value": 0,
+        "pass": "partner_wants"
+      },
+      {
+        "item_id": "acq_28",
+        "value": 0,
+        "pass": "partner_wants"
+      },
+      {
+        "item_id": "acq_29",
+        "value": 0,
+        "pass": "partner_wants"
+      },
+      {
+        "item_id": "acq_30",
+        "value": 0,
+        "pass": "partner_wants"
+      },
+      {
+        "item_id": "acq_31",
+        "value": 0,
+        "pass": "partner_wants"
+      },
+      {
+        "item_id": "acq_32",
+        "value": 0,
+        "pass": "partner_wants"
+      },
+      {
+        "item_id": "acq_33",
+        "value": 0,
+        "pass": "partner_wants"
+      },
+      {
+        "item_id": "acq_34",
+        "value": 0,
+        "pass": "partner_wants"
+      }
+    ],
+    "fapbi": [
+      {
+        "item_id": "fapbi_1",
+        "value": 5,
+        "pass": "frequency"
+      },
+      {
+        "item_id": "fapbi_2",
+        "value": 5,
+        "pass": "frequency"
+      },
+      {
+        "item_id": "fapbi_3",
+        "value": 5,
+        "pass": "frequency"
+      },
+      {
+        "item_id": "fapbi_4",
+        "value": 5,
+        "pass": "frequency"
+      },
+      {
+        "item_id": "fapbi_5",
+        "value": 5,
+        "pass": "frequency"
+      },
+      {
+        "item_id": "fapbi_6",
+        "value": 5,
+        "pass": "frequency"
+      },
+      {
+        "item_id": "fapbi_7",
+        "value": 5,
+        "pass": "frequency"
+      },
+      {
+        "item_id": "fapbi_8",
+        "value": 5,
+        "pass": "frequency"
+      },
+      {
+        "item_id": "fapbi_9",
+        "value": 5,
+        "pass": "frequency"
+      },
+      {
+        "item_id": "fapbi_10",
+        "value": 5,
+        "pass": "frequency"
+      },
+      {
+        "item_id": "fapbi_11",
+        "value": 5,
+        "pass": "frequency"
+      },
+      {
+        "item_id": "fapbi_12",
+        "value": 5,
+        "pass": "frequency"
+      },
+      {
+        "item_id": "fapbi_13",
+        "value": 5,
+        "pass": "frequency"
+      },
+      {
+        "item_id": "fapbi_14",
+        "value": 5,
+        "pass": "frequency"
+      },
+      {
+        "item_id": "fapbi_15",
+        "value": 5,
+        "pass": "frequency"
+      },
+      {
+        "item_id": "fapbi_16",
+        "value": 5,
+        "pass": "frequency"
+      },
+      {
+        "item_id": "fapbi_17",
+        "value": 5,
+        "pass": "frequency"
+      },
+      {
+        "item_id": "fapbi_18",
+        "value": 5,
+        "pass": "frequency"
+      },
+      {
+        "item_id": "fapbi_19",
+        "value": 5,
+        "pass": "frequency"
+      },
+      {
+        "item_id": "fapbi_20",
+        "value": 5,
+        "pass": "frequency"
+      },
+      {
+        "item_id": "fapbi_1",
+        "value": 9,
+        "pass": "acceptability"
+      },
+      {
+        "item_id": "fapbi_2",
+        "value": 9,
+        "pass": "acceptability"
+      },
+      {
+        "item_id": "fapbi_3",
+        "value": 9,
+        "pass": "acceptability"
+      },
+      {
+        "item_id": "fapbi_4",
+        "value": 9,
+        "pass": "acceptability"
+      },
+      {
+        "item_id": "fapbi_5",
+        "value": 9,
+        "pass": "acceptability"
+      },
+      {
+        "item_id": "fapbi_6",
+        "value": 9,
+        "pass": "acceptability"
+      },
+      {
+        "item_id": "fapbi_7",
+        "value": 9,
+        "pass": "acceptability"
+      },
+      {
+        "item_id": "fapbi_8",
+        "value": 9,
+        "pass": "acceptability"
+      },
+      {
+        "item_id": "fapbi_9",
+        "value": 9,
+        "pass": "acceptability"
+      },
+      {
+        "item_id": "fapbi_10",
+        "value": 9,
+        "pass": "acceptability"
+      },
+      {
+        "item_id": "fapbi_11",
+        "value": 9,
+        "pass": "acceptability"
+      },
+      {
+        "item_id": "fapbi_12",
+        "value": 9,
+        "pass": "acceptability"
+      },
+      {
+        "item_id": "fapbi_13",
+        "value": 9,
+        "pass": "acceptability"
+      },
+      {
+        "item_id": "fapbi_14",
+        "value": 9,
+        "pass": "acceptability"
+      },
+      {
+        "item_id": "fapbi_15",
+        "value": 9,
+        "pass": "acceptability"
+      },
+      {
+        "item_id": "fapbi_16",
+        "value": 9,
+        "pass": "acceptability"
+      },
+      {
+        "item_id": "fapbi_17",
+        "value": 9,
+        "pass": "acceptability"
+      },
+      {
+        "item_id": "fapbi_18",
+        "value": 9,
+        "pass": "acceptability"
+      },
+      {
+        "item_id": "fapbi_19",
+        "value": 9,
+        "pass": "acceptability"
+      },
+      {
+        "item_id": "fapbi_20",
+        "value": 9,
+        "pass": "acceptability"
+      }
+    ],
+    "who_does_what": [
+      {
+        "item_id": "who_does_what_1",
+        "value": 5,
+        "pass": "now"
+      },
+      {
+        "item_id": "who_does_what_2",
+        "value": 1,
+        "pass": "now"
+      },
+      {
+        "item_id": "who_does_what_3",
+        "value": 5,
+        "pass": "now"
+      },
+      {
+        "item_id": "who_does_what_4",
+        "value": 5,
+        "pass": "now"
+      },
+      {
+        "item_id": "who_does_what_5",
+        "value": 5,
+        "pass": "now"
+      },
+      {
+        "item_id": "who_does_what_6",
+        "value": 5,
+        "pass": "now"
+      },
+      {
+        "item_id": "who_does_what_7",
+        "value": 5,
+        "pass": "now"
+      },
+      {
+        "item_id": "who_does_what_8",
+        "value": 5,
+        "pass": "now"
+      },
+      {
+        "item_id": "who_does_what_9",
+        "value": 5,
+        "pass": "now"
+      },
+      {
+        "item_id": "who_does_what_10",
+        "value": 5,
+        "pass": "now"
+      },
+      {
+        "item_id": "who_does_what_11",
+        "value": 5,
+        "pass": "now"
+      },
+      {
+        "item_id": "who_does_what_12",
+        "value": 5,
+        "pass": "now"
+      },
+      {
+        "item_id": "who_does_what_13",
+        "value": 5,
+        "pass": "now"
+      },
+      {
+        "item_id": "who_does_what_14",
+        "value": 5,
+        "pass": "now"
+      },
+      {
+        "item_id": "who_does_what_15",
+        "value": 5,
+        "pass": "now"
+      },
+      {
+        "item_id": "who_does_what_16",
+        "value": 5,
+        "pass": "now"
+      },
+      {
+        "item_id": "who_does_what_17",
+        "value": 5,
+        "pass": "now"
+      },
+      {
+        "item_id": "who_does_what_18",
+        "value": 5,
+        "pass": "now"
+      },
+      {
+        "item_id": "who_does_what_19",
+        "value": 5,
+        "pass": "now"
+      },
+      {
+        "item_id": "who_does_what_20",
+        "value": 5,
+        "pass": "now"
+      },
+      {
+        "item_id": "who_does_what_21",
+        "value": 5,
+        "pass": "now"
+      },
+      {
+        "item_id": "who_does_what_22",
+        "value": 5,
+        "pass": "now"
+      },
+      {
+        "item_id": "who_does_what_23",
+        "value": 5,
+        "pass": "now"
+      },
+      {
+        "item_id": "who_does_what_24",
+        "value": 5,
+        "pass": "now"
+      },
+      {
+        "item_id": "who_does_what_1",
+        "value": 5,
+        "pass": "ideal"
+      },
+      {
+        "item_id": "who_does_what_2",
+        "value": 5,
+        "pass": "ideal"
+      },
+      {
+        "item_id": "who_does_what_3",
+        "value": 5,
+        "pass": "ideal"
+      },
+      {
+        "item_id": "who_does_what_4",
+        "value": 5,
+        "pass": "ideal"
+      },
+      {
+        "item_id": "who_does_what_5",
+        "value": 5,
+        "pass": "ideal"
+      },
+      {
+        "item_id": "who_does_what_6",
+        "value": 5,
+        "pass": "ideal"
+      },
+      {
+        "item_id": "who_does_what_7",
+        "value": 5,
+        "pass": "ideal"
+      },
+      {
+        "item_id": "who_does_what_8",
+        "value": 5,
+        "pass": "ideal"
+      },
+      {
+        "item_id": "who_does_what_9",
+        "value": 5,
+        "pass": "ideal"
+      },
+      {
+        "item_id": "who_does_what_10",
+        "value": 5,
+        "pass": "ideal"
+      },
+      {
+        "item_id": "who_does_what_11",
+        "value": 5,
+        "pass": "ideal"
+      },
+      {
+        "item_id": "who_does_what_12",
+        "value": 5,
+        "pass": "ideal"
+      },
+      {
+        "item_id": "who_does_what_13",
+        "value": 5,
+        "pass": "ideal"
+      },
+      {
+        "item_id": "who_does_what_14",
+        "value": 5,
+        "pass": "ideal"
+      },
+      {
+        "item_id": "who_does_what_15",
+        "value": 5,
+        "pass": "ideal"
+      },
+      {
+        "item_id": "who_does_what_16",
+        "value": 5,
+        "pass": "ideal"
+      },
+      {
+        "item_id": "who_does_what_17",
+        "value": 5,
+        "pass": "ideal"
+      },
+      {
+        "item_id": "who_does_what_18",
+        "value": 5,
+        "pass": "ideal"
+      },
+      {
+        "item_id": "who_does_what_19",
+        "value": 5,
+        "pass": "ideal"
+      },
+      {
+        "item_id": "who_does_what_20",
+        "value": 5,
+        "pass": "ideal"
+      },
+      {
+        "item_id": "who_does_what_21",
+        "value": 5,
+        "pass": "ideal"
+      },
+      {
+        "item_id": "who_does_what_22",
+        "value": 5,
+        "pass": "ideal"
+      },
+      {
+        "item_id": "who_does_what_23",
+        "value": 5,
+        "pass": "ideal"
+      },
+      {
+        "item_id": "who_does_what_24",
+        "value": 5,
+        "pass": "ideal"
+      }
+    ],
+    "map": [
+      {
+        "item_id": "map_1",
+        "value": 0,
+        "pass": "intensity"
+      },
+      {
+        "item_id": "map_2",
+        "value": 0,
+        "pass": "intensity"
+      },
+      {
+        "item_id": "map_3",
+        "value": 0,
+        "pass": "intensity"
+      },
+      {
+        "item_id": "map_4",
+        "value": 0,
+        "pass": "intensity"
+      },
+      {
+        "item_id": "map_5",
+        "value": 0,
+        "pass": "intensity"
+      },
+      {
+        "item_id": "map_6",
+        "value": 0,
+        "pass": "intensity"
+      },
+      {
+        "item_id": "map_7",
+        "value": 0,
+        "pass": "intensity"
+      },
+      {
+        "item_id": "map_8",
+        "value": 0,
+        "pass": "intensity"
+      },
+      {
+        "item_id": "map_9",
+        "value": 0,
+        "pass": "intensity"
+      },
+      {
+        "item_id": "map_10",
+        "value": 0,
+        "pass": "intensity"
+      },
+      {
+        "item_id": "map_1",
+        "value": 100,
+        "pass": "efficacy"
+      },
+      {
+        "item_id": "map_2",
+        "value": 100,
+        "pass": "efficacy"
+      },
+      {
+        "item_id": "map_3",
+        "value": 100,
+        "pass": "efficacy"
+      },
+      {
+        "item_id": "map_4",
+        "value": 100,
+        "pass": "efficacy"
+      },
+      {
+        "item_id": "map_5",
+        "value": 100,
+        "pass": "efficacy"
+      },
+      {
+        "item_id": "map_6",
+        "value": 100,
+        "pass": "efficacy"
+      },
+      {
+        "item_id": "map_7",
+        "value": 100,
+        "pass": "efficacy"
+      },
+      {
+        "item_id": "map_8",
+        "value": 100,
+        "pass": "efficacy"
+      },
+      {
+        "item_id": "map_9",
+        "value": 100,
+        "pass": "efficacy"
+      },
+      {
+        "item_id": "map_10",
+        "value": 100,
+        "pass": "efficacy"
+      }
+    ],
+    "polarization": [
+      {
+        "item_id": "polarization_1",
+        "value": 4,
+        "pass": "self_alone"
+      },
+      {
+        "item_id": "polarization_2",
+        "value": 4,
+        "pass": "self_alone"
+      },
+      {
+        "item_id": "polarization_3",
+        "value": 4,
+        "pass": "self_alone"
+      },
+      {
+        "item_id": "polarization_4",
+        "value": 4,
+        "pass": "self_alone"
+      },
+      {
+        "item_id": "polarization_5",
+        "value": 4,
+        "pass": "self_alone"
+      },
+      {
+        "item_id": "polarization_6",
+        "value": 4,
+        "pass": "self_alone"
+      },
+      {
+        "item_id": "polarization_7",
+        "value": 4,
+        "pass": "self_alone"
+      },
+      {
+        "item_id": "polarization_8",
+        "value": 4,
+        "pass": "self_alone"
+      },
+      {
+        "item_id": "polarization_9",
+        "value": 4,
+        "pass": "self_alone"
+      },
+      {
+        "item_id": "polarization_10",
+        "value": 4,
+        "pass": "self_alone"
+      },
+      {
+        "item_id": "polarization_1",
+        "value": 4,
+        "pass": "self_with_partner"
+      },
+      {
+        "item_id": "polarization_2",
+        "value": 4,
+        "pass": "self_with_partner"
+      },
+      {
+        "item_id": "polarization_3",
+        "value": 4,
+        "pass": "self_with_partner"
+      },
+      {
+        "item_id": "polarization_4",
+        "value": 4,
+        "pass": "self_with_partner"
+      },
+      {
+        "item_id": "polarization_5",
+        "value": 4,
+        "pass": "self_with_partner"
+      },
+      {
+        "item_id": "polarization_6",
+        "value": 4,
+        "pass": "self_with_partner"
+      },
+      {
+        "item_id": "polarization_7",
+        "value": 4,
+        "pass": "self_with_partner"
+      },
+      {
+        "item_id": "polarization_8",
+        "value": 4,
+        "pass": "self_with_partner"
+      },
+      {
+        "item_id": "polarization_9",
+        "value": 4,
+        "pass": "self_with_partner"
+      },
+      {
+        "item_id": "polarization_10",
+        "value": 4,
+        "pass": "self_with_partner"
+      },
+      {
+        "item_id": "polarization_1",
+        "value": 4,
+        "pass": "partner_becomes"
+      },
+      {
+        "item_id": "polarization_2",
+        "value": 4,
+        "pass": "partner_becomes"
+      },
+      {
+        "item_id": "polarization_3",
+        "value": 4,
+        "pass": "partner_becomes"
+      },
+      {
+        "item_id": "polarization_4",
+        "value": 4,
+        "pass": "partner_becomes"
+      },
+      {
+        "item_id": "polarization_5",
+        "value": 4,
+        "pass": "partner_becomes"
+      },
+      {
+        "item_id": "polarization_6",
+        "value": 4,
+        "pass": "partner_becomes"
+      },
+      {
+        "item_id": "polarization_7",
+        "value": 4,
+        "pass": "partner_becomes"
+      },
+      {
+        "item_id": "polarization_8",
+        "value": 4,
+        "pass": "partner_becomes"
+      },
+      {
+        "item_id": "polarization_9",
+        "value": 4,
+        "pass": "partner_becomes"
+      },
+      {
+        "item_id": "polarization_10",
+        "value": 4,
+        "pass": "partner_becomes"
+      }
+    ],
+    "brief_crs": [
+      {
+        "item_id": "brief_crs_1",
+        "value": 6
+      },
+      {
+        "item_id": "brief_crs_2",
+        "value": 6
+      },
+      {
+        "item_id": "brief_crs_3",
+        "value": 6
+      },
+      {
+        "item_id": "brief_crs_4",
+        "value": 6
+      },
+      {
+        "item_id": "brief_crs_5",
+        "value": 0
+      },
+      {
+        "item_id": "brief_crs_6",
+        "value": 0
+      },
+      {
+        "item_id": "brief_crs_7",
+        "value": 6
+      },
+      {
+        "item_id": "brief_crs_8",
+        "value": 6
+      },
+      {
+        "item_id": "brief_crs_9",
+        "value": 0
+      },
+      {
+        "item_id": "brief_crs_10",
+        "value": 0
+      },
+      {
+        "item_id": "brief_crs_11",
+        "value": 6
+      },
+      {
+        "item_id": "brief_crs_12",
+        "value": 6
+      },
+      {
+        "item_id": "brief_crs_13",
+        "value": 6
+      },
+      {
+        "item_id": "brief_crs_14",
+        "value": 6
+      }
+    ],
+    "psdq_sf": [
+      {
+        "item_id": "psdq_sf_1",
+        "value": 3
+      },
+      {
+        "item_id": "psdq_sf_2",
+        "value": 3
+      },
+      {
+        "item_id": "psdq_sf_3",
+        "value": 3
+      },
+      {
+        "item_id": "psdq_sf_4",
+        "value": 3
+      },
+      {
+        "item_id": "psdq_sf_5",
+        "value": 3
+      },
+      {
+        "item_id": "psdq_sf_6",
+        "value": 3
+      },
+      {
+        "item_id": "psdq_sf_7",
+        "value": 3
+      },
+      {
+        "item_id": "psdq_sf_8",
+        "value": 3
+      },
+      {
+        "item_id": "psdq_sf_9",
+        "value": 3
+      },
+      {
+        "item_id": "psdq_sf_10",
+        "value": 3
+      },
+      {
+        "item_id": "psdq_sf_11",
+        "value": 3
+      },
+      {
+        "item_id": "psdq_sf_12",
+        "value": 3
+      },
+      {
+        "item_id": "psdq_sf_13",
+        "value": 3
+      },
+      {
+        "item_id": "psdq_sf_14",
+        "value": 3
+      },
+      {
+        "item_id": "psdq_sf_15",
+        "value": 3
+      },
+      {
+        "item_id": "psdq_sf_16",
+        "value": 3
+      },
+      {
+        "item_id": "psdq_sf_17",
+        "value": 3
+      },
+      {
+        "item_id": "psdq_sf_18",
+        "value": 3
+      },
+      {
+        "item_id": "psdq_sf_19",
+        "value": 3
+      },
+      {
+        "item_id": "psdq_sf_20",
+        "value": 3
+      },
+      {
+        "item_id": "psdq_sf_21",
+        "value": 3
+      },
+      {
+        "item_id": "psdq_sf_22",
+        "value": 3
+      },
+      {
+        "item_id": "psdq_sf_23",
+        "value": 3
+      },
+      {
+        "item_id": "psdq_sf_24",
+        "value": 3
+      },
+      {
+        "item_id": "psdq_sf_25",
+        "value": 3
+      },
+      {
+        "item_id": "psdq_sf_26",
+        "value": 3
+      },
+      {
+        "item_id": "psdq_sf_27",
+        "value": 3
+      },
+      {
+        "item_id": "psdq_sf_28",
+        "value": 3
+      },
+      {
+        "item_id": "psdq_sf_29",
+        "value": 3
+      },
+      {
+        "item_id": "psdq_sf_30",
+        "value": 3
+      },
+      {
+        "item_id": "psdq_sf_31",
+        "value": 3
+      },
+      {
+        "item_id": "psdq_sf_32",
+        "value": 3
+      }
+    ]
+  },
+  "expected": {
+    "distress_context": false,
+    "domains": {
+      "household": 6
+    },
+    "flags": [
+      {
+        "rule_key": "wdw_now_ideal_gap",
+        "domain": "household",
+        "user": "a",
+        "item": "who_does_what_2",
+        "weight": 2
+      },
+      {
+        "rule_key": "wdw_now_ideal_gap",
+        "domain": "household",
+        "user": "b",
+        "item": "who_does_what_2",
+        "weight": 2
+      },
+      {
+        "rule_key": "wdw_now_disagreement",
+        "domain": "household",
+        "user": "both",
+        "item": "who_does_what_2",
+        "weight": 2
+      }
+    ],
+    "polarization_loops": []
+  }
+}

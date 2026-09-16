@@ -1,0 +1,685 @@
+{
+  "key": "fapbi",
+  "name": "Frequency and Acceptability of Partner Behavior Inventory (FAPBI)",
+  "source_citation": "Christensen & Jacobson (1997); Doss & Christensen (2006). The Frequency and Acceptability of Partner Behavior Inventory. Psychological Assessment, 18(3), 289–302.",
+  "license_note": "Available for research and clinical use from the authors (Christensen, UCLA); cite the source.",
+  "layer": 1,
+  "passes": [
+    "frequency",
+    "acceptability"
+  ],
+  "default_domain": "communication",
+  "items": [
+    {
+      "item_id": "fapbi_1",
+      "text": "TODO: populate from source",
+      "descriptor": "affection behavior 1",
+      "scale": {
+        "min": 0,
+        "max": 99
+      },
+      "reverse_scored": false,
+      "domain": "intimacy",
+      "scale_by_pass": {
+        "frequency": {
+          "min": 0,
+          "max": 99
+        },
+        "acceptability": {
+          "min": 0,
+          "max": 9,
+          "labels": [
+            "Totally unacceptable",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "Totally acceptable"
+          ]
+        }
+      }
+    },
+    {
+      "item_id": "fapbi_2",
+      "text": "TODO: populate from source",
+      "descriptor": "affection behavior 2",
+      "scale": {
+        "min": 0,
+        "max": 99
+      },
+      "reverse_scored": false,
+      "domain": "intimacy",
+      "scale_by_pass": {
+        "frequency": {
+          "min": 0,
+          "max": 99
+        },
+        "acceptability": {
+          "min": 0,
+          "max": 9,
+          "labels": [
+            "Totally unacceptable",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "Totally acceptable"
+          ]
+        }
+      }
+    },
+    {
+      "item_id": "fapbi_3",
+      "text": "TODO: populate from source",
+      "descriptor": "affection behavior 3",
+      "scale": {
+        "min": 0,
+        "max": 99
+      },
+      "reverse_scored": false,
+      "domain": "intimacy",
+      "scale_by_pass": {
+        "frequency": {
+          "min": 0,
+          "max": 99
+        },
+        "acceptability": {
+          "min": 0,
+          "max": 9,
+          "labels": [
+            "Totally unacceptable",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "Totally acceptable"
+          ]
+        }
+      }
+    },
+    {
+      "item_id": "fapbi_4",
+      "text": "TODO: populate from source",
+      "descriptor": "affection behavior 4",
+      "scale": {
+        "min": 0,
+        "max": 99
+      },
+      "reverse_scored": false,
+      "domain": "intimacy",
+      "scale_by_pass": {
+        "frequency": {
+          "min": 0,
+          "max": 99
+        },
+        "acceptability": {
+          "min": 0,
+          "max": 9,
+          "labels": [
+            "Totally unacceptable",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "Totally acceptable"
+          ]
+        }
+      }
+    },
+    {
+      "item_id": "fapbi_5",
+      "text": "TODO: populate from source",
+      "descriptor": "affection behavior 5",
+      "scale": {
+        "min": 0,
+        "max": 99
+      },
+      "reverse_scored": false,
+      "domain": "intimacy",
+      "scale_by_pass": {
+        "frequency": {
+          "min": 0,
+          "max": 99
+        },
+        "acceptability": {
+          "min": 0,
+          "max": 9,
+          "labels": [
+            "Totally unacceptable",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "Totally acceptable"
+          ]
+        }
+      }
+    },
+    {
+      "item_id": "fapbi_6",
+      "text": "TODO: populate from source",
+      "descriptor": "closeness behavior 1",
+      "scale": {
+        "min": 0,
+        "max": 99
+      },
+      "reverse_scored": false,
+      "domain": "intimacy",
+      "scale_by_pass": {
+        "frequency": {
+          "min": 0,
+          "max": 99
+        },
+        "acceptability": {
+          "min": 0,
+          "max": 9,
+          "labels": [
+            "Totally unacceptable",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "Totally acceptable"
+          ]
+        }
+      }
+    },
+    {
+      "item_id": "fapbi_7",
+      "text": "TODO: populate from source",
+      "descriptor": "closeness behavior 2",
+      "scale": {
+        "min": 0,
+        "max": 99
+      },
+      "reverse_scored": false,
+      "domain": "intimacy",
+      "scale_by_pass": {
+        "frequency": {
+          "min": 0,
+          "max": 99
+        },
+        "acceptability": {
+          "min": 0,
+          "max": 9,
+          "labels": [
+            "Totally unacceptable",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "Totally acceptable"
+          ]
+        }
+      }
+    },
+    {
+      "item_id": "fapbi_8",
+      "text": "TODO: populate from source",
+      "descriptor": "closeness behavior 3",
+      "scale": {
+        "min": 0,
+        "max": 99
+      },
+      "reverse_scored": false,
+      "domain": "intimacy",
+      "scale_by_pass": {
+        "frequency": {
+          "min": 0,
+          "max": 99
+        },
+        "acceptability": {
+          "min": 0,
+          "max": 9,
+          "labels": [
+            "Totally unacceptable",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "Totally acceptable"
+          ]
+        }
+      }
+    },
+    {
+      "item_id": "fapbi_9",
+      "text": "TODO: populate from source",
+      "descriptor": "closeness behavior 4",
+      "scale": {
+        "min": 0,
+        "max": 99
+      },
+      "reverse_scored": false,
+      "domain": "intimacy",
+      "scale_by_pass": {
+        "frequency": {
+          "min": 0,
+          "max": 99
+        },
+        "acceptability": {
+          "min": 0,
+          "max": 9,
+          "labels": [
+            "Totally unacceptable",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "Totally acceptable"
+          ]
+        }
+      }
+    },
+    {
+      "item_id": "fapbi_10",
+      "text": "TODO: populate from source",
+      "descriptor": "closeness behavior 5",
+      "scale": {
+        "min": 0,
+        "max": 99
+      },
+      "reverse_scored": false,
+      "domain": "intimacy",
+      "scale_by_pass": {
+        "frequency": {
+          "min": 0,
+          "max": 99
+        },
+        "acceptability": {
+          "min": 0,
+          "max": 9,
+          "labels": [
+            "Totally unacceptable",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "Totally acceptable"
+          ]
+        }
+      }
+    },
+    {
+      "item_id": "fapbi_11",
+      "text": "TODO: populate from source",
+      "descriptor": "demand behavior 1",
+      "scale": {
+        "min": 0,
+        "max": 99
+      },
+      "reverse_scored": false,
+      "domain": "communication",
+      "scale_by_pass": {
+        "frequency": {
+          "min": 0,
+          "max": 99
+        },
+        "acceptability": {
+          "min": 0,
+          "max": 9,
+          "labels": [
+            "Totally unacceptable",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "Totally acceptable"
+          ]
+        }
+      }
+    },
+    {
+      "item_id": "fapbi_12",
+      "text": "TODO: populate from source",
+      "descriptor": "demand behavior 2",
+      "scale": {
+        "min": 0,
+        "max": 99
+      },
+      "reverse_scored": false,
+      "domain": "communication",
+      "scale_by_pass": {
+        "frequency": {
+          "min": 0,
+          "max": 99
+        },
+        "acceptability": {
+          "min": 0,
+          "max": 9,
+          "labels": [
+            "Totally unacceptable",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "Totally acceptable"
+          ]
+        }
+      }
+    },
+    {
+      "item_id": "fapbi_13",
+      "text": "TODO: populate from source",
+      "descriptor": "demand behavior 3",
+      "scale": {
+        "min": 0,
+        "max": 99
+      },
+      "reverse_scored": false,
+      "domain": "communication",
+      "scale_by_pass": {
+        "frequency": {
+          "min": 0,
+          "max": 99
+        },
+        "acceptability": {
+          "min": 0,
+          "max": 9,
+          "labels": [
+            "Totally unacceptable",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "Totally acceptable"
+          ]
+        }
+      }
+    },
+    {
+      "item_id": "fapbi_14",
+      "text": "TODO: populate from source",
+      "descriptor": "demand behavior 4",
+      "scale": {
+        "min": 0,
+        "max": 99
+      },
+      "reverse_scored": false,
+      "domain": "communication",
+      "scale_by_pass": {
+        "frequency": {
+          "min": 0,
+          "max": 99
+        },
+        "acceptability": {
+          "min": 0,
+          "max": 9,
+          "labels": [
+            "Totally unacceptable",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "Totally acceptable"
+          ]
+        }
+      }
+    },
+    {
+      "item_id": "fapbi_15",
+      "text": "TODO: populate from source",
+      "descriptor": "demand behavior 5",
+      "scale": {
+        "min": 0,
+        "max": 99
+      },
+      "reverse_scored": false,
+      "domain": "communication",
+      "scale_by_pass": {
+        "frequency": {
+          "min": 0,
+          "max": 99
+        },
+        "acceptability": {
+          "min": 0,
+          "max": 9,
+          "labels": [
+            "Totally unacceptable",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "Totally acceptable"
+          ]
+        }
+      }
+    },
+    {
+      "item_id": "fapbi_16",
+      "text": "TODO: populate from source",
+      "descriptor": "violation behavior 1",
+      "scale": {
+        "min": 0,
+        "max": 99
+      },
+      "reverse_scored": false,
+      "domain": "conflict",
+      "scale_by_pass": {
+        "frequency": {
+          "min": 0,
+          "max": 99
+        },
+        "acceptability": {
+          "min": 0,
+          "max": 9,
+          "labels": [
+            "Totally unacceptable",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "Totally acceptable"
+          ]
+        }
+      }
+    },
+    {
+      "item_id": "fapbi_17",
+      "text": "TODO: populate from source",
+      "descriptor": "violation behavior 2",
+      "scale": {
+        "min": 0,
+        "max": 99
+      },
+      "reverse_scored": false,
+      "domain": "conflict",
+      "scale_by_pass": {
+        "frequency": {
+          "min": 0,
+          "max": 99
+        },
+        "acceptability": {
+          "min": 0,
+          "max": 9,
+          "labels": [
+            "Totally unacceptable",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "Totally acceptable"
+          ]
+        }
+      }
+    },
+    {
+      "item_id": "fapbi_18",
+      "text": "TODO: populate from source",
+      "descriptor": "violation behavior 3",
+      "scale": {
+        "min": 0,
+        "max": 99
+      },
+      "reverse_scored": false,
+      "domain": "conflict",
+      "scale_by_pass": {
+        "frequency": {
+          "min": 0,
+          "max": 99
+        },
+        "acceptability": {
+          "min": 0,
+          "max": 9,
+          "labels": [
+            "Totally unacceptable",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "Totally acceptable"
+          ]
+        }
+      }
+    },
+    {
+      "item_id": "fapbi_19",
+      "text": "TODO: populate from source",
+      "descriptor": "violation behavior 4",
+      "scale": {
+        "min": 0,
+        "max": 99
+      },
+      "reverse_scored": false,
+      "domain": "conflict",
+      "scale_by_pass": {
+        "frequency": {
+          "min": 0,
+          "max": 99
+        },
+        "acceptability": {
+          "min": 0,
+          "max": 9,
+          "labels": [
+            "Totally unacceptable",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "Totally acceptable"
+          ]
+        }
+      }
+    },
+    {
+      "item_id": "fapbi_20",
+      "text": "TODO: populate from source",
+      "descriptor": "violation behavior 5",
+      "scale": {
+        "min": 0,
+        "max": 99
+      },
+      "reverse_scored": false,
+      "domain": "conflict",
+      "scale_by_pass": {
+        "frequency": {
+          "min": 0,
+          "max": 99
+        },
+        "acceptability": {
+          "min": 0,
+          "max": 9,
+          "labels": [
+            "Totally unacceptable",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "Totally acceptable"
+          ]
+        }
+      }
+    }
+  ],
+  "scoring": {
+    "version": "1.0.0",
+    "subscales": [],
+    "cutoffs": []
+  },
+  "scoring_key_verified": false,
+  "notes": "Per behavior: frequency (count in the past month, 0–99) and acceptability (0–9), each pass with its own scale via scale_by_pass. The flag rule marks any behavior rated unacceptable at its current frequency (acceptability at or below the threshold in config/flag_rules.json).",
+  "pass_prompts": {
+    "frequency": "How often did this happen in the past month?",
+    "acceptability": "How acceptable is that frequency to you?"
+  }
+}

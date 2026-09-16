@@ -1,0 +1,170 @@
+{
+  "key": "map",
+  "name": "Marital Agendas Protocol (MAP)",
+  "source_citation": "Notarius & Vanzetti (1983). The Marital Agendas Protocol. In Filsinger (Ed.), Marriage and Family Assessment. Sage.",
+  "license_note": "Used with citation for research and clinical purposes; confirm terms with the authors for commercial deployment.",
+  "layer": 1,
+  "passes": [
+    "intensity",
+    "efficacy"
+  ],
+  "default_domain": "conflict",
+  "items": [
+    {
+      "item_id": "map_1",
+      "text": "TODO: populate from source",
+      "descriptor": "problem area: money",
+      "scale": {
+        "min": 0,
+        "max": 100
+      },
+      "reverse_scored": false,
+      "domain": "household"
+    },
+    {
+      "item_id": "map_2",
+      "text": "TODO: populate from source",
+      "descriptor": "problem area: communication",
+      "scale": {
+        "min": 0,
+        "max": 100
+      },
+      "reverse_scored": false,
+      "domain": "conflict"
+    },
+    {
+      "item_id": "map_3",
+      "text": "TODO: populate from source",
+      "descriptor": "problem area: sex",
+      "scale": {
+        "min": 0,
+        "max": 100
+      },
+      "reverse_scored": false,
+      "domain": "intimacy"
+    },
+    {
+      "item_id": "map_4",
+      "text": "TODO: populate from source",
+      "descriptor": "problem area: in-laws",
+      "scale": {
+        "min": 0,
+        "max": 100
+      },
+      "reverse_scored": false,
+      "domain": "social_family_longterm"
+    },
+    {
+      "item_id": "map_5",
+      "text": "TODO: populate from source",
+      "descriptor": "problem area: recreation",
+      "scale": {
+        "min": 0,
+        "max": 100
+      },
+      "reverse_scored": false,
+      "domain": "social_family_longterm"
+    },
+    {
+      "item_id": "map_6",
+      "text": "TODO: populate from source",
+      "descriptor": "problem area: friends",
+      "scale": {
+        "min": 0,
+        "max": 100
+      },
+      "reverse_scored": false,
+      "domain": "social_family_longterm"
+    },
+    {
+      "item_id": "map_7",
+      "text": "TODO: populate from source",
+      "descriptor": "problem area: alcohol and drugs",
+      "scale": {
+        "min": 0,
+        "max": 100
+      },
+      "reverse_scored": false,
+      "domain": "self_care"
+    },
+    {
+      "item_id": "map_8",
+      "text": "TODO: populate from source",
+      "descriptor": "problem area: children",
+      "scale": {
+        "min": 0,
+        "max": 100
+      },
+      "reverse_scored": false,
+      "domain": "parenting"
+    },
+    {
+      "item_id": "map_9",
+      "text": "TODO: populate from source",
+      "descriptor": "problem area: jealousy",
+      "scale": {
+        "min": 0,
+        "max": 100
+      },
+      "reverse_scored": false,
+      "domain": "conflict"
+    },
+    {
+      "item_id": "map_10",
+      "text": "TODO: populate from source",
+      "descriptor": "problem area: religion",
+      "scale": {
+        "min": 0,
+        "max": 100
+      },
+      "reverse_scored": false,
+      "domain": "social_family_longterm"
+    }
+  ],
+  "scoring": {
+    "version": "1.0.0",
+    "subscales": [
+      {
+        "name": "intensity_mean",
+        "items": [
+          "map_1",
+          "map_2",
+          "map_3",
+          "map_4",
+          "map_5",
+          "map_6",
+          "map_7",
+          "map_8",
+          "map_9",
+          "map_10"
+        ],
+        "method": "mean",
+        "pass": "intensity"
+      },
+      {
+        "name": "efficacy_mean",
+        "items": [
+          "map_1",
+          "map_2",
+          "map_3",
+          "map_4",
+          "map_5",
+          "map_6",
+          "map_7",
+          "map_8",
+          "map_9",
+          "map_10"
+        ],
+        "method": "mean",
+        "pass": "efficacy"
+      }
+    ],
+    "cutoffs": []
+  },
+  "scoring_key_verified": false,
+  "notes": "Per area: problem intensity (0–100) and relationship efficacy expectancy (0–100, the percent chance the couple can resolve it). Couple-level: areas where either partner's intensity is high and efficacy is low (thresholds in config/flag_rules.json).",
+  "pass_prompts": {
+    "intensity": "How much of a problem is this area for you two right now?",
+    "efficacy": "How confident are you that the two of you can resolve it?"
+  }
+}

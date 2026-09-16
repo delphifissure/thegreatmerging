@@ -1,0 +1,343 @@
+{
+  "key": "brief_crs",
+  "name": "Coparenting Relationship Scale – Brief (Brief CRS)",
+  "source_citation": "Feinberg, Brown & Kan (2012). A multi-domain self-report measure of coparenting. Parenting: Science and Practice, 12(1), 1–21.",
+  "license_note": "Available for research and clinical use with citation; see source.",
+  "layer": 1,
+  "passes": [
+    "single"
+  ],
+  "default_domain": "parenting",
+  "items": [
+    {
+      "item_id": "brief_crs_1",
+      "text": "TODO: populate from source",
+      "descriptor": "agreement item 1",
+      "scale": {
+        "min": 0,
+        "max": 6,
+        "labels": [
+          "Not true of us",
+          "",
+          "",
+          "Somewhat true of us",
+          "",
+          "",
+          "Very true of us"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "brief_crs_2",
+      "text": "TODO: populate from source",
+      "descriptor": "agreement item 2",
+      "scale": {
+        "min": 0,
+        "max": 6,
+        "labels": [
+          "Not true of us",
+          "",
+          "",
+          "Somewhat true of us",
+          "",
+          "",
+          "Very true of us"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "brief_crs_3",
+      "text": "TODO: populate from source",
+      "descriptor": "closeness item 1",
+      "scale": {
+        "min": 0,
+        "max": 6,
+        "labels": [
+          "Not true of us",
+          "",
+          "",
+          "Somewhat true of us",
+          "",
+          "",
+          "Very true of us"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "brief_crs_4",
+      "text": "TODO: populate from source",
+      "descriptor": "closeness item 2",
+      "scale": {
+        "min": 0,
+        "max": 6,
+        "labels": [
+          "Not true of us",
+          "",
+          "",
+          "Somewhat true of us",
+          "",
+          "",
+          "Very true of us"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "brief_crs_5",
+      "text": "TODO: populate from source",
+      "descriptor": "exposure_to_conflict item 1",
+      "scale": {
+        "min": 0,
+        "max": 6,
+        "labels": [
+          "Not true of us",
+          "",
+          "",
+          "Somewhat true of us",
+          "",
+          "",
+          "Very true of us"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "brief_crs_6",
+      "text": "TODO: populate from source",
+      "descriptor": "exposure_to_conflict item 2",
+      "scale": {
+        "min": 0,
+        "max": 6,
+        "labels": [
+          "Not true of us",
+          "",
+          "",
+          "Somewhat true of us",
+          "",
+          "",
+          "Very true of us"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "brief_crs_7",
+      "text": "TODO: populate from source",
+      "descriptor": "support item 1",
+      "scale": {
+        "min": 0,
+        "max": 6,
+        "labels": [
+          "Not true of us",
+          "",
+          "",
+          "Somewhat true of us",
+          "",
+          "",
+          "Very true of us"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "brief_crs_8",
+      "text": "TODO: populate from source",
+      "descriptor": "support item 2",
+      "scale": {
+        "min": 0,
+        "max": 6,
+        "labels": [
+          "Not true of us",
+          "",
+          "",
+          "Somewhat true of us",
+          "",
+          "",
+          "Very true of us"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "brief_crs_9",
+      "text": "TODO: populate from source",
+      "descriptor": "undermining item 1",
+      "scale": {
+        "min": 0,
+        "max": 6,
+        "labels": [
+          "Not true of us",
+          "",
+          "",
+          "Somewhat true of us",
+          "",
+          "",
+          "Very true of us"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "brief_crs_10",
+      "text": "TODO: populate from source",
+      "descriptor": "undermining item 2",
+      "scale": {
+        "min": 0,
+        "max": 6,
+        "labels": [
+          "Not true of us",
+          "",
+          "",
+          "Somewhat true of us",
+          "",
+          "",
+          "Very true of us"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "brief_crs_11",
+      "text": "TODO: populate from source",
+      "descriptor": "endorsement item 1",
+      "scale": {
+        "min": 0,
+        "max": 6,
+        "labels": [
+          "Not true of us",
+          "",
+          "",
+          "Somewhat true of us",
+          "",
+          "",
+          "Very true of us"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "brief_crs_12",
+      "text": "TODO: populate from source",
+      "descriptor": "endorsement item 2",
+      "scale": {
+        "min": 0,
+        "max": 6,
+        "labels": [
+          "Not true of us",
+          "",
+          "",
+          "Somewhat true of us",
+          "",
+          "",
+          "Very true of us"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "brief_crs_13",
+      "text": "TODO: populate from source",
+      "descriptor": "division_of_labor item 1",
+      "scale": {
+        "min": 0,
+        "max": 6,
+        "labels": [
+          "Not true of us",
+          "",
+          "",
+          "Somewhat true of us",
+          "",
+          "",
+          "Very true of us"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "brief_crs_14",
+      "text": "TODO: populate from source",
+      "descriptor": "division_of_labor item 2",
+      "scale": {
+        "min": 0,
+        "max": 6,
+        "labels": [
+          "Not true of us",
+          "",
+          "",
+          "Somewhat true of us",
+          "",
+          "",
+          "Very true of us"
+        ]
+      },
+      "reverse_scored": false
+    }
+  ],
+  "scoring": {
+    "version": "1.0.0",
+    "subscales": [
+      {
+        "name": "agreement",
+        "items": [
+          "brief_crs_1",
+          "brief_crs_2"
+        ],
+        "method": "mean"
+      },
+      {
+        "name": "closeness",
+        "items": [
+          "brief_crs_3",
+          "brief_crs_4"
+        ],
+        "method": "mean"
+      },
+      {
+        "name": "exposure_to_conflict",
+        "items": [
+          "brief_crs_5",
+          "brief_crs_6"
+        ],
+        "method": "mean"
+      },
+      {
+        "name": "support",
+        "items": [
+          "brief_crs_7",
+          "brief_crs_8"
+        ],
+        "method": "mean"
+      },
+      {
+        "name": "undermining",
+        "items": [
+          "brief_crs_9",
+          "brief_crs_10"
+        ],
+        "method": "mean"
+      },
+      {
+        "name": "endorsement",
+        "items": [
+          "brief_crs_11",
+          "brief_crs_12"
+        ],
+        "method": "mean"
+      },
+      {
+        "name": "division_of_labor",
+        "items": [
+          "brief_crs_13",
+          "brief_crs_14"
+        ],
+        "method": "mean"
+      }
+    ],
+    "cutoffs": []
+  },
+  "scoring_key_verified": false,
+  "notes": "VERIFY BEFORE USE: items are grouped two per subscale in this file (agreement, closeness, exposure to conflict, support, undermining, endorsement, division of labor); map each official item to its subscale when populating text. Undermining and exposure-to-conflict above the scale midpoint (3) trigger a weight-3 parenting flag."
+}

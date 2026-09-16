@@ -1,0 +1,58 @@
+{
+  "description": "Hand-coded set for the sentiment flagger (section 11a: evaluate against a hand-coded set before enabling). Each case is one person's answers; `expected_markers` lists markers that must appear at least once with confidence >= 0.5 and `forbidden_markers` lists markers that must not appear at confidence >= 0.5.",
+  "cases": [
+    {
+      "id": "contempt_and_criticism",
+      "expected_markers": ["contempt", "criticism"],
+      "forbidden_markers": [],
+      "input": {
+        "answers": [
+          { "answer_id": "s1", "domain": "household", "step": "specifics", "question_text": "One of you wants to reorganize a shared space the other uses. What's the right way to go about it?", "answer_text": "He would never reorganize anything, he is far too lazy to notice a mess exists. Honestly he is useless around the house and always has been. I roll my eyes and do it myself." },
+          { "answer_id": "s2", "domain": "household", "step": "preference", "question_text": "On the tasks that flagged, describe the split you'd actually be content with.", "answer_text": "I would be content if he did the dishes twice a week, which he did on Tuesday and Thursday last week, so maybe it is possible." }
+        ]
+      }
+    },
+    {
+      "id": "stonewalling_and_defensiveness",
+      "expected_markers": ["stonewalling", "defensiveness"],
+      "forbidden_markers": ["contempt"],
+      "input": {
+        "answers": [
+          { "answer_id": "c1", "domain": "conflict", "step": "specifics", "question_text": "One of you says something hurtful in a fight. Ten minutes later, what happens? The next morning?", "answer_text": "I go to the garage and I do not talk to her for the rest of the night, sometimes the next day too. There is no point. Whatever she says I am the problem, so I just shut it down." },
+          { "answer_id": "c2", "domain": "conflict", "step": "specifics", "question_text": "What does a pause in a fight mean to you, and what would make you trust that it isn't abandonment?", "answer_text": "It is not my fault she gets like that. If she brought things up normally I would not have to leave. She started it every single time last month, I only ever react." }
+        ]
+      }
+    },
+    {
+      "id": "negative_sentiment_override",
+      "expected_markers": ["negative_sentiment_override"],
+      "forbidden_markers": ["contempt"],
+      "input": {
+        "answers": [
+          { "answer_id": "i1", "domain": "intimacy", "step": "specifics", "question_text": "What's the smallest thing your partner could do that would make you feel wanted this week?", "answer_text": "She brought me coffee in bed on Sunday, but I know she only did it because she wanted something. When she says she loves me it is usually because she feels guilty about something." }
+        ]
+      }
+    },
+    {
+      "id": "clean_warm",
+      "expected_markers": [],
+      "forbidden_markers": ["contempt", "criticism", "defensiveness", "stonewalling", "negative_sentiment_override"],
+      "input": {
+        "answers": [
+          { "answer_id": "w1", "domain": "communication", "step": "specifics", "question_text": "Your partner has been quiet for two days. What do you assume, and what do you do?", "answer_text": "I assume work is heavy. On Wednesday I made her tea and asked if she wanted company or quiet, and she picked quiet, so I read next to her." },
+          { "answer_id": "w2", "domain": "communication", "step": "preference", "question_text": "When you're upset, how do you want to be approached, in words you'd actually use?", "answer_text": "'I noticed you seem low. I am here when you want me.' Then a bit of space. That is what she did last Friday and it worked." }
+        ]
+      }
+    },
+    {
+      "id": "clean_specific_complaint_not_criticism",
+      "expected_markers": [],
+      "forbidden_markers": ["criticism", "contempt"],
+      "input": {
+        "answers": [
+          { "answer_id": "h1", "domain": "household", "step": "preference", "question_text": "On the tasks that flagged, describe the split you'd actually be content with.", "answer_text": "The bins went out late three times last month and we got a notice. I would like the bins to be his on Sunday nights and the recycling mine on Wednesdays." }
+        ]
+      }
+    }
+  ]
+}

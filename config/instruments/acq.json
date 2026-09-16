@@ -1,0 +1,705 @@
+{
+  "key": "acq",
+  "name": "Areas of Change Questionnaire (ACQ)",
+  "source_citation": "Weiss, Hops & Patterson (1973); Weiss & Birchler (1975). Areas of Change Questionnaire. Oregon Research Institute.",
+  "license_note": "Public-domain research instrument; cite the source. Confirm with the Oregon Research Institute for commercial use.",
+  "layer": 1,
+  "passes": [
+    "self",
+    "partner_wants"
+  ],
+  "default_domain": "communication",
+  "items": [
+    {
+      "item_id": "acq_1",
+      "text": "TODO: populate from source",
+      "descriptor": "household chores",
+      "scale": {
+        "min": -3,
+        "max": 3,
+        "labels": [
+          "Much less",
+          "Somewhat less",
+          "A little less",
+          "No change",
+          "A little more",
+          "Somewhat more",
+          "Much more"
+        ]
+      },
+      "reverse_scored": false,
+      "domain": "household"
+    },
+    {
+      "item_id": "acq_2",
+      "text": "TODO: populate from source",
+      "descriptor": "financial decisions",
+      "scale": {
+        "min": -3,
+        "max": 3,
+        "labels": [
+          "Much less",
+          "Somewhat less",
+          "A little less",
+          "No change",
+          "A little more",
+          "Somewhat more",
+          "Much more"
+        ]
+      },
+      "reverse_scored": false,
+      "domain": "household"
+    },
+    {
+      "item_id": "acq_3",
+      "text": "TODO: populate from source",
+      "descriptor": "spending money",
+      "scale": {
+        "min": -3,
+        "max": 3,
+        "labels": [
+          "Much less",
+          "Somewhat less",
+          "A little less",
+          "No change",
+          "A little more",
+          "Somewhat more",
+          "Much more"
+        ]
+      },
+      "reverse_scored": false,
+      "domain": "household"
+    },
+    {
+      "item_id": "acq_4",
+      "text": "TODO: populate from source",
+      "descriptor": "time with friends",
+      "scale": {
+        "min": -3,
+        "max": 3,
+        "labels": [
+          "Much less",
+          "Somewhat less",
+          "A little less",
+          "No change",
+          "A little more",
+          "Somewhat more",
+          "Much more"
+        ]
+      },
+      "reverse_scored": false,
+      "domain": "social_family_longterm"
+    },
+    {
+      "item_id": "acq_5",
+      "text": "TODO: populate from source",
+      "descriptor": "time with relatives",
+      "scale": {
+        "min": -3,
+        "max": 3,
+        "labels": [
+          "Much less",
+          "Somewhat less",
+          "A little less",
+          "No change",
+          "A little more",
+          "Somewhat more",
+          "Much more"
+        ]
+      },
+      "reverse_scored": false,
+      "domain": "social_family_longterm"
+    },
+    {
+      "item_id": "acq_6",
+      "text": "TODO: populate from source",
+      "descriptor": "sexual initiation",
+      "scale": {
+        "min": -3,
+        "max": 3,
+        "labels": [
+          "Much less",
+          "Somewhat less",
+          "A little less",
+          "No change",
+          "A little more",
+          "Somewhat more",
+          "Much more"
+        ]
+      },
+      "reverse_scored": false,
+      "domain": "intimacy"
+    },
+    {
+      "item_id": "acq_7",
+      "text": "TODO: populate from source",
+      "descriptor": "affection",
+      "scale": {
+        "min": -3,
+        "max": 3,
+        "labels": [
+          "Much less",
+          "Somewhat less",
+          "A little less",
+          "No change",
+          "A little more",
+          "Somewhat more",
+          "Much more"
+        ]
+      },
+      "reverse_scored": false,
+      "domain": "intimacy"
+    },
+    {
+      "item_id": "acq_8",
+      "text": "TODO: populate from source",
+      "descriptor": "conversation starting",
+      "scale": {
+        "min": -3,
+        "max": 3,
+        "labels": [
+          "Much less",
+          "Somewhat less",
+          "A little less",
+          "No change",
+          "A little more",
+          "Somewhat more",
+          "Much more"
+        ]
+      },
+      "reverse_scored": false,
+      "domain": "communication"
+    },
+    {
+      "item_id": "acq_9",
+      "text": "TODO: populate from source",
+      "descriptor": "going out together",
+      "scale": {
+        "min": -3,
+        "max": 3,
+        "labels": [
+          "Much less",
+          "Somewhat less",
+          "A little less",
+          "No change",
+          "A little more",
+          "Somewhat more",
+          "Much more"
+        ]
+      },
+      "reverse_scored": false,
+      "domain": "social_family_longterm"
+    },
+    {
+      "item_id": "acq_10",
+      "text": "TODO: populate from source",
+      "descriptor": "child discipline",
+      "scale": {
+        "min": -3,
+        "max": 3,
+        "labels": [
+          "Much less",
+          "Somewhat less",
+          "A little less",
+          "No change",
+          "A little more",
+          "Somewhat more",
+          "Much more"
+        ]
+      },
+      "reverse_scored": false,
+      "domain": "parenting"
+    },
+    {
+      "item_id": "acq_11",
+      "text": "TODO: populate from source",
+      "descriptor": "time with the children",
+      "scale": {
+        "min": -3,
+        "max": 3,
+        "labels": [
+          "Much less",
+          "Somewhat less",
+          "A little less",
+          "No change",
+          "A little more",
+          "Somewhat more",
+          "Much more"
+        ]
+      },
+      "reverse_scored": false,
+      "domain": "parenting"
+    },
+    {
+      "item_id": "acq_12",
+      "text": "TODO: populate from source",
+      "descriptor": "drinking",
+      "scale": {
+        "min": -3,
+        "max": 3,
+        "labels": [
+          "Much less",
+          "Somewhat less",
+          "A little less",
+          "No change",
+          "A little more",
+          "Somewhat more",
+          "Much more"
+        ]
+      },
+      "reverse_scored": false,
+      "domain": "self_care"
+    },
+    {
+      "item_id": "acq_13",
+      "text": "TODO: populate from source",
+      "descriptor": "personal appearance",
+      "scale": {
+        "min": -3,
+        "max": 3,
+        "labels": [
+          "Much less",
+          "Somewhat less",
+          "A little less",
+          "No change",
+          "A little more",
+          "Somewhat more",
+          "Much more"
+        ]
+      },
+      "reverse_scored": false,
+      "domain": "self_care"
+    },
+    {
+      "item_id": "acq_14",
+      "text": "TODO: populate from source",
+      "descriptor": "work hours",
+      "scale": {
+        "min": -3,
+        "max": 3,
+        "labels": [
+          "Much less",
+          "Somewhat less",
+          "A little less",
+          "No change",
+          "A little more",
+          "Somewhat more",
+          "Much more"
+        ]
+      },
+      "reverse_scored": false,
+      "domain": "social_family_longterm"
+    },
+    {
+      "item_id": "acq_15",
+      "text": "TODO: populate from source",
+      "descriptor": "arguing",
+      "scale": {
+        "min": -3,
+        "max": 3,
+        "labels": [
+          "Much less",
+          "Somewhat less",
+          "A little less",
+          "No change",
+          "A little more",
+          "Somewhat more",
+          "Much more"
+        ]
+      },
+      "reverse_scored": false,
+      "domain": "conflict"
+    },
+    {
+      "item_id": "acq_16",
+      "text": "TODO: populate from source",
+      "descriptor": "expressing feelings",
+      "scale": {
+        "min": -3,
+        "max": 3,
+        "labels": [
+          "Much less",
+          "Somewhat less",
+          "A little less",
+          "No change",
+          "A little more",
+          "Somewhat more",
+          "Much more"
+        ]
+      },
+      "reverse_scored": false,
+      "domain": "communication"
+    },
+    {
+      "item_id": "acq_17",
+      "text": "TODO: populate from source",
+      "descriptor": "listening",
+      "scale": {
+        "min": -3,
+        "max": 3,
+        "labels": [
+          "Much less",
+          "Somewhat less",
+          "A little less",
+          "No change",
+          "A little more",
+          "Somewhat more",
+          "Much more"
+        ]
+      },
+      "reverse_scored": false,
+      "domain": "communication"
+    },
+    {
+      "item_id": "acq_18",
+      "text": "TODO: populate from source",
+      "descriptor": "praise and appreciation",
+      "scale": {
+        "min": -3,
+        "max": 3,
+        "labels": [
+          "Much less",
+          "Somewhat less",
+          "A little less",
+          "No change",
+          "A little more",
+          "Somewhat more",
+          "Much more"
+        ]
+      },
+      "reverse_scored": false,
+      "domain": "communication"
+    },
+    {
+      "item_id": "acq_19",
+      "text": "TODO: populate from source",
+      "descriptor": "sharing decisions",
+      "scale": {
+        "min": -3,
+        "max": 3,
+        "labels": [
+          "Much less",
+          "Somewhat less",
+          "A little less",
+          "No change",
+          "A little more",
+          "Somewhat more",
+          "Much more"
+        ]
+      },
+      "reverse_scored": false,
+      "domain": "communication"
+    },
+    {
+      "item_id": "acq_20",
+      "text": "TODO: populate from source",
+      "descriptor": "leisure planning",
+      "scale": {
+        "min": -3,
+        "max": 3,
+        "labels": [
+          "Much less",
+          "Somewhat less",
+          "A little less",
+          "No change",
+          "A little more",
+          "Somewhat more",
+          "Much more"
+        ]
+      },
+      "reverse_scored": false,
+      "domain": "social_family_longterm"
+    },
+    {
+      "item_id": "acq_21",
+      "text": "TODO: populate from source",
+      "descriptor": "religious observance",
+      "scale": {
+        "min": -3,
+        "max": 3,
+        "labels": [
+          "Much less",
+          "Somewhat less",
+          "A little less",
+          "No change",
+          "A little more",
+          "Somewhat more",
+          "Much more"
+        ]
+      },
+      "reverse_scored": false,
+      "domain": "social_family_longterm"
+    },
+    {
+      "item_id": "acq_22",
+      "text": "TODO: populate from source",
+      "descriptor": "health habits",
+      "scale": {
+        "min": -3,
+        "max": 3,
+        "labels": [
+          "Much less",
+          "Somewhat less",
+          "A little less",
+          "No change",
+          "A little more",
+          "Somewhat more",
+          "Much more"
+        ]
+      },
+      "reverse_scored": false,
+      "domain": "self_care"
+    },
+    {
+      "item_id": "acq_23",
+      "text": "TODO: populate from source",
+      "descriptor": "privacy and alone time",
+      "scale": {
+        "min": -3,
+        "max": 3,
+        "labels": [
+          "Much less",
+          "Somewhat less",
+          "A little less",
+          "No change",
+          "A little more",
+          "Somewhat more",
+          "Much more"
+        ]
+      },
+      "reverse_scored": false,
+      "domain": "self_care"
+    },
+    {
+      "item_id": "acq_24",
+      "text": "TODO: populate from source",
+      "descriptor": "hobbies",
+      "scale": {
+        "min": -3,
+        "max": 3,
+        "labels": [
+          "Much less",
+          "Somewhat less",
+          "A little less",
+          "No change",
+          "A little more",
+          "Somewhat more",
+          "Much more"
+        ]
+      },
+      "reverse_scored": false,
+      "domain": "self_care"
+    },
+    {
+      "item_id": "acq_25",
+      "text": "TODO: populate from source",
+      "descriptor": "punctuality",
+      "scale": {
+        "min": -3,
+        "max": 3,
+        "labels": [
+          "Much less",
+          "Somewhat less",
+          "A little less",
+          "No change",
+          "A little more",
+          "Somewhat more",
+          "Much more"
+        ]
+      },
+      "reverse_scored": false,
+      "domain": "household"
+    },
+    {
+      "item_id": "acq_26",
+      "text": "TODO: populate from source",
+      "descriptor": "tidiness",
+      "scale": {
+        "min": -3,
+        "max": 3,
+        "labels": [
+          "Much less",
+          "Somewhat less",
+          "A little less",
+          "No change",
+          "A little more",
+          "Somewhat more",
+          "Much more"
+        ]
+      },
+      "reverse_scored": false,
+      "domain": "household"
+    },
+    {
+      "item_id": "acq_27",
+      "text": "TODO: populate from source",
+      "descriptor": "car and repairs",
+      "scale": {
+        "min": -3,
+        "max": 3,
+        "labels": [
+          "Much less",
+          "Somewhat less",
+          "A little less",
+          "No change",
+          "A little more",
+          "Somewhat more",
+          "Much more"
+        ]
+      },
+      "reverse_scored": false,
+      "domain": "household"
+    },
+    {
+      "item_id": "acq_28",
+      "text": "TODO: populate from source",
+      "descriptor": "meal preparation",
+      "scale": {
+        "min": -3,
+        "max": 3,
+        "labels": [
+          "Much less",
+          "Somewhat less",
+          "A little less",
+          "No change",
+          "A little more",
+          "Somewhat more",
+          "Much more"
+        ]
+      },
+      "reverse_scored": false,
+      "domain": "household"
+    },
+    {
+      "item_id": "acq_29",
+      "text": "TODO: populate from source",
+      "descriptor": "bedtime and sleep",
+      "scale": {
+        "min": -3,
+        "max": 3,
+        "labels": [
+          "Much less",
+          "Somewhat less",
+          "A little less",
+          "No change",
+          "A little more",
+          "Somewhat more",
+          "Much more"
+        ]
+      },
+      "reverse_scored": false,
+      "domain": "self_care"
+    },
+    {
+      "item_id": "acq_30",
+      "text": "TODO: populate from source",
+      "descriptor": "sexual variety",
+      "scale": {
+        "min": -3,
+        "max": 3,
+        "labels": [
+          "Much less",
+          "Somewhat less",
+          "A little less",
+          "No change",
+          "A little more",
+          "Somewhat more",
+          "Much more"
+        ]
+      },
+      "reverse_scored": false,
+      "domain": "intimacy"
+    },
+    {
+      "item_id": "acq_31",
+      "text": "TODO: populate from source",
+      "descriptor": "birth control and family planning",
+      "scale": {
+        "min": -3,
+        "max": 3,
+        "labels": [
+          "Much less",
+          "Somewhat less",
+          "A little less",
+          "No change",
+          "A little more",
+          "Somewhat more",
+          "Much more"
+        ]
+      },
+      "reverse_scored": false,
+      "domain": "social_family_longterm"
+    },
+    {
+      "item_id": "acq_32",
+      "text": "TODO: populate from source",
+      "descriptor": "accepting criticism",
+      "scale": {
+        "min": -3,
+        "max": 3,
+        "labels": [
+          "Much less",
+          "Somewhat less",
+          "A little less",
+          "No change",
+          "A little more",
+          "Somewhat more",
+          "Much more"
+        ]
+      },
+      "reverse_scored": false,
+      "domain": "conflict"
+    },
+    {
+      "item_id": "acq_33",
+      "text": "TODO: populate from source",
+      "descriptor": "jealousy",
+      "scale": {
+        "min": -3,
+        "max": 3,
+        "labels": [
+          "Much less",
+          "Somewhat less",
+          "A little less",
+          "No change",
+          "A little more",
+          "Somewhat more",
+          "Much more"
+        ]
+      },
+      "reverse_scored": false,
+      "domain": "conflict"
+    },
+    {
+      "item_id": "acq_34",
+      "text": "TODO: populate from source",
+      "descriptor": "future plans",
+      "scale": {
+        "min": -3,
+        "max": 3,
+        "labels": [
+          "Much less",
+          "Somewhat less",
+          "A little less",
+          "No change",
+          "A little more",
+          "Somewhat more",
+          "Much more"
+        ]
+      },
+      "reverse_scored": false,
+      "domain": "social_family_longterm"
+    }
+  ],
+  "scoring": {
+    "version": "1.0.0",
+    "subscales": [],
+    "cutoffs": []
+  },
+  "scoring_key_verified": false,
+  "notes": "Two passes: 'self' (how much I want my partner to change on each item) and 'partner_wants' (how much I think my partner wants me to change). Per person the desired-change vector is the 'self' pass. Perceptual accuracy is computed in instruments/couple.ts. Descriptors are neutral topic labels, not item wording; owners should re-map descriptors and domains when populating the official item list.",
+  "pass_prompts": {
+    "self": "I would like my partner to…",
+    "partner_wants": "It would please my partner if I…"
+  }
+}

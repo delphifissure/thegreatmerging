@@ -1,0 +1,276 @@
+{
+  "key": "sis_ses_sf",
+  "name": "Sexual Inhibition/Sexual Excitation Scales – Short Form (SIS/SES-SF)",
+  "source_citation": "Carpenter, Janssen, Graham, Vorst & Wicherts (2008). Women's scores on the Sexual Inhibition/Sexual Excitation Scales (SIS/SES): gender similarities and differences. Journal of Sex Research, 45(1), 36–48.",
+  "license_note": "Available for research use from the Kinsey Institute; confirm terms for clinical or commercial use before deployment.",
+  "layer": 0,
+  "passes": [
+    "single"
+  ],
+  "items": [
+    {
+      "item_id": "sis_ses_sf_1",
+      "text": "TODO: populate from source",
+      "descriptor": "sexual excitation item 1",
+      "scale": {
+        "min": 1,
+        "max": 4,
+        "labels": [
+          "Strongly agree",
+          "Agree",
+          "Disagree",
+          "Strongly disagree"
+        ]
+      },
+      "reverse_scored": true
+    },
+    {
+      "item_id": "sis_ses_sf_2",
+      "text": "TODO: populate from source",
+      "descriptor": "sexual excitation item 2",
+      "scale": {
+        "min": 1,
+        "max": 4,
+        "labels": [
+          "Strongly agree",
+          "Agree",
+          "Disagree",
+          "Strongly disagree"
+        ]
+      },
+      "reverse_scored": true
+    },
+    {
+      "item_id": "sis_ses_sf_3",
+      "text": "TODO: populate from source",
+      "descriptor": "sexual excitation item 3",
+      "scale": {
+        "min": 1,
+        "max": 4,
+        "labels": [
+          "Strongly agree",
+          "Agree",
+          "Disagree",
+          "Strongly disagree"
+        ]
+      },
+      "reverse_scored": true
+    },
+    {
+      "item_id": "sis_ses_sf_4",
+      "text": "TODO: populate from source",
+      "descriptor": "sexual excitation item 4",
+      "scale": {
+        "min": 1,
+        "max": 4,
+        "labels": [
+          "Strongly agree",
+          "Agree",
+          "Disagree",
+          "Strongly disagree"
+        ]
+      },
+      "reverse_scored": true
+    },
+    {
+      "item_id": "sis_ses_sf_5",
+      "text": "TODO: populate from source",
+      "descriptor": "sexual excitation item 5",
+      "scale": {
+        "min": 1,
+        "max": 4,
+        "labels": [
+          "Strongly agree",
+          "Agree",
+          "Disagree",
+          "Strongly disagree"
+        ]
+      },
+      "reverse_scored": true
+    },
+    {
+      "item_id": "sis_ses_sf_6",
+      "text": "TODO: populate from source",
+      "descriptor": "sexual excitation item 6",
+      "scale": {
+        "min": 1,
+        "max": 4,
+        "labels": [
+          "Strongly agree",
+          "Agree",
+          "Disagree",
+          "Strongly disagree"
+        ]
+      },
+      "reverse_scored": true
+    },
+    {
+      "item_id": "sis_ses_sf_7",
+      "text": "TODO: populate from source",
+      "descriptor": "inhibition (performance failure) item 1",
+      "scale": {
+        "min": 1,
+        "max": 4,
+        "labels": [
+          "Strongly agree",
+          "Agree",
+          "Disagree",
+          "Strongly disagree"
+        ]
+      },
+      "reverse_scored": true
+    },
+    {
+      "item_id": "sis_ses_sf_8",
+      "text": "TODO: populate from source",
+      "descriptor": "inhibition (performance failure) item 2",
+      "scale": {
+        "min": 1,
+        "max": 4,
+        "labels": [
+          "Strongly agree",
+          "Agree",
+          "Disagree",
+          "Strongly disagree"
+        ]
+      },
+      "reverse_scored": true
+    },
+    {
+      "item_id": "sis_ses_sf_9",
+      "text": "TODO: populate from source",
+      "descriptor": "inhibition (performance failure) item 3",
+      "scale": {
+        "min": 1,
+        "max": 4,
+        "labels": [
+          "Strongly agree",
+          "Agree",
+          "Disagree",
+          "Strongly disagree"
+        ]
+      },
+      "reverse_scored": true
+    },
+    {
+      "item_id": "sis_ses_sf_10",
+      "text": "TODO: populate from source",
+      "descriptor": "inhibition (performance failure) item 4",
+      "scale": {
+        "min": 1,
+        "max": 4,
+        "labels": [
+          "Strongly agree",
+          "Agree",
+          "Disagree",
+          "Strongly disagree"
+        ]
+      },
+      "reverse_scored": true
+    },
+    {
+      "item_id": "sis_ses_sf_11",
+      "text": "TODO: populate from source",
+      "descriptor": "inhibition (performance consequences) item 1",
+      "scale": {
+        "min": 1,
+        "max": 4,
+        "labels": [
+          "Strongly agree",
+          "Agree",
+          "Disagree",
+          "Strongly disagree"
+        ]
+      },
+      "reverse_scored": true
+    },
+    {
+      "item_id": "sis_ses_sf_12",
+      "text": "TODO: populate from source",
+      "descriptor": "inhibition (performance consequences) item 2",
+      "scale": {
+        "min": 1,
+        "max": 4,
+        "labels": [
+          "Strongly agree",
+          "Agree",
+          "Disagree",
+          "Strongly disagree"
+        ]
+      },
+      "reverse_scored": true
+    },
+    {
+      "item_id": "sis_ses_sf_13",
+      "text": "TODO: populate from source",
+      "descriptor": "inhibition (performance consequences) item 3",
+      "scale": {
+        "min": 1,
+        "max": 4,
+        "labels": [
+          "Strongly agree",
+          "Agree",
+          "Disagree",
+          "Strongly disagree"
+        ]
+      },
+      "reverse_scored": true
+    },
+    {
+      "item_id": "sis_ses_sf_14",
+      "text": "TODO: populate from source",
+      "descriptor": "inhibition (performance consequences) item 4",
+      "scale": {
+        "min": 1,
+        "max": 4,
+        "labels": [
+          "Strongly agree",
+          "Agree",
+          "Disagree",
+          "Strongly disagree"
+        ]
+      },
+      "reverse_scored": true
+    }
+  ],
+  "scoring": {
+    "version": "1.0.0",
+    "subscales": [
+      {
+        "name": "ses",
+        "items": [
+          "sis_ses_sf_1",
+          "sis_ses_sf_2",
+          "sis_ses_sf_3",
+          "sis_ses_sf_4",
+          "sis_ses_sf_5",
+          "sis_ses_sf_6"
+        ],
+        "method": "sum_reverse_aware"
+      },
+      {
+        "name": "sis1",
+        "items": [
+          "sis_ses_sf_7",
+          "sis_ses_sf_8",
+          "sis_ses_sf_9",
+          "sis_ses_sf_10"
+        ],
+        "method": "sum_reverse_aware"
+      },
+      {
+        "name": "sis2",
+        "items": [
+          "sis_ses_sf_11",
+          "sis_ses_sf_12",
+          "sis_ses_sf_13",
+          "sis_ses_sf_14"
+        ],
+        "method": "sum_reverse_aware"
+      }
+    ],
+    "cutoffs": []
+  },
+  "scoring_key_verified": false,
+  "notes": "VERIFY BEFORE USE: items in this file are grouped by subscale (SES 1–6, SIS1 7–10, SIS2 11–14), not in the administration order of Carpenter et al. 2008. Items are answered 1 (strongly agree) to 4 (strongly disagree) and reverse-keyed so that higher scores mean higher excitation or inhibition, matching the published direction. When populating text, place each official item under its published subscale."
+}

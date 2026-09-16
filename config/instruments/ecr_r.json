@@ -1,0 +1,785 @@
+{
+  "key": "ecr_r",
+  "name": "Experiences in Close Relationships–Revised (ECR-R)",
+  "source_citation": "Fraley, Waller & Brennan (2000). An item response theory analysis of self-report measures of adult attachment. Journal of Personality and Social Psychology, 78(2), 350–365.",
+  "license_note": "Freely available for research and clinical use from the author's site (Fraley); cite the source.",
+  "layer": 0,
+  "passes": [
+    "single"
+  ],
+  "items": [
+    {
+      "item_id": "ecr_r_1",
+      "text": "TODO: populate from source",
+      "descriptor": "attachment anxiety item 1",
+      "scale": {
+        "min": 1,
+        "max": 7,
+        "labels": [
+          "Strongly disagree",
+          "",
+          "",
+          "Neutral/mixed",
+          "",
+          "",
+          "Strongly agree"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "ecr_r_2",
+      "text": "TODO: populate from source",
+      "descriptor": "attachment anxiety item 2",
+      "scale": {
+        "min": 1,
+        "max": 7,
+        "labels": [
+          "Strongly disagree",
+          "",
+          "",
+          "Neutral/mixed",
+          "",
+          "",
+          "Strongly agree"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "ecr_r_3",
+      "text": "TODO: populate from source",
+      "descriptor": "attachment anxiety item 3",
+      "scale": {
+        "min": 1,
+        "max": 7,
+        "labels": [
+          "Strongly disagree",
+          "",
+          "",
+          "Neutral/mixed",
+          "",
+          "",
+          "Strongly agree"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "ecr_r_4",
+      "text": "TODO: populate from source",
+      "descriptor": "attachment anxiety item 4",
+      "scale": {
+        "min": 1,
+        "max": 7,
+        "labels": [
+          "Strongly disagree",
+          "",
+          "",
+          "Neutral/mixed",
+          "",
+          "",
+          "Strongly agree"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "ecr_r_5",
+      "text": "TODO: populate from source",
+      "descriptor": "attachment anxiety item 5",
+      "scale": {
+        "min": 1,
+        "max": 7,
+        "labels": [
+          "Strongly disagree",
+          "",
+          "",
+          "Neutral/mixed",
+          "",
+          "",
+          "Strongly agree"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "ecr_r_6",
+      "text": "TODO: populate from source",
+      "descriptor": "attachment anxiety item 6",
+      "scale": {
+        "min": 1,
+        "max": 7,
+        "labels": [
+          "Strongly disagree",
+          "",
+          "",
+          "Neutral/mixed",
+          "",
+          "",
+          "Strongly agree"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "ecr_r_7",
+      "text": "TODO: populate from source",
+      "descriptor": "attachment anxiety item 7",
+      "scale": {
+        "min": 1,
+        "max": 7,
+        "labels": [
+          "Strongly disagree",
+          "",
+          "",
+          "Neutral/mixed",
+          "",
+          "",
+          "Strongly agree"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "ecr_r_8",
+      "text": "TODO: populate from source",
+      "descriptor": "attachment anxiety item 8",
+      "scale": {
+        "min": 1,
+        "max": 7,
+        "labels": [
+          "Strongly disagree",
+          "",
+          "",
+          "Neutral/mixed",
+          "",
+          "",
+          "Strongly agree"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "ecr_r_9",
+      "text": "TODO: populate from source",
+      "descriptor": "attachment anxiety item 9",
+      "scale": {
+        "min": 1,
+        "max": 7,
+        "labels": [
+          "Strongly disagree",
+          "",
+          "",
+          "Neutral/mixed",
+          "",
+          "",
+          "Strongly agree"
+        ]
+      },
+      "reverse_scored": true
+    },
+    {
+      "item_id": "ecr_r_10",
+      "text": "TODO: populate from source",
+      "descriptor": "attachment anxiety item 10",
+      "scale": {
+        "min": 1,
+        "max": 7,
+        "labels": [
+          "Strongly disagree",
+          "",
+          "",
+          "Neutral/mixed",
+          "",
+          "",
+          "Strongly agree"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "ecr_r_11",
+      "text": "TODO: populate from source",
+      "descriptor": "attachment anxiety item 11",
+      "scale": {
+        "min": 1,
+        "max": 7,
+        "labels": [
+          "Strongly disagree",
+          "",
+          "",
+          "Neutral/mixed",
+          "",
+          "",
+          "Strongly agree"
+        ]
+      },
+      "reverse_scored": true
+    },
+    {
+      "item_id": "ecr_r_12",
+      "text": "TODO: populate from source",
+      "descriptor": "attachment anxiety item 12",
+      "scale": {
+        "min": 1,
+        "max": 7,
+        "labels": [
+          "Strongly disagree",
+          "",
+          "",
+          "Neutral/mixed",
+          "",
+          "",
+          "Strongly agree"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "ecr_r_13",
+      "text": "TODO: populate from source",
+      "descriptor": "attachment anxiety item 13",
+      "scale": {
+        "min": 1,
+        "max": 7,
+        "labels": [
+          "Strongly disagree",
+          "",
+          "",
+          "Neutral/mixed",
+          "",
+          "",
+          "Strongly agree"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "ecr_r_14",
+      "text": "TODO: populate from source",
+      "descriptor": "attachment anxiety item 14",
+      "scale": {
+        "min": 1,
+        "max": 7,
+        "labels": [
+          "Strongly disagree",
+          "",
+          "",
+          "Neutral/mixed",
+          "",
+          "",
+          "Strongly agree"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "ecr_r_15",
+      "text": "TODO: populate from source",
+      "descriptor": "attachment anxiety item 15",
+      "scale": {
+        "min": 1,
+        "max": 7,
+        "labels": [
+          "Strongly disagree",
+          "",
+          "",
+          "Neutral/mixed",
+          "",
+          "",
+          "Strongly agree"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "ecr_r_16",
+      "text": "TODO: populate from source",
+      "descriptor": "attachment anxiety item 16",
+      "scale": {
+        "min": 1,
+        "max": 7,
+        "labels": [
+          "Strongly disagree",
+          "",
+          "",
+          "Neutral/mixed",
+          "",
+          "",
+          "Strongly agree"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "ecr_r_17",
+      "text": "TODO: populate from source",
+      "descriptor": "attachment anxiety item 17",
+      "scale": {
+        "min": 1,
+        "max": 7,
+        "labels": [
+          "Strongly disagree",
+          "",
+          "",
+          "Neutral/mixed",
+          "",
+          "",
+          "Strongly agree"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "ecr_r_18",
+      "text": "TODO: populate from source",
+      "descriptor": "attachment anxiety item 18",
+      "scale": {
+        "min": 1,
+        "max": 7,
+        "labels": [
+          "Strongly disagree",
+          "",
+          "",
+          "Neutral/mixed",
+          "",
+          "",
+          "Strongly agree"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "ecr_r_19",
+      "text": "TODO: populate from source",
+      "descriptor": "attachment avoidance item 1",
+      "scale": {
+        "min": 1,
+        "max": 7,
+        "labels": [
+          "Strongly disagree",
+          "",
+          "",
+          "Neutral/mixed",
+          "",
+          "",
+          "Strongly agree"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "ecr_r_20",
+      "text": "TODO: populate from source",
+      "descriptor": "attachment avoidance item 2",
+      "scale": {
+        "min": 1,
+        "max": 7,
+        "labels": [
+          "Strongly disagree",
+          "",
+          "",
+          "Neutral/mixed",
+          "",
+          "",
+          "Strongly agree"
+        ]
+      },
+      "reverse_scored": true
+    },
+    {
+      "item_id": "ecr_r_21",
+      "text": "TODO: populate from source",
+      "descriptor": "attachment avoidance item 3",
+      "scale": {
+        "min": 1,
+        "max": 7,
+        "labels": [
+          "Strongly disagree",
+          "",
+          "",
+          "Neutral/mixed",
+          "",
+          "",
+          "Strongly agree"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "ecr_r_22",
+      "text": "TODO: populate from source",
+      "descriptor": "attachment avoidance item 4",
+      "scale": {
+        "min": 1,
+        "max": 7,
+        "labels": [
+          "Strongly disagree",
+          "",
+          "",
+          "Neutral/mixed",
+          "",
+          "",
+          "Strongly agree"
+        ]
+      },
+      "reverse_scored": true
+    },
+    {
+      "item_id": "ecr_r_23",
+      "text": "TODO: populate from source",
+      "descriptor": "attachment avoidance item 5",
+      "scale": {
+        "min": 1,
+        "max": 7,
+        "labels": [
+          "Strongly disagree",
+          "",
+          "",
+          "Neutral/mixed",
+          "",
+          "",
+          "Strongly agree"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "ecr_r_24",
+      "text": "TODO: populate from source",
+      "descriptor": "attachment avoidance item 6",
+      "scale": {
+        "min": 1,
+        "max": 7,
+        "labels": [
+          "Strongly disagree",
+          "",
+          "",
+          "Neutral/mixed",
+          "",
+          "",
+          "Strongly agree"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "ecr_r_25",
+      "text": "TODO: populate from source",
+      "descriptor": "attachment avoidance item 7",
+      "scale": {
+        "min": 1,
+        "max": 7,
+        "labels": [
+          "Strongly disagree",
+          "",
+          "",
+          "Neutral/mixed",
+          "",
+          "",
+          "Strongly agree"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "ecr_r_26",
+      "text": "TODO: populate from source",
+      "descriptor": "attachment avoidance item 8",
+      "scale": {
+        "min": 1,
+        "max": 7,
+        "labels": [
+          "Strongly disagree",
+          "",
+          "",
+          "Neutral/mixed",
+          "",
+          "",
+          "Strongly agree"
+        ]
+      },
+      "reverse_scored": true
+    },
+    {
+      "item_id": "ecr_r_27",
+      "text": "TODO: populate from source",
+      "descriptor": "attachment avoidance item 9",
+      "scale": {
+        "min": 1,
+        "max": 7,
+        "labels": [
+          "Strongly disagree",
+          "",
+          "",
+          "Neutral/mixed",
+          "",
+          "",
+          "Strongly agree"
+        ]
+      },
+      "reverse_scored": true
+    },
+    {
+      "item_id": "ecr_r_28",
+      "text": "TODO: populate from source",
+      "descriptor": "attachment avoidance item 10",
+      "scale": {
+        "min": 1,
+        "max": 7,
+        "labels": [
+          "Strongly disagree",
+          "",
+          "",
+          "Neutral/mixed",
+          "",
+          "",
+          "Strongly agree"
+        ]
+      },
+      "reverse_scored": true
+    },
+    {
+      "item_id": "ecr_r_29",
+      "text": "TODO: populate from source",
+      "descriptor": "attachment avoidance item 11",
+      "scale": {
+        "min": 1,
+        "max": 7,
+        "labels": [
+          "Strongly disagree",
+          "",
+          "",
+          "Neutral/mixed",
+          "",
+          "",
+          "Strongly agree"
+        ]
+      },
+      "reverse_scored": true
+    },
+    {
+      "item_id": "ecr_r_30",
+      "text": "TODO: populate from source",
+      "descriptor": "attachment avoidance item 12",
+      "scale": {
+        "min": 1,
+        "max": 7,
+        "labels": [
+          "Strongly disagree",
+          "",
+          "",
+          "Neutral/mixed",
+          "",
+          "",
+          "Strongly agree"
+        ]
+      },
+      "reverse_scored": true
+    },
+    {
+      "item_id": "ecr_r_31",
+      "text": "TODO: populate from source",
+      "descriptor": "attachment avoidance item 13",
+      "scale": {
+        "min": 1,
+        "max": 7,
+        "labels": [
+          "Strongly disagree",
+          "",
+          "",
+          "Neutral/mixed",
+          "",
+          "",
+          "Strongly agree"
+        ]
+      },
+      "reverse_scored": true
+    },
+    {
+      "item_id": "ecr_r_32",
+      "text": "TODO: populate from source",
+      "descriptor": "attachment avoidance item 14",
+      "scale": {
+        "min": 1,
+        "max": 7,
+        "labels": [
+          "Strongly disagree",
+          "",
+          "",
+          "Neutral/mixed",
+          "",
+          "",
+          "Strongly agree"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "ecr_r_33",
+      "text": "TODO: populate from source",
+      "descriptor": "attachment avoidance item 15",
+      "scale": {
+        "min": 1,
+        "max": 7,
+        "labels": [
+          "Strongly disagree",
+          "",
+          "",
+          "Neutral/mixed",
+          "",
+          "",
+          "Strongly agree"
+        ]
+      },
+      "reverse_scored": true
+    },
+    {
+      "item_id": "ecr_r_34",
+      "text": "TODO: populate from source",
+      "descriptor": "attachment avoidance item 16",
+      "scale": {
+        "min": 1,
+        "max": 7,
+        "labels": [
+          "Strongly disagree",
+          "",
+          "",
+          "Neutral/mixed",
+          "",
+          "",
+          "Strongly agree"
+        ]
+      },
+      "reverse_scored": true
+    },
+    {
+      "item_id": "ecr_r_35",
+      "text": "TODO: populate from source",
+      "descriptor": "attachment avoidance item 17",
+      "scale": {
+        "min": 1,
+        "max": 7,
+        "labels": [
+          "Strongly disagree",
+          "",
+          "",
+          "Neutral/mixed",
+          "",
+          "",
+          "Strongly agree"
+        ]
+      },
+      "reverse_scored": true
+    },
+    {
+      "item_id": "ecr_r_36",
+      "text": "TODO: populate from source",
+      "descriptor": "attachment avoidance item 18",
+      "scale": {
+        "min": 1,
+        "max": 7,
+        "labels": [
+          "Strongly disagree",
+          "",
+          "",
+          "Neutral/mixed",
+          "",
+          "",
+          "Strongly agree"
+        ]
+      },
+      "reverse_scored": true
+    }
+  ],
+  "scoring": {
+    "version": "1.0.0",
+    "subscales": [
+      {
+        "name": "anxiety",
+        "items": [
+          "ecr_r_1",
+          "ecr_r_2",
+          "ecr_r_3",
+          "ecr_r_4",
+          "ecr_r_5",
+          "ecr_r_6",
+          "ecr_r_7",
+          "ecr_r_8",
+          "ecr_r_9",
+          "ecr_r_10",
+          "ecr_r_11",
+          "ecr_r_12",
+          "ecr_r_13",
+          "ecr_r_14",
+          "ecr_r_15",
+          "ecr_r_16",
+          "ecr_r_17",
+          "ecr_r_18"
+        ],
+        "method": "mean_reverse_aware"
+      },
+      {
+        "name": "avoidance",
+        "items": [
+          "ecr_r_19",
+          "ecr_r_20",
+          "ecr_r_21",
+          "ecr_r_22",
+          "ecr_r_23",
+          "ecr_r_24",
+          "ecr_r_25",
+          "ecr_r_26",
+          "ecr_r_27",
+          "ecr_r_28",
+          "ecr_r_29",
+          "ecr_r_30",
+          "ecr_r_31",
+          "ecr_r_32",
+          "ecr_r_33",
+          "ecr_r_34",
+          "ecr_r_35",
+          "ecr_r_36"
+        ],
+        "method": "mean_reverse_aware"
+      }
+    ],
+    "cutoffs": [
+      {
+        "subscale": "anxiety",
+        "below": 2.5,
+        "label": "low"
+      },
+      {
+        "subscale": "anxiety",
+        "at_or_above": 2.5,
+        "at_or_below": 4.5,
+        "label": "moderate"
+      },
+      {
+        "subscale": "anxiety",
+        "above": 4.5,
+        "label": "high"
+      },
+      {
+        "subscale": "avoidance",
+        "below": 2.5,
+        "label": "low"
+      },
+      {
+        "subscale": "avoidance",
+        "at_or_above": 2.5,
+        "at_or_below": 4.5,
+        "label": "moderate"
+      },
+      {
+        "subscale": "avoidance",
+        "above": 4.5,
+        "label": "high"
+      }
+    ]
+  },
+  "scoring_key_verified": false,
+  "notes": "Items 1–18 anxiety, 19–36 avoidance, each a mean of 18 items. Reverse-keyed items follow Fraley's published key. Cutoff bands (2.5 / 4.5) are the configurable defaults from the build prompt, not published norms."
+}

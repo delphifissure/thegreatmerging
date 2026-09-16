@@ -1,0 +1,29 @@
+{
+  "version": "1.0.0",
+  "source": "docs/question_inventory.md Part F and docs/app_flow.html section 8. Original content.",
+  "caregiver": {
+    "title": "Third caregiver",
+    "intro": "Adjusted Brief CRS; a Who Does What column for their tasks; PSDQ if they take real caregiving time. Then four questions.",
+    "instruments": ["brief_crs", "who_does_what", "psdq_sf"],
+    "psdq_condition": "takes_real_caregiving_time",
+    "questions": [
+      { "id": "cg_1", "text": "What help do you want from the household?" },
+      { "id": "cg_2", "text": "What help are you able to give?" },
+      { "id": "cg_3", "text": "What role would you like with the child?" },
+      { "id": "cg_4", "text": "What would you prefer the household not do?" }
+    ]
+  },
+  "child": {
+    "title": "Child (kitchen-table conversation, adults present, never a form)",
+    "intro": "A guided shared-screen script that an adult runs with the child present. Answers are typed by the adult and stored under a child_proxy role. The adults answer the two rule questions as well, and those are pinned to the plan.",
+    "questions": [
+      { "id": "child_1", "text": "What makes home feel safe and good to you?", "adults_answer_too": false },
+      { "id": "child_2", "text": "When a grown-up is upset about something, how do you like them to tell you?", "adults_answer_too": false },
+      { "id": "child_3", "text": "What's something you'd like to do with each grown-up, just the two of you?", "adults_answer_too": false },
+      { "id": "child_4", "text": "What's a house rule you think is fair? What's one you think isn't?", "adults_answer_too": false },
+      { "id": "child_5", "text": "When you have a question about something a grown-up does, what should you do?", "adults_answer_too": true, "pin_to_plan": true },
+      { "id": "child_6", "text": "What should a grown-up do if you say something and they don't like it?", "adults_answer_too": true, "pin_to_plan": true },
+      { "id": "child_7", "text": "What do you want a new baby to know about you?", "adults_answer_too": false }
+    ]
+  }
+}

@@ -1,0 +1,78 @@
+{
+  "version": "1.0.0",
+  "required_instruments": {
+    "layer0": ["mini_ipip", "ecr_r", "phq9", "gad7", "sis_ses_sf", "sdi2"],
+    "layer1": ["csi16", "rdas", "cpq_sf", "acq", "fapbi", "who_does_what", "map", "polarization"],
+    "layer1_when_children": ["brief_crs", "psdq_sf"],
+    "optional": ["oci_r", "prqc"]
+  },
+  "domains": ["parenting", "intimacy", "communication", "conflict", "household", "self_care", "social_family_longterm"],
+  "distress_context": {
+    "phq9_total_at_or_above": 10,
+    "gad7_total_at_or_above": 10
+  },
+  "rules": {
+    "map_high_intensity_low_efficacy": {
+      "instrument": "map",
+      "intensity_at_or_above": 50,
+      "efficacy_at_or_below": 50,
+      "weight": 3
+    },
+    "acq_desired_change": {
+      "instrument": "acq",
+      "abs_change_at_or_above": 2,
+      "weight": 2
+    },
+    "acq_perceptual_miss": {
+      "instrument": "acq",
+      "miss_at_or_above": 2,
+      "weight": 2
+    },
+    "fapbi_unacceptable": {
+      "instrument": "fapbi",
+      "acceptability_at_or_below": 4,
+      "weight": 2
+    },
+    "wdw_now_ideal_gap": {
+      "instrument": "who_does_what",
+      "gap_at_or_above": 3,
+      "weight": 2
+    },
+    "wdw_now_disagreement": {
+      "instrument": "who_does_what",
+      "disagreement_at_or_above": 3,
+      "weight": 2
+    },
+    "rdas_consensus_disagree": {
+      "instrument": "rdas",
+      "subscale": "consensus",
+      "value_at_or_below": 2,
+      "weight": 2
+    },
+    "brief_crs_negative_coparenting": {
+      "instrument": "brief_crs",
+      "subscales": ["undermining", "exposure_to_conflict"],
+      "above": 3,
+      "weight": 3,
+      "domain": "parenting"
+    },
+    "psdq_between_parent_gap": {
+      "instrument": "psdq_sf",
+      "styles": ["authoritarian", "permissive"],
+      "gap_at_or_above": 1.0,
+      "weight": 3,
+      "label": "values_conflict",
+      "domain": "parenting"
+    },
+    "polarization_loop": {
+      "instrument": "polarization",
+      "gap_abs_at_or_above": 2,
+      "weight": 2,
+      "label": "shared_pattern"
+    },
+    "needs_context": {
+      "weight": 1,
+      "label": "context"
+    }
+  }
+}

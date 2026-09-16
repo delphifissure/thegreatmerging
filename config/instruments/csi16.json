@@ -1,0 +1,214 @@
+{
+  "key": "csi16",
+  "name": "Couples Satisfaction Index (CSI-16)",
+  "source_citation": "Funk & Rogge (2007). Testing the ruler with item response theory: increasing precision of measurement for relationship satisfaction with the Couples Satisfaction Index. Journal of Family Psychology, 21(4), 572–583.",
+  "license_note": "Free for clinical and research use; see source.",
+  "layer": 1,
+  "passes": [
+    "single"
+  ],
+  "default_domain": "communication",
+  "items": [
+    {
+      "item_id": "csi16_1",
+      "text": "TODO: populate from source",
+      "descriptor": "overall happiness",
+      "scale": {
+        "min": 0,
+        "max": 6
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "csi16_2",
+      "text": "TODO: populate from source",
+      "descriptor": "satisfaction item 2",
+      "scale": {
+        "min": 0,
+        "max": 5
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "csi16_3",
+      "text": "TODO: populate from source",
+      "descriptor": "satisfaction item 3",
+      "scale": {
+        "min": 0,
+        "max": 5
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "csi16_4",
+      "text": "TODO: populate from source",
+      "descriptor": "satisfaction item 4",
+      "scale": {
+        "min": 0,
+        "max": 5
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "csi16_5",
+      "text": "TODO: populate from source",
+      "descriptor": "satisfaction item 5",
+      "scale": {
+        "min": 0,
+        "max": 5
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "csi16_6",
+      "text": "TODO: populate from source",
+      "descriptor": "satisfaction item 6",
+      "scale": {
+        "min": 0,
+        "max": 5
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "csi16_7",
+      "text": "TODO: populate from source",
+      "descriptor": "satisfaction item 7",
+      "scale": {
+        "min": 0,
+        "max": 5
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "csi16_8",
+      "text": "TODO: populate from source",
+      "descriptor": "satisfaction item 8",
+      "scale": {
+        "min": 0,
+        "max": 5
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "csi16_9",
+      "text": "TODO: populate from source",
+      "descriptor": "satisfaction item 9",
+      "scale": {
+        "min": 0,
+        "max": 5
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "csi16_10",
+      "text": "TODO: populate from source",
+      "descriptor": "satisfaction item 10",
+      "scale": {
+        "min": 0,
+        "max": 5
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "csi16_11",
+      "text": "TODO: populate from source",
+      "descriptor": "relationship descriptor pair 1",
+      "scale": {
+        "min": 0,
+        "max": 5
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "csi16_12",
+      "text": "TODO: populate from source",
+      "descriptor": "relationship descriptor pair 2",
+      "scale": {
+        "min": 0,
+        "max": 5
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "csi16_13",
+      "text": "TODO: populate from source",
+      "descriptor": "relationship descriptor pair 3",
+      "scale": {
+        "min": 0,
+        "max": 5
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "csi16_14",
+      "text": "TODO: populate from source",
+      "descriptor": "relationship descriptor pair 4",
+      "scale": {
+        "min": 0,
+        "max": 5
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "csi16_15",
+      "text": "TODO: populate from source",
+      "descriptor": "relationship descriptor pair 5",
+      "scale": {
+        "min": 0,
+        "max": 5
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "csi16_16",
+      "text": "TODO: populate from source",
+      "descriptor": "relationship descriptor pair 6",
+      "scale": {
+        "min": 0,
+        "max": 5
+      },
+      "reverse_scored": false
+    }
+  ],
+  "scoring": {
+    "version": "1.0.0",
+    "subscales": [
+      {
+        "name": "total",
+        "items": [
+          "csi16_1",
+          "csi16_2",
+          "csi16_3",
+          "csi16_4",
+          "csi16_5",
+          "csi16_6",
+          "csi16_7",
+          "csi16_8",
+          "csi16_9",
+          "csi16_10",
+          "csi16_11",
+          "csi16_12",
+          "csi16_13",
+          "csi16_14",
+          "csi16_15",
+          "csi16_16"
+        ],
+        "method": "sum"
+      }
+    ],
+    "cutoffs": [
+      {
+        "subscale": "total",
+        "below": 51.5,
+        "label": "distressed"
+      },
+      {
+        "subscale": "total",
+        "at_or_above": 51.5,
+        "label": "non_distressed"
+      }
+    ]
+  },
+  "scoring_key_verified": true,
+  "notes": "Values are stored as the printed scoring values on the official form (item 1 is 0–6, items 2–16 are 0–5; bipolar adjective pairs and frequency items are printed with their scoring direction), so no reverse scoring is applied in code. Total 0–81, cutoff 51.5."
+}

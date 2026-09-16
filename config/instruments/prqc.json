@@ -1,0 +1,416 @@
+{
+  "key": "prqc",
+  "name": "Perceived Relationship Quality Components (PRQC) Inventory",
+  "source_citation": "Fletcher, Simpson & Thomas (2000). The measurement of perceived relationship quality components: a confirmatory factor analytic approach. Personality and Social Psychology Bulletin, 26(3), 340–354.",
+  "license_note": "Free for research and clinical use with citation; see source.",
+  "layer": 1,
+  "passes": [
+    "single"
+  ],
+  "items": [
+    {
+      "item_id": "prqc_1",
+      "text": "TODO: populate from source",
+      "descriptor": "satisfaction item 1",
+      "scale": {
+        "min": 1,
+        "max": 7,
+        "labels": [
+          "Not at all",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "Extremely"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "prqc_2",
+      "text": "TODO: populate from source",
+      "descriptor": "satisfaction item 2",
+      "scale": {
+        "min": 1,
+        "max": 7,
+        "labels": [
+          "Not at all",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "Extremely"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "prqc_3",
+      "text": "TODO: populate from source",
+      "descriptor": "satisfaction item 3",
+      "scale": {
+        "min": 1,
+        "max": 7,
+        "labels": [
+          "Not at all",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "Extremely"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "prqc_4",
+      "text": "TODO: populate from source",
+      "descriptor": "commitment item 1",
+      "scale": {
+        "min": 1,
+        "max": 7,
+        "labels": [
+          "Not at all",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "Extremely"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "prqc_5",
+      "text": "TODO: populate from source",
+      "descriptor": "commitment item 2",
+      "scale": {
+        "min": 1,
+        "max": 7,
+        "labels": [
+          "Not at all",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "Extremely"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "prqc_6",
+      "text": "TODO: populate from source",
+      "descriptor": "commitment item 3",
+      "scale": {
+        "min": 1,
+        "max": 7,
+        "labels": [
+          "Not at all",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "Extremely"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "prqc_7",
+      "text": "TODO: populate from source",
+      "descriptor": "intimacy item 1",
+      "scale": {
+        "min": 1,
+        "max": 7,
+        "labels": [
+          "Not at all",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "Extremely"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "prqc_8",
+      "text": "TODO: populate from source",
+      "descriptor": "intimacy item 2",
+      "scale": {
+        "min": 1,
+        "max": 7,
+        "labels": [
+          "Not at all",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "Extremely"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "prqc_9",
+      "text": "TODO: populate from source",
+      "descriptor": "intimacy item 3",
+      "scale": {
+        "min": 1,
+        "max": 7,
+        "labels": [
+          "Not at all",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "Extremely"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "prqc_10",
+      "text": "TODO: populate from source",
+      "descriptor": "trust item 1",
+      "scale": {
+        "min": 1,
+        "max": 7,
+        "labels": [
+          "Not at all",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "Extremely"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "prqc_11",
+      "text": "TODO: populate from source",
+      "descriptor": "trust item 2",
+      "scale": {
+        "min": 1,
+        "max": 7,
+        "labels": [
+          "Not at all",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "Extremely"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "prqc_12",
+      "text": "TODO: populate from source",
+      "descriptor": "trust item 3",
+      "scale": {
+        "min": 1,
+        "max": 7,
+        "labels": [
+          "Not at all",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "Extremely"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "prqc_13",
+      "text": "TODO: populate from source",
+      "descriptor": "passion item 1",
+      "scale": {
+        "min": 1,
+        "max": 7,
+        "labels": [
+          "Not at all",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "Extremely"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "prqc_14",
+      "text": "TODO: populate from source",
+      "descriptor": "passion item 2",
+      "scale": {
+        "min": 1,
+        "max": 7,
+        "labels": [
+          "Not at all",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "Extremely"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "prqc_15",
+      "text": "TODO: populate from source",
+      "descriptor": "passion item 3",
+      "scale": {
+        "min": 1,
+        "max": 7,
+        "labels": [
+          "Not at all",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "Extremely"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "prqc_16",
+      "text": "TODO: populate from source",
+      "descriptor": "love item 1",
+      "scale": {
+        "min": 1,
+        "max": 7,
+        "labels": [
+          "Not at all",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "Extremely"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "prqc_17",
+      "text": "TODO: populate from source",
+      "descriptor": "love item 2",
+      "scale": {
+        "min": 1,
+        "max": 7,
+        "labels": [
+          "Not at all",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "Extremely"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "prqc_18",
+      "text": "TODO: populate from source",
+      "descriptor": "love item 3",
+      "scale": {
+        "min": 1,
+        "max": 7,
+        "labels": [
+          "Not at all",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "Extremely"
+        ]
+      },
+      "reverse_scored": false
+    }
+  ],
+  "scoring": {
+    "version": "1.0.0",
+    "subscales": [
+      {
+        "name": "satisfaction",
+        "items": [
+          "prqc_1",
+          "prqc_2",
+          "prqc_3"
+        ],
+        "method": "mean"
+      },
+      {
+        "name": "commitment",
+        "items": [
+          "prqc_4",
+          "prqc_5",
+          "prqc_6"
+        ],
+        "method": "mean"
+      },
+      {
+        "name": "intimacy",
+        "items": [
+          "prqc_7",
+          "prqc_8",
+          "prqc_9"
+        ],
+        "method": "mean"
+      },
+      {
+        "name": "trust",
+        "items": [
+          "prqc_10",
+          "prqc_11",
+          "prqc_12"
+        ],
+        "method": "mean"
+      },
+      {
+        "name": "passion",
+        "items": [
+          "prqc_13",
+          "prqc_14",
+          "prqc_15"
+        ],
+        "method": "mean"
+      },
+      {
+        "name": "love",
+        "items": [
+          "prqc_16",
+          "prqc_17",
+          "prqc_18"
+        ],
+        "method": "mean"
+      }
+    ],
+    "cutoffs": []
+  },
+  "scoring_key_verified": false,
+  "notes": "Optional instrument. Six 3-item subscales scored as means (1–7)."
+}

@@ -1,0 +1,63 @@
+{
+  "domain": "communication",
+  "title": "Communication and nonverbal",
+  "opens_on": "CPQ-SF demand-withdraw or ACQ communication items.",
+  "specifics": [
+    {
+      "id": "communication_s1",
+      "text": "Your partner's face looks angry and you don't know if they are. What do you do? What should they do?"
+    },
+    {
+      "id": "communication_s2",
+      "text": "Your partner has been quiet for two days. What do you assume, and what do you do?"
+    },
+    {
+      "id": "communication_s4",
+      "text": "Write-in: When my face looks upset, what's usually going on is ____."
+    }
+  ],
+  "preference": [
+    {
+      "id": "communication_p3",
+      "text": "When you're upset, how do you want to be approached, in words you'd actually use?"
+    },
+    {
+      "id": "communication_p0",
+      "text": "Describe what good would look like here, concretely, in your house, on an ordinary week."
+    }
+  ],
+  "tags": [
+    {
+      "id": "communication_t5",
+      "topics": [
+        "gentleness of delivery",
+        "being asked versus being read"
+      ]
+    }
+  ],
+  "version": "1.0.0",
+  "source": "docs/question_inventory.md Part C (original content, verbatim).",
+  "common": {
+    "preference_universal": "Describe what good would look like here, concretely, in your house, on an ordinary week.",
+    "tag_question": "Is this a requirement, meaning the relationship doesn't work for you without it, or a preference, meaning you'd like it and could live without it?",
+    "tag_comment_prompt": "Required comment: what it means, and what it would look like met.",
+    "perception_gap": "You rated yourself {self_value} on this and your partner rated you {partner_value}. What are you each seeing?",
+    "context": "You flagged this one. What's the context?",
+    "polarization": "You said that left to yourself you're at {self_alone} on this, and with your partner you find yourself at {self_with_partner}. What do you think is going on?",
+    "concreteness_followup": "Can you give me a specific example?",
+    "probe_skip_label": "Skip",
+    "transitions": {
+      "enter": "This domain flagged. A few written questions, one at a time. You can pause and come back any time.",
+      "specifics": "Specifics",
+      "preference": "Preference",
+      "tag": "Requirement or preference",
+      "polarization": "Polarization",
+      "perception_gap": "Perception gap",
+      "context": "Context",
+      "consistency": "A few follow-ups. Each has a reason attached and a skip button.",
+      "complete": "That's this domain done. Nothing here is shared until your partner has finished too.",
+      "ack": "Saved.",
+      "skipped_ack": "Skipped. Noted, not pushed."
+    }
+  }
+}

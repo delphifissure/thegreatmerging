@@ -1,0 +1,615 @@
+{
+  "key": "psdq_sf",
+  "name": "Parenting Styles and Dimensions Questionnaire – Short Form (PSDQ-SF)",
+  "source_citation": "Robinson, Mandleco, Olsen & Hart (2001). The Parenting Styles and Dimensions Questionnaire (PSDQ). In Perlmutter, Touliatos & Holden (Eds.), Handbook of Family Measurement Techniques, Vol. 3. Sage.",
+  "license_note": "Available for research and clinical use with citation; see source.",
+  "layer": 1,
+  "passes": [
+    "single"
+  ],
+  "default_domain": "parenting",
+  "items": [
+    {
+      "item_id": "psdq_sf_1",
+      "text": "TODO: populate from source",
+      "descriptor": "authoritative practice item 1",
+      "scale": {
+        "min": 1,
+        "max": 5,
+        "labels": [
+          "Never",
+          "Once in a while",
+          "About half of the time",
+          "Very often",
+          "Always"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "psdq_sf_2",
+      "text": "TODO: populate from source",
+      "descriptor": "authoritarian practice item 2",
+      "scale": {
+        "min": 1,
+        "max": 5,
+        "labels": [
+          "Never",
+          "Once in a while",
+          "About half of the time",
+          "Very often",
+          "Always"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "psdq_sf_3",
+      "text": "TODO: populate from source",
+      "descriptor": "authoritative practice item 3",
+      "scale": {
+        "min": 1,
+        "max": 5,
+        "labels": [
+          "Never",
+          "Once in a while",
+          "About half of the time",
+          "Very often",
+          "Always"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "psdq_sf_4",
+      "text": "TODO: populate from source",
+      "descriptor": "permissive practice item 4",
+      "scale": {
+        "min": 1,
+        "max": 5,
+        "labels": [
+          "Never",
+          "Once in a while",
+          "About half of the time",
+          "Very often",
+          "Always"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "psdq_sf_5",
+      "text": "TODO: populate from source",
+      "descriptor": "authoritative practice item 5",
+      "scale": {
+        "min": 1,
+        "max": 5,
+        "labels": [
+          "Never",
+          "Once in a while",
+          "About half of the time",
+          "Very often",
+          "Always"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "psdq_sf_6",
+      "text": "TODO: populate from source",
+      "descriptor": "authoritarian practice item 6",
+      "scale": {
+        "min": 1,
+        "max": 5,
+        "labels": [
+          "Never",
+          "Once in a while",
+          "About half of the time",
+          "Very often",
+          "Always"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "psdq_sf_7",
+      "text": "TODO: populate from source",
+      "descriptor": "authoritative practice item 7",
+      "scale": {
+        "min": 1,
+        "max": 5,
+        "labels": [
+          "Never",
+          "Once in a while",
+          "About half of the time",
+          "Very often",
+          "Always"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "psdq_sf_8",
+      "text": "TODO: populate from source",
+      "descriptor": "permissive practice item 8",
+      "scale": {
+        "min": 1,
+        "max": 5,
+        "labels": [
+          "Never",
+          "Once in a while",
+          "About half of the time",
+          "Very often",
+          "Always"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "psdq_sf_9",
+      "text": "TODO: populate from source",
+      "descriptor": "authoritative practice item 9",
+      "scale": {
+        "min": 1,
+        "max": 5,
+        "labels": [
+          "Never",
+          "Once in a while",
+          "About half of the time",
+          "Very often",
+          "Always"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "psdq_sf_10",
+      "text": "TODO: populate from source",
+      "descriptor": "authoritarian practice item 10",
+      "scale": {
+        "min": 1,
+        "max": 5,
+        "labels": [
+          "Never",
+          "Once in a while",
+          "About half of the time",
+          "Very often",
+          "Always"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "psdq_sf_11",
+      "text": "TODO: populate from source",
+      "descriptor": "authoritative practice item 11",
+      "scale": {
+        "min": 1,
+        "max": 5,
+        "labels": [
+          "Never",
+          "Once in a while",
+          "About half of the time",
+          "Very often",
+          "Always"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "psdq_sf_12",
+      "text": "TODO: populate from source",
+      "descriptor": "authoritative practice item 12",
+      "scale": {
+        "min": 1,
+        "max": 5,
+        "labels": [
+          "Never",
+          "Once in a while",
+          "About half of the time",
+          "Very often",
+          "Always"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "psdq_sf_13",
+      "text": "TODO: populate from source",
+      "descriptor": "authoritarian practice item 13",
+      "scale": {
+        "min": 1,
+        "max": 5,
+        "labels": [
+          "Never",
+          "Once in a while",
+          "About half of the time",
+          "Very often",
+          "Always"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "psdq_sf_14",
+      "text": "TODO: populate from source",
+      "descriptor": "authoritative practice item 14",
+      "scale": {
+        "min": 1,
+        "max": 5,
+        "labels": [
+          "Never",
+          "Once in a while",
+          "About half of the time",
+          "Very often",
+          "Always"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "psdq_sf_15",
+      "text": "TODO: populate from source",
+      "descriptor": "permissive practice item 15",
+      "scale": {
+        "min": 1,
+        "max": 5,
+        "labels": [
+          "Never",
+          "Once in a while",
+          "About half of the time",
+          "Very often",
+          "Always"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "psdq_sf_16",
+      "text": "TODO: populate from source",
+      "descriptor": "authoritarian practice item 16",
+      "scale": {
+        "min": 1,
+        "max": 5,
+        "labels": [
+          "Never",
+          "Once in a while",
+          "About half of the time",
+          "Very often",
+          "Always"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "psdq_sf_17",
+      "text": "TODO: populate from source",
+      "descriptor": "authoritarian practice item 17",
+      "scale": {
+        "min": 1,
+        "max": 5,
+        "labels": [
+          "Never",
+          "Once in a while",
+          "About half of the time",
+          "Very often",
+          "Always"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "psdq_sf_18",
+      "text": "TODO: populate from source",
+      "descriptor": "authoritative practice item 18",
+      "scale": {
+        "min": 1,
+        "max": 5,
+        "labels": [
+          "Never",
+          "Once in a while",
+          "About half of the time",
+          "Very often",
+          "Always"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "psdq_sf_19",
+      "text": "TODO: populate from source",
+      "descriptor": "authoritarian practice item 19",
+      "scale": {
+        "min": 1,
+        "max": 5,
+        "labels": [
+          "Never",
+          "Once in a while",
+          "About half of the time",
+          "Very often",
+          "Always"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "psdq_sf_20",
+      "text": "TODO: populate from source",
+      "descriptor": "permissive practice item 20",
+      "scale": {
+        "min": 1,
+        "max": 5,
+        "labels": [
+          "Never",
+          "Once in a while",
+          "About half of the time",
+          "Very often",
+          "Always"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "psdq_sf_21",
+      "text": "TODO: populate from source",
+      "descriptor": "authoritative practice item 21",
+      "scale": {
+        "min": 1,
+        "max": 5,
+        "labels": [
+          "Never",
+          "Once in a while",
+          "About half of the time",
+          "Very often",
+          "Always"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "psdq_sf_22",
+      "text": "TODO: populate from source",
+      "descriptor": "authoritative practice item 22",
+      "scale": {
+        "min": 1,
+        "max": 5,
+        "labels": [
+          "Never",
+          "Once in a while",
+          "About half of the time",
+          "Very often",
+          "Always"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "psdq_sf_23",
+      "text": "TODO: populate from source",
+      "descriptor": "authoritarian practice item 23",
+      "scale": {
+        "min": 1,
+        "max": 5,
+        "labels": [
+          "Never",
+          "Once in a while",
+          "About half of the time",
+          "Very often",
+          "Always"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "psdq_sf_24",
+      "text": "TODO: populate from source",
+      "descriptor": "permissive practice item 24",
+      "scale": {
+        "min": 1,
+        "max": 5,
+        "labels": [
+          "Never",
+          "Once in a while",
+          "About half of the time",
+          "Very often",
+          "Always"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "psdq_sf_25",
+      "text": "TODO: populate from source",
+      "descriptor": "authoritative practice item 25",
+      "scale": {
+        "min": 1,
+        "max": 5,
+        "labels": [
+          "Never",
+          "Once in a while",
+          "About half of the time",
+          "Very often",
+          "Always"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "psdq_sf_26",
+      "text": "TODO: populate from source",
+      "descriptor": "authoritarian practice item 26",
+      "scale": {
+        "min": 1,
+        "max": 5,
+        "labels": [
+          "Never",
+          "Once in a while",
+          "About half of the time",
+          "Very often",
+          "Always"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "psdq_sf_27",
+      "text": "TODO: populate from source",
+      "descriptor": "authoritative practice item 27",
+      "scale": {
+        "min": 1,
+        "max": 5,
+        "labels": [
+          "Never",
+          "Once in a while",
+          "About half of the time",
+          "Very often",
+          "Always"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "psdq_sf_28",
+      "text": "TODO: populate from source",
+      "descriptor": "authoritarian practice item 28",
+      "scale": {
+        "min": 1,
+        "max": 5,
+        "labels": [
+          "Never",
+          "Once in a while",
+          "About half of the time",
+          "Very often",
+          "Always"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "psdq_sf_29",
+      "text": "TODO: populate from source",
+      "descriptor": "authoritative practice item 29",
+      "scale": {
+        "min": 1,
+        "max": 5,
+        "labels": [
+          "Never",
+          "Once in a while",
+          "About half of the time",
+          "Very often",
+          "Always"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "psdq_sf_30",
+      "text": "TODO: populate from source",
+      "descriptor": "authoritarian practice item 30",
+      "scale": {
+        "min": 1,
+        "max": 5,
+        "labels": [
+          "Never",
+          "Once in a while",
+          "About half of the time",
+          "Very often",
+          "Always"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "psdq_sf_31",
+      "text": "TODO: populate from source",
+      "descriptor": "authoritative practice item 31",
+      "scale": {
+        "min": 1,
+        "max": 5,
+        "labels": [
+          "Never",
+          "Once in a while",
+          "About half of the time",
+          "Very often",
+          "Always"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "psdq_sf_32",
+      "text": "TODO: populate from source",
+      "descriptor": "authoritarian practice item 32",
+      "scale": {
+        "min": 1,
+        "max": 5,
+        "labels": [
+          "Never",
+          "Once in a while",
+          "About half of the time",
+          "Very often",
+          "Always"
+        ]
+      },
+      "reverse_scored": false
+    }
+  ],
+  "scoring": {
+    "version": "1.0.0",
+    "subscales": [
+      {
+        "name": "authoritative",
+        "items": [
+          "psdq_sf_1",
+          "psdq_sf_3",
+          "psdq_sf_5",
+          "psdq_sf_7",
+          "psdq_sf_9",
+          "psdq_sf_11",
+          "psdq_sf_12",
+          "psdq_sf_14",
+          "psdq_sf_18",
+          "psdq_sf_21",
+          "psdq_sf_22",
+          "psdq_sf_25",
+          "psdq_sf_27",
+          "psdq_sf_29",
+          "psdq_sf_31"
+        ],
+        "method": "mean"
+      },
+      {
+        "name": "authoritarian",
+        "items": [
+          "psdq_sf_2",
+          "psdq_sf_6",
+          "psdq_sf_10",
+          "psdq_sf_13",
+          "psdq_sf_16",
+          "psdq_sf_17",
+          "psdq_sf_19",
+          "psdq_sf_23",
+          "psdq_sf_26",
+          "psdq_sf_28",
+          "psdq_sf_30",
+          "psdq_sf_32"
+        ],
+        "method": "mean"
+      },
+      {
+        "name": "permissive",
+        "items": [
+          "psdq_sf_4",
+          "psdq_sf_8",
+          "psdq_sf_15",
+          "psdq_sf_20",
+          "psdq_sf_24"
+        ],
+        "method": "mean"
+      }
+    ],
+    "cutoffs": []
+  },
+  "scoring_key_verified": false,
+  "notes": "VERIFY BEFORE USE: item-to-style membership (15 authoritative, 12 authoritarian, 5 permissive) follows the commonly published PSDQ-SF key and must be checked against Robinson et al. 2001 when populating text. Styles are means on the 1–5 scale. Between-parent gap per style is computed in instruments/couple.ts."
+}

@@ -1,0 +1,54 @@
+{
+  "version": "1.0.0",
+  "source": "docs/question_inventory.md Part D. These are the only forms the prober may use. At most three per domain, one at a time, to that person only, reason attached, skip allowed.",
+  "max_probes_per_domain": 3,
+  "templates": [
+    {
+      "id": 1,
+      "text": "You answered X here and Y in [domain]. Help me understand how those fit together.",
+      "slots": ["X", "Y", "domain"],
+      "pattern": "^You answered .+ here and .+ in .+\\. Help me understand how those fit together\\.$"
+    },
+    {
+      "id": 2,
+      "text": "Your [score] suggests [pattern], and here you said [the opposite]. How do those fit for you?",
+      "slots": ["score", "pattern", "the opposite"],
+      "pattern": "^Your .+ suggests .+, and here you said .+\\. How do those fit for you\\?$"
+    },
+    {
+      "id": 3,
+      "text": "You rated yourself high on [behavior], and your scenario answers here are mostly about [contrasting behavior]. Help me see how those fit.",
+      "slots": ["behavior", "contrasting behavior"],
+      "pattern": "^You rated yourself high on .+, and your scenario answers here are mostly about .+\\. Help me see how those fit\\.$"
+    },
+    {
+      "id": 4,
+      "text": "What's the value under this?",
+      "slots": [],
+      "pattern": "^What's the value under this\\?$"
+    },
+    {
+      "id": 5,
+      "text": "What would it look like if your partner did the thing you said you'd do?",
+      "slots": [],
+      "pattern": "^What would it look like if your partner did the thing you said you'd do\\?$"
+    },
+    {
+      "id": 6,
+      "text": "Is this a preference or a requirement?",
+      "slots": [],
+      "pattern": "^Is this a preference or a requirement\\?$"
+    },
+    {
+      "id": 7,
+      "text": "What would change your mind?",
+      "slots": [],
+      "pattern": "^What would change your mind\\?$"
+    }
+  ],
+  "parenting_watch_for": [
+    "high self-rated warmth with scenario answers that are all control",
+    "respect defined as obedience alongside adult conduct the person wouldn't accept from the child",
+    "an easygoing self-description with no structure the person can name"
+  ]
+}

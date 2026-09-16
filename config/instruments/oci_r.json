@@ -1,0 +1,416 @@
+{
+  "key": "oci_r",
+  "name": "Obsessive-Compulsive Inventory–Revised (OCI-R)",
+  "source_citation": "Foa, Huppert, Leiberg, Langner, Kichic, Hajcak & Salkovskis (2002). The Obsessive-Compulsive Inventory: development and validation of a short version. Psychological Assessment, 14(4), 485–496.",
+  "license_note": "Free for clinical and research use with citation (Center for the Treatment and Study of Anxiety, University of Pennsylvania).",
+  "layer": 0,
+  "passes": [
+    "single"
+  ],
+  "mental_health": true,
+  "items": [
+    {
+      "item_id": "oci_r_1",
+      "text": "TODO: populate from source",
+      "descriptor": "hoarding item 1",
+      "scale": {
+        "min": 0,
+        "max": 4,
+        "labels": [
+          "Not at all",
+          "A little",
+          "Moderately",
+          "A lot",
+          "Extremely"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "oci_r_2",
+      "text": "TODO: populate from source",
+      "descriptor": "checking item 1",
+      "scale": {
+        "min": 0,
+        "max": 4,
+        "labels": [
+          "Not at all",
+          "A little",
+          "Moderately",
+          "A lot",
+          "Extremely"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "oci_r_3",
+      "text": "TODO: populate from source",
+      "descriptor": "ordering item 1",
+      "scale": {
+        "min": 0,
+        "max": 4,
+        "labels": [
+          "Not at all",
+          "A little",
+          "Moderately",
+          "A lot",
+          "Extremely"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "oci_r_4",
+      "text": "TODO: populate from source",
+      "descriptor": "neutralizing item 1",
+      "scale": {
+        "min": 0,
+        "max": 4,
+        "labels": [
+          "Not at all",
+          "A little",
+          "Moderately",
+          "A lot",
+          "Extremely"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "oci_r_5",
+      "text": "TODO: populate from source",
+      "descriptor": "washing item 1",
+      "scale": {
+        "min": 0,
+        "max": 4,
+        "labels": [
+          "Not at all",
+          "A little",
+          "Moderately",
+          "A lot",
+          "Extremely"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "oci_r_6",
+      "text": "TODO: populate from source",
+      "descriptor": "obsessing item 1",
+      "scale": {
+        "min": 0,
+        "max": 4,
+        "labels": [
+          "Not at all",
+          "A little",
+          "Moderately",
+          "A lot",
+          "Extremely"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "oci_r_7",
+      "text": "TODO: populate from source",
+      "descriptor": "hoarding item 2",
+      "scale": {
+        "min": 0,
+        "max": 4,
+        "labels": [
+          "Not at all",
+          "A little",
+          "Moderately",
+          "A lot",
+          "Extremely"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "oci_r_8",
+      "text": "TODO: populate from source",
+      "descriptor": "checking item 2",
+      "scale": {
+        "min": 0,
+        "max": 4,
+        "labels": [
+          "Not at all",
+          "A little",
+          "Moderately",
+          "A lot",
+          "Extremely"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "oci_r_9",
+      "text": "TODO: populate from source",
+      "descriptor": "ordering item 2",
+      "scale": {
+        "min": 0,
+        "max": 4,
+        "labels": [
+          "Not at all",
+          "A little",
+          "Moderately",
+          "A lot",
+          "Extremely"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "oci_r_10",
+      "text": "TODO: populate from source",
+      "descriptor": "neutralizing item 2",
+      "scale": {
+        "min": 0,
+        "max": 4,
+        "labels": [
+          "Not at all",
+          "A little",
+          "Moderately",
+          "A lot",
+          "Extremely"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "oci_r_11",
+      "text": "TODO: populate from source",
+      "descriptor": "washing item 2",
+      "scale": {
+        "min": 0,
+        "max": 4,
+        "labels": [
+          "Not at all",
+          "A little",
+          "Moderately",
+          "A lot",
+          "Extremely"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "oci_r_12",
+      "text": "TODO: populate from source",
+      "descriptor": "obsessing item 2",
+      "scale": {
+        "min": 0,
+        "max": 4,
+        "labels": [
+          "Not at all",
+          "A little",
+          "Moderately",
+          "A lot",
+          "Extremely"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "oci_r_13",
+      "text": "TODO: populate from source",
+      "descriptor": "hoarding item 3",
+      "scale": {
+        "min": 0,
+        "max": 4,
+        "labels": [
+          "Not at all",
+          "A little",
+          "Moderately",
+          "A lot",
+          "Extremely"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "oci_r_14",
+      "text": "TODO: populate from source",
+      "descriptor": "checking item 3",
+      "scale": {
+        "min": 0,
+        "max": 4,
+        "labels": [
+          "Not at all",
+          "A little",
+          "Moderately",
+          "A lot",
+          "Extremely"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "oci_r_15",
+      "text": "TODO: populate from source",
+      "descriptor": "ordering item 3",
+      "scale": {
+        "min": 0,
+        "max": 4,
+        "labels": [
+          "Not at all",
+          "A little",
+          "Moderately",
+          "A lot",
+          "Extremely"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "oci_r_16",
+      "text": "TODO: populate from source",
+      "descriptor": "neutralizing item 3",
+      "scale": {
+        "min": 0,
+        "max": 4,
+        "labels": [
+          "Not at all",
+          "A little",
+          "Moderately",
+          "A lot",
+          "Extremely"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "oci_r_17",
+      "text": "TODO: populate from source",
+      "descriptor": "washing item 3",
+      "scale": {
+        "min": 0,
+        "max": 4,
+        "labels": [
+          "Not at all",
+          "A little",
+          "Moderately",
+          "A lot",
+          "Extremely"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "oci_r_18",
+      "text": "TODO: populate from source",
+      "descriptor": "obsessing item 3",
+      "scale": {
+        "min": 0,
+        "max": 4,
+        "labels": [
+          "Not at all",
+          "A little",
+          "Moderately",
+          "A lot",
+          "Extremely"
+        ]
+      },
+      "reverse_scored": false
+    }
+  ],
+  "scoring": {
+    "version": "1.0.0",
+    "subscales": [
+      {
+        "name": "total",
+        "items": [
+          "oci_r_1",
+          "oci_r_2",
+          "oci_r_3",
+          "oci_r_4",
+          "oci_r_5",
+          "oci_r_6",
+          "oci_r_7",
+          "oci_r_8",
+          "oci_r_9",
+          "oci_r_10",
+          "oci_r_11",
+          "oci_r_12",
+          "oci_r_13",
+          "oci_r_14",
+          "oci_r_15",
+          "oci_r_16",
+          "oci_r_17",
+          "oci_r_18"
+        ],
+        "method": "sum"
+      },
+      {
+        "name": "washing",
+        "items": [
+          "oci_r_5",
+          "oci_r_11",
+          "oci_r_17"
+        ],
+        "method": "sum"
+      },
+      {
+        "name": "obsessing",
+        "items": [
+          "oci_r_6",
+          "oci_r_12",
+          "oci_r_18"
+        ],
+        "method": "sum"
+      },
+      {
+        "name": "hoarding",
+        "items": [
+          "oci_r_1",
+          "oci_r_7",
+          "oci_r_13"
+        ],
+        "method": "sum"
+      },
+      {
+        "name": "ordering",
+        "items": [
+          "oci_r_3",
+          "oci_r_9",
+          "oci_r_15"
+        ],
+        "method": "sum"
+      },
+      {
+        "name": "checking",
+        "items": [
+          "oci_r_2",
+          "oci_r_8",
+          "oci_r_14"
+        ],
+        "method": "sum"
+      },
+      {
+        "name": "neutralizing",
+        "items": [
+          "oci_r_4",
+          "oci_r_10",
+          "oci_r_16"
+        ],
+        "method": "sum"
+      }
+    ],
+    "cutoffs": [
+      {
+        "subscale": "total",
+        "below": 21,
+        "label": "below_cutoff"
+      },
+      {
+        "subscale": "total",
+        "at_or_above": 21,
+        "label": "at_or_above_cutoff"
+      }
+    ]
+  },
+  "scoring_key_verified": true,
+  "notes": "Optional instrument. Screener result; clinical evaluation required. Total cutoff 21 per Foa et al. 2002."
+}

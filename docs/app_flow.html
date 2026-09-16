@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Plan: app flow and question inventory</title>
+<style>
+  :root {
+    --bg: #fbfaf7;
+    --fg: #1f1e1b;
+    --muted: #5f5c55;
+    --line: #dcd8cf;
+    --panel: #f2efe8;
+    --accent: #3b5b8c;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #17181a;
+      --fg: #e8e6e1;
+      --muted: #a8a49b;
+      --line: #34363a;
+      --panel: #202225;
+      --accent: #8fb0e0;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #17181a;
+    --fg: #e8e6e1;
+    --muted: #a8a49b;
+    --line: #34363a;
+    --panel: #202225;
+    --accent: #8fb0e0;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: Georgia, "Times New Roman", serif;
+    line-height: 1.5;
+    font-size: 1.02rem;
+  }
+  main { max-width: 56rem; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
+  h1 { font-size: 1.8rem; margin: 0 0 .25rem; }
+  h2 { font-size: 1.35rem; margin: 2.5rem 0 .75rem; border-bottom: 1px solid var(--line); padding-bottom: .3rem; }
+  h3 { font-size: 1.1rem; margin: 1.6rem 0 .4rem; }
+  h4 { font-size: 1rem; margin: 1.1rem 0 .3rem; color: var(--accent); }
+  p.lead { color: var(--muted); margin-top: 0; }
+  .note { background: var(--panel); border: 1px solid var(--line); padding: .8rem 1rem; border-radius: 6px; margin: 1rem 0; }
+  .diagram { overflow: auto; border: 1px solid var(--line); border-radius: 6px; background: var(--panel); padding: 1rem; }
+  .diagram svg { max-width: none !important; height: auto; overflow: visible; display: block; }
+  .diagram pre { margin: 0; }
+  ol, ul { padding-left: 1.4rem; }
+  li { margin: .25rem 0; }
+  table { border-collapse: collapse; width: 100%; font-size: .95rem; }
+  .tablewrap { overflow-x: auto; }
+  th, td { border: 1px solid var(--line); padding: .45rem .6rem; text-align: left; vertical-align: top; }
+  th { background: var(--panel); }
+  .small { font-size: .9rem; color: var(--muted); }
+  code { font-family: Menlo, Consolas, monospace; font-size: .9em; }
+  nav a { margin-right: 1rem; color: var(--accent); text-decoration: none; }
+  nav { margin: .5rem 0 1.5rem; font-size: .95rem; }
+</style>
+</head>
+<body>
+<main>
+<h1>The Plan: app flow and question inventory</h1>
+<p class="lead">The decision tree for the app, then every question the app asks, laid out for review. Validated instruments are described at the construct level with sources; their item text isn't reproduced here. Everything in the color layer and the polarization block is original and unvalidated by design.</p>
+
+<nav>
+  <a href="#tree">1. Decision tree</a>
+  <a href="#l0">2. Layer 0</a>
+  <a href="#l1">3. Layer 1</a>
+  <a href="#pol">4. Polarization block</a>
+  <a href="#color">5. Color layer</a>
+  <a href="#probes">6. Probes</a>
+  <a href="#plan">7. Plan</a>
+  <a href="#ext">8. Extended</a>
+</nav>
+
+<h2 id="tree">1. Decision tree</h2>
+<p>Two diagrams so nothing has to shrink to fit. The first is the whole flow. The second is what happens inside one flagged domain in the color layer. Both scroll sideways if your screen is narrow. A plain-text version of the full tree follows, so every branch is readable regardless of how the diagrams render.</p>
+
+<h3>A. The whole flow</h3>
+<div class="diagram">
+<pre class="mermaid">
+%%{init: {"flowchart": {"useMaxWidth": false, "htmlLabels": true, "nodeSpacing": 35, "rankSpacing": 40}} }%%
+flowchart TD
+  S["Setup, together<br/>framing, consent switches,<br/>names and roles, scheduling"] --> L0
+  L0["Layer 0, each alone<br/>individual baselines<br/>context checkbox on every item"] --> L1
+  L1["Layer 1, each alone<br/>relationship instruments<br/>plus polarization block"] --> BOTH{"Both partners<br/>finished?"}
+  BOTH -- "No" --> WAIT["Wait.<br/>Nothing compared."] --> BOTH
+  BOTH -- "Yes" --> INT["Interpretation<br/>deterministic scoring,<br/>reading rules, flags"]
+  INT --> OWN["Private: your own scores<br/>in plain language.<br/>Individual profile created."]
+  OWN --> FLAGS{"Any domains<br/>flagged?"}
+  FLAGS -- "No" --> BRIEF
+  FLAGS -- "Yes" --> COLOR["Layer 2, each alone<br/>one flagged domain at a time<br/>(see diagram B)"]
+  COLOR --> NEXT{"More flagged<br/>domains?"}
+  NEXT -- "Yes" --> COLOR
+  NEXT -- "No" --> READY{"Partner finished<br/>the color layer?"}
+  READY -- "No" --> WAIT2["Wait"] --> READY
+  READY -- "Yes" --> BRIEF["Brief, together<br/>aligned items by name,<br/>parked items,<br/>one page per flagged domain"]
+  BRIEF --> PLAN["Plan, together<br/>one domain per sitting,<br/>shared requirements pinned,<br/>parenting gets its five lines"]
+  PLAN --> DATED{"Every mismatch<br/>has a date?"}
+  DATED -- "No" --> PLAN
+  DATED -- "Yes" --> EXPORT["One-page plan<br/>versioned, exportable,<br/>optional therapist share"]
+  EXPORT --> REV["Revisits on set dates<br/>only items due,<br/>original shown, still true?"]
+  REV --> RETAKE{"Major change<br/>or 12 months?"}
+  RETAKE -- "Yes" --> L0
+  RETAKE -- "No" --> REV
+  EXPORT -.-> EXT["Optional<br/>third caregiver module,<br/>child conversation"]
+</pre>
+</div>
+
+<h3>B. Inside one flagged domain (the color layer)</h3>
+<div class="diagram">
+<pre class="mermaid">
+%%{init: {"flowchart": {"useMaxWidth": false, "htmlLabels": true, "nodeSpacing": 35, "rankSpacing": 40}} }%%
+flowchart TD
+  IN["Enter flagged domain<br/>(highest weight first)"] --> SPEC["Specifics<br/>2 to 3 scenarios, written"]
+  SPEC --> ABS{"Answer<br/>concrete?"}
+  ABS -- "No" --> EX["Ask for an example"] --> SPEC
+  ABS -- "Yes" --> PREF["Preference<br/>what good looks like,<br/>in your house, ordinary week"]
+  PREF --> TAG["Tag: requirement or preference<br/>required comment: what it means,<br/>what it looks like met"]
+  TAG --> POLQ{"Polarization gap<br/>of 2 or more here?"}
+  POLQ -- "Yes" --> POLA["Ask the attribution:<br/>why do you shift<br/>with your partner?"] --> GAP
+  POLQ -- "No" --> GAP{"Perception gap<br/>of 2 or more<br/>on any item?"}
+  GAP -- "Yes" --> GAPQ["Show both numbers.<br/>What are we each seeing?"] --> CTX
+  GAP -- "No" --> CTX{"Any items marked<br/>needs context?"}
+  CTX -- "Yes" --> CTXQ["One question<br/>per marked item"] --> CONS
+  CTX -- "No" --> CONS{"Inconsistency<br/>detected?"}
+  CONS -- "Yes, max 3" --> PROBE["Gentle probe<br/>one at a time, reason attached,<br/>skip button on each"]
+  PROBE --> SKIP{"Skipped?"}
+  SKIP -- "Yes" --> NOTE["Note the skip.<br/>Move on."] --> MORE
+  SKIP -- "No" --> MORE{"More probes<br/>(under 3)?"}
+  MORE -- "Yes" --> PROBE
+  MORE -- "No" --> OUT
+  CONS -- "No" --> OUT["Domain complete<br/>return to main flow"]
+</pre>
+</div>
+
+<h3>C. The same tree in plain text</h3>
+<div class="note">
+<ol>
+<li><strong>Setup</strong> (together): framing; consent switches (partner-visible scores, verbatim vs summarized answers, may the interpreter quote earlier answers); names and roles; scheduling.</li>
+<li><strong>Layer 0</strong> (each alone): Mini-IPIP, ECR-R, PHQ-9, GAD-7, SIS/SES-SF, SDI-2, optional OCI-R with an easy skip. Context checkbox on every item. Save and return anytime.</li>
+<li><strong>Layer 1</strong> (each alone): CSI-16, RDAS, CPQ-SF, ACQ (two passes, same screen), FAPBI, Who Does What (now and ideal, same screen), Brief CRS, MAP, PSDQ, optional PRQC, polarization block (self alone, self with partner, mirror set).</li>
+<li><strong>Both finished?</strong> If no: wait; nothing is compared. If yes: continue.</li>
+<li><strong>Interpretation</strong> (automatic): deterministic scoring; reading rules (state measures first, attachment as context, PSDQ profiles side by side); flags by the rules; list of context-marked items; polarization gaps and loops.</li>
+<li><strong>Private results</strong> (each alone): your own scores, one plain sentence each with the cutoff named; which domains are flagged and why. Individual profile generated, owned by you, shareable only by your choice.</li>
+<li><strong>Any domains flagged?</strong> If no: go to the brief. If yes: color layer, highest-weight domain first.</li>
+<li><strong>Color layer, per flagged domain</strong> (each alone):
+  <ol type="a">
+  <li>Specifics: two or three scenarios, written. If an answer is abstract, ask for an example and return.</li>
+  <li>Preference: what good looks like, concretely, ordinary week.</li>
+  <li>Tag: requirement or preference, with the required comment.</li>
+  <li>Polarization gap of 2 or more in this domain? If yes: ask why you shift with your partner.</li>
+  <li>Perception gap of 2 or more on any item? If yes: show both numbers, ask what each is seeing.</li>
+  <li>Any context-marked items? If yes: one question each.</li>
+  <li>Inconsistency detected? If yes: up to three gentle probes, one at a time, reason attached, skip allowed; skips noted. If no: domain complete.</li>
+  <li>More flagged domains? If yes: next domain. If no: continue.</li>
+  </ol></li>
+<li><strong>Partner finished the color layer?</strong> If no: wait. If yes: continue.</li>
+<li><strong>Brief</strong> (together): aligned items by name first; parked items; one page per flagged domain (what each would do and why, values underneath, tags side by side, perception gaps with both explanations, polarization loops, consistency notes each agreed to share; written answers summarized unless marked shareable).</li>
+<li><strong>Plan</strong> (together, one domain per sitting): per item, the topic, what we agreed, what each does, when we revisit. Shared requirements pinned. Parenting gets its five lines. <strong>Every requirement-vs-preference mismatch has a date?</strong> If no: stay on the domain. If yes: close it.</li>
+<li><strong>Export</strong>: one-page plan, versioned, exportable, optional therapist share (by consent, with the validated/unvalidated labels intact).</li>
+<li><strong>Revisits</strong>: reminders on the set dates; only items due; original agreement shown; one question, still true?</li>
+<li><strong>Retake?</strong> Major change or 12 months: return to Layer 0; results shown as deltas. Otherwise: keep revisiting.</li>
+<li><strong>Optional modules</strong> (anytime after export): third caregiver (adjusted Brief CRS, Who Does What column, PSDQ if they caregive, four color questions); child (kitchen-table conversation, adults present, never a form).</li>
+</ol>
+</div>
+
+<h2 id="l0">2. Layer 0: individual baselines (each alone, about 20 minutes)</h2>
+<p>Presented one instrument at a time with the official item text. No comment fields. One checkbox per item: <em>this one needs context</em>.</p>
+<div class="tablewrap">
+<table>
+<tr><th>Instrument</th><th>Items</th><th>What the items ask about</th><th>Scores produced</th><th>Source</th></tr>
+<tr><td>Mini-IPIP</td><td>20</td><td>Short self-descriptions across the Big Five (sociability, sympathy, orderliness, mood stability, imagination), agree-disagree</td><td>Extraversion, agreeableness, conscientiousness, neuroticism, openness</td><td>Donnellan et al. 2006; ipip.ori.org (public domain)</td></tr>
+<tr><td>ECR-R</td><td>36</td><td>How you feel in close relationships: worry about being abandoned or not loved; discomfort depending on or opening up to a partner</td><td>Attachment anxiety, attachment avoidance</td><td>Fraley, Waller and Brennan 2000 (free)</td></tr>
+<tr><td>PHQ-9</td><td>9</td><td>Frequency over two weeks of low mood, loss of interest, sleep, energy, appetite, concentration, self-worth, and one safety item</td><td>Depression severity with cutoffs 5/10/15/20</td><td>Kroenke et al. 2001 (public domain)</td></tr>
+<tr><td>GAD-7</td><td>7</td><td>Frequency over two weeks of nervousness, worry, restlessness, irritability, dread</td><td>Anxiety severity with cutoffs 5/10/15</td><td>Spitzer et al. 2006 (public domain)</td></tr>
+<tr><td>SIS/SES-SF</td><td>14</td><td>What turns arousal on and what shuts it off: responsiveness to sexual cues, worry about performance, worry about consequences</td><td>Excitation; inhibition (performance); inhibition (consequences)</td><td>Carpenter, Janssen et al. 2008</td></tr>
+<tr><td>SDI-2</td><td>14</td><td>Frequency and strength of desire for sex with a partner and on your own</td><td>Dyadic desire, solitary desire</td><td>Spector, Carey and Steinberg 1996</td></tr>
+<tr><td>OCI-R (optional)</td><td>18</td><td>Distress from checking, ordering, washing, hoarding, obsessing, neutralizing</td><td>Total with cutoff 21; six subscales</td><td>Foa et al. 2002. Self-knowledge only; never shared without consent.</td></tr>
+</table>
+</div>
+
+<h2 id="l1">3. Layer 1: the relationship (each alone, about 35 minutes)</h2>
+<div class="tablewrap">
+<table>
+<tr><th>Instrument</th><th>Items</th><th>What the items ask about</th><th>Scores produced</th><th>Source</th></tr>
+<tr><td>CSI-16</td><td>16</td><td>Overall happiness with the relationship, warmth and comfort, how rewarding it feels, on several scale types</td><td>Satisfaction 0 to 81; below 51.5 indicates distress</td><td>Funk and Rogge 2007 (free)</td></tr>
+<tr><td>RDAS</td><td>14</td><td>How often you agree on money, religion, affection, friends, sex, conventions, life philosophy, in-laws, time together, decisions, household tasks; frequency of conflict and of shared activities</td><td>Consensus, satisfaction, cohesion; total with cutoff 48</td><td>Busby et al. 1995</td></tr>
+<tr><td>CPQ-SF</td><td>11</td><td>When a problem arises, who raises it, who avoids it, who pressures, who withdraws, and whether you discuss constructively</td><td>Demand-withdraw in both directions; constructive communication</td><td>Futris et al. 2010</td></tr>
+<tr><td>ACQ</td><td>34 x 2 passes</td><td>Pass 1: how much you want your partner to change on each of 34 behaviors (affection, chores, money, sex, time, initiative, and so on). Pass 2: how much you think your partner wants you to change on each</td><td>Desired change per item; perceptual accuracy</td><td>Weiss, Hops and Patterson 1973</td></tr>
+<tr><td>FAPBI</td><td>about 20 x 2</td><td>For each partner behavior (affection, closeness, demands, violations): how often it happens, and how acceptable that frequency is</td><td>Frequency and acceptability per behavior</td><td>Doss and Christensen 2006</td></tr>
+<tr><td>Who Does What?</td><td>varies x 2</td><td>Household tasks, decisions, childcare: who does each now, and how you'd like it, both on a 1 to 9 scale from all-her to all-him</td><td>Now vs ideal per person; between-partner "now" agreement</td><td>Cowan and Cowan 1988</td></tr>
+<tr><td>Brief CRS</td><td>14</td><td>Whether the two caregivers agree, back each other up, undermine each other, expose the child to conflict, and share the load</td><td>Agreement, closeness, support, undermining, exposure to conflict, endorsement, division</td><td>Feinberg, Brown and Kan 2012</td></tr>
+<tr><td>MAP</td><td>10 x 2</td><td>Intensity of the problem in money, communication, sex, in-laws, recreation, friends, alcohol/drugs, children, jealousy, religion; then confidence you two can resolve each</td><td>Intensity and relational efficacy per area</td><td>Notarius and Vanzetti 1983</td></tr>
+<tr><td>PSDQ short form</td><td>32</td><td>How often you, as a parent, reason with the child, show warmth, demand obedience, punish, avoid confrontation, let things slide</td><td>Authoritative, authoritarian, permissive</td><td>Robinson et al. 2001</td></tr>
+<tr><td>PRQC (optional)</td><td>18</td><td>Three items each on satisfaction, commitment, intimacy, trust, passion, love</td><td>Six separate component scores</td><td>Fletcher, Simpson and Thomas 2000</td></tr>
+</table>
+</div>
+<p class="small">Both ACQ passes and both Who Does What ratings are shown on the same screen per item, so the comparison is felt rather than repeated.</p>
+
+<h2 id="pol">4. Polarization block (new, in Layer 1, each alone, about 8 minutes)</h2>
+<div class="note">
+<p><strong>Why it exists.</strong> Couples drift into compensating positions: one becomes stricter because the other seems lax, one plans more because the other never does. Integrative Behavioral Couple Therapy calls this polarization, and the resulting stuck pattern the mutual trap. A trait instrument can't see it, because it asks who you are, not who you become next to this person. This block asks both. It's original and unvalidated.</p>
+</div>
+<p>For each of ten dimensions, three questions. The first two are 1 to 7 scales with the anchors shown. The third is asked only when the first two differ by 2 or more.</p>
+<ol>
+<li><strong>Structure with a child.</strong> Anchors: 1 = loose, let it unfold; 7 = structured, planned, rules first.<br>Left to yourself, where are you? With your partner, where do you find yourself? If different: why do you think you shift?</li>
+<li><strong>Order in the home.</strong> 1 = mess doesn't bother me; 7 = it needs to be tidy for me to rest.</li>
+<li><strong>Emotional expressiveness.</strong> 1 = I keep feelings to myself; 7 = I say what I feel as I feel it.</li>
+<li><strong>Directness versus gentleness.</strong> 1 = I soften everything; 7 = I say it straight, however it lands.</li>
+<li><strong>Initiating affection.</strong> 1 = I wait to be approached; 7 = I reach first.</li>
+<li><strong>Planning versus spontaneity.</strong> 1 = I like things open; 7 = I need a plan.</li>
+<li><strong>Taking charge versus deferring.</strong> 1 = I let the other lead; 7 = I run things.</li>
+<li><strong>Caution versus risk.</strong> 1 = I assume things will be fine; 7 = I assume something could go wrong.</li>
+<li><strong>Social energy.</strong> 1 = I need a lot of time alone; 7 = I want people around most of the time.</li>
+<li><strong>Home versus work focus.</strong> 1 = home first; 7 = work first.</li>
+</ol>
+<p>Then a mirror set, ten items: <em>With me, my partner seems to become more ___</em>, same anchors. The interpreter computes each person's polarization gap (self-alone minus self-with-partner) and looks for the loop: if A reports becoming stricter and B reports becoming looser on the same dimension, that's flagged once as a shared pattern, never as two separate faults.</p>
+
+<h2 id="color">5. Color layer: every question, by module (each alone, only where flagged)</h2>
+<p>Each module runs specifics, preference, tag, then the gap and probe steps. Written answers. The interpreter asks for a concrete example whenever it gets an abstraction.</p>
+
+<h3>Parenting (opens on PSDQ gap, Brief CRS flags, or childcare rows of Who Does What)</h3>
+<h4>Dimension 1. Warmth and control, separately</h4>
+<ul>
+<li>On a normal day, how do you show a child warmth? A concrete example from this week if there was one.</li>
+<li>On a normal day, how do you enforce a limit? A concrete example.</li>
+<li>Preference: describe a moment where a child was corrected well. What made it good?</li>
+</ul>
+<h4>Dimension 2. What "respect" means</h4>
+<ul>
+<li>Finish this sentence: A respectful child is one who ____.</li>
+<li>Finish this sentence: A respectful parent is one who ____.</li>
+<li>A child disagrees with an adult, out loud, and turns out to be right. What should happen?</li>
+<li>A child asks a blunt, curious question about an adult's body, clothes, or choices, in front of others. Is that disrespect, curiosity, or something else? What do you do?</li>
+<li>Tag: whether children may question adults; what a child owes an adult versus what an adult owes a child.</li>
+</ul>
+<h4>Dimension 3. Self-expression versus structure</h4>
+<ul>
+<li>How much of a child's day should be planned versus open? Describe your ideal weekday.</li>
+<li>A child wants to do something unusual (in clothing, interest, behavior) that isn't harmful. What's your response?</li>
+<li>How involved should a parent be in a child's friendships, schoolwork, and activities? Where's the line between supporting and controlling?</li>
+<li>Preference: describe the balance of structure and freedom you'd want for a child at this age.</li>
+<li>Tag: daily structure; how much a child directs their own interests.</li>
+</ul>
+<h4>Dimension 4. Modeling</h4>
+<ul>
+<li>Name something you expect from a child that you also hold yourself to.</li>
+<li>Name something adults in the house do that you would not want the child to copy.</li>
+<li>Is it fine for adults to use language or habits around a child that the child isn't allowed to use? Where's the line?</li>
+<li>Tag: adults modeling what they require.</li>
+</ul>
+<h4>Dimension 5. Discipline mechanics</h4>
+<ul>
+<li>When a limit is broken, what happens, step by step?</li>
+<li>What's off the table entirely as a response to a child?</li>
+<li>Who handles correction when both adults are present, and what does the other do?</li>
+<li>When adults disagree about a child in the moment, what happens in front of the child, and what happens after?</li>
+<li>Tag: specific methods; disagreeing in front of the child; who has final say.</li>
+</ul>
+<h4>Dimension 6. Roles in a multi-caregiver home</h4>
+<ul>
+<li>What's each adult's role with the child, and how did you decide it?</li>
+<li>When does a non-primary caregiver correct the child, and when do they hand it to the primary parent?</li>
+<li>What does backing each other up mean, and what does it not require?</li>
+<li>Tag: who disciplines; how a newer caregiver earns standing.</li>
+</ul>
+
+<h3>Intimacy and affection (opens on FAPBI affection/closeness flags, SDI-2 dyadic gap, or MAP sex intensity)</h3>
+<ul>
+<li>One of you initiates a kiss with no other intention and the other isn't in the mood. Write the exchange.</li>
+<li>What's the smallest thing your partner could do that would make you feel wanted this week?</li>
+<li>Preference: describe an ordinary good week, with affection in it, under current circumstances. Then a year from now.</li>
+<li>Tag: scheduled time; advance notice; what counts as intimacy.</li>
+</ul>
+
+<h3>Communication and nonverbal (opens on CPQ-SF demand-withdraw or ACQ communication items)</h3>
+<ul>
+<li>Your partner's face looks angry and you don't know if they are. What do you do? What should they do?</li>
+<li>Your partner has been quiet for two days. What do you assume, and what do you do?</li>
+<li>Preference: when you're upset, how do you want to be approached, in words you'd actually use?</li>
+<li>Write-in: When my face looks upset, what's usually going on is ____.</li>
+<li>Tag: gentleness of delivery; being asked versus being read.</li>
+</ul>
+
+<h3>Conflict and repair (opens on RDAS satisfaction subscale, MAP communication intensity, or FAPBI violations)</h3>
+<ul>
+<li>One of you says something hurtful in a fight. Ten minutes later, what happens? The next morning?</li>
+<li>What does a pause in a fight mean to you, and what would make you trust that it isn't abandonment?</li>
+<li>Preference: describe a fight that went as well as a fight can.</li>
+<li>Tag: apology; volume; being able to be wrong and stay in the room.</li>
+</ul>
+
+<h3>Household (opens on Who Does What flags)</h3>
+<ul>
+<li>One of you wants to reorganize a shared space the other uses. What's the right way to go about it?</li>
+<li>Preference: on the tasks that flagged, describe the split you'd actually be content with.</li>
+<li>Tag: each other's things and spaces; guests without notice.</li>
+</ul>
+
+<h3>Self-care and health (opens on FAPBI/ACQ health behaviors or MAP alcohol area)</h3>
+<ul>
+<li>A doctor recommends something and the person doesn't want to do it. What's the partner's role?</li>
+<li>Your partner comes home after a drink with a friend you didn't know about. What do you do, and what did you want them to do?</li>
+<li>Preference: what do you want your partner to say when they're worried about you?</li>
+<li>Tag: notice; comment; space when stressed.</li>
+</ul>
+
+<h3>Friends, family, and the long term (opens on RDAS consensus flags for friends, in-laws, life philosophy; MAP in-laws or friends; PRQC commitment)</h3>
+<ul>
+<li>One of you wants four days away without the kids. Who covers, and what's a fair ask?</li>
+<li>A parent is coming over. Ground rules, and who sets them?</li>
+<li>Five years from now, describe a good Tuesday evening in your house.</li>
+<li>Tag: separate social time; family in the home; where you live.</li>
+</ul>
+
+<h3>Questions asked in every flagged domain</h3>
+<ul>
+<li>Preference: Describe what good would look like here, concretely, in your house, on an ordinary week.</li>
+<li>Tag: Is this a requirement, meaning the relationship doesn't work for you without it, or a preference, meaning you'd like it and could live without it? Required comment: what it means, and what it would look like met.</li>
+<li>Perception gap (only where the gap is 2 or more): You rated yourself X on this and your partner rated you Y. What are you each seeing?</li>
+<li>Context (only for items the person checkboxed): You flagged this one. What's the context?</li>
+<li>Polarization (only where the gap is 2 or more): You said that left to yourself you're at X on this, and with your partner you find yourself at Y. What do you think is going on?</li>
+</ul>
+
+<h2 id="probes">6. Consistency probes: the templates</h2>
+<p>At most three per domain, one at a time, to that person only, with the reason attached, and a skip button on each. Skips are noted, never pushed. These are the only forms the interpreter may use.</p>
+<ul>
+<li>You answered X here and Y in [domain]. Help me understand how those fit together.</li>
+<li>Your [score] suggests [pattern], and here you said [the opposite]. How do those fit for you?</li>
+<li>You rated yourself high on [behavior], and your scenario answers here are mostly about [contrasting behavior]. Help me see how those fit.</li>
+<li>What's the value under this?</li>
+<li>What would it look like if your partner did the thing you said you'd do?</li>
+<li>Is this a preference or a requirement?</li>
+<li>What would change your mind?</li>
+</ul>
+<p>Parenting-specific probes the interpreter is told to watch for: high self-rated warmth with scenario answers that are all control; respect defined as obedience alongside adult conduct the person wouldn't accept from the child; an easygoing self-description with no structure the person can name.</p>
+
+<h2 id="plan">7. The plan: what gets written</h2>
+<p>One line per agenda item: the topic; what we agreed; what each of us does; when we look at it again. Shared requirements pinned at the top and not revisited. Requirement-versus-preference mismatches must have a date before the domain can close. Parked items carry over marked as parked on purpose.</p>
+<p>Parenting plans must include five lines: children questioning adults; who corrects and how; structure versus freedom for this child at this age; the language and modeling standard adults hold; the protocol for adults disagreeing in front of the child.</p>
+<p>The individual profile (Layer 0 scores plus the person's own relationship-satisfaction scores) is generated for each person separately, owned by that person, and shareable with a therapist only by that person's choice. Derived interpretations are labeled as unvalidated; the instrument scores are labeled with their sources.</p>
+
+<h2 id="ext">8. Extended caregivers and children</h2>
+<h3>Third caregiver</h3>
+<ul>
+<li>Brief CRS with wording adjusted; a Who Does What column for their tasks; PSDQ if they take real caregiving time.</li>
+<li>What help do you want from the household?</li>
+<li>What help are you able to give?</li>
+<li>What role would you like with the child?</li>
+<li>What would you prefer the household not do?</li>
+</ul>
+<h3>Child (kitchen-table conversation, adults present, never a form)</h3>
+<ul>
+<li>What makes home feel safe and good to you?</li>
+<li>When a grown-up is upset about something, how do you like them to tell you?</li>
+<li>What's something you'd like to do with each grown-up, just the two of you?</li>
+<li>What's a house rule you think is fair? What's one you think isn't?</li>
+<li>When you have a question about something a grown-up does, what should you do?</li>
+<li>What should a grown-up do if you say something and they don't like it?</li>
+<li>What do you want a new baby to know about you?</li>
+</ul>
+<p>The adults answer the last two of the rule questions too, so the household's rule about questions and disagreements is written partly in the child's words and pinned to the plan.</p>
+
+<p class="small">Sources for the validated instruments: Mini-IPIP (ipip.ori.org); ECR-R (Fraley lab); PHQ-9 and GAD-7 (public domain); SIS/SES-SF (Carpenter et al. 2008, Journal of Sex Research); SDI-2 (Spector et al. 1996, Journal of Sex and Marital Therapy); CSI-16 (Funk and Rogge 2007, Journal of Family Psychology); RDAS (Busby et al. 1995, Journal of Marital and Family Therapy); CPQ-SF (Futris et al. 2010, Journal of Family Psychology); ACQ (Weiss, Hops and Patterson 1973); FAPBI (Doss and Christensen 2006, Psychological Assessment); Who Does What? (Cowan and Cowan 1988); Brief CRS (Feinberg, Brown and Kan 2012, Parenting: Science and Practice); MAP (Notarius and Vanzetti 1983); PRQC (Fletcher, Simpson and Thomas 2000, Personality and Social Psychology Bulletin); PSDQ (Robinson et al. 2001); OCI-R (Foa et al. 2002, Psychological Assessment).</p>
+</main>
+</body>
+</html>

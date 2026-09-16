@@ -1,0 +1,142 @@
+@import "tailwindcss";
+
+:root {
+  --background: #fbfaf7;
+  --foreground: #1c1b19;
+  --muted: #5d5a54;
+  --surface: #ffffff;
+  --border: #d9d5cc;
+  --accent: #1f5f8b;
+  --accent-contrast: #ffffff;
+  --focus: #b8860b;
+  --bar: #2f7d5b;
+  --bar-track: #e6e2d8;
+  --warn-bg: #fff4e0;
+  --warn-border: #d69a2b;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-surface: var(--surface);
+  --color-border: var(--border);
+  --color-accent: var(--accent);
+  --color-accent-contrast: var(--accent-contrast);
+  --color-focus: var(--focus);
+  --color-bar: var(--bar);
+  --color-bar-track: var(--bar-track);
+  --color-warn-bg: var(--warn-bg);
+  --color-warn-border: var(--warn-border);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not(.high-contrast) {
+    --background: #141311;
+    --foreground: #ecebe6;
+    --muted: #b3afa6;
+    --surface: #1e1d1a;
+    --border: #3c3a35;
+    --accent: #7fb6dd;
+    --accent-contrast: #101010;
+    --focus: #f2c14e;
+    --bar: #6ec49a;
+    --bar-track: #2b2a26;
+    --warn-bg: #3a2c12;
+    --warn-border: #d69a2b;
+  }
+}
+
+/* High-contrast mode: toggled by adding .high-contrast to <html>; persisted in localStorage. */
+:root.high-contrast {
+  --background: #000000;
+  --foreground: #ffffff;
+  --muted: #ffffff;
+  --surface: #000000;
+  --border: #ffffff;
+  --accent: #ffff00;
+  --accent-contrast: #000000;
+  --focus: #00ffff;
+  --bar: #ffff00;
+  --bar-track: #333333;
+  --warn-bg: #000000;
+  --warn-border: #ffff00;
+}
+
+:root.high-contrast a {
+  text-decoration: underline;
+}
+
+:root.high-contrast button,
+:root.high-contrast input,
+:root.high-contrast textarea,
+:root.high-contrast select {
+  border: 2px solid var(--foreground);
+}
+
+html {
+  background: var(--background);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+  line-height: 1.5;
+}
+
+/* Visible focus everywhere, for keyboard users. */
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: 0;
+  z-index: 100;
+  padding: 0.5rem 1rem;
+  background: var(--accent);
+  color: var(--accent-contrast);
+}
+
+.skip-link:focus {
+  left: 0.5rem;
+  top: 0.5rem;
+}
+
+input[type="radio"],
+input[type="checkbox"] {
+  accent-color: var(--accent);
+  width: 1.15rem;
+  height: 1.15rem;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="date"],
+input[type="number"],
+textarea,
+select {
+  background: var(--surface);
+  color: var(--foreground);
+  border: 1px solid var(--border);
+  border-radius: 0.375rem;
+  padding: 0.5rem 0.65rem;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+th,
+td {
+  border: 1px solid var(--border);
+  padding: 0.4rem 0.6rem;
+  vertical-align: top;
+  text-align: left;
+}

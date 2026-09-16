@@ -1,0 +1,60 @@
+{
+  "domain": "intimacy",
+  "title": "Intimacy and affection",
+  "opens_on": "FAPBI affection or closeness flags, an SDI-2 dyadic gap, or MAP sex intensity.",
+  "specifics": [
+    {
+      "id": "intimacy_s1",
+      "text": "One of you initiates a kiss with no other intention and the other isn't in the mood. Write the exchange."
+    },
+    {
+      "id": "intimacy_s2",
+      "text": "What's the smallest thing your partner could do that would make you feel wanted this week?"
+    }
+  ],
+  "preference": [
+    {
+      "id": "intimacy_p3",
+      "text": "Describe an ordinary good week, with affection in it, under current circumstances. Then a year from now."
+    },
+    {
+      "id": "intimacy_p0",
+      "text": "Describe what good would look like here, concretely, in your house, on an ordinary week."
+    }
+  ],
+  "tags": [
+    {
+      "id": "intimacy_t4",
+      "topics": [
+        "scheduled time",
+        "advance notice",
+        "what counts as intimacy"
+      ]
+    }
+  ],
+  "version": "1.0.0",
+  "source": "docs/question_inventory.md Part C (original content, verbatim).",
+  "common": {
+    "preference_universal": "Describe what good would look like here, concretely, in your house, on an ordinary week.",
+    "tag_question": "Is this a requirement, meaning the relationship doesn't work for you without it, or a preference, meaning you'd like it and could live without it?",
+    "tag_comment_prompt": "Required comment: what it means, and what it would look like met.",
+    "perception_gap": "You rated yourself {self_value} on this and your partner rated you {partner_value}. What are you each seeing?",
+    "context": "You flagged this one. What's the context?",
+    "polarization": "You said that left to yourself you're at {self_alone} on this, and with your partner you find yourself at {self_with_partner}. What do you think is going on?",
+    "concreteness_followup": "Can you give me a specific example?",
+    "probe_skip_label": "Skip",
+    "transitions": {
+      "enter": "This domain flagged. A few written questions, one at a time. You can pause and come back any time.",
+      "specifics": "Specifics",
+      "preference": "Preference",
+      "tag": "Requirement or preference",
+      "polarization": "Polarization",
+      "perception_gap": "Perception gap",
+      "context": "Context",
+      "consistency": "A few follow-ups. Each has a reason attached and a skip button.",
+      "complete": "That's this domain done. Nothing here is shared until your partner has finished too.",
+      "ack": "Saved.",
+      "skipped_ack": "Skipped. Noted, not pushed."
+    }
+  }
+}

@@ -1,0 +1,577 @@
+{
+  "key": "who_does_what",
+  "name": "Who Does What? (household tasks)",
+  "source_citation": "Cowan & Cowan (1988). Who Does What? In Touliatos, Perlmutter & Straus (Eds.), Handbook of Family Measurement Techniques.",
+  "license_note": "Used with citation for research and clinical purposes; confirm terms with the authors for commercial deployment.",
+  "layer": 1,
+  "passes": [
+    "now",
+    "ideal"
+  ],
+  "default_domain": "household",
+  "items": [
+    {
+      "item_id": "who_does_what_1",
+      "text": "TODO: populate from source",
+      "descriptor": "planning meals",
+      "scale": {
+        "min": 1,
+        "max": 9,
+        "labels": [
+          "I do it all",
+          "",
+          "",
+          "",
+          "We share it equally",
+          "",
+          "",
+          "",
+          "Partner does it all"
+        ]
+      },
+      "reverse_scored": false,
+      "domain": "household",
+      "group": "household_tasks"
+    },
+    {
+      "item_id": "who_does_what_2",
+      "text": "TODO: populate from source",
+      "descriptor": "cooking",
+      "scale": {
+        "min": 1,
+        "max": 9,
+        "labels": [
+          "I do it all",
+          "",
+          "",
+          "",
+          "We share it equally",
+          "",
+          "",
+          "",
+          "Partner does it all"
+        ]
+      },
+      "reverse_scored": false,
+      "domain": "household",
+      "group": "household_tasks"
+    },
+    {
+      "item_id": "who_does_what_3",
+      "text": "TODO: populate from source",
+      "descriptor": "dishes and kitchen cleanup",
+      "scale": {
+        "min": 1,
+        "max": 9,
+        "labels": [
+          "I do it all",
+          "",
+          "",
+          "",
+          "We share it equally",
+          "",
+          "",
+          "",
+          "Partner does it all"
+        ]
+      },
+      "reverse_scored": false,
+      "domain": "household",
+      "group": "household_tasks"
+    },
+    {
+      "item_id": "who_does_what_4",
+      "text": "TODO: populate from source",
+      "descriptor": "grocery shopping",
+      "scale": {
+        "min": 1,
+        "max": 9,
+        "labels": [
+          "I do it all",
+          "",
+          "",
+          "",
+          "We share it equally",
+          "",
+          "",
+          "",
+          "Partner does it all"
+        ]
+      },
+      "reverse_scored": false,
+      "domain": "household",
+      "group": "household_tasks"
+    },
+    {
+      "item_id": "who_does_what_5",
+      "text": "TODO: populate from source",
+      "descriptor": "house cleaning",
+      "scale": {
+        "min": 1,
+        "max": 9,
+        "labels": [
+          "I do it all",
+          "",
+          "",
+          "",
+          "We share it equally",
+          "",
+          "",
+          "",
+          "Partner does it all"
+        ]
+      },
+      "reverse_scored": false,
+      "domain": "household",
+      "group": "household_tasks"
+    },
+    {
+      "item_id": "who_does_what_6",
+      "text": "TODO: populate from source",
+      "descriptor": "laundry",
+      "scale": {
+        "min": 1,
+        "max": 9,
+        "labels": [
+          "I do it all",
+          "",
+          "",
+          "",
+          "We share it equally",
+          "",
+          "",
+          "",
+          "Partner does it all"
+        ]
+      },
+      "reverse_scored": false,
+      "domain": "household",
+      "group": "household_tasks"
+    },
+    {
+      "item_id": "who_does_what_7",
+      "text": "TODO: populate from source",
+      "descriptor": "repairs and maintenance",
+      "scale": {
+        "min": 1,
+        "max": 9,
+        "labels": [
+          "I do it all",
+          "",
+          "",
+          "",
+          "We share it equally",
+          "",
+          "",
+          "",
+          "Partner does it all"
+        ]
+      },
+      "reverse_scored": false,
+      "domain": "household",
+      "group": "household_tasks"
+    },
+    {
+      "item_id": "who_does_what_8",
+      "text": "TODO: populate from source",
+      "descriptor": "paying bills",
+      "scale": {
+        "min": 1,
+        "max": 9,
+        "labels": [
+          "I do it all",
+          "",
+          "",
+          "",
+          "We share it equally",
+          "",
+          "",
+          "",
+          "Partner does it all"
+        ]
+      },
+      "reverse_scored": false,
+      "domain": "household",
+      "group": "household_tasks"
+    },
+    {
+      "item_id": "who_does_what_9",
+      "text": "TODO: populate from source",
+      "descriptor": "budgeting and financial tracking",
+      "scale": {
+        "min": 1,
+        "max": 9,
+        "labels": [
+          "I do it all",
+          "",
+          "",
+          "",
+          "We share it equally",
+          "",
+          "",
+          "",
+          "Partner does it all"
+        ]
+      },
+      "reverse_scored": false,
+      "domain": "household",
+      "group": "household_tasks"
+    },
+    {
+      "item_id": "who_does_what_10",
+      "text": "TODO: populate from source",
+      "descriptor": "scheduling appointments",
+      "scale": {
+        "min": 1,
+        "max": 9,
+        "labels": [
+          "I do it all",
+          "",
+          "",
+          "",
+          "We share it equally",
+          "",
+          "",
+          "",
+          "Partner does it all"
+        ]
+      },
+      "reverse_scored": false,
+      "domain": "household",
+      "group": "household_tasks"
+    },
+    {
+      "item_id": "who_does_what_11",
+      "text": "TODO: populate from source",
+      "descriptor": "car upkeep",
+      "scale": {
+        "min": 1,
+        "max": 9,
+        "labels": [
+          "I do it all",
+          "",
+          "",
+          "",
+          "We share it equally",
+          "",
+          "",
+          "",
+          "Partner does it all"
+        ]
+      },
+      "reverse_scored": false,
+      "domain": "household",
+      "group": "household_tasks"
+    },
+    {
+      "item_id": "who_does_what_12",
+      "text": "TODO: populate from source",
+      "descriptor": "yard and outdoor work",
+      "scale": {
+        "min": 1,
+        "max": 9,
+        "labels": [
+          "I do it all",
+          "",
+          "",
+          "",
+          "We share it equally",
+          "",
+          "",
+          "",
+          "Partner does it all"
+        ]
+      },
+      "reverse_scored": false,
+      "domain": "household",
+      "group": "household_tasks"
+    },
+    {
+      "item_id": "who_does_what_13",
+      "text": "TODO: populate from source",
+      "descriptor": "pet care",
+      "scale": {
+        "min": 1,
+        "max": 9,
+        "labels": [
+          "I do it all",
+          "",
+          "",
+          "",
+          "We share it equally",
+          "",
+          "",
+          "",
+          "Partner does it all"
+        ]
+      },
+      "reverse_scored": false,
+      "domain": "household",
+      "group": "household_tasks"
+    },
+    {
+      "item_id": "who_does_what_14",
+      "text": "TODO: populate from source",
+      "descriptor": "household supplies and errands",
+      "scale": {
+        "min": 1,
+        "max": 9,
+        "labels": [
+          "I do it all",
+          "",
+          "",
+          "",
+          "We share it equally",
+          "",
+          "",
+          "",
+          "Partner does it all"
+        ]
+      },
+      "reverse_scored": false,
+      "domain": "household",
+      "group": "household_tasks"
+    },
+    {
+      "item_id": "who_does_what_15",
+      "text": "TODO: populate from source",
+      "descriptor": "trash and recycling",
+      "scale": {
+        "min": 1,
+        "max": 9,
+        "labels": [
+          "I do it all",
+          "",
+          "",
+          "",
+          "We share it equally",
+          "",
+          "",
+          "",
+          "Partner does it all"
+        ]
+      },
+      "reverse_scored": false,
+      "domain": "household",
+      "group": "household_tasks"
+    },
+    {
+      "item_id": "who_does_what_16",
+      "text": "TODO: populate from source",
+      "descriptor": "household paperwork",
+      "scale": {
+        "min": 1,
+        "max": 9,
+        "labels": [
+          "I do it all",
+          "",
+          "",
+          "",
+          "We share it equally",
+          "",
+          "",
+          "",
+          "Partner does it all"
+        ]
+      },
+      "reverse_scored": false,
+      "domain": "household",
+      "group": "household_tasks"
+    },
+    {
+      "item_id": "who_does_what_17",
+      "text": "TODO: populate from source",
+      "descriptor": "deciding how money is spent",
+      "scale": {
+        "min": 1,
+        "max": 9,
+        "labels": [
+          "I do it all",
+          "",
+          "",
+          "",
+          "We share it equally",
+          "",
+          "",
+          "",
+          "Partner does it all"
+        ]
+      },
+      "reverse_scored": false,
+      "domain": "household",
+      "group": "decisions"
+    },
+    {
+      "item_id": "who_does_what_18",
+      "text": "TODO: populate from source",
+      "descriptor": "deciding how leisure time is spent",
+      "scale": {
+        "min": 1,
+        "max": 9,
+        "labels": [
+          "I do it all",
+          "",
+          "",
+          "",
+          "We share it equally",
+          "",
+          "",
+          "",
+          "Partner does it all"
+        ]
+      },
+      "reverse_scored": false,
+      "domain": "social_family_longterm",
+      "group": "decisions"
+    },
+    {
+      "item_id": "who_does_what_19",
+      "text": "TODO: populate from source",
+      "descriptor": "deciding about time with family and friends",
+      "scale": {
+        "min": 1,
+        "max": 9,
+        "labels": [
+          "I do it all",
+          "",
+          "",
+          "",
+          "We share it equally",
+          "",
+          "",
+          "",
+          "Partner does it all"
+        ]
+      },
+      "reverse_scored": false,
+      "domain": "social_family_longterm",
+      "group": "decisions"
+    },
+    {
+      "item_id": "who_does_what_20",
+      "text": "TODO: populate from source",
+      "descriptor": "deciding about major purchases and moves",
+      "scale": {
+        "min": 1,
+        "max": 9,
+        "labels": [
+          "I do it all",
+          "",
+          "",
+          "",
+          "We share it equally",
+          "",
+          "",
+          "",
+          "Partner does it all"
+        ]
+      },
+      "reverse_scored": false,
+      "domain": "social_family_longterm",
+      "group": "decisions"
+    },
+    {
+      "item_id": "who_does_what_21",
+      "text": "TODO: populate from source",
+      "descriptor": "daily childcare (meals, bedtime, getting ready)",
+      "scale": {
+        "min": 1,
+        "max": 9,
+        "labels": [
+          "I do it all",
+          "",
+          "",
+          "",
+          "We share it equally",
+          "",
+          "",
+          "",
+          "Partner does it all"
+        ]
+      },
+      "reverse_scored": false,
+      "domain": "parenting",
+      "group": "childcare"
+    },
+    {
+      "item_id": "who_does_what_22",
+      "text": "TODO: populate from source",
+      "descriptor": "child's discipline and limits",
+      "scale": {
+        "min": 1,
+        "max": 9,
+        "labels": [
+          "I do it all",
+          "",
+          "",
+          "",
+          "We share it equally",
+          "",
+          "",
+          "",
+          "Partner does it all"
+        ]
+      },
+      "reverse_scored": false,
+      "domain": "parenting",
+      "group": "childcare"
+    },
+    {
+      "item_id": "who_does_what_23",
+      "text": "TODO: populate from source",
+      "descriptor": "child's school, activities and appointments",
+      "scale": {
+        "min": 1,
+        "max": 9,
+        "labels": [
+          "I do it all",
+          "",
+          "",
+          "",
+          "We share it equally",
+          "",
+          "",
+          "",
+          "Partner does it all"
+        ]
+      },
+      "reverse_scored": false,
+      "domain": "parenting",
+      "group": "childcare"
+    },
+    {
+      "item_id": "who_does_what_24",
+      "text": "TODO: populate from source",
+      "descriptor": "playing and spending time with the child",
+      "scale": {
+        "min": 1,
+        "max": 9,
+        "labels": [
+          "I do it all",
+          "",
+          "",
+          "",
+          "We share it equally",
+          "",
+          "",
+          "",
+          "Partner does it all"
+        ]
+      },
+      "reverse_scored": false,
+      "domain": "parenting",
+      "group": "childcare"
+    }
+  ],
+  "scoring": {
+    "version": "1.0.0",
+    "subscales": [],
+    "cutoffs": []
+  },
+  "scoring_key_verified": false,
+  "notes": "Two passes on the same screen per row: 'now' (how it is) and 'ideal' (how I would like it), 1 = I do it all, 5 = shared equally, 9 = partner does it all (the app is gender-neutral; the original scale runs from all-her to all-him). Rows 1–16 household tasks, 17–20 decisions, 21–24 childcare; childcare rows route to the parenting domain. Per person: now-versus-ideal gap per row (derived). Couple-level: disagreement between the two 'now' ratings after mirroring the partner's perspective. The row list is a placeholder pending the official Who Does What? task list (distributed on request, see docs/instrument_acquisition.md); the RDAS consensus items on household tasks can stand in temporarily.",
+  "pass_prompts": {
+    "now": "How it is now",
+    "ideal": "How I would like it"
+  }
+}

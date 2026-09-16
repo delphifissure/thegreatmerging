@@ -1,0 +1,230 @@
+{
+  "key": "polarization",
+  "name": "Polarization block (original, unvalidated)",
+  "source_citation": "Original instrument for The Plan; docs/question_inventory.md Part B and docs/app_flow.html section 4. Not validated.",
+  "license_note": "Original work of the project; no external license. Unvalidated: every output that references it carries the unvalidated label.",
+  "layer": 1,
+  "passes": [
+    "self_alone",
+    "self_with_partner",
+    "partner_becomes"
+  ],
+  "unvalidated": true,
+  "default_domain": "communication",
+  "items": [
+    {
+      "item_id": "polarization_1",
+      "text": "Structure with a child",
+      "descriptor": "structure with a child",
+      "scale": {
+        "min": 1,
+        "max": 7,
+        "labels": [
+          "1 = loose, let it unfold",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "7 = structured, planned, rules first"
+        ]
+      },
+      "reverse_scored": false,
+      "domain": "parenting"
+    },
+    {
+      "item_id": "polarization_2",
+      "text": "Order in the home",
+      "descriptor": "order in the home",
+      "scale": {
+        "min": 1,
+        "max": 7,
+        "labels": [
+          "1 = mess doesn't bother me",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "7 = it needs to be tidy for me to rest"
+        ]
+      },
+      "reverse_scored": false,
+      "domain": "household"
+    },
+    {
+      "item_id": "polarization_3",
+      "text": "Emotional expressiveness",
+      "descriptor": "emotional expressiveness",
+      "scale": {
+        "min": 1,
+        "max": 7,
+        "labels": [
+          "1 = I keep feelings to myself",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "7 = I say what I feel as I feel it"
+        ]
+      },
+      "reverse_scored": false,
+      "domain": "communication"
+    },
+    {
+      "item_id": "polarization_4",
+      "text": "Directness versus gentleness",
+      "descriptor": "directness versus gentleness",
+      "scale": {
+        "min": 1,
+        "max": 7,
+        "labels": [
+          "1 = I soften everything",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "7 = I say it straight, however it lands"
+        ]
+      },
+      "reverse_scored": false,
+      "domain": "communication"
+    },
+    {
+      "item_id": "polarization_5",
+      "text": "Initiating affection",
+      "descriptor": "initiating affection",
+      "scale": {
+        "min": 1,
+        "max": 7,
+        "labels": [
+          "1 = I wait to be approached",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "7 = I reach first"
+        ]
+      },
+      "reverse_scored": false,
+      "domain": "intimacy"
+    },
+    {
+      "item_id": "polarization_6",
+      "text": "Planning versus spontaneity",
+      "descriptor": "planning versus spontaneity",
+      "scale": {
+        "min": 1,
+        "max": 7,
+        "labels": [
+          "1 = I like things open",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "7 = I need a plan"
+        ]
+      },
+      "reverse_scored": false,
+      "domain": "household"
+    },
+    {
+      "item_id": "polarization_7",
+      "text": "Taking charge versus deferring",
+      "descriptor": "taking charge versus deferring",
+      "scale": {
+        "min": 1,
+        "max": 7,
+        "labels": [
+          "1 = I let the other lead",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "7 = I run things"
+        ]
+      },
+      "reverse_scored": false,
+      "domain": "communication"
+    },
+    {
+      "item_id": "polarization_8",
+      "text": "Caution versus risk",
+      "descriptor": "caution versus risk",
+      "scale": {
+        "min": 1,
+        "max": 7,
+        "labels": [
+          "1 = I assume things will be fine",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "7 = I assume something could go wrong"
+        ]
+      },
+      "reverse_scored": false,
+      "domain": "social_family_longterm"
+    },
+    {
+      "item_id": "polarization_9",
+      "text": "Social energy",
+      "descriptor": "social energy",
+      "scale": {
+        "min": 1,
+        "max": 7,
+        "labels": [
+          "1 = I need a lot of time alone",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "7 = I want people around most of the time"
+        ]
+      },
+      "reverse_scored": false,
+      "domain": "social_family_longterm"
+    },
+    {
+      "item_id": "polarization_10",
+      "text": "Home versus work focus",
+      "descriptor": "home versus work focus",
+      "scale": {
+        "min": 1,
+        "max": 7,
+        "labels": [
+          "1 = home first",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "7 = work first"
+        ]
+      },
+      "reverse_scored": false,
+      "domain": "social_family_longterm"
+    }
+  ],
+  "scoring": {
+    "version": "1.0.0",
+    "subscales": [],
+    "cutoffs": []
+  },
+  "scoring_key_verified": false,
+  "notes": "UNVALIDATED. Ten dimensions rated 1–7 three ways: self when alone, self when with partner, and a mirror rating of how the partner becomes when with me. Per person: gap = self_with_partner − self_alone (build prompt convention). Couple-level: a loop on a dimension when A's gap and B's gap have opposite signs and both are at least 2 in magnitude, flagged once as a shared pattern. The written attribution question is asked in the color layer only where the two self ratings differ by 2 or more. Item text is original content from docs/question_inventory.md and is populated here.",
+  "pass_prompts": {
+    "self_alone": "Left to yourself, where are you?",
+    "self_with_partner": "With your partner, where do you find yourself?",
+    "partner_becomes": "With me, my partner seems to become more ___."
+  },
+  "attribution_prompt": "If those differ: why do you think you shift?",
+  "attribution_gap_at_or_above": 2
+}

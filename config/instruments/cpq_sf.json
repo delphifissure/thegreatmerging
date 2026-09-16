@@ -1,0 +1,292 @@
+{
+  "key": "cpq_sf",
+  "name": "Communication Patterns Questionnaire – Short Form (CPQ-SF)",
+  "source_citation": "Futris, Campbell, Nielsen & Burwell (2010). The Communication Patterns Questionnaire-Short Form: a review and assessment. The Family Journal, 18(3), 275–287. Original: Christensen & Sullaway (1984).",
+  "license_note": "Available for research and clinical use from the authors (Christensen, UCLA); cite the source.",
+  "layer": 1,
+  "passes": [
+    "single"
+  ],
+  "default_domain": "communication",
+  "items": [
+    {
+      "item_id": "cpq_sf_1",
+      "text": "TODO: populate from source",
+      "descriptor": "constructive communication item 1",
+      "scale": {
+        "min": 1,
+        "max": 9,
+        "labels": [
+          "Very unlikely",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "Very likely"
+        ]
+      },
+      "reverse_scored": false,
+      "domain": "communication"
+    },
+    {
+      "item_id": "cpq_sf_2",
+      "text": "TODO: populate from source",
+      "descriptor": "constructive communication item 2",
+      "scale": {
+        "min": 1,
+        "max": 9,
+        "labels": [
+          "Very unlikely",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "Very likely"
+        ]
+      },
+      "reverse_scored": true,
+      "domain": "communication"
+    },
+    {
+      "item_id": "cpq_sf_3",
+      "text": "TODO: populate from source",
+      "descriptor": "constructive communication item 3",
+      "scale": {
+        "min": 1,
+        "max": 9,
+        "labels": [
+          "Very unlikely",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "Very likely"
+        ]
+      },
+      "reverse_scored": true,
+      "domain": "communication"
+    },
+    {
+      "item_id": "cpq_sf_4",
+      "text": "TODO: populate from source",
+      "descriptor": "constructive communication item 4",
+      "scale": {
+        "min": 1,
+        "max": 9,
+        "labels": [
+          "Very unlikely",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "Very likely"
+        ]
+      },
+      "reverse_scored": false,
+      "domain": "communication"
+    },
+    {
+      "item_id": "cpq_sf_5",
+      "text": "TODO: populate from source",
+      "descriptor": "constructive communication item 5",
+      "scale": {
+        "min": 1,
+        "max": 9,
+        "labels": [
+          "Very unlikely",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "Very likely"
+        ]
+      },
+      "reverse_scored": false,
+      "domain": "communication"
+    },
+    {
+      "item_id": "cpq_sf_6",
+      "text": "TODO: populate from source",
+      "descriptor": "constructive communication item 6",
+      "scale": {
+        "min": 1,
+        "max": 9,
+        "labels": [
+          "Very unlikely",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "Very likely"
+        ]
+      },
+      "reverse_scored": true,
+      "domain": "communication"
+    },
+    {
+      "item_id": "cpq_sf_7",
+      "text": "TODO: populate from source",
+      "descriptor": "self demands / partner withdraws item 1",
+      "scale": {
+        "min": 1,
+        "max": 9,
+        "labels": [
+          "Very unlikely",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "Very likely"
+        ]
+      },
+      "reverse_scored": false,
+      "domain": "communication"
+    },
+    {
+      "item_id": "cpq_sf_8",
+      "text": "TODO: populate from source",
+      "descriptor": "partner demands / self withdraws item 1",
+      "scale": {
+        "min": 1,
+        "max": 9,
+        "labels": [
+          "Very unlikely",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "Very likely"
+        ]
+      },
+      "reverse_scored": false,
+      "domain": "communication"
+    },
+    {
+      "item_id": "cpq_sf_9",
+      "text": "TODO: populate from source",
+      "descriptor": "self demands / partner withdraws item 2",
+      "scale": {
+        "min": 1,
+        "max": 9,
+        "labels": [
+          "Very unlikely",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "Very likely"
+        ]
+      },
+      "reverse_scored": false,
+      "domain": "communication"
+    },
+    {
+      "item_id": "cpq_sf_10",
+      "text": "TODO: populate from source",
+      "descriptor": "partner demands / self withdraws item 2",
+      "scale": {
+        "min": 1,
+        "max": 9,
+        "labels": [
+          "Very unlikely",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "Very likely"
+        ]
+      },
+      "reverse_scored": false,
+      "domain": "communication"
+    },
+    {
+      "item_id": "cpq_sf_11",
+      "text": "TODO: populate from source",
+      "descriptor": "constructive communication item 7",
+      "scale": {
+        "min": 1,
+        "max": 9,
+        "labels": [
+          "Very unlikely",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "Very likely"
+        ]
+      },
+      "reverse_scored": false,
+      "domain": "communication"
+    }
+  ],
+  "scoring": {
+    "version": "1.0.0",
+    "subscales": [
+      {
+        "name": "constructive_communication",
+        "items": [
+          "cpq_sf_1",
+          "cpq_sf_2",
+          "cpq_sf_3",
+          "cpq_sf_4",
+          "cpq_sf_5",
+          "cpq_sf_6",
+          "cpq_sf_11"
+        ],
+        "method": "sum_reverse_aware"
+      },
+      {
+        "name": "self_demand_partner_withdraw",
+        "items": [
+          "cpq_sf_7",
+          "cpq_sf_9"
+        ],
+        "method": "sum"
+      },
+      {
+        "name": "partner_demand_self_withdraw",
+        "items": [
+          "cpq_sf_8",
+          "cpq_sf_10"
+        ],
+        "method": "sum"
+      }
+    ],
+    "cutoffs": []
+  },
+  "scoring_key_verified": false,
+  "notes": "VERIFY BEFORE USE: subscale membership and reverse keying must be checked against Futris et al. 2010 Table 1 when populating text. The app is gender-neutral: 'self demand / partner withdraw' replaces the man/woman labels. Couple-level demand–withdraw directions are computed in instruments/couple.ts."
+}

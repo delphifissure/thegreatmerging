@@ -1,0 +1,197 @@
+{
+  "domain": "parenting",
+  "title": "Parenting",
+  "opens_on": "PSDQ between-parent gap, Brief CRS flags, or the childcare rows of Who Does What.",
+  "groups": {
+    "d1": "Dimension 1. Warmth and control, separately",
+    "d2": "Dimension 2. What \"respect\" means",
+    "d3": "Dimension 3. Self-expression versus structure",
+    "d4": "Dimension 4. Modeling",
+    "d5": "Dimension 5. Discipline mechanics",
+    "d6": "Dimension 6. Roles in a multi-caregiver home"
+  },
+  "specifics": [
+    {
+      "id": "parenting_s1",
+      "text": "On a normal day, how do you show a child warmth? A concrete example from this week if there was one.",
+      "group": "d1"
+    },
+    {
+      "id": "parenting_s2",
+      "text": "On a normal day, how do you enforce a limit? A concrete example.",
+      "group": "d1"
+    },
+    {
+      "id": "parenting_s4",
+      "text": "Finish this sentence: A respectful child is one who ____.",
+      "group": "d2"
+    },
+    {
+      "id": "parenting_s5",
+      "text": "Finish this sentence: A respectful parent is one who ____.",
+      "group": "d2"
+    },
+    {
+      "id": "parenting_s6",
+      "text": "A child disagrees with an adult, out loud, and turns out to be right. What should happen?",
+      "group": "d2"
+    },
+    {
+      "id": "parenting_s7",
+      "text": "A child asks a blunt, curious question about an adult's body, clothes, or choices, in front of others. Is that disrespect, curiosity, or something else? What do you do?",
+      "group": "d2"
+    },
+    {
+      "id": "parenting_s9",
+      "text": "How much of a child's day should be planned versus open? Describe your ideal weekday.",
+      "group": "d3"
+    },
+    {
+      "id": "parenting_s10",
+      "text": "A child wants to do something unusual (in clothing, interest, behavior) that isn't harmful. What's your response?",
+      "group": "d3"
+    },
+    {
+      "id": "parenting_s11",
+      "text": "How involved should a parent be in a child's friendships, schoolwork, and activities? Where's the line between supporting and controlling?",
+      "group": "d3"
+    },
+    {
+      "id": "parenting_s14",
+      "text": "Name something you expect from a child that you also hold yourself to.",
+      "group": "d4"
+    },
+    {
+      "id": "parenting_s15",
+      "text": "Name something adults in the house do that you would not want the child to copy.",
+      "group": "d4"
+    },
+    {
+      "id": "parenting_s16",
+      "text": "Is it fine for adults to use language or habits around a child that the child isn't allowed to use? Where's the line?",
+      "group": "d4"
+    },
+    {
+      "id": "parenting_s18",
+      "text": "When a limit is broken, what happens, step by step?",
+      "group": "d5"
+    },
+    {
+      "id": "parenting_s19",
+      "text": "What's off the table entirely as a response to a child?",
+      "group": "d5"
+    },
+    {
+      "id": "parenting_s20",
+      "text": "Who handles correction when both adults are present, and what does the other do?",
+      "group": "d5"
+    },
+    {
+      "id": "parenting_s21",
+      "text": "When adults disagree about a child in the moment, what happens in front of the child, and what happens after?",
+      "group": "d5"
+    },
+    {
+      "id": "parenting_s23",
+      "text": "What's each adult's role with the child, and how did you decide it?",
+      "group": "d6",
+      "condition": "multi_caregiver"
+    },
+    {
+      "id": "parenting_s24",
+      "text": "When does a non-primary caregiver correct the child, and when do they hand it to the primary parent?",
+      "group": "d6",
+      "condition": "multi_caregiver"
+    },
+    {
+      "id": "parenting_s25",
+      "text": "What does backing each other up mean, and what does it not require?",
+      "group": "d6",
+      "condition": "multi_caregiver"
+    }
+  ],
+  "preference": [
+    {
+      "id": "parenting_p3",
+      "text": "Describe a moment where a child was corrected well. What made it good?",
+      "group": "d1"
+    },
+    {
+      "id": "parenting_p12",
+      "text": "Describe the balance of structure and freedom you'd want for a child at this age.",
+      "group": "d3"
+    },
+    {
+      "id": "parenting_p0",
+      "text": "Describe what good would look like here, concretely, in your house, on an ordinary week."
+    }
+  ],
+  "tags": [
+    {
+      "id": "parenting_t8",
+      "topics": [
+        "whether children may question adults",
+        "what a child owes an adult versus what an adult owes a child"
+      ],
+      "group": "d2"
+    },
+    {
+      "id": "parenting_t13",
+      "topics": [
+        "daily structure",
+        "how much a child directs their own interests"
+      ],
+      "group": "d3"
+    },
+    {
+      "id": "parenting_t17",
+      "topics": [
+        "adults modeling what they require"
+      ],
+      "group": "d4"
+    },
+    {
+      "id": "parenting_t22",
+      "topics": [
+        "specific methods",
+        "disagreeing in front of the child",
+        "who has final say"
+      ],
+      "group": "d5"
+    },
+    {
+      "id": "parenting_t26",
+      "topics": [
+        "who disciplines",
+        "how a newer caregiver earns standing"
+      ],
+      "group": "d6",
+      "condition": "multi_caregiver"
+    }
+  ],
+  "version": "1.0.0",
+  "source": "docs/question_inventory.md Part C (original content, verbatim).",
+  "common": {
+    "preference_universal": "Describe what good would look like here, concretely, in your house, on an ordinary week.",
+    "tag_question": "Is this a requirement, meaning the relationship doesn't work for you without it, or a preference, meaning you'd like it and could live without it?",
+    "tag_comment_prompt": "Required comment: what it means, and what it would look like met.",
+    "perception_gap": "You rated yourself {self_value} on this and your partner rated you {partner_value}. What are you each seeing?",
+    "context": "You flagged this one. What's the context?",
+    "polarization": "You said that left to yourself you're at {self_alone} on this, and with your partner you find yourself at {self_with_partner}. What do you think is going on?",
+    "concreteness_followup": "Can you give me a specific example?",
+    "probe_skip_label": "Skip",
+    "transitions": {
+      "enter": "This domain flagged. A few written questions, one at a time. You can pause and come back any time.",
+      "specifics": "Specifics",
+      "preference": "Preference",
+      "tag": "Requirement or preference",
+      "polarization": "Polarization",
+      "perception_gap": "Perception gap",
+      "context": "Context",
+      "consistency": "A few follow-ups. Each has a reason attached and a skip button.",
+      "complete": "That's this domain done. Nothing here is shared until your partner has finished too.",
+      "ack": "Saved.",
+      "skipped_ack": "Skipped. Noted, not pushed."
+    }
+  }
+}

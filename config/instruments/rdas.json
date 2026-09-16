@@ -1,0 +1,238 @@
+{
+  "key": "rdas",
+  "name": "Revised Dyadic Adjustment Scale (RDAS)",
+  "source_citation": "Busby, Christensen, Crane & Larson (1995). A revision of the Dyadic Adjustment Scale for use with distressed and nondistressed couples. Journal of Marital and Family Therapy, 21(3), 289–308.",
+  "license_note": "Free for clinical and research use with citation; see source.",
+  "layer": 1,
+  "passes": [
+    "single"
+  ],
+  "default_domain": "communication",
+  "items": [
+    {
+      "item_id": "rdas_1",
+      "text": "TODO: populate from source",
+      "descriptor": "consensus item 1",
+      "scale": {
+        "min": 0,
+        "max": 5
+      },
+      "reverse_scored": false,
+      "domain": "social_family_longterm"
+    },
+    {
+      "item_id": "rdas_2",
+      "text": "TODO: populate from source",
+      "descriptor": "consensus item 2",
+      "scale": {
+        "min": 0,
+        "max": 5
+      },
+      "reverse_scored": false,
+      "domain": "intimacy"
+    },
+    {
+      "item_id": "rdas_3",
+      "text": "TODO: populate from source",
+      "descriptor": "consensus item 3",
+      "scale": {
+        "min": 0,
+        "max": 5
+      },
+      "reverse_scored": false,
+      "domain": "communication"
+    },
+    {
+      "item_id": "rdas_4",
+      "text": "TODO: populate from source",
+      "descriptor": "consensus item 4",
+      "scale": {
+        "min": 0,
+        "max": 5
+      },
+      "reverse_scored": false,
+      "domain": "intimacy"
+    },
+    {
+      "item_id": "rdas_5",
+      "text": "TODO: populate from source",
+      "descriptor": "consensus item 5",
+      "scale": {
+        "min": 0,
+        "max": 5
+      },
+      "reverse_scored": false,
+      "domain": "social_family_longterm"
+    },
+    {
+      "item_id": "rdas_6",
+      "text": "TODO: populate from source",
+      "descriptor": "consensus item 6",
+      "scale": {
+        "min": 0,
+        "max": 5
+      },
+      "reverse_scored": false,
+      "domain": "social_family_longterm"
+    },
+    {
+      "item_id": "rdas_7",
+      "text": "TODO: populate from source",
+      "descriptor": "satisfaction item 1",
+      "scale": {
+        "min": 0,
+        "max": 5
+      },
+      "reverse_scored": false,
+      "domain": "conflict"
+    },
+    {
+      "item_id": "rdas_8",
+      "text": "TODO: populate from source",
+      "descriptor": "satisfaction item 2",
+      "scale": {
+        "min": 0,
+        "max": 5
+      },
+      "reverse_scored": false,
+      "domain": "conflict"
+    },
+    {
+      "item_id": "rdas_9",
+      "text": "TODO: populate from source",
+      "descriptor": "satisfaction item 3",
+      "scale": {
+        "min": 0,
+        "max": 5
+      },
+      "reverse_scored": false,
+      "domain": "conflict"
+    },
+    {
+      "item_id": "rdas_10",
+      "text": "TODO: populate from source",
+      "descriptor": "satisfaction item 4",
+      "scale": {
+        "min": 0,
+        "max": 5
+      },
+      "reverse_scored": false,
+      "domain": "conflict"
+    },
+    {
+      "item_id": "rdas_11",
+      "text": "TODO: populate from source",
+      "descriptor": "cohesion item 1",
+      "scale": {
+        "min": 0,
+        "max": 4
+      },
+      "reverse_scored": false,
+      "domain": "social_family_longterm"
+    },
+    {
+      "item_id": "rdas_12",
+      "text": "TODO: populate from source",
+      "descriptor": "cohesion item 2",
+      "scale": {
+        "min": 0,
+        "max": 5
+      },
+      "reverse_scored": false,
+      "domain": "social_family_longterm"
+    },
+    {
+      "item_id": "rdas_13",
+      "text": "TODO: populate from source",
+      "descriptor": "cohesion item 3",
+      "scale": {
+        "min": 0,
+        "max": 5
+      },
+      "reverse_scored": false,
+      "domain": "social_family_longterm"
+    },
+    {
+      "item_id": "rdas_14",
+      "text": "TODO: populate from source",
+      "descriptor": "cohesion item 4",
+      "scale": {
+        "min": 0,
+        "max": 5
+      },
+      "reverse_scored": false,
+      "domain": "social_family_longterm"
+    }
+  ],
+  "scoring": {
+    "version": "1.0.0",
+    "subscales": [
+      {
+        "name": "consensus",
+        "items": [
+          "rdas_1",
+          "rdas_2",
+          "rdas_3",
+          "rdas_4",
+          "rdas_5",
+          "rdas_6"
+        ],
+        "method": "sum"
+      },
+      {
+        "name": "satisfaction",
+        "items": [
+          "rdas_7",
+          "rdas_8",
+          "rdas_9",
+          "rdas_10"
+        ],
+        "method": "sum"
+      },
+      {
+        "name": "cohesion",
+        "items": [
+          "rdas_11",
+          "rdas_12",
+          "rdas_13",
+          "rdas_14"
+        ],
+        "method": "sum"
+      },
+      {
+        "name": "total",
+        "items": [
+          "rdas_1",
+          "rdas_2",
+          "rdas_3",
+          "rdas_4",
+          "rdas_5",
+          "rdas_6",
+          "rdas_7",
+          "rdas_8",
+          "rdas_9",
+          "rdas_10",
+          "rdas_11",
+          "rdas_12",
+          "rdas_13",
+          "rdas_14"
+        ],
+        "method": "sum"
+      }
+    ],
+    "cutoffs": [
+      {
+        "subscale": "total",
+        "below": 48,
+        "label": "distressed"
+      },
+      {
+        "subscale": "total",
+        "at_or_above": 48,
+        "label": "non_distressed"
+      }
+    ]
+  },
+  "scoring_key_verified": true,
+  "notes": "Consensus 1–6 (0–5; 0 = always disagree … 5 = always agree), satisfaction 7–10, cohesion 11–14 (item 11 is 0–4). Values are stored as the printed scoring values, so no reverse scoring is applied in code. Total 0–69, cutoff 48."
+}

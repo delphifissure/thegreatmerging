@@ -1,0 +1,87 @@
+{
+  "version": "1.0.0",
+  "source": "docs/square_one.md. Original content; no scoring, no LLM, no sharing.",
+  "intro": "The instrument for the beginning, before attraction gets a vote. Most big flags are visible in the first three months to anyone who asks the right questions and believes the answers. The list fails when you override it, not when it misses.",
+  "rules": [
+    "Ask early. The later you ask, the more the answer costs you to hear.",
+    "Write down every answer that raises your eyebrows, the same day, in plain words. The eyebrow is the instrument; the notebook is what keeps you honest when you're smitten.",
+    "Listen for the pattern, not the story. Everyone has a story. The pattern is what repeats across the stories."
+  ],
+  "requirements_prompt": "Before the first date, write your requirements list: the five things the relationship doesn't work without. Score every answer against it.",
+  "requirements_count": 5,
+  "eyebrow_label": "raised an eyebrow",
+  "tiers": [
+    {
+      "id": "tier1",
+      "title": "Tier 1. The first few dates",
+      "questions": [
+        { "index": 1, "text": "How did your last relationship end? And the one before that?", "listen_for": "Listen for the pattern across endings. Always the other person's fault; always an exit; ghosting; \"it just fizzled.\" Versus specific, self-implicating accounts with repair attempts. This is the single most informative question on the list." },
+        { "index": 2, "text": "What did your parents' marriage look like from the inside?", "listen_for": "Affection, conflict, how it ended. People re-stage the marriage they grew up in far more often than they think. Ask what they saw, not what they concluded." },
+        { "index": 3, "text": "What's the longest you've lived with a partner, and how did it go?", "listen_for": "\"Never\" is data, especially past thirty. Also listen for what changed when it got real." },
+        { "index": 4, "text": "What do you do when you're wrong? Tell me about the last time.", "listen_for": "Can they produce an example at all. Do they describe fixing it or hiding it. A person who can't name a recent time they were wrong has told you how fights will go." },
+        { "index": 5, "text": "What's something you've changed about yourself in the last five years, on purpose?", "listen_for": "Growth orientation. \"This is just who I am\" is a full answer, and you should hear it as one." },
+        { "index": 6, "text": "When you're stressed, do you want people or space? How much?", "listen_for": "Attachment shows up here before it shows up anywhere else. Also notice whether the answer scares you. If it does, that's a match question, not a character question." },
+        { "index": 7, "text": "What's your relationship with your family now?", "listen_for": "Contempt for parents can be earned. Total cutoff and total enmeshment both matter. Listen for whether they can describe their parents as people." },
+        { "index": 8, "text": "How do you feel about kids: having them, being around them, other people's?", "listen_for": "Enthusiasm, duty, or avoidance. If you have a child, ask directly what they imagine being a stepparent is like. \"A thankless job\" is a complete answer." },
+        { "index": 9, "text": "What does a good weekend look like?", "listen_for": "This is where living together actually happens. Fit of daily life predicts more than fit of values." },
+        { "index": 10, "text": "What do you do for fun that has nothing to do with dating or work?", "listen_for": "A self, a life to join, a source of joy. \"Nothing, really\" is a flag, and so is a list with no joy in it." },
+        { "index": 11, "text": "How do you handle money?", "listen_for": "Shared or separate views, debt honesty, anxiety around it. Watch for someone who can't say." },
+        { "index": 12, "text": "What's your relationship with alcohol or anything else?", "listen_for": "Ask, then watch. The answer matters less than the third and fourth date." }
+      ]
+    },
+    {
+      "id": "tier2",
+      "title": "Tier 2. Month two or three, once you like them",
+      "questions": [
+        { "index": 13, "text": "What's a boundary of yours that partners have struggled with?", "listen_for": "Is the boundary reasonable. Also: does every preference get called a boundary. The word does a lot of work for some people, and you want to know how much before you're inside it." },
+        { "index": 14, "text": "When you're upset with someone close to you, what do you actually do?", "listen_for": "Talk, withdraw, blow up, go quiet for days. The honest ones know. Then compare with your own answer; opposite styles produce the pursue-and-withdraw loop." },
+        { "index": 15, "text": "What makes you feel wanted?", "listen_for": "Whether they can answer, and whether the answer resembles yours. Two people who feel wanted in incompatible ways will each feel unwanted." },
+        { "index": 16, "text": "What does your desire run on? Has it changed across relationships?", "listen_for": "Buildup, setting, spontaneity, distance, novelty. What killed it before. This is the sexual architecture question, and almost nobody asks it until it's too late." },
+        { "index": 17, "text": "What's something a past partner said about you that stung because it was partly true?", "listen_for": "Self-awareness in one question. The person who can't name one is telling you something." },
+        { "index": 18, "text": "Do you think people change?", "listen_for": "Their answer is also their answer about whether they'll do the work when it's needed." },
+        { "index": 19, "text": "What scares you about commitment?", "listen_for": "An actual answer beats \"nothing.\" \"Nothing\" is a flag." },
+        { "index": 20, "text": "How do you feel about therapy? Have you gone? Would you?", "listen_for": "Listen for whether working on things is a normal activity or an insult." },
+        { "index": 21, "text": "What did your worst year look like, and how did you get through it?", "listen_for": "Capacity under load. Who helped. Whether they let anyone." },
+        { "index": 22, "text": "How do you treat people who have less power than you?", "listen_for": "Ask it, then observe it. Waiters, exes they mention, children in the room, anyone who can't push back." }
+      ]
+    },
+    {
+      "id": "tier3",
+      "title": "Tier 3. Before you move in",
+      "questions": [
+        { "index": 23, "text": "Who does what in the house? Say it task by task.", "listen_for": "" },
+        { "index": 24, "text": "What are your rules about your things and your space?", "listen_for": "Everyone has some. You want to know them before you move a drawer." },
+        { "index": 25, "text": "How much alone time do you need in a week? In hours.", "listen_for": "" },
+        { "index": 26, "text": "What happens the first time we have a real fight under one roof?", "listen_for": "Get a protocol before you need one: what a pause means, when you come back, what's off limits." },
+        { "index": 27, "text": "What's off the table for you in bed, and what do you need?", "listen_for": "Both halves. Someone who can only answer the first half has told you about the second." },
+        { "index": 28, "text": "How do we handle each other's family in our home?", "listen_for": "" },
+        { "index": 29, "text": "What's your five-year picture: where, doing what, with whom?", "listen_for": "" },
+        { "index": 30, "text": "What would make you leave? What would make you stay through something hard?", "listen_for": "The second half is the one that matters, and most people have never been asked it." }
+      ]
+    }
+  ],
+  "observe": {
+    "title": "Observe instead of asking",
+    "intro": "Answers are self-report. These aren't.",
+    "items": [
+      "How they treat a waiter, a driver, a cashier.",
+      "What happens the first time you disagree about something small.",
+      "What happens the first time you're sick or low. Do they move toward you or away.",
+      "Whether they ask about you, and remember the answers a week later.",
+      "Whether they can be teased, and whether they can tease without cruelty.",
+      "What they do when plans change without warning.",
+      "Whether they ever say sorry, unprompted, for something small.",
+      "What they fill their head with when no one's watching. It's their window on the world, and you'll be living behind it."
+    ]
+  },
+  "reading": {
+    "title": "Reading the answers",
+    "paragraphs": [
+      "Pattern over story. One bad ex is a story. Three exits that all sound alike is a pattern.",
+      "Self-implication is the green flag. People who can name their own part in a past failure can name it in a future one. People who can't will need you to be the guilty party every time.",
+      "\"Nothing\" answers are the flag. Nothing scares me. I've never really been wrong like that. There's nothing I'd change. Those are the doors that stay locked later.",
+      "Match the answers to your requirements list, not to your feelings. Attraction will vote if you let it. The list exists so it doesn't get the only vote.",
+      "And one honest limit. The deepest things surface only under stakes, and no list catches those in month one. What the list catches is the pattern that predicts how a person will handle what surfaces. That's the thing you're actually choosing."
+    ]
+  }
+}

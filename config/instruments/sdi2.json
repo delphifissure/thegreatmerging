@@ -1,0 +1,202 @@
+{
+  "key": "sdi2",
+  "name": "Sexual Desire Inventory-2 (SDI-2)",
+  "source_citation": "Spector, Carey & Steinberg (1996). The Sexual Desire Inventory: development, factor structure, and evidence of reliability. Journal of Sex & Marital Therapy, 22(3), 175–190.",
+  "license_note": "Available for research and clinical use with citation; confirm terms with the authors for commercial deployment.",
+  "layer": 0,
+  "passes": [
+    "single"
+  ],
+  "items": [
+    {
+      "item_id": "sdi2_1",
+      "text": "TODO: populate from source",
+      "descriptor": "dyadic desire item 1",
+      "scale": {
+        "min": 0,
+        "max": 7
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "sdi2_2",
+      "text": "TODO: populate from source",
+      "descriptor": "dyadic desire item 2",
+      "scale": {
+        "min": 0,
+        "max": 7
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "sdi2_3",
+      "text": "TODO: populate from source",
+      "descriptor": "dyadic desire item 3",
+      "scale": {
+        "min": 0,
+        "max": 8
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "sdi2_4",
+      "text": "TODO: populate from source",
+      "descriptor": "dyadic desire item 4",
+      "scale": {
+        "min": 0,
+        "max": 8
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "sdi2_5",
+      "text": "TODO: populate from source",
+      "descriptor": "dyadic desire item 5",
+      "scale": {
+        "min": 0,
+        "max": 8
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "sdi2_6",
+      "text": "TODO: populate from source",
+      "descriptor": "dyadic desire item 6",
+      "scale": {
+        "min": 0,
+        "max": 8
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "sdi2_7",
+      "text": "TODO: populate from source",
+      "descriptor": "dyadic desire item 7",
+      "scale": {
+        "min": 0,
+        "max": 8
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "sdi2_8",
+      "text": "TODO: populate from source",
+      "descriptor": "dyadic desire item 8",
+      "scale": {
+        "min": 0,
+        "max": 8
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "sdi2_9",
+      "text": "TODO: populate from source",
+      "descriptor": "dyadic desire comparison item (not scored in subscales)",
+      "scale": {
+        "min": 0,
+        "max": 8
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "sdi2_10",
+      "text": "TODO: populate from source",
+      "descriptor": "solitary desire item 1",
+      "scale": {
+        "min": 0,
+        "max": 7
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "sdi2_11",
+      "text": "TODO: populate from source",
+      "descriptor": "solitary desire item 2",
+      "scale": {
+        "min": 0,
+        "max": 8
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "sdi2_12",
+      "text": "TODO: populate from source",
+      "descriptor": "solitary desire item 3",
+      "scale": {
+        "min": 0,
+        "max": 8
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "sdi2_13",
+      "text": "TODO: populate from source",
+      "descriptor": "solitary desire item 4",
+      "scale": {
+        "min": 0,
+        "max": 8
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "sdi2_14",
+      "text": "TODO: populate from source",
+      "descriptor": "duration without sexual activity (not scored)",
+      "scale": {
+        "min": 0,
+        "max": 7
+      },
+      "reverse_scored": false
+    }
+  ],
+  "scoring": {
+    "version": "1.0.0",
+    "subscales": [
+      {
+        "name": "dyadic",
+        "items": [
+          "sdi2_1",
+          "sdi2_2",
+          "sdi2_3",
+          "sdi2_4",
+          "sdi2_5",
+          "sdi2_6",
+          "sdi2_7",
+          "sdi2_8"
+        ],
+        "method": "sum"
+      },
+      {
+        "name": "solitary",
+        "items": [
+          "sdi2_10",
+          "sdi2_11",
+          "sdi2_12",
+          "sdi2_13"
+        ],
+        "method": "sum"
+      },
+      {
+        "name": "total",
+        "items": [
+          "sdi2_1",
+          "sdi2_2",
+          "sdi2_3",
+          "sdi2_4",
+          "sdi2_5",
+          "sdi2_6",
+          "sdi2_7",
+          "sdi2_8",
+          "sdi2_10",
+          "sdi2_11",
+          "sdi2_12",
+          "sdi2_13"
+        ],
+        "method": "sum"
+      }
+    ],
+    "cutoffs": []
+  },
+  "scoring_key_verified": false,
+  "notes": "Dyadic = items 1–8 (range 0–62: two 0–7 frequency items and six 0–8 strength items), solitary = items 10–13 (range 0–31: one 0–7 frequency item and three 0–8 strength items), total = dyadic + solitary (0–93). Items 9 and 14 are descriptive comparison/duration items and are not included in the subscale sums. Verify the per-item scale assignment and the published subscale membership against Spector et al. 1996 when populating text."
+}

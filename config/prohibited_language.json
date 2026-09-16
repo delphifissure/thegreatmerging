@@ -1,0 +1,58 @@
+{
+  "version": "1.0.0",
+  "description": "Deterministic filter applied to every LLM output (lib/guardrails.ts). Patterns are case-insensitive regular expressions. Add every miss the evals catch. Categories: relationship verdicts (should end/continue, compatible/incompatible), diagnoses, trait labels applied to a person, statements about a person's worth.",
+  "relationship_verdict": [
+    "\\b(should|ought to|need to|have to|must)\\s+(break\\s*up|split\\s*up|separate|divorce|end (the|this|your) (relationship|marriage)|leave (him|her|them|your partner)|stay together|stay in (the|this) (relationship|marriage))\\b",
+    "\\b(this|the|your) (relationship|marriage|partnership) (is|seems|appears|looks) (doomed|over|finished|unsalvageable|unsustainable|not (going to|gonna) (work|last)|worth saving|not worth)\\b",
+    "\\b(you|the two of you|you both|you two|this couple|the couple|they) (are|seems?|appears?( to be)?|looks?|feels?|sounds?)( like| to be| to me like)? (an? )?(incompatible|compatible|(good|bad|poor|great|perfect|terrible|strong|weak) match|mismatched|well[- ]matched|badly matched|(not )?meant for each other|(not )?right for each other|wrong for each other|made for each other)\\b",
+    "\\b(fundamentally|deeply|basically|simply) (incompatible|compatible)\\b",
+    "\\b(compatibility|incompatibility) (score|rating|verdict|assessment)\\b",
+    "\\b(this|the|your) (relationship|marriage) (will|won't|will not|is going to|is likely to|is unlikely to) (last|survive|succeed|fail|end|work out)\\b",
+    "\\b(it's|it is) (time|best|better) to (move on|walk away|call it quits|end (it|things))\\b",
+    "\\b(you|they) (deserve|would be) (better|happier) (without|apart from|than) (him|her|them|your partner|each other)\\b",
+    "\\b(recommend|advise|suggest)(ed|s)?\\s+(that\\s+)?(you|they|the couple)\\s+(separate|divorce|break up|stay together|reconcile)\\b",
+    "\\b(red flag|deal[- ]?breaker)s?\\b"
+  ],
+  "diagnosis": [
+    "\\b(has|have|had|suffers? from|struggles? with|is|are|shows? signs of|meets? (the )?criteria for|is (clearly|likely|probably) (living with|dealing with))\\s+(a\\s+|an\\s+)?(major depressive|depressive|depression|clinical depression|generalized anxiety|anxiety disorder|panic disorder|bipolar|borderline|narcissistic|antisocial|avoidant personality|dependent personality|obsessive[- ]compulsive disorder|ocd|ptsd|post[- ]traumatic|adhd|attention deficit|autism|autistic|personality disorder|eating disorder|substance (use|abuse) disorder|alcoholism|addiction|dysthymia|adjustment disorder|attachment disorder|sex(ual)? addiction|hypersexual|hypoactive sexual desire disorder)\\b",
+    "\\b(diagnos(e|is|ed|able)|diagnostic (criteria|impression))\\b",
+    "\\b(clinically|is) (depressed|anxious|obsessive|compulsive|narcissistic|borderline|bipolar|manic|paranoid|schizoid)\\b",
+    "\\b(a|the) (depressed|anxious|narcissistic|borderline|bipolar) (person|partner|individual|man|woman|spouse)\\b",
+    "\\b(disorder|pathology|pathological|psychopath(y|ic)|sociopath(y|ic)|mental illness|mentally ill)\\b"
+  ],
+  "trait_label": [
+    "\\b(you|he|she|they|your partner|partner a|partner b|[a-z]+) (is|are|seems?|appears?|comes across as|sounds?|reads? as|tends? to be|can be) (very |quite |rather |pretty |extremely |a bit |somewhat |kind of |sort of |clearly |obviously |simply )?(rigid|inflexible|avoidant|anxious|insecure|immature|childish|selfish|self-centered|self-absorbed|narcissistic|controlling|manipulative|toxic|abusive|lazy|irresponsible|needy|clingy|cold|distant|emotionally unavailable|emotionally immature|passive[- ]aggressive|codependent|dismissive|neglectful|dramatic|hysterical|unstable|unreliable|untrustworthy|dishonest|a liar|a cheater|a narcissist|a bully|difficult|impossible|broken|damaged|crazy|insane)\\b",
+    "\\b(an?|the) (rigid|avoidant|anxious|insecure|immature|selfish|narcissistic|controlling|manipulative|toxic|abusive|lazy|needy|clingy|cold|dismissive|codependent|passive[- ]aggressive) (person|partner|parent|individual|man|woman|spouse|type)\\b",
+    "\\b(attachment style|attachment type) (is|of|:)\\s*(secure|anxious|avoidant|fearful|disorganized|dismissive|preoccupied)\\b",
+    "\\b(is|are) (a|an) (secure|anxious|avoidant|fearful|disorganized) (attacher|type|attachment)\\b",
+    "\\b(introvert|extrovert|extravert|neurotic|psychotic|perfectionist|workaholic|hoarder|narcissist)s?\\b",
+    "\\b(you|he|she|they|your partner) (has|have) (an?|the) (rigid|avoidant|anxious|insecure|narcissistic|controlling|manipulative|toxic|abusive|difficult|addictive|obsessive|compulsive) (personality|character|nature|temperament|streak|tendency|tendencies)\\b",
+    "\\b(you|he|she|they|your partner) (is|are) (the|a) (problem|issue|cause)\\b"
+  ],
+  "worth": [
+    "\\b(you|he|she|they|your partner) (is|are) (not |un)?(worthy|worthless|good enough|a (good|bad|terrible|great|wonderful|awful) (person|partner|parent|spouse|husband|wife)|a (failure|loser|disappointment|burden))\\b",
+    "\\b(you|he|she|they|your partner) (deserve|don't deserve|do not deserve|doesn't deserve|does not deserve) (better|worse|this|love|happiness|respect)\\b",
+    "\\b(you|he|she|they) (should be ashamed|are to blame|is to blame|are at fault|is at fault)\\b",
+    "\\b(better|worse) (person|partner|parent) than\\b"
+  ],
+  "allowlist_phrases": [
+    "attachment anxiety",
+    "attachment avoidance",
+    "ecr-r anxiety",
+    "ecr-r avoidance",
+    "anxiety subscale",
+    "avoidance subscale",
+    "depression screener",
+    "anxiety screener",
+    "obsessive-compulsive inventory",
+    "generalized anxiety disorder-7",
+    "gad-7",
+    "phq-9",
+    "oci-r",
+    "screener result; clinical evaluation required",
+    "no diagnosis",
+    "not a diagnosis",
+    "does not diagnose",
+    "never diagnoses"
+  ]
+}

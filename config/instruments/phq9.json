@@ -1,0 +1,210 @@
+{
+  "key": "phq9",
+  "name": "Patient Health Questionnaire-9 (PHQ-9)",
+  "source_citation": "Kroenke, Spitzer & Williams (2001). The PHQ-9: validity of a brief depression severity measure. Journal of General Internal Medicine, 16(9), 606–613.",
+  "license_note": "Developed by Drs. Spitzer, Williams, Kroenke and colleagues with a grant from Pfizer; no permission required to reproduce, translate, display or distribute.",
+  "layer": 0,
+  "passes": [
+    "single"
+  ],
+  "mental_health": true,
+  "items": [
+    {
+      "item_id": "phq9_1",
+      "text": "TODO: populate from source",
+      "descriptor": "depression symptom item 1",
+      "scale": {
+        "min": 0,
+        "max": 3,
+        "labels": [
+          "Not at all",
+          "Several days",
+          "More than half the days",
+          "Nearly every day"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "phq9_2",
+      "text": "TODO: populate from source",
+      "descriptor": "depression symptom item 2",
+      "scale": {
+        "min": 0,
+        "max": 3,
+        "labels": [
+          "Not at all",
+          "Several days",
+          "More than half the days",
+          "Nearly every day"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "phq9_3",
+      "text": "TODO: populate from source",
+      "descriptor": "depression symptom item 3",
+      "scale": {
+        "min": 0,
+        "max": 3,
+        "labels": [
+          "Not at all",
+          "Several days",
+          "More than half the days",
+          "Nearly every day"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "phq9_4",
+      "text": "TODO: populate from source",
+      "descriptor": "depression symptom item 4",
+      "scale": {
+        "min": 0,
+        "max": 3,
+        "labels": [
+          "Not at all",
+          "Several days",
+          "More than half the days",
+          "Nearly every day"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "phq9_5",
+      "text": "TODO: populate from source",
+      "descriptor": "depression symptom item 5",
+      "scale": {
+        "min": 0,
+        "max": 3,
+        "labels": [
+          "Not at all",
+          "Several days",
+          "More than half the days",
+          "Nearly every day"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "phq9_6",
+      "text": "TODO: populate from source",
+      "descriptor": "depression symptom item 6",
+      "scale": {
+        "min": 0,
+        "max": 3,
+        "labels": [
+          "Not at all",
+          "Several days",
+          "More than half the days",
+          "Nearly every day"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "phq9_7",
+      "text": "TODO: populate from source",
+      "descriptor": "depression symptom item 7",
+      "scale": {
+        "min": 0,
+        "max": 3,
+        "labels": [
+          "Not at all",
+          "Several days",
+          "More than half the days",
+          "Nearly every day"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "phq9_8",
+      "text": "TODO: populate from source",
+      "descriptor": "depression symptom item 8",
+      "scale": {
+        "min": 0,
+        "max": 3,
+        "labels": [
+          "Not at all",
+          "Several days",
+          "More than half the days",
+          "Nearly every day"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "phq9_9",
+      "text": "TODO: populate from source",
+      "descriptor": "safety item (thoughts of self-harm)",
+      "scale": {
+        "min": 0,
+        "max": 3,
+        "labels": [
+          "Not at all",
+          "Several days",
+          "More than half the days",
+          "Nearly every day"
+        ]
+      },
+      "reverse_scored": false,
+      "safety_item": true
+    }
+  ],
+  "scoring": {
+    "version": "1.0.0",
+    "subscales": [
+      {
+        "name": "total",
+        "items": [
+          "phq9_1",
+          "phq9_2",
+          "phq9_3",
+          "phq9_4",
+          "phq9_5",
+          "phq9_6",
+          "phq9_7",
+          "phq9_8",
+          "phq9_9"
+        ],
+        "method": "sum"
+      }
+    ],
+    "cutoffs": [
+      {
+        "subscale": "total",
+        "below": 5,
+        "label": "minimal"
+      },
+      {
+        "subscale": "total",
+        "at_or_above": 5,
+        "below": 10,
+        "label": "mild"
+      },
+      {
+        "subscale": "total",
+        "at_or_above": 10,
+        "below": 15,
+        "label": "moderate"
+      },
+      {
+        "subscale": "total",
+        "at_or_above": 15,
+        "below": 20,
+        "label": "moderately_severe"
+      },
+      {
+        "subscale": "total",
+        "at_or_above": 20,
+        "label": "severe"
+      }
+    ]
+  },
+  "scoring_key_verified": true,
+  "notes": "Screener result; clinical evaluation required. Item 9 is a safety item: any value above 0 shows the safety-resource screen to that user only, is never surfaced to the partner, and is excluded from every couple-level computation."
+}
