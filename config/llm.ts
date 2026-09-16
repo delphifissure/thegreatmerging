@@ -107,8 +107,8 @@ export const LLM_CONFIG: Record<Role, RoleConfig> = {
     model: "claude-sonnet-5",
     temperature: 0,
     effort: "medium",
-    prompt_file: "interpreter.v1.md",
-    prompt_version: "interpreter.v1",
+    prompt_file: "interpreter.v2.md",
+    prompt_version: "interpreter.v2",
     tool_name: "emit_interpretation",
     max_tokens: 16000,
     batchable: true,
@@ -159,4 +159,4 @@ export const LLM_CONFIG: Record<Role, RoleConfig> = {
 };
 
 /** Bump on any change to a prompt, model, temperature, or output schema. Record it in prompts/CHANGELOG.md. */
-export const LLM_CONFIG_VERSION = "2026.09.16-1";
+export const LLM_CONFIG_VERSION = "2026.09.16-2";

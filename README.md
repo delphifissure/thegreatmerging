@@ -23,7 +23,7 @@ instruments/          one module per instrument: definition + pure score(); coup
 config/instruments/   item text and scoring keys (owner populates text from the official sources)
 config/color_modules/ fixed question text per domain (from docs/question_inventory.md Part C)
 config/flag_rules.json, config/prohibited_language.json, config/probe_templates.json, config/llm.ts
-prompts/              interpreter.v1.md, prober.v1.md, summarizer.v1.md, sentiment_flagger.v1.md, concreteness.v1.md, guardrail.v1.md
+prompts/              interpreter.v2.md (v1 kept for history), prober.v1.md, summarizer.v1.md, sentiment_flagger.v1.md, concreteness.v1.md, guardrail.v1.md
 inngest/              interpretation, prober, brief, export and reminder jobs
 db/                   schema.ts, migrations/ (0000 schema, 0001 RLS policies), migrate.ts, seed.ts
 evals/                scoring goldens, synthetic couples, interpreter and prober evals

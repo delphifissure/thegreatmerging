@@ -186,6 +186,20 @@ describe("callRole: schema validation retry", () => {
   });
 });
 
+describe("callRole: rejection diagnostics hook", () => {
+  it("reports each rejected attempt to onRejected when set, and nothing when unset", async () => {
+    const seen: Array<[string, string, string]> = [];
+    configureLlm({ onRejected: (role, kind, problem, c) => seen.push([role, kind, `${c.jobStep}|${problem.slice(0, 40)}`]) });
+    fake.enqueue("emit_concreteness", toolUseResponse("emit_concreteness", { concrete: "yes" }), toolUseResponse("emit_concreteness", { concrete: true }));
+    await callRole("concreteness", { q: "hook" }, ConcretenessOutputSchema, ctx);
+    expect(seen).toEqual([["concreteness", "validation_failed", "test-step|Your previous output failed schema valid"]]);
+    configureLlm({ onRejected: undefined });
+    fake.enqueue("emit_concreteness", toolUseResponse("emit_concreteness", { concrete: "yes" }), toolUseResponse("emit_concreteness", { concrete: true }));
+    await callRole("concreteness", { q: "hook-2" }, ConcretenessOutputSchema, ctx);
+    expect(seen).toHaveLength(1);
+  });
+});
+
 describe("callRole: guardrail retry", () => {
   const bad: InterpreterOutput = {
     ...interpreterOutput,

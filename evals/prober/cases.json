@@ -90,13 +90,14 @@
     },
     {
       "id": "communication_clean",
+      "notes": "Revised 2026-09-16: the first version had the person expect the partner to speak up unprompted ('She should say so before I ask') while wanting to be asked themselves. Claude Fable 5.1 probed that asymmetry with template 6, a real tension, so the sentence was removed to keep the case clean.",
       "domain": "communication",
       "planted": [],
       "expect_zero": true,
       "input": {
         "domain": "communication",
         "answers": [
-          { "answer_id": "ans_1", "step": "specifics", "question_id": "communication_s1", "question_text": "Your partner's face looks angry and you don't know if they are. What do you do? What should they do?", "answer_text": "I ask. Last Thursday I said 'you look tense, is it me?' and she said it was work. She should say so before I ask, but asking is fine.", "skipped": false },
+          { "answer_id": "ans_1", "step": "specifics", "question_id": "communication_s1", "question_text": "Your partner's face looks angry and you don't know if they are. What do you do? What should they do?", "answer_text": "I ask. Last Thursday I said 'you look tense, is it me?' and she said it was work. Asking is how we both do it.", "skipped": false },
           { "answer_id": "ans_2", "step": "specifics", "question_id": "communication_s2", "question_text": "Your partner has been quiet for two days. What do you assume, and what do you do?", "answer_text": "I assume work or family. After a day I ask directly, like in March when her mother was ill and she went quiet.", "skipped": false },
           { "answer_id": "ans_3", "step": "preference", "question_id": "communication_p3", "question_text": "When you're upset, how do you want to be approached, in words you'd actually use?", "answer_text": "'I can see something is up. Want to talk now or later?' Then give me the later if I take it.", "skipped": false }
         ],
@@ -133,6 +134,7 @@
     },
     {
       "id": "conflict_clean_with_skips",
+      "notes": "Revised 2026-09-16: the first version defined a pause as 'twenty minutes apart' while the fight described as going well paused until after dinner. Claude Fable 5.1 asked about that in one of four runs (template 6), so the duration was removed to keep the case clean.",
       "domain": "conflict",
       "planted": [],
       "expect_zero": true,
@@ -140,7 +142,7 @@
         "domain": "conflict",
         "answers": [
           { "answer_id": "ans_1", "step": "specifics", "question_id": "conflict_s1", "question_text": "One of you says something hurtful in a fight. Ten minutes later, what happens? The next morning?", "answer_text": null, "skipped": true },
-          { "answer_id": "ans_2", "step": "specifics", "question_id": "conflict_s2", "question_text": "What does a pause in a fight mean to you, and what would make you trust that it isn't abandonment?", "answer_text": "A pause means twenty minutes apart and a time to come back. When she said 'back at nine' last month and came back at nine, I trusted it.", "skipped": false },
+          { "answer_id": "ans_2", "step": "specifics", "question_id": "conflict_s2", "question_text": "What does a pause in a fight mean to you, and what would make you trust that it isn't abandonment?", "answer_text": "A pause means time apart and a set time to come back. When she said 'back at nine' last month and came back at nine, I trusted it.", "skipped": false },
           { "answer_id": "ans_3", "step": "preference", "question_id": "conflict_p3", "question_text": "Describe a fight that went as well as a fight can.", "answer_text": "The car argument in June: we both got loud, she called a pause, we came back after dinner and each said what we got wrong.", "skipped": false }
         ],
         "other_answers": [],

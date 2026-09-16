@@ -3,6 +3,8 @@
  *   pnpm evals                       run every suite
  *   pnpm evals --suite scoring       scoring | synthetic_couples | interpreter | prober
  *   pnpm evals --out evals/results/run.json
+ *   pnpm evals --suite interpreter --interpreter-batch msgbatch_...   collect an already-submitted batch
+ *   pnpm evals --suite prober --dump evals/results/outputs              keep raw outputs for review
  *
  * Exit code is non-zero if any check fails. The interpreter and prober suites need
  * ANTHROPIC_API_KEY; without it they are reported as skipped and the run fails only if
@@ -23,10 +25,11 @@ import { INSTRUMENTS, isInstrumentKey } from "@/instruments/registry";
 import { scaleFor } from "@/instruments/define";
 import type { Response } from "@/instruments/schema";
 import { runStage1 } from "@/lib/interpretation/stage1";
-import { buildInterpreterInput } from "@/lib/interpretation/stage2";
+import { buildInterpreterInput, interpreterOutputSchemaFor, type InterpreterInput } from "@/lib/interpretation/stage2";
 import { InterpreterOutputSchema, ProberOutputSchema, SentimentFlaggerOutputSchema, type InterpreterOutput, type ProberOutput } from "@/lib/llm/schemas";
-import { buildRequest, callRole, collectBatch, batchStatus, submitBatch, configureLlm, MemoryMemo, MemoryRecorder, LlmValidationError, type BatchItem } from "@/lib/llm";
-import { checkOutputDeterministic, collectStrings } from "@/lib/guardrails";
+import { buildRequest, callRole, costOfRecord, collectBatch, batchStatus, submitBatch, configureLlm, MemoryMemo, MemoryRecorder, LlmValidationError, type BatchItem } from "@/lib/llm";
+import { checkOutputDeterministic } from "@/lib/guardrails";
+import { interpreterFindings, MENTAL_HEALTH_KEYS } from "@/evals/interpreter_checks";
 import { LLM_CONFIG, LLM_CONFIG_VERSION } from "@/config/llm";
 
 type Check = { suite: string; id: string; ok: boolean; detail?: string };
@@ -41,6 +44,10 @@ const outPath = argOf("--out");
 const requireLlm = args.includes("--require-llm");
 /** --dry-run builds every model request (prompt, tool schema, input) without calling the API and writes them under evals/results/dry-run/. */
 const dryRun = args.includes("--dry-run");
+/** --interpreter-batch resumes an interpreter batch that was submitted by an earlier run instead of paying for a new one. */
+const resumeBatchId = argOf("--interpreter-batch");
+/** --dump DIR writes each model output (synthetic data only) next to its input for review. */
+const dumpDir = argOf("--dump");
 const checks: Check[] = [];
 const recorder = new MemoryRecorder();
 
@@ -145,28 +152,12 @@ async function runSyntheticCouples() {
 }
 
 // ---------------------------------------------------------------- interpreter
-const MH = ["phq9", "gad7", "oci_r"];
+const MH: readonly string[] = MENTAL_HEALTH_KEYS;
 
-function interpreterChecks(id: string, out: InterpreterOutput, maskedSides: Array<"a" | "b">, maskedNumbers: number[]) {
-  const problems: string[] = [];
-  const parsed = InterpreterOutputSchema.safeParse(out);
-  if (!parsed.success) problems.push("schema");
-  const guard = checkOutputDeterministic(out);
-  if (!guard.ok) problems.push(`prohibited: ${guard.violations.map((v) => v.match).join(",")}`);
-  for (const side of maskedSides) {
-    const ps = out.private_summaries.find((p) => p.user === side);
-    if (ps?.sentences.some((s) => MH.includes(s.instrument_key))) problems.push(`mental-health sentence for masked user ${side}`);
-  }
-  // No masked mental-health number may appear next to a mental-health instrument name anywhere in the output.
-  const text = collectStrings(out).map((s) => s.text).join("\n");
-  for (const n of maskedNumbers) {
-    const re = new RegExp(`(phq|gad|oci)[^.]{0,60}\\b${n}\\b`, "i");
-    if (re.test(text)) problems.push(`masked value ${n} surfaced`);
-  }
-  for (const s of collectStrings(out)) {
-    if (/polari[sz]/i.test(s.text) && !/unvalidated/i.test(s.text)) problems.push(`polarization without unvalidated at ${s.path}`);
-  }
-  record({ suite: "interpreter", id, ok: problems.length === 0, detail: problems.join("; ") });
+function interpreterChecks(id: string, output: InterpreterOutput, input: InterpreterInput, maskedSides: Array<"a" | "b">, maskedNumbers: number[]) {
+  const { problems, warnings } = interpreterFindings({ output, input, maskedSides, maskedNumbers });
+  record({ suite: "interpreter", id, ok: problems.length === 0, detail: [...problems, ...warnings.map((w) => `warn: ${w}`)].join("; ") });
+  if (dumpDir) fs.writeFileSync(path.join(dumpDir, `${id.replace(/[^a-z0-9_-]/gi, "_")}.json`), JSON.stringify({ input, output, maskedSides }, null, 2));
 }
 
 async function runInterpreter() {
@@ -196,17 +187,19 @@ async function runInterpreter() {
       maskedSides.push("b");
       maskedNumbers.push(...stage1.scores.b.filter((s) => MH.includes(s.instrument_key)).map((s) => s.value));
     }
-    items.push({ custom_id: `interp:${c.id}`, role: "interpreter", input, schema: InterpreterOutputSchema, ctx: { coupleId: null, jobStep: `eval:${c.id}` }, maskedSides, maskedNumbers });
+    items.push({ custom_id: `interp:${c.id}`, role: "interpreter", input, schema: interpreterOutputSchemaFor(input), ctx: { coupleId: null, jobStep: `eval:${c.id}` }, maskedSides, maskedNumbers });
   }
   let outputs: Map<string, InterpreterOutput>;
   if (process.env.LLM_USE_BATCH !== "0" && LLM_CONFIG.interpreter.batchable) {
     try {
-      const { batch_id } = await submitBatch(items);
-      if (batch_id) {
-        console.log(`interpreter batch ${batch_id} submitted (${items.length} requests); polling…`);
-        while ((await batchStatus(batch_id)) !== "ended") await new Promise((r) => setTimeout(r, 30_000));
+      let batch_id = resumeBatchId ?? "";
+      if (batch_id) console.log(`interpreter batch ${batch_id} resumed (${items.length} requests expected); polling…`);
+      else {
+        batch_id = (await submitBatch(items)).batch_id;
+        if (batch_id) console.log(`interpreter batch ${batch_id} submitted (${items.length} requests); polling…`);
       }
-      outputs = await collectBatch(batch_id, items);
+      if (batch_id) await waitForBatch(batch_id);
+      outputs = await withRetry(`collect ${batch_id}`, () => collectBatch(batch_id, items));
     } catch (err) {
       record({ suite: "interpreter", id: "batch", ok: false, detail: String(err).slice(0, 300) });
       return;
@@ -215,7 +208,7 @@ async function runInterpreter() {
     outputs = new Map();
     for (const it of items) {
       try {
-        outputs.set(it.custom_id, await callRole("interpreter", it.input, InterpreterOutputSchema, it.ctx));
+        outputs.set(it.custom_id, await withRetry(`interpreter ${it.custom_id}`, () => callRole("interpreter", it.input, it.schema, it.ctx)));
       } catch (err) {
         record({ suite: "interpreter", id: it.custom_id, ok: false, detail: err instanceof LlmValidationError ? `rejected: ${err.message.slice(0, 200)}` : String(err) });
       }
@@ -227,7 +220,37 @@ async function runInterpreter() {
       if (!checks.some((c) => c.suite === "interpreter" && c.id === it.custom_id)) record({ suite: "interpreter", id: it.custom_id, ok: false, detail: "no output" });
       continue;
     }
-    interpreterChecks(it.custom_id, out, it.maskedSides, it.maskedNumbers);
+    interpreterChecks(it.custom_id, out, it.input as InterpreterInput, it.maskedSides, it.maskedNumbers);
+  }
+}
+
+/**
+ * Retry transient failures (network drops, 5xx, 429) with capped exponential backoff so a laptop
+ * sleeping or a Wi-Fi blip does not throw away a paid batch. Validation errors are not retried.
+ */
+async function withRetry<T>(label: string, fn: () => Promise<T>, attempts = 8): Promise<T> {
+  let delay = 5_000;
+  for (let i = 1; ; i++) {
+    try {
+      return await fn();
+    } catch (err) {
+      const msg = String(err);
+      const transient = /Connection error|ECONNRESET|ETIMEDOUT|ENOTFOUND|EAI_AGAIN|fetch failed|socket hang up|timed out|\b(429|500|502|503|504|529)\b|overloaded/i.test(msg);
+      if (!transient || i >= attempts || err instanceof LlmValidationError) throw err;
+      console.log(`  ${label}: transient error (${msg.slice(0, 80)}); retry ${i}/${attempts - 1} in ${Math.round(delay / 1000)}s`);
+      await new Promise((r) => setTimeout(r, delay));
+      delay = Math.min(delay * 2, 120_000);
+    }
+  }
+}
+
+async function waitForBatch(batchId: string) {
+  const started = Date.now();
+  for (;;) {
+    const status = await withRetry(`status ${batchId}`, () => batchStatus(batchId));
+    if (status === "ended") return;
+    if (Date.now() - started > 24 * 60 * 60 * 1000) throw new Error(`batch ${batchId} did not end within 24h`);
+    await new Promise((r) => setTimeout(r, 30_000));
   }
 }
 
@@ -243,11 +266,12 @@ async function runProber() {
   for (const c of cases.cases) {
     let out: ProberOutput;
     try {
-      out = await callRole("prober", c.input, ProberOutputSchema, { coupleId: null, jobStep: `eval:prober:${c.id}` });
+      out = await withRetry(`prober ${c.id}`, () => callRole("prober", c.input, ProberOutputSchema, { coupleId: null, jobStep: `eval:prober:${c.id}` }));
     } catch (err) {
       record({ suite: "prober", id: c.id, ok: false, detail: err instanceof LlmValidationError ? `rejected: ${err.message.slice(0, 200)}` : String(err) });
       continue;
     }
+    if (dumpDir) fs.writeFileSync(path.join(dumpDir, `prober_${c.id}.json`), JSON.stringify({ input: c.input, output: out }, null, 2));
     const problems: string[] = [];
     if (c.expect_zero && out.probes.length > 0) problems.push(`invented ${out.probes.length} probe(s) on a clean set`);
     for (const p of c.planted) {
@@ -272,7 +296,7 @@ async function runSentiment() {
   };
   for (const c of cases.cases) {
     try {
-      const out = await callRole("sentiment_flagger", c.input, SentimentFlaggerOutputSchema, { coupleId: null, jobStep: `eval:sentiment:${c.id}` });
+      const out = await withRetry(`sentiment ${c.id}`, () => callRole("sentiment_flagger", c.input, SentimentFlaggerOutputSchema, { coupleId: null, jobStep: `eval:sentiment:${c.id}` }));
       const confident: string[] = out.flags.filter((f) => f.confidence >= 0.5).map((f) => f.marker);
       const problems: string[] = [];
       for (const m of c.expected_markers) if (!confident.includes(m)) problems.push(`missed ${m}`);
@@ -328,8 +352,26 @@ async function runDryRun() {
 }
 
 // ---------------------------------------------------------------- main
+function callBreakdown() {
+  const out: Record<string, { calls: number; outcomes: Record<string, number>; usd: number }> = {};
+  for (const r of recorder.records) {
+    const row = (out[r.role] ??= { calls: 0, outcomes: {}, usd: 0 });
+    row.calls++;
+    row.outcomes[r.outcome] = (row.outcomes[r.outcome] ?? 0) + 1;
+    // List price; batch requests are billed at half of this.
+    row.usd = Math.round((row.usd + costOfRecord(r) * (r.batch_id ? 0.5 : 1)) * 1e4) / 1e4;
+  }
+  return out;
+}
+
 async function main() {
-  configureLlm({ recorder, memo: new MemoryMemo() });
+  // Synthetic data only, so rejection reasons are safe to print here (never in jobs or the app).
+  configureLlm({
+    recorder,
+    memo: new MemoryMemo(),
+    onRejected: (role, kind, problem, ctx) => console.log(`  retry  ${role} ${ctx.jobStep}: ${kind}: ${problem.split(". Never state")[0].slice(0, 400)}`),
+  });
+  if (dumpDir) fs.mkdirSync(dumpDir, { recursive: true });
   console.log(`evals: suite=${suite} llm_config=${LLM_CONFIG_VERSION}`);
   if (dryRun) {
     await runDryRun();
@@ -346,13 +388,14 @@ async function main() {
     total: checks.length,
     failed: failed.length,
     llm_calls: recorder.records.length,
+    llm_calls_by_role: callBreakdown(),
     checks,
   };
   if (outPath) {
     fs.mkdirSync(path.dirname(outPath), { recursive: true });
     fs.writeFileSync(outPath, JSON.stringify(summary, null, 2));
   }
-  console.log(`\n${checks.length - failed.length}/${checks.length} checks passed; ${recorder.records.length} model call(s)`);
+  console.log(`\n${checks.length - failed.length}/${checks.length} checks passed; ${recorder.records.length} model call(s) ${JSON.stringify(callBreakdown())}`);
   process.exit(failed.length > 0 ? 1 : 0);
 }
 

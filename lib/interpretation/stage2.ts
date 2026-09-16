@@ -10,7 +10,8 @@ import { INSTRUMENTS, isMentalHealthKey, type InstrumentKey } from "@/instrument
 import { metricMap } from "@/instruments/derived";
 import type { Domain, Score } from "@/instruments/schema";
 import type { Flag, Stage1Output } from "./stage1";
-import type { InterpreterOutput } from "@/lib/llm/schemas";
+import { z } from "zod";
+import { InterpreterOutputSchema, type InterpreterOutput } from "@/lib/llm/schemas";
 
 export type MaskedScore = {
   instrument_key: string;
@@ -145,6 +146,41 @@ export function buildInterpreterInput(
       .filter((m) => m.definition.unvalidated)
       .map((m) => m.definition.key),
   };
+}
+
+/**
+ * The output schema for one interpreter call. Flags are produced by code, so the model may only
+ * phrase the flags it was given: no flagged entry in a domain without flags, no more entries than
+ * flags, and every weight copied from that domain's flags. A violation is a validation failure,
+ * which callRole/collectBatch retry with the problem spelled out. Refinements do not change the
+ * JSON schema sent to the model, so the tool definition stays identical and cacheable.
+ */
+export function interpreterOutputSchemaFor(input: Pick<InterpreterInput, "flags_by_domain">): z.ZodType<InterpreterOutput> {
+  return InterpreterOutputSchema.superRefine((out, ctx) => {
+    out.domains.forEach((d, i) => {
+      const given = input.flags_by_domain[d.domain] ?? [];
+      const weights = new Set(given.map((f) => f.weight));
+      if (given.length === 0 && d.flagged.length > 0) {
+        ctx.addIssue({ code: "custom", path: ["domains", i, "flagged"], message: `the input has no flags for ${d.domain}, so flagged must be empty; put unflagged differences under low_intensity_misaligned` });
+        return;
+      }
+      if (d.flagged.length > given.length) {
+        ctx.addIssue({ code: "custom", path: ["domains", i, "flagged"], message: `${d.domain} has ${given.length} flag(s) in the input but ${d.flagged.length} flagged entries; write one entry per given flag and add none` });
+      }
+      d.flagged.forEach((f, j) => {
+        if (!weights.has(f.weight)) {
+          ctx.addIssue({ code: "custom", path: ["domains", i, "flagged", j, "weight"], message: `weight ${f.weight} is not one of the weights given for ${d.domain} (${[...weights].join(", ")}); copy the weight unchanged` });
+        }
+      });
+    });
+    for (const [domain, flags] of Object.entries(input.flags_by_domain)) {
+      if (flags.length === 0) continue;
+      const d = out.domains.find((x) => x.domain === domain);
+      if (!d || d.flagged.length === 0) {
+        ctx.addIssue({ code: "custom", path: ["domains"], message: `${domain} has ${flags.length} flag(s) in the input; include the domain and phrase each flag under flagged` });
+      }
+    }
+  });
 }
 
 /** Deterministic one-sentence summaries for mental-health instruments (never sent to the model for the other partner). */

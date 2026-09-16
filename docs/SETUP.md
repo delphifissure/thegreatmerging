@@ -16,7 +16,7 @@ Everything the app needs that a person has to create by hand. Fill `.env.local` 
 
 1. Create an API key at console.anthropic.com and put it in `ANTHROPIC_API_KEY`.
 2. Verify the pinned model identifiers still resolve: `pnpm exec tsx scripts/verify_models.ts`.
-3. Baseline the LLM evals: `pnpm evals --out evals/results/baseline.json`. Record the result in `prompts/CHANGELOG.md`. Expect on the order of 30 model calls (20 interpreter requests through the Batches API, 7 prober cases, plus guardrail checks); the sentiment suite is separate: `pnpm evals --suite sentiment`.
+3. Baseline the LLM evals: `pnpm evals --out evals/results/baseline.json`. Record the result in `prompts/CHANGELOG.md`. Expect about 55 model calls and about $1 (20 interpreter requests through the Batches API, which can take from minutes to an hour, 7 prober cases, plus guardrail checks); the sentiment suite is separate: `pnpm evals --suite sentiment`. If the run is interrupted after the batch was submitted, collect it without paying again: `pnpm evals --suite interpreter --interpreter-batch <msgbatch id from the log>`. Add `--dump evals/results/outputs` to keep the raw outputs for review.
 4. The console's data-retention setting must allow 30-day retention for Claude Fable 5.1 (the prober); zero-data-retention organizations receive a 400 from that model.
 
 ## 3. Inngest (jobs)

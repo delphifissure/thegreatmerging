@@ -9,8 +9,9 @@ import { checkTextDeterministic } from "@/lib/guardrails";
 import { INSTRUMENTS, isMentalHealthKey, MENTAL_HEALTH_KEYS } from "@/instruments/registry";
 import type { Score } from "@/instruments/schema";
 import { runStage1 } from "@/lib/interpretation/stage1";
-import { buildInterpreterInput, computeCandidates, maskScores, mentalHealthSentences, privateResultsFor, type InterpreterInput } from "@/lib/interpretation/stage2";
-import type { InterpreterOutput } from "@/lib/llm/schemas";
+import { buildInterpreterInput, computeCandidates, interpreterOutputSchemaFor, maskScores, mentalHealthSentences, privateResultsFor, type InterpreterInput } from "@/lib/interpretation/stage2";
+import { InterpreterOutputSchema, type InterpreterOutput } from "@/lib/llm/schemas";
+import { buildRequest } from "@/lib/llm";
 import { completeCouple, responsesFrom, setItem, setItems } from "@/tests/unit/helpers/responses";
 
 const PHQ_12 = responsesFrom("phq9", { phq9_1: 3, phq9_2: 3, phq9_3: 3, phq9_4: 3 });
@@ -294,5 +295,40 @@ describe("computeCandidates", () => {
   it("never reads mental-health instruments", () => {
     const { aligned, misaligned } = computeCandidates(stage1, responses);
     expect(JSON.stringify([...aligned, ...misaligned])).not.toMatch(/phq9|gad7|oci_r/);
+  });
+});
+
+describe("interpreterOutputSchemaFor", () => {
+  const base = {
+    distress_note: null,
+    private_summaries: [
+      { user: "a" as const, sentences: [] },
+      { user: "b" as const, sentences: [] },
+    ],
+  };
+  const flagged = (weight: number) => ({ item: "problem area: money (MAP)", plain_reason: "One partner rated this at 49 and the other at 0.", weight });
+
+  it("rejects flagged entries in a domain the code did not flag (seen from Claude Sonnet 5 with weight 0)", () => {
+    const schema = interpreterOutputSchemaFor({ flags_by_domain: {} });
+    const r = schema.safeParse({ ...base, domains: [{ domain: "household", aligned: [], low_intensity_misaligned: [], flagged: [flagged(1)] }] });
+    expect(r.success).toBe(false);
+    expect(JSON.stringify(r.error?.issues)).toContain("flagged must be empty");
+  });
+
+  it("rejects changed weights, extra entries and dropped flags, and accepts a faithful copy", () => {
+    const flags = { household: [{ rule_key: "wdw_gap", weight: 2, triggered_by: { instrument: "who_does_what", item: "wdw_1" } }] } as never;
+    const schema = interpreterOutputSchemaFor({ flags_by_domain: flags });
+    const domain = (f: ReturnType<typeof flagged>[]) => ({ ...base, domains: [{ domain: "household", aligned: [], low_intensity_misaligned: [], flagged: f }] });
+    expect(schema.safeParse(domain([flagged(3)])).success).toBe(false);
+    expect(schema.safeParse(domain([flagged(2), flagged(2)])).success).toBe(false);
+    expect(schema.safeParse(domain([])).success).toBe(false);
+    expect(schema.safeParse({ ...base, domains: [] }).success).toBe(false);
+    expect(schema.safeParse(domain([flagged(2)])).success).toBe(true);
+  });
+
+  it("sends the same JSON schema to the model as the base schema", () => {
+    const a = JSON.stringify(buildRequest("interpreter", { x: 1 }, InterpreterOutputSchema).tools);
+    const b = JSON.stringify(buildRequest("interpreter", { x: 1 }, interpreterOutputSchemaFor({ flags_by_domain: {} })).tools);
+    expect(b).toBe(a);
   });
 });

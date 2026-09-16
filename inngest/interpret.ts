@@ -10,7 +10,7 @@
 import { LLM_CONFIG } from "@/config/llm";
 import { hashInput } from "@/lib/hash";
 import { runStage1, FLAG_RULES } from "@/lib/interpretation/stage1";
-import { buildInterpreterInput, privateResultsFor } from "@/lib/interpretation/stage2";
+import { buildInterpreterInput, interpreterOutputSchemaFor, privateResultsFor } from "@/lib/interpretation/stage2";
 import { InterpreterOutputSchema, type InterpreterOutput } from "@/lib/llm/schemas";
 import { batchStatus, callRole, collectBatch, configureLlm, submitBatch } from "@/lib/llm";
 import * as data from "@/lib/data";
@@ -56,9 +56,10 @@ export const interpretCouple = inngest.createFunction(
       const consentB = await data.getConsent(bId, coupleId);
       const input = buildInterpreterInput(stage1, { a, b }, { a: consentA, b: consentB });
       const ctx = { coupleId, jobStep: "interpret" };
+      const schema = interpreterOutputSchemaFor(input);
       let output: InterpreterOutput;
       if (process.env.LLM_USE_BATCH !== "0" && LLM_CONFIG.interpreter.batchable) {
-        const item = { custom_id: `interp:${scored.runId}`, role: "interpreter" as const, input, schema: InterpreterOutputSchema, ctx };
+        const item = { custom_id: `interp:${scored.runId}`, role: "interpreter" as const, input, schema, ctx };
         const { batch_id } = await submitBatch([item]);
         if (batch_id) {
           // Poll inside the step with a bounded wait; Inngest retries the step if it times out.
@@ -70,7 +71,7 @@ export const interpretCouple = inngest.createFunction(
         }
         output = (await collectBatch(batch_id, [item])).get(item.custom_id)!;
       } else {
-        output = await callRole("interpreter", input, InterpreterOutputSchema, ctx);
+        output = await callRole("interpreter", input, schema, ctx);
       }
       await data.persistInterpretation({ runId: scored.runId, coupleId, content: output, version: LLM_CONFIG.interpreter.prompt_version, inputHash: scored.inputHash });
       return { ok: true, domains: output.domains.length };

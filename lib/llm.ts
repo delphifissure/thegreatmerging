@@ -76,7 +76,17 @@ export class MemoryMemo implements LlmMemo {
   }
 }
 
-type Deps = { client: Anthropic | null; recorder: LlmRecorder; memo: LlmMemo };
+type Deps = {
+  client: Anthropic | null;
+  recorder: LlmRecorder;
+  memo: LlmMemo;
+  /**
+   * Eval-only diagnostics: called with the rejection message each time an output fails validation
+   * or the guardrail. The message can quote model output that paraphrases a person's answers, so
+   * jobs and the app never set this.
+   */
+  onRejected?: (role: Role, kind: "validation_failed" | "guardrail_failed", problem: string, ctx: CallContext) => void;
+};
 
 let deps: Deps | undefined;
 
@@ -357,6 +367,7 @@ export async function callRole<T>(role: Role, input: unknown, schema: z.ZodType<
       return verdict.value;
     }
     await usageRecord(role, ctx, res, attempt, verdict.kind, inputHash, promptVersion);
+    getDeps().onRejected?.(role, verdict.kind, verdict.problem, ctx);
     lastProblem = verdict.problem;
     appended.push(verdict.problem);
   }
@@ -428,6 +439,7 @@ export async function collectBatch<T>(batchId: string, items: Array<BatchItem<T>
           pending.delete(item.custom_id);
         } else {
           await usageRecord(item.role, ctx, res, 1, verdict.kind, inputHash, promptVersion);
+          getDeps().onRejected?.(item.role, verdict.kind, verdict.problem, ctx);
         }
       } catch (err) {
         await usageRecord(item.role, ctx, res, 1, err instanceof LlmRefusalError ? "refusal" : "error", inputHash, promptVersion);
