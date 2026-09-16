@@ -3,6 +3,7 @@
  * code-generated mental-health sentences, private-result merging and the candidate lists.
  * Stage 1 outputs come from runStage1 over helper-built couples (tests/unit/helpers/responses.ts).
  */
+import { descriptorContext } from "@/lib/llm/static_context";
 import { describe, expect, it } from "vitest";
 import { checkTextDeterministic } from "@/lib/guardrails";
 import { INSTRUMENTS, isMentalHealthKey, MENTAL_HEALTH_KEYS } from "@/instruments/registry";
@@ -104,7 +105,6 @@ describe("buildInterpreterInput", () => {
     const rest: Partial<InterpreterInput> = { ...input };
     delete rest.scores_a;
     delete rest.scores_b;
-    delete rest.descriptors;
     expect(JSON.stringify(rest)).not.toMatch(/phq9|gad7|oci_r/);
   });
 
@@ -115,7 +115,7 @@ describe("buildInterpreterInput", () => {
     expect(input.scores_b.find((s) => s.instrument_key === "gad7")).toMatchObject({ value: 11, cutoff_label: "moderate" });
   });
 
-  it("carries distress_context, flags by domain, candidates, descriptors and the unvalidated instrument list", () => {
+  it("carries distress_context, flags by domain, candidates and the unvalidated instrument list; descriptors live in the static system context", () => {
     const flagged = completeCouple({ a: { map: (rs) => setItems(rs, [["map_1", 60, "intensity"], ["map_1", 20, "efficacy"]]) } });
     const s1 = runStage1(flagged);
     const input = buildInterpreterInput(s1, { a: flagged.a, b: flagged.b }, { a: { share_mental_health_scores: false }, b: { share_mental_health_scores: false } });
@@ -123,8 +123,9 @@ describe("buildInterpreterInput", () => {
     expect(Object.keys(input.flags_by_domain)).toEqual(["household"]);
     expect(input.flags_by_domain.household).toEqual([{ rule_key: "map_high_intensity_low_efficacy", weight: 3, label: undefined, triggered_by: s1.flags[0].triggered_by }]);
     expect(input.unvalidated_instruments).toEqual(["polarization"]);
-    expect(input.descriptors.acq_1).toBe("household chores");
-    expect(input.descriptors.map_1).toBe("problem area: money");
+    expect("descriptors" in input).toBe(false);
+    expect(descriptorContext()).toContain('"acq_1":"household chores"');
+    expect(descriptorContext()).toContain('"map_1":"problem area: money"');
     expect(input.aligned_candidates.length).toBeLessThanOrEqual(60);
     expect(input.misaligned_candidates).toEqual([]);
     expect(input.aligned_candidates.some((c) => c.item === "map_1")).toBe(false);

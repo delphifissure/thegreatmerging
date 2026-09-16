@@ -23,6 +23,7 @@ import { checkOutput, checkOutputDeterministic, formatViolations, type ModelChec
 import { hashInput, stableStringify } from "@/lib/hash";
 import { loadRolePrompt } from "@/lib/prompts";
 import { GuardrailOutputSchema } from "@/lib/llm/schemas";
+import { staticContextFor } from "@/lib/llm/static_context";
 
 export type CallContext = {
   coupleId: string | null;
@@ -135,9 +136,11 @@ export function buildMessages(role: Role, input: unknown, appended: string[] = [
 } {
   const cfg = LLM_CONFIG[role];
   const prompt = loadRolePrompt(role);
-  const system: Anthropic.Beta.BetaTextBlockParam[] = [
-    { type: "text", text: prompt.text, cache_control: { type: "ephemeral" } },
-  ];
+  // All static content first (prompt file, then role reference context), one cache breakpoint on the last static block.
+  const system: Anthropic.Beta.BetaTextBlockParam[] = [{ type: "text", text: prompt.text }];
+  const staticContext = staticContextFor(role);
+  if (staticContext) system.push({ type: "text", text: staticContext });
+  system[system.length - 1] = { ...system[system.length - 1], cache_control: { type: "ephemeral" } };
   const parts: string[] = [
     `Input (JSON):\n${stableStringify(input)}`,
     `Respond by calling the tool \`${cfg.tool_name}\` exactly once with the complete output. Do not write prose outside the tool call.`,

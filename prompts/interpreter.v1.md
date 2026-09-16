@@ -35,5 +35,6 @@ The input carries item IDs and short descriptors, never item text. Fields:
 - `couple_scores`: array of `{metric, value, details}`.
 - `flags_by_domain`: object keyed by domain, each an array of `{rule_key, weight, label?, triggered_by}`.
 - `aligned_candidates`, `misaligned_candidates`: arrays of `{domain, item, descriptor, a, b}` computed by code.
-- `descriptors`: map from item ID to descriptor.
 - `unvalidated_instruments`: list of instrument keys that are unvalidated.
+
+The item descriptor reference (item ID to descriptor for every instrument) is provided above this input as static context.

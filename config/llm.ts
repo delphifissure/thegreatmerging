@@ -159,4 +159,4 @@ export const LLM_CONFIG: Record<Role, RoleConfig> = {
 };
 
 /** Bump on any change to a prompt, model, temperature, or output schema. Record it in prompts/CHANGELOG.md. */
-export const LLM_CONFIG_VERSION = "2026.09.15-1";
+export const LLM_CONFIG_VERSION = "2026.09.16-1";

@@ -25,7 +25,7 @@ import type { Response } from "@/instruments/schema";
 import { runStage1 } from "@/lib/interpretation/stage1";
 import { buildInterpreterInput } from "@/lib/interpretation/stage2";
 import { InterpreterOutputSchema, ProberOutputSchema, SentimentFlaggerOutputSchema, type InterpreterOutput, type ProberOutput } from "@/lib/llm/schemas";
-import { callRole, collectBatch, batchStatus, submitBatch, configureLlm, MemoryMemo, MemoryRecorder, LlmValidationError, type BatchItem } from "@/lib/llm";
+import { buildRequest, callRole, collectBatch, batchStatus, submitBatch, configureLlm, MemoryMemo, MemoryRecorder, LlmValidationError, type BatchItem } from "@/lib/llm";
 import { checkOutputDeterministic, collectStrings } from "@/lib/guardrails";
 import { LLM_CONFIG, LLM_CONFIG_VERSION } from "@/config/llm";
 
@@ -39,6 +39,8 @@ const argOf = (flag: string) => {
 const suite = argOf("--suite") ?? "all";
 const outPath = argOf("--out");
 const requireLlm = args.includes("--require-llm");
+/** --dry-run builds every model request (prompt, tool schema, input) without calling the API and writes them under evals/results/dry-run/. */
+const dryRun = args.includes("--dry-run");
 const checks: Check[] = [];
 const recorder = new MemoryRecorder();
 
@@ -277,14 +279,60 @@ async function runSentiment() {
   }
 }
 
+// ---------------------------------------------------------------- dry run (no API key needed)
+function approxTokens(text: string): number {
+  return Math.ceil(text.length / 4);
+}
+
+async function runDryRun() {
+  const outDir = path.join("evals", "results", "dry-run");
+  fs.mkdirSync(outDir, { recursive: true });
+  const write = (name: string, req: unknown) => {
+    const json = JSON.stringify(req, null, 2);
+    fs.writeFileSync(path.join(outDir, `${name}.json`), json);
+    return approxTokens(json);
+  };
+  const couples = await loadCouples();
+  let n = 0;
+  for (const [i, c] of couples.entries()) {
+    const stage1 = runStage1({ hasChildren: c.has_children, a: c.a, b: c.b });
+    const input = buildInterpreterInput(stage1, { a: c.a, b: c.b }, { a: { share_mental_health_scores: i % 2 === 0 }, b: { share_mental_health_scores: i % 3 === 0 } });
+    const req = buildRequest("interpreter", input, InterpreterOutputSchema);
+    const tokens = write(`interpreter-${c.id}`, req);
+    const text = JSON.stringify(req);
+    const leaked = /"text":\s*"TODO: populate from source"/.test(text) || /Not at all|Several days/.test(text);
+    record({ suite: "dry_run", id: `interpreter:${c.id}`, ok: !leaked, detail: leaked ? "instrument item text leaked into the prompt" : `~${tokens} tokens` });
+    n++;
+  }
+  const prober = JSON.parse(fs.readFileSync(path.join("evals", "prober", "cases.json"), "utf8")) as { cases: Array<{ id: string; input: unknown }> };
+  for (const c of prober.cases) {
+    const req = buildRequest("prober", c.input, ProberOutputSchema);
+    const tokens = write(`prober-${c.id}`, req);
+    const ok = req.model === LLM_CONFIG.prober.model && req.tool_choice?.type === "auto" && Array.isArray((req as { fallbacks?: unknown }).fallbacks);
+    record({ suite: "dry_run", id: `prober:${c.id}`, ok, detail: ok ? `~${tokens} tokens` : "unexpected request shape for Claude Fable 5.1" });
+    n++;
+  }
+  const sentiment = JSON.parse(fs.readFileSync(path.join("evals", "sentiment", "cases.json"), "utf8")) as { cases: Array<{ id: string; input: unknown }> };
+  for (const c of sentiment.cases) {
+    const req = buildRequest("sentiment_flagger", c.input, SentimentFlaggerOutputSchema);
+    const tokens = write(`sentiment-${c.id}`, req);
+    record({ suite: "dry_run", id: `sentiment:${c.id}`, ok: true, detail: `~${tokens} tokens` });
+    n++;
+  }
+  console.log(`dry run wrote ${n} request(s) to ${outDir}`);
+}
+
 // ---------------------------------------------------------------- main
 async function main() {
   configureLlm({ recorder, memo: new MemoryMemo() });
   console.log(`evals: suite=${suite} llm_config=${LLM_CONFIG_VERSION}`);
+  if (dryRun) {
+    await runDryRun();
+  }
   if (suite === "all" || suite === "scoring") runScoring();
   if (suite === "all" || suite === "synthetic_couples") await runSyntheticCouples();
-  if (suite === "all" || suite === "interpreter") await runInterpreter();
-  if (suite === "all" || suite === "prober") await runProber();
+  if (!dryRun && (suite === "all" || suite === "interpreter")) await runInterpreter();
+  if (!dryRun && (suite === "all" || suite === "prober")) await runProber();
   if (suite === "sentiment") await runSentiment();
   const failed = checks.filter((c) => !c.ok);
   const summary = {

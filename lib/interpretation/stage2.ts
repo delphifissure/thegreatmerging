@@ -30,7 +30,6 @@ export type InterpreterInput = {
   flags_by_domain: Record<string, Array<Pick<Flag, "rule_key" | "weight" | "label" | "triggered_by">>>;
   aligned_candidates: Candidate[];
   misaligned_candidates: Candidate[];
-  descriptors: Record<string, string>;
   unvalidated_instruments: string[];
 };
 
@@ -47,12 +46,6 @@ export function maskScores(scores: Score[], shareMentalHealth: boolean): MaskedS
 function domainOfItem(key: InstrumentKey, itemId: string): Domain {
   const def = INSTRUMENTS[key].definition;
   return def.items.find((i) => i.item_id === itemId)?.domain ?? def.default_domain ?? "communication";
-}
-
-function descriptorMap(): Record<string, string> {
-  const out: Record<string, string> = {};
-  for (const mod of Object.values(INSTRUMENTS)) for (const it of mod.definition.items) out[it.item_id] = it.descriptor;
-  return out;
 }
 
 /** Code-computed aligned and low-intensity-misaligned candidates from comparable items. */
@@ -148,7 +141,6 @@ export function buildInterpreterInput(
     flags_by_domain,
     aligned_candidates: aligned.slice(0, 60),
     misaligned_candidates: misaligned.slice(0, 60),
-    descriptors: descriptorMap(),
     unvalidated_instruments: Object.values(INSTRUMENTS)
       .filter((m) => m.definition.unvalidated)
       .map((m) => m.definition.key),

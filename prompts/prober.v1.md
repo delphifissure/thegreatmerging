@@ -34,4 +34,4 @@ Call the `emit_probes` tool once with `probes`: an array of zero to three `{temp
 - `other_answers`: this person's answers in other domains, same shape, with `domain`.
 - `scores`: this person's own scores `{instrument_key, subscale, value, cutoff_label, unvalidated?}` (including their own mental-health scores, which are theirs to see).
 - `tags`: this person's tags `{item_ref, tag, comment}`.
-- `descriptors`: map from item ID to descriptor. Item text is never included.
+- The item descriptor reference (item ID to descriptor) is provided above this input as static context. Item text is never included.

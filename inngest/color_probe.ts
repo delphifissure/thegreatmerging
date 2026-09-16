@@ -9,7 +9,6 @@ import { callRole, configureLlm } from "@/lib/llm";
 import * as data from "@/lib/data";
 import { reduce, type MachineState } from "@/lib/color/machine";
 import { loadColorModule } from "@/lib/color/config";
-import { INSTRUMENTS } from "@/instruments/registry";
 import type { Domain } from "@/instruments/schema";
 import { inngest } from "./client";
 
@@ -29,12 +28,10 @@ export const probeColorSession = inngest.createFunction(
       const others = all.filter((a) => a.domain !== domain);
       const scores = await data.getOwnScores(userId, coupleId);
       const tags = await data.listOwnTags(userId, coupleId);
-      const descriptors: Record<string, string> = {};
-      for (const mod of Object.values(INSTRUMENTS)) for (const it of mod.definition.items) descriptors[it.item_id] = it.descriptor;
       const shape = (a: (typeof all)[number]) => ({ answer_id: a.id, domain: a.domain, step: a.step, question_id: a.question_id, question_text: a.question_text, answer_text: a.answer_text, skipped: a.skipped });
       const out = await callRole(
         "prober",
-        { domain, answers: mine.map(shape), other_answers: others.map(shape), scores, tags: tags.map((t) => ({ item_ref: t.item_ref, tag: t.tag, comment: t.comment })), descriptors },
+        { domain, answers: mine.map(shape), other_answers: others.map(shape), scores, tags: tags.map((t) => ({ item_ref: t.item_ref, tag: t.tag, comment: t.comment })) },
         ProberOutputSchema,
         { coupleId, userId, jobStep: `color_probe:${domain}` },
       );

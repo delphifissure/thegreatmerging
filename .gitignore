@@ -45,3 +45,6 @@ next-env.d.ts
 
 # embedded Postgres data for local integration tests
 /.pg-test
+
+# eval run outputs
+/evals/results
