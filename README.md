@@ -76,4 +76,4 @@ CI (`.github/workflows/ci.yml`) runs lint, typecheck and unit tests on every pus
 
 ## Local development caveat
 
-The repository currently sits in an iCloud-synced folder (`~/Documents`). Under disk pressure macOS evicts files (including `node_modules` and `.git` objects) to iCloud, which corrupts installs and can break git. `node_modules` is therefore a symlink to `node_modules.nosync`, which iCloud ignores. Moving the repository outside iCloud (for example `~/dev/thegreatmerging`) and freeing disk space removes the problem entirely.
+This repository sits in an iCloud-synced folder (`~/Documents`). Under disk pressure macOS evicts files (including `node_modules`, `.git` internals and freshly written source) to iCloud, which corrupts installs and can break git; once it even replaced the working tree with a stale cloud copy. Keep plenty of free disk space, or better, move the repository outside iCloud (for example `~/dev/thegreatmerging`) and push the branch to the remote. If a build or test fails with "Unexpected end of JSON input", "Invalid character" or an empty config file, check for evicted files with `find . -type f -flags +dataless` and reinstall.

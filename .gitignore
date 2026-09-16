@@ -40,5 +40,5 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# pnpm install target kept out of iCloud sync (see README: repo location)
+# local iCloud workaround directory, if used
 /node_modules.nosync
