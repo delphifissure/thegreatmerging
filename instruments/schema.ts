@@ -100,6 +100,11 @@ export const InstrumentDefinitionSchema = z
     /** Set to true by the owner after checking the key against the published source. */
     scoring_key_verified: z.boolean().default(false),
     notes: z.string().optional(),
+    /** Where the item text and scoring key were taken from (URL or citation), recorded when populated. */
+    source_url: z.string().optional(),
+    text_source: z.string().optional(),
+    /** Terms under which the text may be used, as stated by the source. */
+    license_url: z.string().optional(),
     /** Display prompt per pass for multi-pass instruments (shown above the item's scale for that pass). */
     pass_prompts: z.record(z.string(), z.string()).optional(),
     /** Polarization only: the written attribution question asked in the color layer when two self ratings differ. */

@@ -247,8 +247,10 @@ suite(`lib/data module ${DB_TESTS_ENABLED ? "" : SKIP_MESSAGE}`, () => {
     expect(resolved?.share.id).toBe(share.id);
     expect(resolved?.profile?.user_id).toBe(A);
     expect(resolved?.briefs).toEqual([]);
-    const [row] = await sql<Array<{ last_accessed_at: Date | null }>>`select last_accessed_at from therapist_shares where id = ${share.id}`;
-    expect(row.last_accessed_at).toBeInstanceOf(Date);
+    // postgres-js may hand back timestamptz as a string on some servers; the app maps it through Drizzle.
+    const [row] = await sql<Array<{ last_accessed_at: Date | string | null }>>`select last_accessed_at from therapist_shares where id = ${share.id}`;
+    expect(row.last_accessed_at).not.toBeNull();
+    expect(Number.isFinite(new Date(row.last_accessed_at as string).getTime())).toBe(true);
     const audits = await sql<Array<{ actor_kind: string; target_user_id: string; metadata: { email: string }; consent_state_at_time: unknown }>>`select actor_kind, target_user_id, metadata, consent_state_at_time from audit_log where action = 'profile.share_access' and target_id = ${share.id}`;
     expect(audits).toEqual([expect.objectContaining({ actor_kind: "share_link", target_user_id: A, metadata: { email: "doc@example.com" } })]);
     expect(audits[0].consent_state_at_time).toMatchObject({ share_profile_with_therapist: false });

@@ -40,7 +40,7 @@ pnpm db:seed                 # syncs instrument definitions; E2E_SEED=1 adds two
 pnpm dev
 ```
 
-Generate a field encryption key with `node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"`.
+Generate a field encryption key with `node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"`. The full account and secrets walkthrough is in [docs/SETUP.md](docs/SETUP.md).
 
 Run Inngest locally with `npx inngest-cli@latest dev` pointed at `http://localhost:3000/api/inngest`.
 
@@ -55,7 +55,7 @@ Instruments whose subscale membership could not be encoded with certainty from m
 | Command | What it does |
 |---|---|
 | `pnpm lint`, `pnpm typecheck`, `pnpm test` | ESLint, `tsc --noEmit`, Vitest unit tests |
-| `pnpm test:integration` | RLS and data-module tests against `DATABASE_URL` (`RUN_DB_TESTS=1`) |
+| `pnpm test:integration:local` | RLS and data-module tests against an embedded Postgres (no install needed); `pnpm test:integration` runs them against `DATABASE_URL` with `RUN_DB_TESTS=1` |
 | `pnpm playwright` | end-to-end tests (seeded users, `E2E_SEED=1`) |
 | `pnpm evals` | scoring goldens, synthetic couples, interpreter and prober evals (the last two need `ANTHROPIC_API_KEY`) |
 | `pnpm db:generate` | regenerate the schema migration from `db/schema.ts` |
