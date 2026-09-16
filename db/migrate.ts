@@ -1,7 +1,7 @@
 /**
  * Apply db/migrations in order (schema + RLS). Usage: pnpm db:migrate (reads DATABASE_URL).
  */
-import "dotenv/config";
+import "@/lib/load_env";
 import { drizzle } from "drizzle-orm/postgres-js";
 import { migrate } from "drizzle-orm/postgres-js/migrator";
 import postgres from "postgres";

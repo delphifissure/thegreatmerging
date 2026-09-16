@@ -16,7 +16,7 @@
  *   prober             planted contradictions found, none invented on clean sets, templates only
  *   sentiment          hand-coded marker set for the clinician-layer flagger (gate before enabling)
  */
-import "dotenv/config";
+import "@/lib/load_env";
 import fs from "node:fs";
 import path from "node:path";
 import { INSTRUMENTS, isInstrumentKey } from "@/instruments/registry";

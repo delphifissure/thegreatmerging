@@ -1,7 +1,7 @@
 /**
  * Cost per couple run (cost control 7). Usage: pnpm cost:report <coupleId>
  */
-import "dotenv/config";
+import "@/lib/load_env";
 import { costReportForCouple } from "@/lib/data";
 
 async function main() {

@@ -3,7 +3,7 @@
  * This is the one script outside lib/llm.ts allowed to touch the SDK, and it does so only through
  * lib/llm's configured client accessor; it never sends a message.
  */
-import "dotenv/config";
+import "@/lib/load_env";
 import { LLM_CONFIG, MODEL_CAPABILITIES } from "@/config/llm";
 import { listModelIds } from "@/lib/llm/models";
 

@@ -6,7 +6,7 @@
  * the seeded accounts can sign in (password from E2E_PASSWORD, default "the-plan-e2e").
  * Without it (plain Postgres), fixed UUIDs are inserted into `users` for integration tests.
  */
-import "dotenv/config";
+import "@/lib/load_env";
 import { createClient } from "@supabase/supabase-js";
 import { db, schema } from "@/db/client";
 import { INSTRUMENTS } from "@/instruments/registry";
