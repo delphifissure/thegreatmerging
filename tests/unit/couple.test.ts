@@ -159,8 +159,8 @@ describe("computeCoupleScores", () => {
   describe("PSDQ between-parent gaps", () => {
     it("reports |a - b| per style", () => {
       // a permissive all 5, b all 3 -> gap 2; a authoritarian 4 vs b 3 -> 1; authoritative equal -> 0
-      const permissive = ["psdq_sf_4", "psdq_sf_8", "psdq_sf_15", "psdq_sf_20", "psdq_sf_24"];
-      const authoritarian = [2, 6, 10, 13, 16, 17, 19, 23, 26, 28, 30, 32].map((n) => `psdq_sf_${n}`);
+      const permissive = ["psdq_sf_8", "psdq_sf_15", "psdq_sf_17", "psdq_sf_20", "psdq_sf_24"];
+      const authoritarian = [2, 4, 6, 10, 13, 16, 19, 23, 26, 28, 30, 32].map((n) => `psdq_sf_${n}`);
       const [a, b] = partners({
         a: { psdq_sf: (rs) => setItems(rs, [...permissive.map((id): [string, number] => [id, 5]), ...authoritarian.map((id): [string, number] => [id, 4])]) },
       });

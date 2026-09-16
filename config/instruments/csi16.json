@@ -2,7 +2,7 @@
   "key": "csi16",
   "name": "Couples Satisfaction Index (CSI-16)",
   "source_citation": "Funk & Rogge (2007). Testing the ruler with item response theory: increasing precision of measurement for relationship satisfaction with the Couples Satisfaction Index. Journal of Family Psychology, 21(4), 572–583.",
-  "license_note": "Free for clinical and research use; see source.",
+  "license_note": "Free for clinical and research use (Funk & Rogge 2007; the Rogge lab distributes the CSI without charge). Text transcribed from the CSI-32 as reproduced in the Fetzer Institute / Fincham self-report measures compilation, using the compilation's stated CSI-16 subset.",
   "layer": 1,
   "passes": [
     "single"
@@ -11,163 +11,353 @@
   "items": [
     {
       "item_id": "csi16_1",
-      "text": "TODO: populate from source",
+      "text": "Please indicate the degree of happiness, all things considered, of your relationship.",
       "descriptor": "overall happiness",
       "scale": {
         "min": 0,
-        "max": 6
+        "max": 6,
+        "labels": [
+          "Extremely Unhappy",
+          "Fairly Unhappy",
+          "A Little Unhappy",
+          "Happy",
+          "Very Happy",
+          "Extremely Happy",
+          "Perfect"
+        ]
       },
-      "reverse_scored": false
+      "reverse_scored": false,
+      "domain": "communication",
+      "csi32_item": 1
     },
     {
       "item_id": "csi16_2",
-      "text": "TODO: populate from source",
-      "descriptor": "satisfaction item 2",
+      "text": "In general, how often do you think that things between you and your partner are going well?",
+      "descriptor": "things going well",
       "scale": {
         "min": 0,
-        "max": 5
+        "max": 5,
+        "labels": [
+          "Never",
+          "Rarely",
+          "Occasionally",
+          "More often than Not",
+          "Most of the Time",
+          "All the Time"
+        ]
       },
-      "reverse_scored": false
+      "reverse_scored": false,
+      "domain": "communication",
+      "csi32_item": 5,
+      "printed_descending": true
     },
     {
       "item_id": "csi16_3",
-      "text": "TODO: populate from source",
-      "descriptor": "satisfaction item 3",
+      "text": "Our relationship is strong",
+      "descriptor": "relationship strength",
       "scale": {
         "min": 0,
-        "max": 5
+        "max": 5,
+        "labels": [
+          "Not at all True",
+          "A little True",
+          "Somewhat True",
+          "Mostly True",
+          "Almost Completely True",
+          "Completely True"
+        ]
       },
-      "reverse_scored": false
+      "reverse_scored": false,
+      "domain": "communication",
+      "csi32_item": 9
     },
     {
       "item_id": "csi16_4",
-      "text": "TODO: populate from source",
-      "descriptor": "satisfaction item 4",
+      "text": "My relationship with my partner makes me happy",
+      "descriptor": "relationship makes me happy",
       "scale": {
         "min": 0,
-        "max": 5
+        "max": 5,
+        "labels": [
+          "Not at all True",
+          "A little True",
+          "Somewhat True",
+          "Mostly True",
+          "Almost Completely True",
+          "Completely True"
+        ]
       },
-      "reverse_scored": false
+      "reverse_scored": false,
+      "domain": "communication",
+      "csi32_item": 11
     },
     {
       "item_id": "csi16_5",
-      "text": "TODO: populate from source",
-      "descriptor": "satisfaction item 5",
+      "text": "I have a warm and comfortable relationship with my partner",
+      "descriptor": "warm and comfortable relationship",
       "scale": {
         "min": 0,
-        "max": 5
+        "max": 5,
+        "labels": [
+          "Not at all True",
+          "A little True",
+          "Somewhat True",
+          "Mostly True",
+          "Almost Completely True",
+          "Completely True"
+        ]
       },
-      "reverse_scored": false
+      "reverse_scored": false,
+      "domain": "communication",
+      "csi32_item": 12
     },
     {
       "item_id": "csi16_6",
-      "text": "TODO: populate from source",
-      "descriptor": "satisfaction item 6",
+      "text": "I really feel like part of a team with my partner",
+      "descriptor": "part of a team",
       "scale": {
         "min": 0,
-        "max": 5
+        "max": 5,
+        "labels": [
+          "Not at all True",
+          "A little True",
+          "Somewhat True",
+          "Mostly True",
+          "Almost Completely True",
+          "Completely True"
+        ]
       },
-      "reverse_scored": false
+      "reverse_scored": false,
+      "domain": "communication",
+      "csi32_item": 17
     },
     {
       "item_id": "csi16_7",
-      "text": "TODO: populate from source",
-      "descriptor": "satisfaction item 7",
+      "text": "How rewarding is your relationship with your partner?",
+      "descriptor": "how rewarding",
       "scale": {
         "min": 0,
-        "max": 5
+        "max": 5,
+        "labels": [
+          "Not at All",
+          "A little",
+          "Somewhat",
+          "Mostly",
+          "Almost completely",
+          "Completely"
+        ]
       },
-      "reverse_scored": false
+      "reverse_scored": false,
+      "domain": "communication",
+      "csi32_item": 19
     },
     {
       "item_id": "csi16_8",
-      "text": "TODO: populate from source",
-      "descriptor": "satisfaction item 8",
+      "text": "How well does your partner meet your needs?",
+      "descriptor": "needs met",
       "scale": {
         "min": 0,
-        "max": 5
+        "max": 5,
+        "labels": [
+          "Not at All",
+          "A little",
+          "Somewhat",
+          "Mostly",
+          "Almost completely",
+          "Completely"
+        ]
       },
-      "reverse_scored": false
+      "reverse_scored": false,
+      "domain": "communication",
+      "csi32_item": 20
     },
     {
       "item_id": "csi16_9",
-      "text": "TODO: populate from source",
-      "descriptor": "satisfaction item 9",
+      "text": "To what extent has your relationship met your original expectations?",
+      "descriptor": "expectations met",
       "scale": {
         "min": 0,
-        "max": 5
+        "max": 5,
+        "labels": [
+          "Not at All",
+          "A little",
+          "Somewhat",
+          "Mostly",
+          "Almost completely",
+          "Completely"
+        ]
       },
-      "reverse_scored": false
+      "reverse_scored": false,
+      "domain": "communication",
+      "csi32_item": 21
     },
     {
       "item_id": "csi16_10",
-      "text": "TODO: populate from source",
-      "descriptor": "satisfaction item 10",
+      "text": "In general, how satisfied are you with your relationship?",
+      "descriptor": "overall satisfaction",
       "scale": {
         "min": 0,
-        "max": 5
+        "max": 5,
+        "labels": [
+          "Not at All",
+          "A little",
+          "Somewhat",
+          "Mostly",
+          "Almost completely",
+          "Completely"
+        ]
       },
-      "reverse_scored": false
+      "reverse_scored": false,
+      "domain": "communication",
+      "csi32_item": 22
     },
     {
       "item_id": "csi16_11",
-      "text": "TODO: populate from source",
-      "descriptor": "relationship descriptor pair 1",
+      "text": "INTERESTING – BORING",
+      "descriptor": "interesting vs boring",
       "scale": {
         "min": 0,
-        "max": 5
+        "max": 5,
+        "labels": [
+          "BORING",
+          "",
+          "",
+          "",
+          "",
+          "INTERESTING"
+        ]
       },
-      "reverse_scored": false
+      "reverse_scored": false,
+      "domain": "communication",
+      "csi32_item": 26,
+      "bipolar": {
+        "left": "INTERESTING",
+        "right": "BORING"
+      },
+      "printed_descending": true
     },
     {
       "item_id": "csi16_12",
-      "text": "TODO: populate from source",
-      "descriptor": "relationship descriptor pair 2",
+      "text": "BAD – GOOD",
+      "descriptor": "bad vs good",
       "scale": {
         "min": 0,
-        "max": 5
+        "max": 5,
+        "labels": [
+          "BAD",
+          "",
+          "",
+          "",
+          "",
+          "GOOD"
+        ]
       },
-      "reverse_scored": false
+      "reverse_scored": false,
+      "domain": "communication",
+      "csi32_item": 27,
+      "bipolar": {
+        "left": "BAD",
+        "right": "GOOD"
+      }
     },
     {
       "item_id": "csi16_13",
-      "text": "TODO: populate from source",
-      "descriptor": "relationship descriptor pair 3",
+      "text": "FULL – EMPTY",
+      "descriptor": "full vs empty",
       "scale": {
         "min": 0,
-        "max": 5
+        "max": 5,
+        "labels": [
+          "EMPTY",
+          "",
+          "",
+          "",
+          "",
+          "FULL"
+        ]
       },
-      "reverse_scored": false
+      "reverse_scored": false,
+      "domain": "communication",
+      "csi32_item": 28,
+      "bipolar": {
+        "left": "FULL",
+        "right": "EMPTY"
+      },
+      "printed_descending": true
     },
     {
       "item_id": "csi16_14",
-      "text": "TODO: populate from source",
-      "descriptor": "relationship descriptor pair 4",
+      "text": "STURDY – FRAGILE",
+      "descriptor": "sturdy vs fragile",
       "scale": {
         "min": 0,
-        "max": 5
+        "max": 5,
+        "labels": [
+          "FRAGILE",
+          "",
+          "",
+          "",
+          "",
+          "STURDY"
+        ]
       },
-      "reverse_scored": false
+      "reverse_scored": false,
+      "domain": "communication",
+      "csi32_item": 30,
+      "bipolar": {
+        "left": "STURDY",
+        "right": "FRAGILE"
+      },
+      "printed_descending": true
     },
     {
       "item_id": "csi16_15",
-      "text": "TODO: populate from source",
-      "descriptor": "relationship descriptor pair 5",
+      "text": "DISCOURAGING – HOPEFUL",
+      "descriptor": "discouraging vs hopeful",
       "scale": {
         "min": 0,
-        "max": 5
+        "max": 5,
+        "labels": [
+          "DISCOURAGING",
+          "",
+          "",
+          "",
+          "",
+          "HOPEFUL"
+        ]
       },
-      "reverse_scored": false
+      "reverse_scored": false,
+      "domain": "communication",
+      "csi32_item": 31,
+      "bipolar": {
+        "left": "DISCOURAGING",
+        "right": "HOPEFUL"
+      }
     },
     {
       "item_id": "csi16_16",
-      "text": "TODO: populate from source",
-      "descriptor": "relationship descriptor pair 6",
+      "text": "ENJOYABLE – MISERABLE",
+      "descriptor": "enjoyable vs miserable",
       "scale": {
         "min": 0,
-        "max": 5
+        "max": 5,
+        "labels": [
+          "MISERABLE",
+          "",
+          "",
+          "",
+          "",
+          "ENJOYABLE"
+        ]
       },
-      "reverse_scored": false
+      "reverse_scored": false,
+      "domain": "communication",
+      "csi32_item": 32,
+      "bipolar": {
+        "left": "ENJOYABLE",
+        "right": "MISERABLE"
+      },
+      "printed_descending": true
     }
   ],
   "scoring": {
@@ -210,5 +400,11 @@
     ]
   },
   "scoring_key_verified": true,
-  "notes": "Values are stored as the printed scoring values on the official form (item 1 is 0–6, items 2–16 are 0–5; bipolar adjective pairs and frequency items are printed with their scoring direction), so no reverse scoring is applied in code. Total 0–81, cutoff 51.5."
+  "notes": "Values are stored as the printed scoring values (item 1 is 0–6, items 2–16 are 0–5), so no reverse scoring is applied in code; items marked printed_descending are printed with 5 on the left, and bipolar items carry their two poles. Total 0–81 (6 + 15 × 5), cutoff 51.5 per Funk & Rogge 2007. Item set and printed values verified from source_url.",
+  "instructions": {
+    "bipolar": "For each of the following items, select the answer that best describes how you feel about your relationship. Base your responses on your first impressions and immediate feelings about the item."
+  },
+  "source_url": "https://nbcgutah.com/wp-content/uploads/2017/09/Couple.Satisfaction.Index_-1.pdf",
+  "text_source": "\"Self Report Measures for Love and Compassion Research: Marital Satisfaction — The Couples Satisfaction Index (CSI)\" (32-item form with printed scoring values; scoring note: \"For the 16-item version use 1, 5, 9, 11, 12, 17, 19, 20, 21, 22, 26, 27, 28, 30, 31, 32\"), transcribed verbatim 2026-09-16. Each item's csi32_item field records its number on that form.",
+  "license_url": "https://doi.org/10.1037/0893-3200.21.4.572"
 }

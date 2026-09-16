@@ -155,22 +155,22 @@ describe("runStage1", () => {
 
   describe("brief_crs_negative_coparenting (weight 3, parenting)", () => {
     it("fires when undermining or exposure_to_conflict mean is above 3 (no item)", () => {
-      const input = completeCouple({ a: { brief_crs: (rs) => setItems(rs, [["brief_crs_9", 4], ["brief_crs_10", 4]]) } });
+      const input = completeCouple({ a: { brief_crs: (rs) => setItems(rs, [["brief_crs_7", 4], ["brief_crs_9", 4]]) } });
       expect(flagsOf(input)).toEqual([{ rule_key: "brief_crs_negative_coparenting", domain: "parenting", user: "a", weight: 3 }]);
       expect(runStage1(input).flags[0].triggered_by).toEqual({ instrument: "brief_crs", user: "a", values: { subscale: "undermining", value: 4 } });
       // exposure (6 + 1) / 2 = 3.5 for b -> one flag for b
-      expect(flagsOf(completeCouple({ b: { brief_crs: (rs) => setItems(rs, [["brief_crs_5", 6], ["brief_crs_6", 1]]) } }))).toEqual([
+      expect(flagsOf(completeCouple({ b: { brief_crs: (rs) => setItems(rs, [["brief_crs_13", 6], ["brief_crs_14", 1]]) } }))).toEqual([
         { rule_key: "brief_crs_negative_coparenting", domain: "parenting", user: "b", weight: 3 },
       ]);
     });
     it("does not fire at a mean of exactly 3", () => {
-      expect(flagsOf(completeCouple({ a: { brief_crs: (rs) => setItems(rs, [["brief_crs_9", 3], ["brief_crs_10", 3]]) } }))).toEqual([]);
-      expect(flagsOf(completeCouple({ a: { brief_crs: (rs) => setItems(rs, [["brief_crs_5", 4], ["brief_crs_6", 2]]) } }))).toEqual([]);
+      expect(flagsOf(completeCouple({ a: { brief_crs: (rs) => setItems(rs, [["brief_crs_7", 3], ["brief_crs_9", 3]]) } }))).toEqual([]);
+      expect(flagsOf(completeCouple({ a: { brief_crs: (rs) => setItems(rs, [["brief_crs_13", 4], ["brief_crs_14", 2]]) } }))).toEqual([]);
     });
   });
 
   describe("psdq_between_parent_gap (weight 3, parenting, label values_conflict, both)", () => {
-    const permissive = ["psdq_sf_4", "psdq_sf_8", "psdq_sf_15", "psdq_sf_20", "psdq_sf_24"];
+    const permissive = ["psdq_sf_8", "psdq_sf_15", "psdq_sf_17", "psdq_sf_20", "psdq_sf_24"];
     const authoritative = [1, 3, 5, 7, 9, 11, 12, 14, 18, 21, 22, 25, 27, 29, 31].map((n) => `psdq_sf_${n}`);
     it("fires at a permissive gap of exactly 1.0", () => {
       const input = completeCouple({ a: { psdq_sf: (rs) => setItems(rs, permissive.map((id): [string, number] => [id, 4])) } });
@@ -234,7 +234,7 @@ describe("runStage1", () => {
         a: {
           rdas: (rs) => setItem(rs, "rdas_2", 2),
           fapbi: (rs) => setItem(rs, "fapbi_1", 4, "acceptability"),
-          brief_crs: (rs) => setItems(rs, [["brief_crs_9", 5], ["brief_crs_10", 5]]),
+          brief_crs: (rs) => setItems(rs, [["brief_crs_7", 5], ["brief_crs_9", 5]]),
           who_does_what: (rs) => setItem(rs, "who_does_what_1", { needs_context: true }, "now"),
         },
       });

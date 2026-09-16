@@ -51,6 +51,10 @@ export const ItemSchema = z.object({
   safety_item: z.boolean().default(false),
   /** Optional presentation grouping (e.g. Who Does What: household_tasks | decisions | childcare). */
   group: z.string().optional(),
+  /** The official form prints this item's scoring values from high to low (left to right); render it as printed. */
+  printed_descending: z.boolean().optional(),
+  /** Bipolar adjective item: the left and right poles as printed. Values are stored as the printed scoring value. */
+  bipolar: z.object({ left: z.string(), right: z.string() }).optional(),
 });
 
 export const ScoringMethodSchema = z.enum(["sum", "mean", "sum_reverse_aware", "mean_reverse_aware"]);

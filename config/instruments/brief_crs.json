@@ -2,7 +2,7 @@
   "key": "brief_crs",
   "name": "Coparenting Relationship Scale – Brief (Brief CRS)",
   "source_citation": "Feinberg, Brown & Kan (2012). A multi-domain self-report measure of coparenting. Parenting: Science and Practice, 12(1), 1–21.",
-  "license_note": "Available for research and clinical use with citation; see source.",
+  "license_note": "Available for research and clinical use with citation; see source. The article carries no explicit permission statement; request the measure from the authors.",
   "layer": 1,
   "passes": [
     "single"
@@ -12,7 +12,7 @@
     {
       "item_id": "brief_crs_1",
       "text": "TODO: populate from source",
-      "descriptor": "agreement item 1",
+      "descriptor": "endorsement item (CRS 1)",
       "scale": {
         "min": 0,
         "max": 6,
@@ -26,12 +26,14 @@
           "Very true of us"
         ]
       },
-      "reverse_scored": false
+      "reverse_scored": false,
+      "domain": "parenting",
+      "crs_item": 1
     },
     {
       "item_id": "brief_crs_2",
       "text": "TODO: populate from source",
-      "descriptor": "agreement item 2",
+      "descriptor": "closeness item (CRS 2)",
       "scale": {
         "min": 0,
         "max": 6,
@@ -45,12 +47,14 @@
           "Very true of us"
         ]
       },
-      "reverse_scored": false
+      "reverse_scored": false,
+      "domain": "parenting",
+      "crs_item": 2
     },
     {
       "item_id": "brief_crs_3",
       "text": "TODO: populate from source",
-      "descriptor": "closeness item 1",
+      "descriptor": "endorsement item (CRS 4)",
       "scale": {
         "min": 0,
         "max": 6,
@@ -64,12 +68,14 @@
           "Very true of us"
         ]
       },
-      "reverse_scored": false
+      "reverse_scored": false,
+      "domain": "parenting",
+      "crs_item": 4
     },
     {
       "item_id": "brief_crs_4",
       "text": "TODO: populate from source",
-      "descriptor": "closeness item 2",
+      "descriptor": "division of labor item (CRS 5)",
       "scale": {
         "min": 0,
         "max": 6,
@@ -83,12 +89,14 @@
           "Very true of us"
         ]
       },
-      "reverse_scored": false
+      "reverse_scored": false,
+      "domain": "parenting",
+      "crs_item": 5
     },
     {
       "item_id": "brief_crs_5",
       "text": "TODO: populate from source",
-      "descriptor": "exposure_to_conflict item 1",
+      "descriptor": "agreement item (CRS 6)",
       "scale": {
         "min": 0,
         "max": 6,
@@ -102,12 +110,14 @@
           "Very true of us"
         ]
       },
-      "reverse_scored": false
+      "reverse_scored": false,
+      "domain": "parenting",
+      "crs_item": 6
     },
     {
       "item_id": "brief_crs_6",
       "text": "TODO: populate from source",
-      "descriptor": "exposure_to_conflict item 2",
+      "descriptor": "agreement item (CRS 9)",
       "scale": {
         "min": 0,
         "max": 6,
@@ -121,12 +131,14 @@
           "Very true of us"
         ]
       },
-      "reverse_scored": false
+      "reverse_scored": true,
+      "domain": "parenting",
+      "crs_item": 9
     },
     {
       "item_id": "brief_crs_7",
       "text": "TODO: populate from source",
-      "descriptor": "support item 1",
+      "descriptor": "undermining item (CRS 16)",
       "scale": {
         "min": 0,
         "max": 6,
@@ -140,12 +152,14 @@
           "Very true of us"
         ]
       },
-      "reverse_scored": false
+      "reverse_scored": false,
+      "domain": "parenting",
+      "crs_item": 16
     },
     {
       "item_id": "brief_crs_8",
       "text": "TODO: populate from source",
-      "descriptor": "support item 2",
+      "descriptor": "division of labor item (CRS 20)",
       "scale": {
         "min": 0,
         "max": 6,
@@ -159,12 +173,14 @@
           "Very true of us"
         ]
       },
-      "reverse_scored": false
+      "reverse_scored": true,
+      "domain": "parenting",
+      "crs_item": 20
     },
     {
       "item_id": "brief_crs_9",
       "text": "TODO: populate from source",
-      "descriptor": "undermining item 1",
+      "descriptor": "undermining item (CRS 22)",
       "scale": {
         "min": 0,
         "max": 6,
@@ -178,12 +194,14 @@
           "Very true of us"
         ]
       },
-      "reverse_scored": false
+      "reverse_scored": false,
+      "domain": "parenting",
+      "crs_item": 22
     },
     {
       "item_id": "brief_crs_10",
       "text": "TODO: populate from source",
-      "descriptor": "undermining item 2",
+      "descriptor": "closeness item (CRS 24)",
       "scale": {
         "min": 0,
         "max": 6,
@@ -197,12 +215,14 @@
           "Very true of us"
         ]
       },
-      "reverse_scored": false
+      "reverse_scored": false,
+      "domain": "parenting",
+      "crs_item": 24
     },
     {
       "item_id": "brief_crs_11",
       "text": "TODO: populate from source",
-      "descriptor": "endorsement item 1",
+      "descriptor": "support item (CRS 25)",
       "scale": {
         "min": 0,
         "max": 6,
@@ -216,12 +236,14 @@
           "Very true of us"
         ]
       },
-      "reverse_scored": false
+      "reverse_scored": false,
+      "domain": "parenting",
+      "crs_item": 25
     },
     {
       "item_id": "brief_crs_12",
       "text": "TODO: populate from source",
-      "descriptor": "endorsement item 2",
+      "descriptor": "support item (CRS 27)",
       "scale": {
         "min": 0,
         "max": 6,
@@ -235,45 +257,51 @@
           "Very true of us"
         ]
       },
-      "reverse_scored": false
+      "reverse_scored": false,
+      "domain": "parenting",
+      "crs_item": 27
     },
     {
       "item_id": "brief_crs_13",
       "text": "TODO: populate from source",
-      "descriptor": "division_of_labor item 1",
+      "descriptor": "exposure to conflict item (CRS 33)",
       "scale": {
         "min": 0,
         "max": 6,
         "labels": [
-          "Not true of us",
+          "Never",
           "",
           "",
-          "Somewhat true of us",
           "",
           "",
-          "Very true of us"
+          "",
+          "Very often"
         ]
       },
-      "reverse_scored": false
+      "reverse_scored": false,
+      "domain": "parenting",
+      "crs_item": 33
     },
     {
       "item_id": "brief_crs_14",
       "text": "TODO: populate from source",
-      "descriptor": "division_of_labor item 2",
+      "descriptor": "exposure to conflict item (CRS 34)",
       "scale": {
         "min": 0,
         "max": 6,
         "labels": [
-          "Not true of us",
+          "Never",
           "",
           "",
-          "Somewhat true of us",
           "",
           "",
-          "Very true of us"
+          "",
+          "Very often"
         ]
       },
-      "reverse_scored": false
+      "reverse_scored": false,
+      "domain": "parenting",
+      "crs_item": 34
     }
   ],
   "scoring": {
@@ -282,62 +310,64 @@
       {
         "name": "agreement",
         "items": [
-          "brief_crs_1",
-          "brief_crs_2"
+          "brief_crs_5",
+          "brief_crs_6"
         ],
-        "method": "mean"
+        "method": "mean_reverse_aware"
       },
       {
         "name": "closeness",
         "items": [
-          "brief_crs_3",
-          "brief_crs_4"
+          "brief_crs_2",
+          "brief_crs_10"
         ],
-        "method": "mean"
+        "method": "mean_reverse_aware"
       },
       {
         "name": "exposure_to_conflict",
         "items": [
-          "brief_crs_5",
-          "brief_crs_6"
+          "brief_crs_13",
+          "brief_crs_14"
         ],
-        "method": "mean"
+        "method": "mean_reverse_aware"
       },
       {
         "name": "support",
         "items": [
-          "brief_crs_7",
-          "brief_crs_8"
+          "brief_crs_11",
+          "brief_crs_12"
         ],
-        "method": "mean"
+        "method": "mean_reverse_aware"
       },
       {
         "name": "undermining",
         "items": [
-          "brief_crs_9",
-          "brief_crs_10"
+          "brief_crs_7",
+          "brief_crs_9"
         ],
-        "method": "mean"
+        "method": "mean_reverse_aware"
       },
       {
         "name": "endorsement",
         "items": [
-          "brief_crs_11",
-          "brief_crs_12"
+          "brief_crs_1",
+          "brief_crs_3"
         ],
-        "method": "mean"
+        "method": "mean_reverse_aware"
       },
       {
         "name": "division_of_labor",
         "items": [
-          "brief_crs_13",
-          "brief_crs_14"
+          "brief_crs_4",
+          "brief_crs_8"
         ],
-        "method": "mean"
+        "method": "mean_reverse_aware"
       }
     ],
     "cutoffs": []
   },
-  "scoring_key_verified": false,
-  "notes": "VERIFY BEFORE USE: items are grouped two per subscale in this file (agreement, closeness, exposure to conflict, support, undermining, endorsement, division of labor); map each official item to its subscale when populating text. Undermining and exposure-to-conflict above the scale midpoint (3) trigger a weight-3 parenting flag."
+  "scoring_key_verified": true,
+  "notes": "Brief 14-item form = CRS items 1, 2, 4, 5, 6, 9, 16, 20, 22, 24, 25, 27, 33, 34 (Feinberg, Brown & Kan 2012, verified from source_url), listed here in ascending CRS order with each item's crs_item recorded: endorsement {1, 4}, closeness {2, 24}, division of labor {5, 20}, agreement {6, 9}, undermining {16, 22}, support {25, 27}, exposure to conflict {33, 34}. Scale 0 = not true of us … 6 = very true of us (CRS 1–30); exposure items 31–35 use 0 = never … 6 = very often. Reverse-keyed within their subscales: CRS 9 (agreement) and CRS 20 (division of labor); undermining and exposure items are scored so that higher = more of that construct (the article reverses them only when forming a positive-coparenting total). Subscales are means. Undermining or exposure above the midpoint (3) triggers a weight-3 parenting flag. The administration order of the brief form should be confirmed against the official form when transcribing text.",
+  "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3499623/",
+  "text_source": "Item text not populated (journal copyright; obtain the measure from Feinberg's group at Penn State's Prevention Research Center or the article appendix). Scoring key verified from the open-access article."
 }

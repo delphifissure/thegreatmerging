@@ -47,8 +47,8 @@ function symptomTotal(key: "phq9" | "gad7", total: number) {
   return responsesFrom(key, values, 0);
 }
 
-const PERMISSIVE = ["psdq_sf_4", "psdq_sf_8", "psdq_sf_15", "psdq_sf_20", "psdq_sf_24"];
-const AUTHORITARIAN = [2, 6, 10, 13, 16, 17, 19, 23, 26, 28, 30, 32].map((n) => `psdq_sf_${n}`);
+const PERMISSIVE = ["psdq_sf_8", "psdq_sf_15", "psdq_sf_17", "psdq_sf_20", "psdq_sf_24"];
+const AUTHORITARIAN = [2, 4, 6, 10, 13, 16, 19, 23, 26, 28, 30, 32].map((n) => `psdq_sf_${n}`);
 const all = (ids: string[], value: number): Array<[string, number]> => ids.map((id) => [id, value]);
 
 export const PROFILES: Profile[] = [
@@ -146,8 +146,8 @@ export const PROFILES: Profile[] = [
   },
   {
     id: "couple_09",
-    description: "Single rule: partner A reports exposing the child to conflict (brief_crs_5/6 = 5 and 4, mean 4.5 above the midpoint).",
-    overrides: { a: { brief_crs: (rs) => setItems(rs, [["brief_crs_5", 5], ["brief_crs_6", 4]]) } },
+    description: "Single rule: partner A reports exposing the child to conflict (brief_crs_13/14 = 5 and 4, mean 4.5 above the midpoint).",
+    overrides: { a: { brief_crs: (rs) => setItems(rs, [["brief_crs_13", 5], ["brief_crs_14", 4]]) } },
     expected: {
       distress_context: false,
       domains: { parenting: 3 },
@@ -290,7 +290,7 @@ export const PROFILES: Profile[] = [
         acq: (rs) => setItems(rs, [["acq_11", 3, "partner_wants"], ["acq_20", 2, "partner_wants"]]),
         who_does_what: (rs) =>
           setItems(rs, [["who_does_what_8", 9, "now"], ["who_does_what_8", 5, "ideal"], ["who_does_what_22", 2, "now"], ["who_does_what_22", 2, "ideal"]]),
-        brief_crs: (rs) => setItems(rs, [["brief_crs_9", 6], ["brief_crs_10", 5]]),
+        brief_crs: (rs) => setItems(rs, [["brief_crs_7", 6], ["brief_crs_9", 5]]),
         polarization: (rs) => setItems(rs, [["polarization_3", 7, "self_alone"], ["polarization_3", 4, "self_with_partner"]]),
       },
     },
@@ -362,8 +362,8 @@ export const PROFILES: Profile[] = [
         acq: (rs) => setItems(rs, [["acq_1", 1, "self"], ["acq_2", 0, "partner_wants"]]),
         fapbi: (rs) => setItems(rs, [["fapbi_1", 30, "frequency"], ["fapbi_1", 5, "acceptability"]]),
         who_does_what: (rs) => setItems(rs, [["who_does_what_1", 3, "now"], ["who_does_what_1", 5, "ideal"]]),
-        brief_crs: (rs) => setItems(rs, [["brief_crs_9", 3], ["brief_crs_10", 3]]),
-        psdq_sf: (rs) => setItems(rs, [["psdq_sf_4", 4], ["psdq_sf_8", 4], ["psdq_sf_15", 4], ["psdq_sf_20", 4], ["psdq_sf_24", 3]]),
+        brief_crs: (rs) => setItems(rs, [["brief_crs_7", 3], ["brief_crs_9", 3]]),
+        psdq_sf: (rs) => setItems(rs, [["psdq_sf_8", 4], ["psdq_sf_15", 4], ["psdq_sf_17", 4], ["psdq_sf_20", 4], ["psdq_sf_24", 3]]),
         polarization: (rs) =>
           setItems(rs, [
             ["polarization_1", 2, "self_alone"], ["polarization_1", 5, "self_with_partner"],
@@ -378,7 +378,7 @@ export const PROFILES: Profile[] = [
         who_does_what: (rs) =>
           setItems(rs, [["who_does_what_1", 7, "now"], ["who_does_what_1", 7, "ideal"], ["who_does_what_2", 3, "now"], ["who_does_what_2", 3, "ideal"]]),
         rdas: (rs) => setItem(rs, "rdas_1", 3),
-        brief_crs: (rs) => setItems(rs, [["brief_crs_5", 4], ["brief_crs_6", 2]]),
+        brief_crs: (rs) => setItems(rs, [["brief_crs_13", 4], ["brief_crs_14", 2]]),
         polarization: (rs) =>
           setItems(rs, [
             ["polarization_1", 4, "self_alone"], ["polarization_1", 3, "self_with_partner"],

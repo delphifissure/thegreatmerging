@@ -1645,7 +1645,7 @@
       },
       {
         "item_id": "brief_crs_5",
-        "value": 0
+        "value": 6
       },
       {
         "item_id": "brief_crs_6",
@@ -1653,11 +1653,11 @@
       },
       {
         "item_id": "brief_crs_7",
-        "value": 6
+        "value": 0
       },
       {
         "item_id": "brief_crs_8",
-        "value": 6
+        "value": 0
       },
       {
         "item_id": "brief_crs_9",
@@ -1665,7 +1665,7 @@
       },
       {
         "item_id": "brief_crs_10",
-        "value": 0
+        "value": 6
       },
       {
         "item_id": "brief_crs_11",
@@ -1677,11 +1677,11 @@
       },
       {
         "item_id": "brief_crs_13",
-        "value": 6
+        "value": 0
       },
       {
         "item_id": "brief_crs_14",
-        "value": 6
+        "value": 0
       }
     ],
     "psdq_sf": [
@@ -1699,7 +1699,7 @@
       },
       {
         "item_id": "psdq_sf_4",
-        "value": 5
+        "value": 3
       },
       {
         "item_id": "psdq_sf_5",
@@ -1751,7 +1751,7 @@
       },
       {
         "item_id": "psdq_sf_17",
-        "value": 3
+        "value": 5
       },
       {
         "item_id": "psdq_sf_18",
@@ -3605,7 +3605,7 @@
       },
       {
         "item_id": "brief_crs_5",
-        "value": 0
+        "value": 6
       },
       {
         "item_id": "brief_crs_6",
@@ -3617,15 +3617,15 @@
       },
       {
         "item_id": "brief_crs_8",
-        "value": 6
+        "value": 0
       },
       {
         "item_id": "brief_crs_9",
-        "value": 6
+        "value": 5
       },
       {
         "item_id": "brief_crs_10",
-        "value": 5
+        "value": 6
       },
       {
         "item_id": "brief_crs_11",
@@ -3637,11 +3637,11 @@
       },
       {
         "item_id": "brief_crs_13",
-        "value": 6
+        "value": 0
       },
       {
         "item_id": "brief_crs_14",
-        "value": 6
+        "value": 0
       }
     ],
     "psdq_sf": [

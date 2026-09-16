@@ -1,36 +1,991 @@
 {
   "description": "Golden scoring cases derived from the published scoring documentation encoded in config/instruments. `values` is one integer per item in item order for single-pass instruments; `values_by_pass` for multi-pass. Expected subscale values are hand-computed.",
   "cases": [
-    { "id": "phq9_all2", "instrument": "phq9", "values": [2, 2, 2, 2, 2, 2, 2, 2, 2], "expected": { "total": { "value": 18, "cutoff_label": "moderately_severe" } } },
-    { "id": "phq9_all1", "instrument": "phq9", "values": [1, 1, 1, 1, 1, 1, 1, 1, 1], "expected": { "total": { "value": 9, "cutoff_label": "mild" } } },
-    { "id": "phq9_max", "instrument": "phq9", "values": [3, 3, 3, 3, 3, 3, 3, 3, 3], "expected": { "total": { "value": 27, "cutoff_label": "severe" } } },
-    { "id": "phq9_min", "instrument": "phq9", "values": [0, 0, 0, 0, 0, 0, 0, 0, 0], "expected": { "total": { "value": 0, "cutoff_label": "minimal" } } },
-    { "id": "phq9_5", "instrument": "phq9", "values": [1, 1, 1, 1, 1, 0, 0, 0, 0], "expected": { "total": { "value": 5, "cutoff_label": "mild" } } },
-    { "id": "phq9_10", "instrument": "phq9", "values": [2, 2, 2, 2, 2, 0, 0, 0, 0], "expected": { "total": { "value": 10, "cutoff_label": "moderate" } } },
-    { "id": "phq9_15", "instrument": "phq9", "values": [3, 3, 3, 3, 3, 0, 0, 0, 0], "expected": { "total": { "value": 15, "cutoff_label": "moderately_severe" } } },
-    { "id": "phq9_20", "instrument": "phq9", "values": [3, 3, 3, 3, 3, 3, 2, 0, 0], "expected": { "total": { "value": 20, "cutoff_label": "severe" } } },
-    { "id": "gad7_all2", "instrument": "gad7", "values": [2, 2, 2, 2, 2, 2, 2], "expected": { "total": { "value": 14, "cutoff_label": "moderate" } } },
-    { "id": "gad7_15", "instrument": "gad7", "values": [3, 3, 3, 3, 3, 0, 0], "expected": { "total": { "value": 15, "cutoff_label": "severe" } } },
-    { "id": "gad7_5", "instrument": "gad7", "values": [1, 1, 1, 1, 1, 0, 0], "expected": { "total": { "value": 5, "cutoff_label": "mild" } } },
-    { "id": "gad7_4", "instrument": "gad7", "values": [1, 1, 1, 1, 0, 0, 0], "expected": { "total": { "value": 4, "cutoff_label": "minimal" } } },
-    { "id": "csi16_max", "instrument": "csi16", "values": [6, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5], "expected": { "total": { "value": 81, "cutoff_label": "non_distressed" } } },
-    { "id": "csi16_51", "instrument": "csi16", "values": [6, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3], "expected": { "total": { "value": 51, "cutoff_label": "distressed" } } },
-    { "id": "csi16_52", "instrument": "csi16", "values": [6, 4, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3], "expected": { "total": { "value": 52, "cutoff_label": "non_distressed" } } },
-    { "id": "csi16_min", "instrument": "csi16", "values": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], "expected": { "total": { "value": 0, "cutoff_label": "distressed" } } },
-    { "id": "rdas_max", "instrument": "rdas", "values": [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 4, 5, 5, 5], "expected": { "consensus": { "value": 30 }, "satisfaction": { "value": 20 }, "cohesion": { "value": 19 }, "total": { "value": 69, "cutoff_label": "non_distressed" } } },
-    { "id": "rdas_47", "instrument": "rdas", "values": [3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 3, 3, 3, 4], "expected": { "consensus": { "value": 18 }, "satisfaction": { "value": 16 }, "cohesion": { "value": 13 }, "total": { "value": 47, "cutoff_label": "distressed" } } },
-    { "id": "rdas_48", "instrument": "rdas", "values": [3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 3, 3, 4, 4], "expected": { "consensus": { "value": 18 }, "satisfaction": { "value": 16 }, "cohesion": { "value": 14 }, "total": { "value": 48, "cutoff_label": "non_distressed" } } },
-    { "id": "ecr_r_reverse", "instrument": "ecr_r", "values": [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2], "expected": { "anxiety": { "value": 3.2222222222222223, "cutoff_label": "moderate" }, "avoidance": { "value": 4.666666666666667, "cutoff_label": "high" } } },
-    { "id": "ecr_r_low", "instrument": "ecr_r", "values": [1, 1, 1, 1, 1, 1, 1, 1, 7, 1, 7, 1, 1, 1, 1, 1, 1, 1, 1, 7, 1, 7, 1, 1, 1, 7, 7, 7, 7, 7, 7, 1, 7, 7, 7, 7], "expected": { "anxiety": { "value": 1, "cutoff_label": "low" }, "avoidance": { "value": 1, "cutoff_label": "low" } } },
-    { "id": "oci_r_18", "instrument": "oci_r", "values": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], "expected": { "total": { "value": 18, "cutoff_label": "below_cutoff" }, "washing": { "value": 3 }, "hoarding": { "value": 3 } } },
-    { "id": "oci_r_21", "instrument": "oci_r", "values": [2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], "expected": { "total": { "value": 21, "cutoff_label": "at_or_above_cutoff" }, "hoarding": { "value": 4 }, "checking": { "value": 4 }, "ordering": { "value": 4 } } },
-    { "id": "mini_ipip_all5", "instrument": "mini_ipip", "values": [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5], "expected": { "extraversion": { "value": 3 }, "agreeableness": { "value": 3 }, "conscientiousness": { "value": 3 }, "neuroticism": { "value": 3 }, "intellect_imagination": { "value": 2 } } },
-    { "id": "sdi2_max", "instrument": "sdi2", "values": [7, 7, 8, 8, 8, 8, 8, 8, 8, 7, 8, 8, 8, 7], "expected": { "dyadic": { "value": 62 }, "solitary": { "value": 31 }, "total": { "value": 93 } } },
-    { "id": "sis_ses_sf_all_agree", "instrument": "sis_ses_sf", "values": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], "expected": { "ses": { "value": 24 }, "sis1": { "value": 16 }, "sis2": { "value": 16 } } },
-    { "id": "cpq_sf_all9", "instrument": "cpq_sf", "values": [9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9], "expected": { "constructive_communication": { "value": 39 }, "self_demand_partner_withdraw": { "value": 18 }, "partner_demand_self_withdraw": { "value": 18 } } },
-    { "id": "brief_crs_all6", "instrument": "brief_crs", "values": [6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6], "expected": { "agreement": { "value": 6 }, "undermining": { "value": 6 }, "exposure_to_conflict": { "value": 6 } } },
-    { "id": "psdq_all5", "instrument": "psdq_sf", "values": [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5], "expected": { "authoritative": { "value": 5 }, "authoritarian": { "value": 5 }, "permissive": { "value": 5 } } },
-    { "id": "prqc_all7", "instrument": "prqc", "values": [7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7], "expected": { "satisfaction": { "value": 7 }, "love": { "value": 7 } } },
-    { "id": "map_means", "instrument": "map", "values_by_pass": { "intensity": [50, 50, 50, 50, 50, 50, 50, 50, 50, 50], "efficacy": [40, 40, 40, 40, 40, 40, 40, 40, 40, 40] }, "expected": { "intensity_mean": { "value": 50 }, "efficacy_mean": { "value": 40 } } }
+    {
+      "id": "phq9_all2",
+      "instrument": "phq9",
+      "values": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "expected": {
+        "total": {
+          "value": 18,
+          "cutoff_label": "moderately_severe"
+        }
+      }
+    },
+    {
+      "id": "phq9_all1",
+      "instrument": "phq9",
+      "values": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "expected": {
+        "total": {
+          "value": 9,
+          "cutoff_label": "mild"
+        }
+      }
+    },
+    {
+      "id": "phq9_max",
+      "instrument": "phq9",
+      "values": [
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3
+      ],
+      "expected": {
+        "total": {
+          "value": 27,
+          "cutoff_label": "severe"
+        }
+      }
+    },
+    {
+      "id": "phq9_min",
+      "instrument": "phq9",
+      "values": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "expected": {
+        "total": {
+          "value": 0,
+          "cutoff_label": "minimal"
+        }
+      }
+    },
+    {
+      "id": "phq9_5",
+      "instrument": "phq9",
+      "values": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "expected": {
+        "total": {
+          "value": 5,
+          "cutoff_label": "mild"
+        }
+      }
+    },
+    {
+      "id": "phq9_10",
+      "instrument": "phq9",
+      "values": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      "expected": {
+        "total": {
+          "value": 10,
+          "cutoff_label": "moderate"
+        }
+      }
+    },
+    {
+      "id": "phq9_15",
+      "instrument": "phq9",
+      "values": [
+        3,
+        3,
+        3,
+        3,
+        3,
+        0,
+        0,
+        0,
+        0
+      ],
+      "expected": {
+        "total": {
+          "value": 15,
+          "cutoff_label": "moderately_severe"
+        }
+      }
+    },
+    {
+      "id": "phq9_20",
+      "instrument": "phq9",
+      "values": [
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        2,
+        0,
+        0
+      ],
+      "expected": {
+        "total": {
+          "value": 20,
+          "cutoff_label": "severe"
+        }
+      }
+    },
+    {
+      "id": "gad7_all2",
+      "instrument": "gad7",
+      "values": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "expected": {
+        "total": {
+          "value": 14,
+          "cutoff_label": "moderate"
+        }
+      }
+    },
+    {
+      "id": "gad7_15",
+      "instrument": "gad7",
+      "values": [
+        3,
+        3,
+        3,
+        3,
+        3,
+        0,
+        0
+      ],
+      "expected": {
+        "total": {
+          "value": 15,
+          "cutoff_label": "severe"
+        }
+      }
+    },
+    {
+      "id": "gad7_5",
+      "instrument": "gad7",
+      "values": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0
+      ],
+      "expected": {
+        "total": {
+          "value": 5,
+          "cutoff_label": "mild"
+        }
+      }
+    },
+    {
+      "id": "gad7_4",
+      "instrument": "gad7",
+      "values": [
+        1,
+        1,
+        1,
+        1,
+        0,
+        0,
+        0
+      ],
+      "expected": {
+        "total": {
+          "value": 4,
+          "cutoff_label": "minimal"
+        }
+      }
+    },
+    {
+      "id": "csi16_max",
+      "instrument": "csi16",
+      "values": [
+        6,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      "expected": {
+        "total": {
+          "value": 81,
+          "cutoff_label": "non_distressed"
+        }
+      }
+    },
+    {
+      "id": "csi16_51",
+      "instrument": "csi16",
+      "values": [
+        6,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3
+      ],
+      "expected": {
+        "total": {
+          "value": 51,
+          "cutoff_label": "distressed"
+        }
+      }
+    },
+    {
+      "id": "csi16_52",
+      "instrument": "csi16",
+      "values": [
+        6,
+        4,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3
+      ],
+      "expected": {
+        "total": {
+          "value": 52,
+          "cutoff_label": "non_distressed"
+        }
+      }
+    },
+    {
+      "id": "csi16_min",
+      "instrument": "csi16",
+      "values": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "expected": {
+        "total": {
+          "value": 0,
+          "cutoff_label": "distressed"
+        }
+      }
+    },
+    {
+      "id": "rdas_max",
+      "instrument": "rdas",
+      "values": [
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        4,
+        5,
+        5,
+        5
+      ],
+      "expected": {
+        "consensus": {
+          "value": 30
+        },
+        "satisfaction": {
+          "value": 20
+        },
+        "cohesion": {
+          "value": 19
+        },
+        "total": {
+          "value": 69,
+          "cutoff_label": "non_distressed"
+        }
+      }
+    },
+    {
+      "id": "rdas_47",
+      "instrument": "rdas",
+      "values": [
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        4,
+        4,
+        4,
+        4,
+        3,
+        3,
+        3,
+        4
+      ],
+      "expected": {
+        "consensus": {
+          "value": 18
+        },
+        "satisfaction": {
+          "value": 16
+        },
+        "cohesion": {
+          "value": 13
+        },
+        "total": {
+          "value": 47,
+          "cutoff_label": "distressed"
+        }
+      }
+    },
+    {
+      "id": "rdas_48",
+      "instrument": "rdas",
+      "values": [
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        4,
+        4,
+        4,
+        4,
+        3,
+        3,
+        4,
+        4
+      ],
+      "expected": {
+        "consensus": {
+          "value": 18
+        },
+        "satisfaction": {
+          "value": 16
+        },
+        "cohesion": {
+          "value": 14
+        },
+        "total": {
+          "value": 48,
+          "cutoff_label": "non_distressed"
+        }
+      }
+    },
+    {
+      "id": "ecr_r_reverse",
+      "instrument": "ecr_r",
+      "values": [
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "expected": {
+        "anxiety": {
+          "value": 3.2222222222222223,
+          "cutoff_label": "moderate"
+        },
+        "avoidance": {
+          "value": 4.666666666666667,
+          "cutoff_label": "high"
+        }
+      }
+    },
+    {
+      "id": "ecr_r_low",
+      "instrument": "ecr_r",
+      "values": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        7,
+        1,
+        7,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        7,
+        1,
+        7,
+        1,
+        1,
+        1,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        1,
+        7,
+        7,
+        7,
+        7
+      ],
+      "expected": {
+        "anxiety": {
+          "value": 1,
+          "cutoff_label": "low"
+        },
+        "avoidance": {
+          "value": 1,
+          "cutoff_label": "low"
+        }
+      }
+    },
+    {
+      "id": "oci_r_18",
+      "instrument": "oci_r",
+      "values": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "expected": {
+        "total": {
+          "value": 18,
+          "cutoff_label": "below_cutoff"
+        },
+        "washing": {
+          "value": 3
+        },
+        "hoarding": {
+          "value": 3
+        }
+      }
+    },
+    {
+      "id": "oci_r_21",
+      "instrument": "oci_r",
+      "values": [
+        2,
+        2,
+        2,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "expected": {
+        "total": {
+          "value": 21,
+          "cutoff_label": "at_or_above_cutoff"
+        },
+        "hoarding": {
+          "value": 4
+        },
+        "checking": {
+          "value": 4
+        },
+        "ordering": {
+          "value": 4
+        }
+      }
+    },
+    {
+      "id": "mini_ipip_all5",
+      "instrument": "mini_ipip",
+      "values": [
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      "expected": {
+        "extraversion": {
+          "value": 3
+        },
+        "agreeableness": {
+          "value": 3
+        },
+        "conscientiousness": {
+          "value": 3
+        },
+        "neuroticism": {
+          "value": 3
+        },
+        "intellect_imagination": {
+          "value": 2
+        }
+      }
+    },
+    {
+      "id": "sdi2_max",
+      "instrument": "sdi2",
+      "values": [
+        7,
+        7,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        8,
+        7,
+        8,
+        8,
+        8,
+        7
+      ],
+      "expected": {
+        "dyadic": {
+          "value": 62
+        },
+        "solitary": {
+          "value": 31
+        },
+        "total": {
+          "value": 93
+        }
+      }
+    },
+    {
+      "id": "sis_ses_sf_all_agree",
+      "instrument": "sis_ses_sf",
+      "values": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "expected": {
+        "ses": {
+          "value": 24
+        },
+        "sis1": {
+          "value": 16
+        },
+        "sis2": {
+          "value": 16
+        }
+      }
+    },
+    {
+      "id": "cpq_sf_all9",
+      "instrument": "cpq_sf",
+      "values": [
+        9,
+        9,
+        9,
+        9,
+        9,
+        9,
+        9,
+        9,
+        9,
+        9,
+        9
+      ],
+      "expected": {
+        "constructive_communication": {
+          "value": 39
+        },
+        "self_demand_partner_withdraw": {
+          "value": 18
+        },
+        "partner_demand_self_withdraw": {
+          "value": 18
+        }
+      }
+    },
+    {
+      "id": "brief_crs_all6",
+      "instrument": "brief_crs",
+      "values": [
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6
+      ],
+      "expected": {
+        "agreement": {
+          "value": 3
+        },
+        "closeness": {
+          "value": 6
+        },
+        "exposure_to_conflict": {
+          "value": 6
+        },
+        "support": {
+          "value": 6
+        },
+        "undermining": {
+          "value": 6
+        },
+        "endorsement": {
+          "value": 6
+        },
+        "division_of_labor": {
+          "value": 3
+        }
+      },
+      "note": "Items 6 (CRS 9, agreement) and 8 (CRS 20, division of labor) are reverse-keyed: 6 becomes 0, so those two means are (6 + 0) / 2 = 3."
+    },
+    {
+      "id": "psdq_all5",
+      "instrument": "psdq_sf",
+      "values": [
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      "expected": {
+        "authoritative": {
+          "value": 5
+        },
+        "authoritarian": {
+          "value": 5
+        },
+        "permissive": {
+          "value": 5
+        }
+      }
+    },
+    {
+      "id": "prqc_all7",
+      "instrument": "prqc",
+      "values": [
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7
+      ],
+      "expected": {
+        "satisfaction": {
+          "value": 7
+        },
+        "love": {
+          "value": 7
+        }
+      }
+    },
+    {
+      "id": "map_means",
+      "instrument": "map",
+      "values_by_pass": {
+        "intensity": [
+          50,
+          50,
+          50,
+          50,
+          50,
+          50,
+          50,
+          50,
+          50,
+          50
+        ],
+        "efficacy": [
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40,
+          40
+        ]
+      },
+      "expected": {
+        "intensity_mean": {
+          "value": 50
+        },
+        "efficacy_mean": {
+          "value": 40
+        }
+      }
+    },
+    {
+      "id": "psdq_key_split",
+      "instrument": "psdq_sf",
+      "values": [
+        5,
+        1,
+        5,
+        1,
+        5,
+        1,
+        5,
+        1,
+        5,
+        1,
+        5,
+        5,
+        1,
+        5,
+        1,
+        1,
+        1,
+        5,
+        1,
+        1,
+        5,
+        5,
+        1,
+        1,
+        5,
+        1,
+        5,
+        1,
+        5,
+        1,
+        5,
+        1
+      ],
+      "expected": {
+        "authoritative": {
+          "value": 5
+        },
+        "authoritarian": {
+          "value": 1
+        },
+        "permissive": {
+          "value": 1
+        }
+      },
+      "note": "5 on every authoritative item (1,3,5,7,9,11,12,14,18,21,22,25,27,29,31) and 1 elsewhere; verified key from Robinson et al. 2001 via the Redalyc CFA."
+    }
   ]
 }

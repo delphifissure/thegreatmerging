@@ -2,7 +2,7 @@
   "key": "phq9",
   "name": "Patient Health Questionnaire-9 (PHQ-9)",
   "source_citation": "Kroenke, Spitzer & Williams (2001). The PHQ-9: validity of a brief depression severity measure. Journal of General Internal Medicine, 16(9), 606–613.",
-  "license_note": "Developed by Drs. Spitzer, Williams, Kroenke and colleagues with a grant from Pfizer; no permission required to reproduce, translate, display or distribute.",
+  "license_note": "Developed by Drs. Robert L. Spitzer, Janet B.W. Williams, Kurt Kroenke and colleagues, with an educational grant from Pfizer Inc. No permission required to reproduce, translate, display or distribute.",
   "layer": 0,
   "passes": [
     "single"
@@ -11,7 +11,7 @@
   "items": [
     {
       "item_id": "phq9_1",
-      "text": "TODO: populate from source",
+      "text": "Little interest or pleasure in doing things",
       "descriptor": "depression symptom item 1",
       "scale": {
         "min": 0,
@@ -27,7 +27,7 @@
     },
     {
       "item_id": "phq9_2",
-      "text": "TODO: populate from source",
+      "text": "Feeling down, depressed, or hopeless",
       "descriptor": "depression symptom item 2",
       "scale": {
         "min": 0,
@@ -43,7 +43,7 @@
     },
     {
       "item_id": "phq9_3",
-      "text": "TODO: populate from source",
+      "text": "Trouble falling or staying asleep, or sleeping too much",
       "descriptor": "depression symptom item 3",
       "scale": {
         "min": 0,
@@ -59,7 +59,7 @@
     },
     {
       "item_id": "phq9_4",
-      "text": "TODO: populate from source",
+      "text": "Feeling tired or having little energy",
       "descriptor": "depression symptom item 4",
       "scale": {
         "min": 0,
@@ -75,7 +75,7 @@
     },
     {
       "item_id": "phq9_5",
-      "text": "TODO: populate from source",
+      "text": "Poor appetite or overeating",
       "descriptor": "depression symptom item 5",
       "scale": {
         "min": 0,
@@ -91,7 +91,7 @@
     },
     {
       "item_id": "phq9_6",
-      "text": "TODO: populate from source",
+      "text": "Feeling bad about yourself — or that you are a failure or have let yourself or your family down",
       "descriptor": "depression symptom item 6",
       "scale": {
         "min": 0,
@@ -107,7 +107,7 @@
     },
     {
       "item_id": "phq9_7",
-      "text": "TODO: populate from source",
+      "text": "Trouble concentrating on things, such as reading the newspaper or watching television",
       "descriptor": "depression symptom item 7",
       "scale": {
         "min": 0,
@@ -123,7 +123,7 @@
     },
     {
       "item_id": "phq9_8",
-      "text": "TODO: populate from source",
+      "text": "Moving or speaking so slowly that other people could have noticed? Or the opposite — being so fidgety or restless that you have been moving around a lot more than usual",
       "descriptor": "depression symptom item 8",
       "scale": {
         "min": 0,
@@ -139,7 +139,7 @@
     },
     {
       "item_id": "phq9_9",
-      "text": "TODO: populate from source",
+      "text": "Thoughts that you would be better off dead or of hurting yourself in some way",
       "descriptor": "safety item (thoughts of self-harm)",
       "scale": {
         "min": 0,
@@ -206,5 +206,9 @@
     ]
   },
   "scoring_key_verified": true,
-  "notes": "Screener result; clinical evaluation required. Item 9 is a safety item: any value above 0 shows the safety-resource screen to that user only, is never surfaced to the partner, and is excluded from every couple-level computation."
+  "notes": "Screener result; clinical evaluation required. Item 9 is a safety item: any value above 0 shows the safety-resource screen to that user only, is never surfaced to the partner, and is excluded from every couple-level computation. Cutoffs 5/10/15/20 per Kroenke, Spitzer & Williams 2001. Text and anchors verified against the official form (source_url).",
+  "instructions": "Over the last 2 weeks, how often have you been bothered by any of the following problems?",
+  "source_url": "https://www.apa.org/depression-guideline/patient-health-questionnaire.pdf",
+  "text_source": "Official PHQ-9 form (PDF hosted by the American Psychological Association), transcribed verbatim 2026-09-16; the form's tenth difficulty item is not scored and is not included.",
+  "license_url": "https://www.apa.org/depression-guideline/patient-health-questionnaire.pdf"
 }

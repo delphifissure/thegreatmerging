@@ -12,7 +12,7 @@
     {
       "item_id": "psdq_sf_1",
       "text": "TODO: populate from source",
-      "descriptor": "authoritative practice item 1",
+      "descriptor": "authoritative practice (warmth and involvement) item 1",
       "scale": {
         "min": 1,
         "max": 5,
@@ -29,7 +29,7 @@
     {
       "item_id": "psdq_sf_2",
       "text": "TODO: populate from source",
-      "descriptor": "authoritarian practice item 2",
+      "descriptor": "authoritarian practice (corporal punishment) item 2",
       "scale": {
         "min": 1,
         "max": 5,
@@ -46,7 +46,7 @@
     {
       "item_id": "psdq_sf_3",
       "text": "TODO: populate from source",
-      "descriptor": "authoritative practice item 3",
+      "descriptor": "authoritative practice (democratic participation) item 3",
       "scale": {
         "min": 1,
         "max": 5,
@@ -63,7 +63,7 @@
     {
       "item_id": "psdq_sf_4",
       "text": "TODO: populate from source",
-      "descriptor": "permissive practice item 4",
+      "descriptor": "authoritarian practice (punitive strategies) item 4",
       "scale": {
         "min": 1,
         "max": 5,
@@ -80,7 +80,7 @@
     {
       "item_id": "psdq_sf_5",
       "text": "TODO: populate from source",
-      "descriptor": "authoritative practice item 5",
+      "descriptor": "authoritative practice (reasoning/induction) item 5",
       "scale": {
         "min": 1,
         "max": 5,
@@ -97,7 +97,7 @@
     {
       "item_id": "psdq_sf_6",
       "text": "TODO: populate from source",
-      "descriptor": "authoritarian practice item 6",
+      "descriptor": "authoritarian practice (corporal punishment) item 6",
       "scale": {
         "min": 1,
         "max": 5,
@@ -114,7 +114,7 @@
     {
       "item_id": "psdq_sf_7",
       "text": "TODO: populate from source",
-      "descriptor": "authoritative practice item 7",
+      "descriptor": "authoritative practice (warmth and involvement) item 7",
       "scale": {
         "min": 1,
         "max": 5,
@@ -131,7 +131,7 @@
     {
       "item_id": "psdq_sf_8",
       "text": "TODO: populate from source",
-      "descriptor": "permissive practice item 8",
+      "descriptor": "permissive practice (lack of follow through) item 8",
       "scale": {
         "min": 1,
         "max": 5,
@@ -148,7 +148,7 @@
     {
       "item_id": "psdq_sf_9",
       "text": "TODO: populate from source",
-      "descriptor": "authoritative practice item 9",
+      "descriptor": "authoritative practice (democratic participation) item 9",
       "scale": {
         "min": 1,
         "max": 5,
@@ -165,7 +165,7 @@
     {
       "item_id": "psdq_sf_10",
       "text": "TODO: populate from source",
-      "descriptor": "authoritarian practice item 10",
+      "descriptor": "authoritarian practice (punitive strategies) item 10",
       "scale": {
         "min": 1,
         "max": 5,
@@ -182,7 +182,7 @@
     {
       "item_id": "psdq_sf_11",
       "text": "TODO: populate from source",
-      "descriptor": "authoritative practice item 11",
+      "descriptor": "authoritative practice (reasoning/induction) item 11",
       "scale": {
         "min": 1,
         "max": 5,
@@ -199,7 +199,7 @@
     {
       "item_id": "psdq_sf_12",
       "text": "TODO: populate from source",
-      "descriptor": "authoritative practice item 12",
+      "descriptor": "authoritative practice (warmth and involvement) item 12",
       "scale": {
         "min": 1,
         "max": 5,
@@ -216,7 +216,7 @@
     {
       "item_id": "psdq_sf_13",
       "text": "TODO: populate from source",
-      "descriptor": "authoritarian practice item 13",
+      "descriptor": "authoritarian practice (verbal hostility) item 13",
       "scale": {
         "min": 1,
         "max": 5,
@@ -233,7 +233,7 @@
     {
       "item_id": "psdq_sf_14",
       "text": "TODO: populate from source",
-      "descriptor": "authoritative practice item 14",
+      "descriptor": "authoritative practice (warmth and involvement) item 14",
       "scale": {
         "min": 1,
         "max": 5,
@@ -250,7 +250,7 @@
     {
       "item_id": "psdq_sf_15",
       "text": "TODO: populate from source",
-      "descriptor": "permissive practice item 15",
+      "descriptor": "permissive practice (lack of follow through) item 15",
       "scale": {
         "min": 1,
         "max": 5,
@@ -267,7 +267,7 @@
     {
       "item_id": "psdq_sf_16",
       "text": "TODO: populate from source",
-      "descriptor": "authoritarian practice item 16",
+      "descriptor": "authoritarian practice (verbal hostility) item 16",
       "scale": {
         "min": 1,
         "max": 5,
@@ -284,7 +284,7 @@
     {
       "item_id": "psdq_sf_17",
       "text": "TODO: populate from source",
-      "descriptor": "authoritarian practice item 17",
+      "descriptor": "permissive practice (lack of follow through) item 17",
       "scale": {
         "min": 1,
         "max": 5,
@@ -301,7 +301,7 @@
     {
       "item_id": "psdq_sf_18",
       "text": "TODO: populate from source",
-      "descriptor": "authoritative practice item 18",
+      "descriptor": "authoritative practice (democratic participation) item 18",
       "scale": {
         "min": 1,
         "max": 5,
@@ -318,7 +318,7 @@
     {
       "item_id": "psdq_sf_19",
       "text": "TODO: populate from source",
-      "descriptor": "authoritarian practice item 19",
+      "descriptor": "authoritarian practice (corporal punishment) item 19",
       "scale": {
         "min": 1,
         "max": 5,
@@ -335,7 +335,7 @@
     {
       "item_id": "psdq_sf_20",
       "text": "TODO: populate from source",
-      "descriptor": "permissive practice item 20",
+      "descriptor": "permissive practice (lack of follow through) item 20",
       "scale": {
         "min": 1,
         "max": 5,
@@ -352,7 +352,7 @@
     {
       "item_id": "psdq_sf_21",
       "text": "TODO: populate from source",
-      "descriptor": "authoritative practice item 21",
+      "descriptor": "authoritative practice (democratic participation) item 21",
       "scale": {
         "min": 1,
         "max": 5,
@@ -369,7 +369,7 @@
     {
       "item_id": "psdq_sf_22",
       "text": "TODO: populate from source",
-      "descriptor": "authoritative practice item 22",
+      "descriptor": "authoritative practice (democratic participation) item 22",
       "scale": {
         "min": 1,
         "max": 5,
@@ -386,7 +386,7 @@
     {
       "item_id": "psdq_sf_23",
       "text": "TODO: populate from source",
-      "descriptor": "authoritarian practice item 23",
+      "descriptor": "authoritarian practice (verbal hostility) item 23",
       "scale": {
         "min": 1,
         "max": 5,
@@ -403,7 +403,7 @@
     {
       "item_id": "psdq_sf_24",
       "text": "TODO: populate from source",
-      "descriptor": "permissive practice item 24",
+      "descriptor": "permissive practice (lack of follow through) item 24",
       "scale": {
         "min": 1,
         "max": 5,
@@ -420,7 +420,7 @@
     {
       "item_id": "psdq_sf_25",
       "text": "TODO: populate from source",
-      "descriptor": "authoritative practice item 25",
+      "descriptor": "authoritative practice (reasoning/induction) item 25",
       "scale": {
         "min": 1,
         "max": 5,
@@ -437,7 +437,7 @@
     {
       "item_id": "psdq_sf_26",
       "text": "TODO: populate from source",
-      "descriptor": "authoritarian practice item 26",
+      "descriptor": "authoritarian practice (punitive strategies) item 26",
       "scale": {
         "min": 1,
         "max": 5,
@@ -454,7 +454,7 @@
     {
       "item_id": "psdq_sf_27",
       "text": "TODO: populate from source",
-      "descriptor": "authoritative practice item 27",
+      "descriptor": "authoritative practice (warmth and involvement) item 27",
       "scale": {
         "min": 1,
         "max": 5,
@@ -471,7 +471,7 @@
     {
       "item_id": "psdq_sf_28",
       "text": "TODO: populate from source",
-      "descriptor": "authoritarian practice item 28",
+      "descriptor": "authoritarian practice (punitive strategies) item 28",
       "scale": {
         "min": 1,
         "max": 5,
@@ -488,7 +488,7 @@
     {
       "item_id": "psdq_sf_29",
       "text": "TODO: populate from source",
-      "descriptor": "authoritative practice item 29",
+      "descriptor": "authoritative practice (reasoning/induction) item 29",
       "scale": {
         "min": 1,
         "max": 5,
@@ -505,7 +505,7 @@
     {
       "item_id": "psdq_sf_30",
       "text": "TODO: populate from source",
-      "descriptor": "authoritarian practice item 30",
+      "descriptor": "authoritarian practice (verbal hostility) item 30",
       "scale": {
         "min": 1,
         "max": 5,
@@ -522,7 +522,7 @@
     {
       "item_id": "psdq_sf_31",
       "text": "TODO: populate from source",
-      "descriptor": "authoritative practice item 31",
+      "descriptor": "authoritative practice (reasoning/induction) item 31",
       "scale": {
         "min": 1,
         "max": 5,
@@ -539,7 +539,7 @@
     {
       "item_id": "psdq_sf_32",
       "text": "TODO: populate from source",
-      "descriptor": "authoritarian practice item 32",
+      "descriptor": "authoritarian practice (corporal punishment) item 32",
       "scale": {
         "min": 1,
         "max": 5,
@@ -582,11 +582,11 @@
         "name": "authoritarian",
         "items": [
           "psdq_sf_2",
+          "psdq_sf_4",
           "psdq_sf_6",
           "psdq_sf_10",
           "psdq_sf_13",
           "psdq_sf_16",
-          "psdq_sf_17",
           "psdq_sf_19",
           "psdq_sf_23",
           "psdq_sf_26",
@@ -599,9 +599,9 @@
       {
         "name": "permissive",
         "items": [
-          "psdq_sf_4",
           "psdq_sf_8",
           "psdq_sf_15",
+          "psdq_sf_17",
           "psdq_sf_20",
           "psdq_sf_24"
         ],
@@ -610,6 +610,8 @@
     ],
     "cutoffs": []
   },
-  "scoring_key_verified": false,
-  "notes": "VERIFY BEFORE USE: item-to-style membership (15 authoritative, 12 authoritarian, 5 permissive) follows the commonly published PSDQ-SF key and must be checked against Robinson et al. 2001 when populating text. Styles are means on the 1–5 scale. Between-parent gap per style is computed in instruments/couple.ts."
+  "scoring_key_verified": true,
+  "notes": "Original Robinson et al. (2001) short-form key as stated in the Portuguese confirmatory study (source_url): authoritative 15 items = warmth & involvement {1, 7, 12, 14, 27} + reasoning/induction {5, 11, 25, 29, 31} + democratic participation {3, 9, 18, 21, 22}; authoritarian 12 items = corporal punishment {2, 6, 19, 32} + verbal hostility {13, 16, 23, 30} + punitive strategies {4, 10, 26, 28}; permissive 5 items = lack of follow-through {8, 15, 17, 20, 24}. This corrects the previously assumed key (item 4 was listed as permissive and item 17 as authoritarian). Styles are means on the 1–5 scale (1 = never … 5 = always); no reverse-keyed items. Confirm item numbering against the official form when transcribing text. Between-parent gap per style is computed in instruments/couple.ts.",
+  "source_url": "https://www.redalyc.org/journal/1293/129355455001/html/",
+  "text_source": "Item text not populated (obtain the 32-item short form from Robinson et al. 2001 or the authors). Scoring key verified 2026-09-16 from the open-access confirmatory factor analysis of the PSDQ short form in a Portuguese sample (Redalyc), which states the original Robinson et al. (2001) item assignment."
 }

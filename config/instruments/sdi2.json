@@ -198,5 +198,6 @@
     "cutoffs": []
   },
   "scoring_key_verified": false,
-  "notes": "Dyadic = items 1–8 (range 0–62: two 0–7 frequency items and six 0–8 strength items), solitary = items 10–13 (range 0–31: one 0–7 frequency item and three 0–8 strength items), total = dyadic + solitary (0–93). Items 9 and 14 are descriptive comparison/duration items and are not included in the subscale sums. Verify the per-item scale assignment and the published subscale membership against Spector et al. 1996 when populating text."
+  "notes": "VERIFY BEFORE USE: sources disagree on the subscale boundaries. Configured as dyadic = items 1–8 (0–62), solitary = items 10–13 (0–31), total 0–93, items 9 and 14 unscored (the ranges 0–62 / 0–31 are the ones most often cited for Spector et al. 1996). The Brazilian validation (PMC11554335, source_url) reports dyadic = items 1–9 and solitary = items 10–13 with item 14 unscored; other papers describe a three-item solitary subscale (0–23) or a two- versus three-dimension structure (Mark et al. 2018). Frequency items use 0–7 and intensity items 0–8; the per-item assignment here (items 1, 2, 10, 14 as 0–7) must be checked against the original article's form.",
+  "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11554335/"
 }

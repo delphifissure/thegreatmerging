@@ -288,5 +288,6 @@
     "cutoffs": []
   },
   "scoring_key_verified": false,
-  "notes": "VERIFY BEFORE USE: subscale membership and reverse keying must be checked against Futris et al. 2010 Table 1 when populating text. The app is gender-neutral: 'self demand / partner withdraw' replaces the man/woman labels. Couple-level demand–withdraw directions are computed in instruments/couple.ts."
+  "notes": "VERIFY BEFORE USE: Futris, Campbell, Nielsen & Burwell (2010; The Family Journal 18(3), 275–287, source_url) describe the CPQ-SF as 11 items on a 1–9 scale with a 3-item constructive-communication subscale (range 3–27) and a 6-item demand/withdraw total (range 6–54) formed from the two directions (3 items each); the remaining 2 items are not in either subscale. The current subscale membership in this file (7-item constructive communication, 2 items per demand/withdraw direction) does NOT match that structure and must be re-mapped item by item from the article's Table 1 (the article full text could not be fetched: publisher and repository copies returned 403). The app is gender-neutral: 'self demand / partner withdraw' replaces the man/woman labels.",
+  "source_url": "https://journals.sagepub.com/doi/10.1177/1066480710370758"
 }

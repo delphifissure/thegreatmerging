@@ -2,7 +2,7 @@
   "key": "ecr_r",
   "name": "Experiences in Close Relationships–Revised (ECR-R)",
   "source_citation": "Fraley, Waller & Brennan (2000). An item response theory analysis of self-report measures of adult attachment. Journal of Personality and Social Psychology, 78(2), 350–365.",
-  "license_note": "Freely available for research and clinical use from the author's site (Fraley); cite the source.",
+  "license_note": "Distributed without charge on R. Chris Fraley's lab page for research and clinical use; cite Fraley, Waller & Brennan (2000). The page carries no further permission statement.",
   "layer": 0,
   "passes": [
     "single"
@@ -10,7 +10,7 @@
   "items": [
     {
       "item_id": "ecr_r_1",
-      "text": "TODO: populate from source",
+      "text": "I'm afraid that I will lose my partner's love.",
       "descriptor": "attachment anxiety item 1",
       "scale": {
         "min": 1,
@@ -19,7 +19,7 @@
           "Strongly disagree",
           "",
           "",
-          "Neutral/mixed",
+          "",
           "",
           "",
           "Strongly agree"
@@ -29,7 +29,7 @@
     },
     {
       "item_id": "ecr_r_2",
-      "text": "TODO: populate from source",
+      "text": "I often worry that my partner will not want to stay with me.",
       "descriptor": "attachment anxiety item 2",
       "scale": {
         "min": 1,
@@ -38,7 +38,7 @@
           "Strongly disagree",
           "",
           "",
-          "Neutral/mixed",
+          "",
           "",
           "",
           "Strongly agree"
@@ -48,7 +48,7 @@
     },
     {
       "item_id": "ecr_r_3",
-      "text": "TODO: populate from source",
+      "text": "I often worry that my partner doesn't really love me.",
       "descriptor": "attachment anxiety item 3",
       "scale": {
         "min": 1,
@@ -57,7 +57,7 @@
           "Strongly disagree",
           "",
           "",
-          "Neutral/mixed",
+          "",
           "",
           "",
           "Strongly agree"
@@ -67,7 +67,7 @@
     },
     {
       "item_id": "ecr_r_4",
-      "text": "TODO: populate from source",
+      "text": "I worry that romantic partners won't care about me as much as I care about them.",
       "descriptor": "attachment anxiety item 4",
       "scale": {
         "min": 1,
@@ -76,7 +76,7 @@
           "Strongly disagree",
           "",
           "",
-          "Neutral/mixed",
+          "",
           "",
           "",
           "Strongly agree"
@@ -86,7 +86,7 @@
     },
     {
       "item_id": "ecr_r_5",
-      "text": "TODO: populate from source",
+      "text": "I often wish that my partner's feelings for me were as strong as my feelings for him or her.",
       "descriptor": "attachment anxiety item 5",
       "scale": {
         "min": 1,
@@ -95,7 +95,7 @@
           "Strongly disagree",
           "",
           "",
-          "Neutral/mixed",
+          "",
           "",
           "",
           "Strongly agree"
@@ -105,7 +105,7 @@
     },
     {
       "item_id": "ecr_r_6",
-      "text": "TODO: populate from source",
+      "text": "I worry a lot about my relationships.",
       "descriptor": "attachment anxiety item 6",
       "scale": {
         "min": 1,
@@ -114,7 +114,7 @@
           "Strongly disagree",
           "",
           "",
-          "Neutral/mixed",
+          "",
           "",
           "",
           "Strongly agree"
@@ -124,7 +124,7 @@
     },
     {
       "item_id": "ecr_r_7",
-      "text": "TODO: populate from source",
+      "text": "When my partner is out of sight, I worry that he or she might become interested in someone else.",
       "descriptor": "attachment anxiety item 7",
       "scale": {
         "min": 1,
@@ -133,7 +133,7 @@
           "Strongly disagree",
           "",
           "",
-          "Neutral/mixed",
+          "",
           "",
           "",
           "Strongly agree"
@@ -143,7 +143,7 @@
     },
     {
       "item_id": "ecr_r_8",
-      "text": "TODO: populate from source",
+      "text": "When I show my feelings for romantic partners, I'm afraid they will not feel the same about me.",
       "descriptor": "attachment anxiety item 8",
       "scale": {
         "min": 1,
@@ -152,7 +152,7 @@
           "Strongly disagree",
           "",
           "",
-          "Neutral/mixed",
+          "",
           "",
           "",
           "Strongly agree"
@@ -162,7 +162,7 @@
     },
     {
       "item_id": "ecr_r_9",
-      "text": "TODO: populate from source",
+      "text": "I rarely worry about my partner leaving me.",
       "descriptor": "attachment anxiety item 9",
       "scale": {
         "min": 1,
@@ -171,7 +171,7 @@
           "Strongly disagree",
           "",
           "",
-          "Neutral/mixed",
+          "",
           "",
           "",
           "Strongly agree"
@@ -181,7 +181,7 @@
     },
     {
       "item_id": "ecr_r_10",
-      "text": "TODO: populate from source",
+      "text": "My romantic partner makes me doubt myself.",
       "descriptor": "attachment anxiety item 10",
       "scale": {
         "min": 1,
@@ -190,7 +190,7 @@
           "Strongly disagree",
           "",
           "",
-          "Neutral/mixed",
+          "",
           "",
           "",
           "Strongly agree"
@@ -200,7 +200,7 @@
     },
     {
       "item_id": "ecr_r_11",
-      "text": "TODO: populate from source",
+      "text": "I do not often worry about being abandoned.",
       "descriptor": "attachment anxiety item 11",
       "scale": {
         "min": 1,
@@ -209,7 +209,7 @@
           "Strongly disagree",
           "",
           "",
-          "Neutral/mixed",
+          "",
           "",
           "",
           "Strongly agree"
@@ -219,7 +219,7 @@
     },
     {
       "item_id": "ecr_r_12",
-      "text": "TODO: populate from source",
+      "text": "I find that my partner(s) don't want to get as close as I would like.",
       "descriptor": "attachment anxiety item 12",
       "scale": {
         "min": 1,
@@ -228,7 +228,7 @@
           "Strongly disagree",
           "",
           "",
-          "Neutral/mixed",
+          "",
           "",
           "",
           "Strongly agree"
@@ -238,7 +238,7 @@
     },
     {
       "item_id": "ecr_r_13",
-      "text": "TODO: populate from source",
+      "text": "Sometimes romantic partners change their feelings about me for no apparent reason.",
       "descriptor": "attachment anxiety item 13",
       "scale": {
         "min": 1,
@@ -247,7 +247,7 @@
           "Strongly disagree",
           "",
           "",
-          "Neutral/mixed",
+          "",
           "",
           "",
           "Strongly agree"
@@ -257,7 +257,7 @@
     },
     {
       "item_id": "ecr_r_14",
-      "text": "TODO: populate from source",
+      "text": "My desire to be very close sometimes scares people away.",
       "descriptor": "attachment anxiety item 14",
       "scale": {
         "min": 1,
@@ -266,7 +266,7 @@
           "Strongly disagree",
           "",
           "",
-          "Neutral/mixed",
+          "",
           "",
           "",
           "Strongly agree"
@@ -276,7 +276,7 @@
     },
     {
       "item_id": "ecr_r_15",
-      "text": "TODO: populate from source",
+      "text": "I'm afraid that once a romantic partner gets to know me, he or she won't like who I really am.",
       "descriptor": "attachment anxiety item 15",
       "scale": {
         "min": 1,
@@ -285,7 +285,7 @@
           "Strongly disagree",
           "",
           "",
-          "Neutral/mixed",
+          "",
           "",
           "",
           "Strongly agree"
@@ -295,7 +295,7 @@
     },
     {
       "item_id": "ecr_r_16",
-      "text": "TODO: populate from source",
+      "text": "It makes me mad that I don't get the affection and support I need from my partner.",
       "descriptor": "attachment anxiety item 16",
       "scale": {
         "min": 1,
@@ -304,7 +304,7 @@
           "Strongly disagree",
           "",
           "",
-          "Neutral/mixed",
+          "",
           "",
           "",
           "Strongly agree"
@@ -314,7 +314,7 @@
     },
     {
       "item_id": "ecr_r_17",
-      "text": "TODO: populate from source",
+      "text": "I worry that I won't measure up to other people.",
       "descriptor": "attachment anxiety item 17",
       "scale": {
         "min": 1,
@@ -323,7 +323,7 @@
           "Strongly disagree",
           "",
           "",
-          "Neutral/mixed",
+          "",
           "",
           "",
           "Strongly agree"
@@ -333,7 +333,7 @@
     },
     {
       "item_id": "ecr_r_18",
-      "text": "TODO: populate from source",
+      "text": "My partner only seems to notice me when I'm angry.",
       "descriptor": "attachment anxiety item 18",
       "scale": {
         "min": 1,
@@ -342,7 +342,7 @@
           "Strongly disagree",
           "",
           "",
-          "Neutral/mixed",
+          "",
           "",
           "",
           "Strongly agree"
@@ -352,7 +352,7 @@
     },
     {
       "item_id": "ecr_r_19",
-      "text": "TODO: populate from source",
+      "text": "I prefer not to show a partner how I feel deep down.",
       "descriptor": "attachment avoidance item 1",
       "scale": {
         "min": 1,
@@ -361,7 +361,7 @@
           "Strongly disagree",
           "",
           "",
-          "Neutral/mixed",
+          "",
           "",
           "",
           "Strongly agree"
@@ -371,7 +371,7 @@
     },
     {
       "item_id": "ecr_r_20",
-      "text": "TODO: populate from source",
+      "text": "I feel comfortable sharing my private thoughts and feelings with my partner.",
       "descriptor": "attachment avoidance item 2",
       "scale": {
         "min": 1,
@@ -380,7 +380,7 @@
           "Strongly disagree",
           "",
           "",
-          "Neutral/mixed",
+          "",
           "",
           "",
           "Strongly agree"
@@ -390,7 +390,7 @@
     },
     {
       "item_id": "ecr_r_21",
-      "text": "TODO: populate from source",
+      "text": "I find it difficult to allow myself to depend on romantic partners.",
       "descriptor": "attachment avoidance item 3",
       "scale": {
         "min": 1,
@@ -399,7 +399,7 @@
           "Strongly disagree",
           "",
           "",
-          "Neutral/mixed",
+          "",
           "",
           "",
           "Strongly agree"
@@ -409,7 +409,7 @@
     },
     {
       "item_id": "ecr_r_22",
-      "text": "TODO: populate from source",
+      "text": "I am very comfortable being close to romantic partners.",
       "descriptor": "attachment avoidance item 4",
       "scale": {
         "min": 1,
@@ -418,7 +418,7 @@
           "Strongly disagree",
           "",
           "",
-          "Neutral/mixed",
+          "",
           "",
           "",
           "Strongly agree"
@@ -428,7 +428,7 @@
     },
     {
       "item_id": "ecr_r_23",
-      "text": "TODO: populate from source",
+      "text": "I don't feel comfortable opening up to romantic partners.",
       "descriptor": "attachment avoidance item 5",
       "scale": {
         "min": 1,
@@ -437,7 +437,7 @@
           "Strongly disagree",
           "",
           "",
-          "Neutral/mixed",
+          "",
           "",
           "",
           "Strongly agree"
@@ -447,7 +447,7 @@
     },
     {
       "item_id": "ecr_r_24",
-      "text": "TODO: populate from source",
+      "text": "I prefer not to be too close to romantic partners.",
       "descriptor": "attachment avoidance item 6",
       "scale": {
         "min": 1,
@@ -456,7 +456,7 @@
           "Strongly disagree",
           "",
           "",
-          "Neutral/mixed",
+          "",
           "",
           "",
           "Strongly agree"
@@ -466,7 +466,7 @@
     },
     {
       "item_id": "ecr_r_25",
-      "text": "TODO: populate from source",
+      "text": "I get uncomfortable when a romantic partner wants to be very close.",
       "descriptor": "attachment avoidance item 7",
       "scale": {
         "min": 1,
@@ -475,7 +475,7 @@
           "Strongly disagree",
           "",
           "",
-          "Neutral/mixed",
+          "",
           "",
           "",
           "Strongly agree"
@@ -485,7 +485,7 @@
     },
     {
       "item_id": "ecr_r_26",
-      "text": "TODO: populate from source",
+      "text": "I find it relatively easy to get close to my partner.",
       "descriptor": "attachment avoidance item 8",
       "scale": {
         "min": 1,
@@ -494,7 +494,7 @@
           "Strongly disagree",
           "",
           "",
-          "Neutral/mixed",
+          "",
           "",
           "",
           "Strongly agree"
@@ -504,7 +504,7 @@
     },
     {
       "item_id": "ecr_r_27",
-      "text": "TODO: populate from source",
+      "text": "It's not difficult for me to get close to my partner.",
       "descriptor": "attachment avoidance item 9",
       "scale": {
         "min": 1,
@@ -513,7 +513,7 @@
           "Strongly disagree",
           "",
           "",
-          "Neutral/mixed",
+          "",
           "",
           "",
           "Strongly agree"
@@ -523,7 +523,7 @@
     },
     {
       "item_id": "ecr_r_28",
-      "text": "TODO: populate from source",
+      "text": "I usually discuss my problems and concerns with my partner.",
       "descriptor": "attachment avoidance item 10",
       "scale": {
         "min": 1,
@@ -532,7 +532,7 @@
           "Strongly disagree",
           "",
           "",
-          "Neutral/mixed",
+          "",
           "",
           "",
           "Strongly agree"
@@ -542,7 +542,7 @@
     },
     {
       "item_id": "ecr_r_29",
-      "text": "TODO: populate from source",
+      "text": "It helps to turn to my romantic partner in times of need.",
       "descriptor": "attachment avoidance item 11",
       "scale": {
         "min": 1,
@@ -551,7 +551,7 @@
           "Strongly disagree",
           "",
           "",
-          "Neutral/mixed",
+          "",
           "",
           "",
           "Strongly agree"
@@ -561,7 +561,7 @@
     },
     {
       "item_id": "ecr_r_30",
-      "text": "TODO: populate from source",
+      "text": "I tell my partner just about everything.",
       "descriptor": "attachment avoidance item 12",
       "scale": {
         "min": 1,
@@ -570,7 +570,7 @@
           "Strongly disagree",
           "",
           "",
-          "Neutral/mixed",
+          "",
           "",
           "",
           "Strongly agree"
@@ -580,7 +580,7 @@
     },
     {
       "item_id": "ecr_r_31",
-      "text": "TODO: populate from source",
+      "text": "I talk things over with my partner.",
       "descriptor": "attachment avoidance item 13",
       "scale": {
         "min": 1,
@@ -589,7 +589,7 @@
           "Strongly disagree",
           "",
           "",
-          "Neutral/mixed",
+          "",
           "",
           "",
           "Strongly agree"
@@ -599,7 +599,7 @@
     },
     {
       "item_id": "ecr_r_32",
-      "text": "TODO: populate from source",
+      "text": "I am nervous when partners get too close to me.",
       "descriptor": "attachment avoidance item 14",
       "scale": {
         "min": 1,
@@ -608,7 +608,7 @@
           "Strongly disagree",
           "",
           "",
-          "Neutral/mixed",
+          "",
           "",
           "",
           "Strongly agree"
@@ -618,7 +618,7 @@
     },
     {
       "item_id": "ecr_r_33",
-      "text": "TODO: populate from source",
+      "text": "I feel comfortable depending on romantic partners.",
       "descriptor": "attachment avoidance item 15",
       "scale": {
         "min": 1,
@@ -627,7 +627,7 @@
           "Strongly disagree",
           "",
           "",
-          "Neutral/mixed",
+          "",
           "",
           "",
           "Strongly agree"
@@ -637,7 +637,7 @@
     },
     {
       "item_id": "ecr_r_34",
-      "text": "TODO: populate from source",
+      "text": "I find it easy to depend on romantic partners.",
       "descriptor": "attachment avoidance item 16",
       "scale": {
         "min": 1,
@@ -646,7 +646,7 @@
           "Strongly disagree",
           "",
           "",
-          "Neutral/mixed",
+          "",
           "",
           "",
           "Strongly agree"
@@ -656,7 +656,7 @@
     },
     {
       "item_id": "ecr_r_35",
-      "text": "TODO: populate from source",
+      "text": "It's easy for me to be affectionate with my partner.",
       "descriptor": "attachment avoidance item 17",
       "scale": {
         "min": 1,
@@ -665,7 +665,7 @@
           "Strongly disagree",
           "",
           "",
-          "Neutral/mixed",
+          "",
           "",
           "",
           "Strongly agree"
@@ -675,7 +675,7 @@
     },
     {
       "item_id": "ecr_r_36",
-      "text": "TODO: populate from source",
+      "text": "My partner really understands me and my needs.",
       "descriptor": "attachment avoidance item 18",
       "scale": {
         "min": 1,
@@ -684,7 +684,7 @@
           "Strongly disagree",
           "",
           "",
-          "Neutral/mixed",
+          "",
           "",
           "",
           "Strongly agree"
@@ -780,6 +780,9 @@
       }
     ]
   },
-  "scoring_key_verified": false,
-  "notes": "Items 1–18 anxiety, 19–36 avoidance, each a mean of 18 items. Reverse-keyed items follow Fraley's published key. Cutoff bands (2.5 / 4.5) are the configurable defaults from the build prompt, not published norms."
+  "scoring_key_verified": true,
+  "notes": "Items 1–18 anxiety, 19–36 avoidance, each a mean of 18 items after reverse-keying the items listed on Fraley's page (verified from source_url). Cutoff bands (2.5 / 4.5) are the configurable defaults from the build prompt, not published norms. Intermediate anchor labels are not printed on the source page.",
+  "source_url": "http://labs.psychology.illinois.edu/~rcfraley/measures/ecrritems.htm",
+  "text_source": "ECR-R items, 7-point scale (1 = strongly disagree, 7 = strongly agree), subscale membership (1–18 anxiety, 19–36 avoidance) and reverse-keyed items (9, 11, 20, 22, 26, 27, 28, 29, 30, 31, 33, 34, 35, 36) transcribed verbatim from the lab page 2026-09-16.",
+  "license_url": "http://labs.psychology.illinois.edu/~rcfraley/measures/ecrritems.htm"
 }

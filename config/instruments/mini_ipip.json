@@ -2,7 +2,7 @@
   "key": "mini_ipip",
   "name": "Mini-IPIP",
   "source_citation": "Donnellan, Oswald, Baird & Lucas (2006). The Mini-IPIP scales. Psychological Assessment, 18(2), 192–203.",
-  "license_note": "International Personality Item Pool items are in the public domain; see ipip.ori.org.",
+  "license_note": "Public domain. IPIP: \"The items and scales are in the public domain, which means that one can copy, edit, translate, or use them for any purpose without asking permission and without paying a fee.\"",
   "layer": 0,
   "passes": [
     "single"
@@ -10,340 +10,340 @@
   "items": [
     {
       "item_id": "mini_ipip_1",
-      "text": "TODO: populate from source",
+      "text": "Am the life of the party.",
       "descriptor": "extraversion item 1",
       "scale": {
         "min": 1,
         "max": 5,
         "labels": [
-          "Very inaccurate",
-          "Moderately inaccurate",
-          "Neither",
-          "Moderately accurate",
-          "Very accurate"
+          "Very Inaccurate",
+          "Moderately Inaccurate",
+          "Neither Accurate Nor Inaccurate",
+          "Moderately Accurate",
+          "Very Accurate"
         ]
       },
       "reverse_scored": false
     },
     {
       "item_id": "mini_ipip_2",
-      "text": "TODO: populate from source",
-      "descriptor": "agreeableness item 1",
+      "text": "Talk to a lot of different people at parties.",
+      "descriptor": "extraversion item 2",
       "scale": {
         "min": 1,
         "max": 5,
         "labels": [
-          "Very inaccurate",
-          "Moderately inaccurate",
-          "Neither",
-          "Moderately accurate",
-          "Very accurate"
+          "Very Inaccurate",
+          "Moderately Inaccurate",
+          "Neither Accurate Nor Inaccurate",
+          "Moderately Accurate",
+          "Very Accurate"
         ]
       },
       "reverse_scored": false
     },
     {
       "item_id": "mini_ipip_3",
-      "text": "TODO: populate from source",
-      "descriptor": "conscientiousness item 1",
+      "text": "Don't talk a lot.",
+      "descriptor": "extraversion item 3",
       "scale": {
         "min": 1,
         "max": 5,
         "labels": [
-          "Very inaccurate",
-          "Moderately inaccurate",
-          "Neither",
-          "Moderately accurate",
-          "Very accurate"
+          "Very Inaccurate",
+          "Moderately Inaccurate",
+          "Neither Accurate Nor Inaccurate",
+          "Moderately Accurate",
+          "Very Accurate"
         ]
       },
-      "reverse_scored": false
+      "reverse_scored": true
     },
     {
       "item_id": "mini_ipip_4",
-      "text": "TODO: populate from source",
-      "descriptor": "neuroticism item 1",
+      "text": "Keep in the background.",
+      "descriptor": "extraversion item 4",
       "scale": {
         "min": 1,
         "max": 5,
         "labels": [
-          "Very inaccurate",
-          "Moderately inaccurate",
-          "Neither",
-          "Moderately accurate",
-          "Very accurate"
+          "Very Inaccurate",
+          "Moderately Inaccurate",
+          "Neither Accurate Nor Inaccurate",
+          "Moderately Accurate",
+          "Very Accurate"
         ]
       },
-      "reverse_scored": false
+      "reverse_scored": true
     },
     {
       "item_id": "mini_ipip_5",
-      "text": "TODO: populate from source",
-      "descriptor": "intellect/imagination item 1",
+      "text": "Sympathize with others' feelings.",
+      "descriptor": "agreeableness item 1",
       "scale": {
         "min": 1,
         "max": 5,
         "labels": [
-          "Very inaccurate",
-          "Moderately inaccurate",
-          "Neither",
-          "Moderately accurate",
-          "Very accurate"
+          "Very Inaccurate",
+          "Moderately Inaccurate",
+          "Neither Accurate Nor Inaccurate",
+          "Moderately Accurate",
+          "Very Accurate"
         ]
       },
       "reverse_scored": false
     },
     {
       "item_id": "mini_ipip_6",
-      "text": "TODO: populate from source",
-      "descriptor": "extraversion item 2",
-      "scale": {
-        "min": 1,
-        "max": 5,
-        "labels": [
-          "Very inaccurate",
-          "Moderately inaccurate",
-          "Neither",
-          "Moderately accurate",
-          "Very accurate"
-        ]
-      },
-      "reverse_scored": true
-    },
-    {
-      "item_id": "mini_ipip_7",
-      "text": "TODO: populate from source",
+      "text": "Feel others' emotions.",
       "descriptor": "agreeableness item 2",
       "scale": {
         "min": 1,
         "max": 5,
         "labels": [
-          "Very inaccurate",
-          "Moderately inaccurate",
-          "Neither",
-          "Moderately accurate",
-          "Very accurate"
+          "Very Inaccurate",
+          "Moderately Inaccurate",
+          "Neither Accurate Nor Inaccurate",
+          "Moderately Accurate",
+          "Very Accurate"
+        ]
+      },
+      "reverse_scored": false
+    },
+    {
+      "item_id": "mini_ipip_7",
+      "text": "Am not really interested in others.",
+      "descriptor": "agreeableness item 3",
+      "scale": {
+        "min": 1,
+        "max": 5,
+        "labels": [
+          "Very Inaccurate",
+          "Moderately Inaccurate",
+          "Neither Accurate Nor Inaccurate",
+          "Moderately Accurate",
+          "Very Accurate"
         ]
       },
       "reverse_scored": true
     },
     {
       "item_id": "mini_ipip_8",
-      "text": "TODO: populate from source",
-      "descriptor": "conscientiousness item 2",
+      "text": "Am not interested in other people's problems.",
+      "descriptor": "agreeableness item 4",
       "scale": {
         "min": 1,
         "max": 5,
         "labels": [
-          "Very inaccurate",
-          "Moderately inaccurate",
-          "Neither",
-          "Moderately accurate",
-          "Very accurate"
+          "Very Inaccurate",
+          "Moderately Inaccurate",
+          "Neither Accurate Nor Inaccurate",
+          "Moderately Accurate",
+          "Very Accurate"
         ]
       },
       "reverse_scored": true
     },
     {
       "item_id": "mini_ipip_9",
-      "text": "TODO: populate from source",
-      "descriptor": "neuroticism item 2",
+      "text": "Get chores done right away.",
+      "descriptor": "conscientiousness item 1",
       "scale": {
         "min": 1,
         "max": 5,
         "labels": [
-          "Very inaccurate",
-          "Moderately inaccurate",
-          "Neither",
-          "Moderately accurate",
-          "Very accurate"
+          "Very Inaccurate",
+          "Moderately Inaccurate",
+          "Neither Accurate Nor Inaccurate",
+          "Moderately Accurate",
+          "Very Accurate"
         ]
       },
-      "reverse_scored": true
+      "reverse_scored": false
     },
     {
       "item_id": "mini_ipip_10",
-      "text": "TODO: populate from source",
-      "descriptor": "intellect/imagination item 2",
+      "text": "Like order.",
+      "descriptor": "conscientiousness item 2",
       "scale": {
         "min": 1,
         "max": 5,
         "labels": [
-          "Very inaccurate",
-          "Moderately inaccurate",
-          "Neither",
-          "Moderately accurate",
-          "Very accurate"
+          "Very Inaccurate",
+          "Moderately Inaccurate",
+          "Neither Accurate Nor Inaccurate",
+          "Moderately Accurate",
+          "Very Accurate"
         ]
       },
-      "reverse_scored": true
+      "reverse_scored": false
     },
     {
       "item_id": "mini_ipip_11",
-      "text": "TODO: populate from source",
-      "descriptor": "extraversion item 3",
-      "scale": {
-        "min": 1,
-        "max": 5,
-        "labels": [
-          "Very inaccurate",
-          "Moderately inaccurate",
-          "Neither",
-          "Moderately accurate",
-          "Very accurate"
-        ]
-      },
-      "reverse_scored": false
-    },
-    {
-      "item_id": "mini_ipip_12",
-      "text": "TODO: populate from source",
-      "descriptor": "agreeableness item 3",
-      "scale": {
-        "min": 1,
-        "max": 5,
-        "labels": [
-          "Very inaccurate",
-          "Moderately inaccurate",
-          "Neither",
-          "Moderately accurate",
-          "Very accurate"
-        ]
-      },
-      "reverse_scored": false
-    },
-    {
-      "item_id": "mini_ipip_13",
-      "text": "TODO: populate from source",
+      "text": "Often forget to put things back in their proper place.",
       "descriptor": "conscientiousness item 3",
       "scale": {
         "min": 1,
         "max": 5,
         "labels": [
-          "Very inaccurate",
-          "Moderately inaccurate",
-          "Neither",
-          "Moderately accurate",
-          "Very accurate"
+          "Very Inaccurate",
+          "Moderately Inaccurate",
+          "Neither Accurate Nor Inaccurate",
+          "Moderately Accurate",
+          "Very Accurate"
+        ]
+      },
+      "reverse_scored": true
+    },
+    {
+      "item_id": "mini_ipip_12",
+      "text": "Make a mess of things.",
+      "descriptor": "conscientiousness item 4",
+      "scale": {
+        "min": 1,
+        "max": 5,
+        "labels": [
+          "Very Inaccurate",
+          "Moderately Inaccurate",
+          "Neither Accurate Nor Inaccurate",
+          "Moderately Accurate",
+          "Very Accurate"
+        ]
+      },
+      "reverse_scored": true
+    },
+    {
+      "item_id": "mini_ipip_13",
+      "text": "Have frequent mood swings.",
+      "descriptor": "neuroticism item 1",
+      "scale": {
+        "min": 1,
+        "max": 5,
+        "labels": [
+          "Very Inaccurate",
+          "Moderately Inaccurate",
+          "Neither Accurate Nor Inaccurate",
+          "Moderately Accurate",
+          "Very Accurate"
         ]
       },
       "reverse_scored": false
     },
     {
       "item_id": "mini_ipip_14",
-      "text": "TODO: populate from source",
-      "descriptor": "neuroticism item 3",
+      "text": "Get upset easily.",
+      "descriptor": "neuroticism item 2",
       "scale": {
         "min": 1,
         "max": 5,
         "labels": [
-          "Very inaccurate",
-          "Moderately inaccurate",
-          "Neither",
-          "Moderately accurate",
-          "Very accurate"
+          "Very Inaccurate",
+          "Moderately Inaccurate",
+          "Neither Accurate Nor Inaccurate",
+          "Moderately Accurate",
+          "Very Accurate"
         ]
       },
       "reverse_scored": false
     },
     {
       "item_id": "mini_ipip_15",
-      "text": "TODO: populate from source",
-      "descriptor": "intellect/imagination item 3",
+      "text": "Am relaxed most of the time.",
+      "descriptor": "neuroticism item 3",
       "scale": {
         "min": 1,
         "max": 5,
         "labels": [
-          "Very inaccurate",
-          "Moderately inaccurate",
-          "Neither",
-          "Moderately accurate",
-          "Very accurate"
+          "Very Inaccurate",
+          "Moderately Inaccurate",
+          "Neither Accurate Nor Inaccurate",
+          "Moderately Accurate",
+          "Very Accurate"
         ]
       },
       "reverse_scored": true
     },
     {
       "item_id": "mini_ipip_16",
-      "text": "TODO: populate from source",
-      "descriptor": "extraversion item 4",
+      "text": "Seldom feel blue.",
+      "descriptor": "neuroticism item 4",
       "scale": {
         "min": 1,
         "max": 5,
         "labels": [
-          "Very inaccurate",
-          "Moderately inaccurate",
-          "Neither",
-          "Moderately accurate",
-          "Very accurate"
+          "Very Inaccurate",
+          "Moderately Inaccurate",
+          "Neither Accurate Nor Inaccurate",
+          "Moderately Accurate",
+          "Very Accurate"
         ]
       },
       "reverse_scored": true
     },
     {
       "item_id": "mini_ipip_17",
-      "text": "TODO: populate from source",
-      "descriptor": "agreeableness item 4",
+      "text": "Have a vivid imagination.",
+      "descriptor": "intellect / imagination item 1",
       "scale": {
         "min": 1,
         "max": 5,
         "labels": [
-          "Very inaccurate",
-          "Moderately inaccurate",
-          "Neither",
-          "Moderately accurate",
-          "Very accurate"
+          "Very Inaccurate",
+          "Moderately Inaccurate",
+          "Neither Accurate Nor Inaccurate",
+          "Moderately Accurate",
+          "Very Accurate"
         ]
       },
-      "reverse_scored": true
+      "reverse_scored": false
     },
     {
       "item_id": "mini_ipip_18",
-      "text": "TODO: populate from source",
-      "descriptor": "conscientiousness item 4",
+      "text": "Have difficulty understanding abstract ideas.",
+      "descriptor": "intellect / imagination item 2",
       "scale": {
         "min": 1,
         "max": 5,
         "labels": [
-          "Very inaccurate",
-          "Moderately inaccurate",
-          "Neither",
-          "Moderately accurate",
-          "Very accurate"
+          "Very Inaccurate",
+          "Moderately Inaccurate",
+          "Neither Accurate Nor Inaccurate",
+          "Moderately Accurate",
+          "Very Accurate"
         ]
       },
       "reverse_scored": true
     },
     {
       "item_id": "mini_ipip_19",
-      "text": "TODO: populate from source",
-      "descriptor": "neuroticism item 4",
+      "text": "Am not interested in abstract ideas.",
+      "descriptor": "intellect / imagination item 3",
       "scale": {
         "min": 1,
         "max": 5,
         "labels": [
-          "Very inaccurate",
-          "Moderately inaccurate",
-          "Neither",
-          "Moderately accurate",
-          "Very accurate"
+          "Very Inaccurate",
+          "Moderately Inaccurate",
+          "Neither Accurate Nor Inaccurate",
+          "Moderately Accurate",
+          "Very Accurate"
         ]
       },
       "reverse_scored": true
     },
     {
       "item_id": "mini_ipip_20",
-      "text": "TODO: populate from source",
-      "descriptor": "intellect/imagination item 4",
+      "text": "Do not have a good imagination.",
+      "descriptor": "intellect / imagination item 4",
       "scale": {
         "min": 1,
         "max": 5,
         "labels": [
-          "Very inaccurate",
-          "Moderately inaccurate",
-          "Neither",
-          "Moderately accurate",
-          "Very accurate"
+          "Very Inaccurate",
+          "Moderately Inaccurate",
+          "Neither Accurate Nor Inaccurate",
+          "Moderately Accurate",
+          "Very Accurate"
         ]
       },
       "reverse_scored": true
@@ -356,48 +356,48 @@
         "name": "extraversion",
         "items": [
           "mini_ipip_1",
-          "mini_ipip_6",
-          "mini_ipip_11",
-          "mini_ipip_16"
+          "mini_ipip_2",
+          "mini_ipip_3",
+          "mini_ipip_4"
         ],
         "method": "mean_reverse_aware"
       },
       {
         "name": "agreeableness",
         "items": [
-          "mini_ipip_2",
+          "mini_ipip_5",
+          "mini_ipip_6",
           "mini_ipip_7",
-          "mini_ipip_12",
-          "mini_ipip_17"
+          "mini_ipip_8"
         ],
         "method": "mean_reverse_aware"
       },
       {
         "name": "conscientiousness",
         "items": [
-          "mini_ipip_3",
-          "mini_ipip_8",
-          "mini_ipip_13",
-          "mini_ipip_18"
+          "mini_ipip_9",
+          "mini_ipip_10",
+          "mini_ipip_11",
+          "mini_ipip_12"
         ],
         "method": "mean_reverse_aware"
       },
       {
         "name": "neuroticism",
         "items": [
-          "mini_ipip_4",
-          "mini_ipip_9",
+          "mini_ipip_13",
           "mini_ipip_14",
-          "mini_ipip_19"
+          "mini_ipip_15",
+          "mini_ipip_16"
         ],
         "method": "mean_reverse_aware"
       },
       {
         "name": "intellect_imagination",
         "items": [
-          "mini_ipip_5",
-          "mini_ipip_10",
-          "mini_ipip_15",
+          "mini_ipip_17",
+          "mini_ipip_18",
+          "mini_ipip_19",
           "mini_ipip_20"
         ],
         "method": "mean_reverse_aware"
@@ -405,6 +405,10 @@
     ],
     "cutoffs": []
   },
-  "scoring_key_verified": false,
-  "notes": "Five 4-item subscales scored as means (1–5). Reverse-keyed items per the IPIP key. No published clinical cutoffs; the interpreter reports the mean only."
+  "scoring_key_verified": true,
+  "notes": "Five 4-item factors scored as means on the 1–5 scale after reverse-keying the items marked − on the IPIP key page (verified from source_url). No published clinical cutoffs; the interpreter reports the mean only.",
+  "instructions": "Describe yourself as you generally are now, not as you wish to be in the future. Describe yourself as you honestly see yourself, in relation to other people you know of the same sex as you are, and roughly your same age.",
+  "source_url": "https://ipip.ori.org/MiniIPIPKey.htm",
+  "text_source": "International Personality Item Pool, Mini-IPIP key page (items, factors and +/- keying), transcribed verbatim 2026-09-16; response scale and instructions from https://ipip.ori.org/New_IPIP-50-item-scale.htm. Items are listed in the key page's order (grouped by factor), not the interleaved order of Donnellan et al. 2006.",
+  "license_url": "https://ipip.ori.org/"
 }

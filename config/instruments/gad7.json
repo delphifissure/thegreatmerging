@@ -2,7 +2,7 @@
   "key": "gad7",
   "name": "Generalized Anxiety Disorder-7 (GAD-7)",
   "source_citation": "Spitzer, Kroenke, Williams & Löwe (2006). A brief measure for assessing generalized anxiety disorder: the GAD-7. Archives of Internal Medicine, 166(10), 1092–1097.",
-  "license_note": "Developed by Drs. Spitzer, Williams, Kroenke and colleagues with a grant from Pfizer; no permission required to reproduce, translate, display or distribute.",
+  "license_note": "Developed by Drs. Robert L. Spitzer, Janet B.W. Williams, Kurt Kroenke and colleagues, with an educational grant from Pfizer Inc. No permission required to reproduce, translate, display or distribute (statement printed on the PHQ/GAD screener forms).",
   "layer": 0,
   "passes": [
     "single"
@@ -11,7 +11,7 @@
   "items": [
     {
       "item_id": "gad7_1",
-      "text": "TODO: populate from source",
+      "text": "Feeling nervous, anxious, or on edge",
       "descriptor": "anxiety symptom item 1",
       "scale": {
         "min": 0,
@@ -27,7 +27,7 @@
     },
     {
       "item_id": "gad7_2",
-      "text": "TODO: populate from source",
+      "text": "Not being able to stop or control worrying",
       "descriptor": "anxiety symptom item 2",
       "scale": {
         "min": 0,
@@ -43,7 +43,7 @@
     },
     {
       "item_id": "gad7_3",
-      "text": "TODO: populate from source",
+      "text": "Worrying too much about different things",
       "descriptor": "anxiety symptom item 3",
       "scale": {
         "min": 0,
@@ -59,7 +59,7 @@
     },
     {
       "item_id": "gad7_4",
-      "text": "TODO: populate from source",
+      "text": "Trouble relaxing",
       "descriptor": "anxiety symptom item 4",
       "scale": {
         "min": 0,
@@ -75,7 +75,7 @@
     },
     {
       "item_id": "gad7_5",
-      "text": "TODO: populate from source",
+      "text": "Being so restless that it’s hard to sit still",
       "descriptor": "anxiety symptom item 5",
       "scale": {
         "min": 0,
@@ -91,7 +91,7 @@
     },
     {
       "item_id": "gad7_6",
-      "text": "TODO: populate from source",
+      "text": "Becoming easily annoyed or irritable",
       "descriptor": "anxiety symptom item 6",
       "scale": {
         "min": 0,
@@ -107,7 +107,7 @@
     },
     {
       "item_id": "gad7_7",
-      "text": "TODO: populate from source",
+      "text": "Feeling afraid as if something awful might happen",
       "descriptor": "anxiety symptom item 7",
       "scale": {
         "min": 0,
@@ -165,5 +165,9 @@
     ]
   },
   "scoring_key_verified": true,
-  "notes": "Screener result; clinical evaluation required."
+  "notes": "Screener result; clinical evaluation required. Text, anchors and cutoffs verified against the ADAA copy of the form (source_url); the Pfizer permission statement is printed on the official screener forms.",
+  "instructions": "Over the last two weeks, how often have you been bothered by the following problems?",
+  "source_url": "https://adaa.org/sites/default/files/GAD-7_Anxiety-updated_0.pdf",
+  "text_source": "GAD-7 form as distributed by the Anxiety and Depression Association of America (PDF), transcribed verbatim 2026-09-16; cutoffs 0–4 minimal, 5–9 mild, 10–14 moderate, 15–21 severe as printed.",
+  "license_url": "https://www.phqscreeners.com/"
 }

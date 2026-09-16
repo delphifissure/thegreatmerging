@@ -272,5 +272,6 @@
     "cutoffs": []
   },
   "scoring_key_verified": false,
-  "notes": "VERIFY BEFORE USE: items in this file are grouped by subscale (SES 1–6, SIS1 7–10, SIS2 11–14), not in the administration order of Carpenter et al. 2008. Items are answered 1 (strongly agree) to 4 (strongly disagree) and reverse-keyed so that higher scores mean higher excitation or inhibition, matching the published direction. When populating text, place each official item under its published subscale."
+  "notes": "VERIFY BEFORE USE: distributed on request (Kinsey Institute; Carpenter et al. 2008; Carpenter et al. 2013 in the Handbook of Sexuality-Related Measures, 3rd ed.). Items here are grouped by subscale (SES 1–6, SIS1 7–10, SIS2 11–14), not in administration order. Response direction must be taken from the official form: the original SIS/SES convention is 1 = strongly agree … 4 = strongly disagree with items reverse-keyed so that higher = more excitation or inhibition (as configured); Velten et al. 2018 (PLOS ONE, source_url) administered the German SIS/SES-SF as 1 = strongly disagree … 4 = strongly agree with no reverse coding. If the official English form uses the latter, set reverse_scored to false on every item. Subscale sizes (SES 6, SIS1 4, SIS2 4) are consistent across sources; item-to-subscale assignment still needs the official form.",
+  "source_url": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0193080"
 }

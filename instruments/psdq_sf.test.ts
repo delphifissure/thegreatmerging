@@ -11,8 +11,8 @@ import { definition, score } from "@/instruments/psdq_sf";
 import { constantResponses, maxResponses, minResponses, responsesFrom, scoreMap, setItem, withoutItem } from "@/tests/unit/helpers/responses";
 
 const AUTHORITATIVE = [1, 3, 5, 7, 9, 11, 12, 14, 18, 21, 22, 25, 27, 29, 31].map((n) => `psdq_sf_${n}`);
-const AUTHORITARIAN = [2, 6, 10, 13, 16, 17, 19, 23, 26, 28, 30, 32].map((n) => `psdq_sf_${n}`);
-const PERMISSIVE = [4, 8, 15, 20, 24].map((n) => `psdq_sf_${n}`);
+const AUTHORITARIAN = [2, 4, 6, 10, 13, 16, 19, 23, 26, 28, 30, 32].map((n) => `psdq_sf_${n}`);
+const PERMISSIVE = [8, 15, 17, 20, 24].map((n) => `psdq_sf_${n}`);
 
 describe("psdq_sf", () => {
   it("definition matches the key these tests are derived from", () => {
@@ -44,7 +44,7 @@ describe("psdq_sf", () => {
   it("(c) hand-worked: permissive [1,2,3,4,5] = 3; authoritarian eleven 2s and one 5 = 27/12 = 2.25", () => {
     const rs = responsesFrom(
       "psdq_sf",
-      { psdq_sf_4: 1, psdq_sf_8: 2, psdq_sf_15: 3, psdq_sf_20: 4, psdq_sf_24: 5, psdq_sf_2: 5 },
+      { psdq_sf_17: 1, psdq_sf_8: 2, psdq_sf_15: 3, psdq_sf_20: 4, psdq_sf_24: 5, psdq_sf_2: 5 },
       2,
     );
     const m = scoreMap(score(rs));
@@ -55,7 +55,7 @@ describe("psdq_sf", () => {
 
   it("(d) no reverse items: raising one permissive item by 5 raises the permissive mean by 1", () => {
     const base = constantResponses("psdq_sf", 3);
-    const m = scoreMap(score(setItem(base, "psdq_sf_4", 5)));
+    const m = scoreMap(score(setItem(base, "psdq_sf_17", 5)));
     expect(m.permissive.value).toBe(3.4);
     expect(m.authoritative.value).toBe(3);
     expect(m.authoritarian.value).toBe(3);

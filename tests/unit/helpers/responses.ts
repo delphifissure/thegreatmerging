@@ -109,7 +109,7 @@ export function withoutItem(responses: Response[], itemId: string, pass?: string
  *   fapbi: frequency 5, acceptability 9 (rule fires at acceptability <= 4)
  *   who_does_what: now = ideal = 5 (gap 0; both "now" at 5 mirror to 5, disagreement 0)
  *   rdas: every item at its maximum (consensus 5; rule fires at <= 2)
- *   brief_crs: undermining and exposure_to_conflict items 0, everything else 6 (rule fires above 3)
+ *   brief_crs: undermining and exposure_to_conflict items 0 and the two reverse-keyed items 0, everything else 6 (rule fires above 3)
  *   psdq_sf: 3 everywhere (identical for both partners, gap 0)
  *   map: intensity 0, efficacy 100 (rule needs intensity >= 50 and efficacy <= 50)
  *   polarization: 4 on all three passes (gap 0, no loop)
@@ -129,8 +129,9 @@ export function benignResponses(key: InstrumentKey): Response[] {
     case "csi16":
       return maxResponses("csi16");
     case "brief_crs": {
-      const negative = new Set(["brief_crs_5", "brief_crs_6", "brief_crs_9", "brief_crs_10"]);
-      return fullResponses("brief_crs", (item) => (negative.has(item.item_id) ? 0 : 6));
+      // Verified key: undermining {7, 9} and exposure {13, 14} at 0; the reverse-keyed positives (6 = CRS 9, 8 = CRS 20) at 0 so their subscales read 6.
+      const zero = new Set(["brief_crs_7", "brief_crs_9", "brief_crs_13", "brief_crs_14", "brief_crs_6", "brief_crs_8"]);
+      return fullResponses("brief_crs", (item) => (zero.has(item.item_id) ? 0 : 6));
     }
     case "psdq_sf":
       return constantResponses("psdq_sf", 3);
