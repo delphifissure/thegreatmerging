@@ -1,6 +1,8 @@
 /**
- * PRQC (Fletcher, Simpson & Thomas 2000): 18 items 1–7, six 3-item mean subscales per config:
- *   satisfaction 1–3 | commitment 4–6 | intimacy 7–9 | trust 10–12 | passion 13–15 | love 16–18
+ * PRQC (Fletcher, Simpson & Thomas 2000): 18 items 1–7, six 3-item mean subscales. Items are
+ * administered interleaved, so component c (0-based, in the order below) holds items c+1, c+7, c+13
+ * (form's scoring section, relationshipscienceonline.com):
+ *   satisfaction 1, 7, 13 | commitment 2, 8, 14 | intimacy 3, 9, 15 | trust 4, 10, 16 | passion 5, 11, 17 | love 6, 12, 18
  * Optional instrument; no reverse scoring, no cutoffs.
  */
 import { describe, expect, it } from "vitest";
@@ -16,7 +18,7 @@ describe("prqc", () => {
     for (const item of definition.items) expect(item.scale).toMatchObject({ min: 1, max: 7 });
     expect(definition.items.every((i) => !i.reverse_scored)).toBe(true);
     expect(definition.scoring.subscales.map((s) => [s.name, s.method, s.items])).toEqual(
-      SUBSCALES.map((name, i) => [name, "mean", [1, 2, 3].map((k) => `prqc_${3 * i + k}`)]),
+      SUBSCALES.map((name, i) => [name, "mean", [1, 7, 13].map((k) => `prqc_${i + k}`)]),
     );
   });
 
@@ -31,7 +33,7 @@ describe("prqc", () => {
   });
 
   it("(c) hand-worked: satisfaction [7,6,5] = 6; commitment [1,2,3] = 2; love [7,7,1] = 5", () => {
-    const m = scoreMap(score(responsesFrom("prqc", { prqc_1: 7, prqc_2: 6, prqc_3: 5, prqc_4: 1, prqc_5: 2, prqc_6: 3, prqc_16: 7, prqc_17: 7, prqc_18: 1 }, 4)));
+    const m = scoreMap(score(responsesFrom("prqc", { prqc_1: 7, prqc_7: 6, prqc_13: 5, prqc_2: 1, prqc_8: 2, prqc_14: 3, prqc_6: 7, prqc_12: 7, prqc_18: 1 }, 4)));
     expect(m.satisfaction.value).toBe(6);
     expect(m.commitment.value).toBe(2);
     expect(m.love.value).toBe(5);

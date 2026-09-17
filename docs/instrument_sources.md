@@ -1,6 +1,6 @@
 # Instrument sources and verification log
 
-What was fetched from where, what it verified, and what the owner still has to obtain. Updated 2026-09-16. Rule followed throughout: no item text and no scoring key was written from memory; every populated field cites the fetched page in the instrument file's `source_url` / `text_source`.
+What was fetched from where, what it verified, and what the owner still has to obtain. Updated 2026-09-16 (PRQC and OCI-R added later that day). Rule followed throughout: no item text and no scoring key was written from memory; every populated field cites the fetched page in the instrument file's `source_url` / `text_source`.
 
 ## Populated (text, anchors and key from the official source)
 
@@ -11,6 +11,8 @@ What was fetched from where, what it verified, and what the owner still has to o
 | `mini_ipip` | ipip.ori.org Mini-IPIP key page; IPIP 50-item page for instructions and the 1–5 scale | 20 items verbatim, factor membership and + / − keying, response scale | Public domain (quoted on ipip.ori.org) |
 | `ecr_r` | R. Chris Fraley's lab page (ECR-R items) | 36 items verbatim, anxiety 1–18 / avoidance 19–36, reverse items 9, 11, 20, 22, 26, 27, 28, 29, 30, 31, 33, 34, 35, 36, 1–7 scale | Distributed without charge on the lab page; cite Fraley, Waller & Brennan (2000) |
 | `csi16` | Fetzer / Fincham "Self Report Measures for Love and Compassion Research" CSI-32 form with the note "For the 16-item version use 1, 5, 9, 11, 12, 17, 19, 20, 21, 22, 26, 27, 28, 30, 31, 32" | 16 items verbatim with printed scoring values (item 1: 0–6; others 0–5; four items and four bipolar pairs printed descending), total 0–81, cutoff 51.5 | Free for clinical and research use (Funk & Rogge 2007; Rogge lab) |
+| `prqc` | Relationship Health Assessment (PRQC) form on relationshipscienceonline.com, the authors' site | 18 items verbatim, 1–7 scale ("not at all" … "extremely"), scoring section: satisfaction 1, 7, 13; commitment 2, 8, 14; intimacy 3, 9, 15; trust 4, 10, 16; passion 5, 11, 17; love 6, 12, 18 (the config had assumed grouped items and was corrected) | Distributed free by the authors' site; cite Fletcher, Simpson & Thomas (2000) |
+| `oci_r` | OCI-R form ("Copyright by Edna B. Foa 2002") reproduced by the University of Washington Psychiatry Consultation Line; cutoff cross-checked in PMC4530108 | 18 items verbatim, 0–4 anchors, subscale membership consistent with item content, sum scoring, cutoff 21 per Foa et al. 2002 (the UW scoring page's alternative of 18 not adopted) | Freely reproduced for clinical and research use with citation |
 
 ## Key verified, text not populated (obtain the official form)
 
@@ -27,8 +29,24 @@ What was fetched from where, what it verified, and what the owner still has to o
 | `sis_ses_sf` | Velten et al. 2018 (PLOS ONE): 14 items, 1 strongly disagree … 4 strongly agree, no reverse coding in the German administration; the original Janssen convention runs the other way. Item-to-subscale assignment differs between sources. Measure distributed on request (Kinsey Institute; Erick Janssen). | Grouped by subscale, all items reverse-keyed under the original convention; check direction and assignment on the official form. `scoring_key_verified: false` |
 | `sdi2` | Brazilian validation (PMC11554335): dyadic items 1–9, solitary 10–13, item 14 unscored; other papers: dyadic 1–8 (0–62), solitary three or four items. | Dyadic 1–8, solitary 10–13, total 0–93; resolve against Spector et al. 1996. `scoring_key_verified: false` |
 | `rdas` | Busby et al. 1995 (not fetched this session; structure widely reproduced) | Consensus 1–6, satisfaction 7–10, cohesion 11–14 (item 11 0–4), cutoff 48. Confirm on the article's form. |
-| `oci_r` | Foa et al. 2002 (not fetched this session) | Six 3-item subscales by item number, 0–4, cutoff 21. Confirm on the form. |
-| `map`, `fapbi`, `acq`, `who_does_what`, `prqc` | Not fetched this session | Item counts and formats per docs/question_inventory.md; text and keys from the sources listed in docs/instrument_acquisition.md |
+| `map`, `fapbi`, `acq`, `who_does_what` | Not fetched this session | Item counts and formats per docs/question_inventory.md; text and keys from the sources listed in docs/instrument_acquisition.md |
+
+## Leads for the remaining ten (checked 2026-09-16)
+
+| Key | Where to get it |
+|---|---|
+| `rdas` | Fetzer Institute "Self Report Measures for Love and Compassion Research: General Relationship Satisfaction" PDF (RDAS section; the form did not extract as text, so check it visually), or Busby et al. 1995 via ResearchGate or a library |
+| `psdq_sf` | Robinson et al. 2001 chapter; a form titled "Parenting Styles & Dimensions Questionnaire – Short Version" is attached to a ResearchGate Q&A thread (blocked to automated fetches) |
+| `sdi2` | Spector, Carey & Steinberg 1996 (Journal of Sex & Marital Therapy); needed to settle the dyadic 1–8 versus 1–9 question |
+| `cpq_sf` | Futris et al. 2010 (Family Relations), Table 1 for which 11 items and how they are scored; full CPQ wording in the University of Utah "Communication Patterns Questionnaire 2016 revision" document |
+| `fapbi` | Doss & Christensen 2006 (Psychological Assessment); ask Brian Doss's lab if the article is paywalled |
+| `acq` | Weiss, Hops & Patterson 1973 or Margolin et al. 1983; library or interlibrary loan |
+| `map` | Notarius & Vanzetti, "Marital Agendas Protocol", Handbook of Measurements for Marriage and Family (Taylor & Francis chapter 9) |
+| `brief_crs` | Penn State ICOPAR request form: https://sites.psu.edu/icopar/request-to-use-the-crs/ |
+| `sis_ses_sf` | Email Erick Janssen (template below); Kinsey Institute holds the copyright |
+| `who_does_what` | Email the Cowans (template below) |
+
+Put obtained files in `instrument-sources/` at the repo root (gitignored), then ask for them to be transcribed.
 
 ## Request emails (for the two measures distributed on request)
 

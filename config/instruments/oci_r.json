@@ -2,7 +2,7 @@
   "key": "oci_r",
   "name": "Obsessive-Compulsive Inventory–Revised (OCI-R)",
   "source_citation": "Foa, Huppert, Leiberg, Langner, Kichic, Hajcak & Salkovskis (2002). The Obsessive-Compulsive Inventory: development and validation of a short version. Psychological Assessment, 14(4), 485–496.",
-  "license_note": "Free for clinical and research use with citation (Center for the Treatment and Study of Anxiety, University of Pennsylvania).",
+  "license_note": "Copyright Edna B. Foa 2002; freely reproduced for clinical and research use with citation of Foa et al. (2002).",
   "layer": 0,
   "passes": [
     "single"
@@ -11,7 +11,7 @@
   "items": [
     {
       "item_id": "oci_r_1",
-      "text": "TODO: populate from source",
+      "text": "I have saved up so many things that they get in the way.",
       "descriptor": "hoarding item 1",
       "scale": {
         "min": 0,
@@ -28,7 +28,7 @@
     },
     {
       "item_id": "oci_r_2",
-      "text": "TODO: populate from source",
+      "text": "I check things more often than necessary.",
       "descriptor": "checking item 1",
       "scale": {
         "min": 0,
@@ -45,7 +45,7 @@
     },
     {
       "item_id": "oci_r_3",
-      "text": "TODO: populate from source",
+      "text": "I get upset if objects are not arranged properly.",
       "descriptor": "ordering item 1",
       "scale": {
         "min": 0,
@@ -62,7 +62,7 @@
     },
     {
       "item_id": "oci_r_4",
-      "text": "TODO: populate from source",
+      "text": "I feel compelled to count while I am doing things.",
       "descriptor": "neutralizing item 1",
       "scale": {
         "min": 0,
@@ -79,7 +79,7 @@
     },
     {
       "item_id": "oci_r_5",
-      "text": "TODO: populate from source",
+      "text": "I find it difficult to touch an object when I know it has been touched by strangers or certain people.",
       "descriptor": "washing item 1",
       "scale": {
         "min": 0,
@@ -96,7 +96,7 @@
     },
     {
       "item_id": "oci_r_6",
-      "text": "TODO: populate from source",
+      "text": "I find it difficult to control my own thoughts.",
       "descriptor": "obsessing item 1",
       "scale": {
         "min": 0,
@@ -113,7 +113,7 @@
     },
     {
       "item_id": "oci_r_7",
-      "text": "TODO: populate from source",
+      "text": "I collect things I don’t need.",
       "descriptor": "hoarding item 2",
       "scale": {
         "min": 0,
@@ -130,7 +130,7 @@
     },
     {
       "item_id": "oci_r_8",
-      "text": "TODO: populate from source",
+      "text": "I repeatedly check doors, windows, drawers, etc.",
       "descriptor": "checking item 2",
       "scale": {
         "min": 0,
@@ -147,7 +147,7 @@
     },
     {
       "item_id": "oci_r_9",
-      "text": "TODO: populate from source",
+      "text": "I get upset if others change the way I have arranged things.",
       "descriptor": "ordering item 2",
       "scale": {
         "min": 0,
@@ -164,7 +164,7 @@
     },
     {
       "item_id": "oci_r_10",
-      "text": "TODO: populate from source",
+      "text": "I feel I have to repeat certain numbers.",
       "descriptor": "neutralizing item 2",
       "scale": {
         "min": 0,
@@ -181,7 +181,7 @@
     },
     {
       "item_id": "oci_r_11",
-      "text": "TODO: populate from source",
+      "text": "I sometimes have to wash or clean myself simply because I feel contaminated.",
       "descriptor": "washing item 2",
       "scale": {
         "min": 0,
@@ -198,7 +198,7 @@
     },
     {
       "item_id": "oci_r_12",
-      "text": "TODO: populate from source",
+      "text": "I am upset by unpleasant thoughts that come into my mind against my will.",
       "descriptor": "obsessing item 2",
       "scale": {
         "min": 0,
@@ -215,7 +215,7 @@
     },
     {
       "item_id": "oci_r_13",
-      "text": "TODO: populate from source",
+      "text": "I avoid throwing things away because I am afraid I might need them later.",
       "descriptor": "hoarding item 3",
       "scale": {
         "min": 0,
@@ -232,7 +232,7 @@
     },
     {
       "item_id": "oci_r_14",
-      "text": "TODO: populate from source",
+      "text": "I repeatedly check gas and water taps and light switches after turning them off.",
       "descriptor": "checking item 3",
       "scale": {
         "min": 0,
@@ -249,7 +249,7 @@
     },
     {
       "item_id": "oci_r_15",
-      "text": "TODO: populate from source",
+      "text": "I need things to be arranged in a particular order.",
       "descriptor": "ordering item 3",
       "scale": {
         "min": 0,
@@ -266,7 +266,7 @@
     },
     {
       "item_id": "oci_r_16",
-      "text": "TODO: populate from source",
+      "text": "I feel that there are good and bad numbers.",
       "descriptor": "neutralizing item 3",
       "scale": {
         "min": 0,
@@ -283,7 +283,7 @@
     },
     {
       "item_id": "oci_r_17",
-      "text": "TODO: populate from source",
+      "text": "I wash my hands more often and longer than necessary.",
       "descriptor": "washing item 3",
       "scale": {
         "min": 0,
@@ -300,7 +300,7 @@
     },
     {
       "item_id": "oci_r_18",
-      "text": "TODO: populate from source",
+      "text": "I frequently get nasty thoughts and have difficulty in getting rid of them.",
       "descriptor": "obsessing item 3",
       "scale": {
         "min": 0,
@@ -412,5 +412,9 @@
     ]
   },
   "scoring_key_verified": true,
-  "notes": "Optional instrument. Screener result; clinical evaluation required. Total cutoff 21 per Foa et al. 2002."
+  "notes": "Optional instrument. Screener result; clinical evaluation required. Sum scoring, total 0–72; cutoff 21 per Foa et al. 2002 (as cited in PMC4530108, which notes later recommendations from 14 to 36). Subscale membership (hoarding 1, 7, 13; checking 2, 8, 14; ordering 3, 9, 15; neutralizing 4, 10, 16; washing 5, 11, 17; obsessing 6, 12, 18) matches the item content on the form.",
+  "instructions": "The following statements refer to experiences that many people have in their everyday lives. Circle the number that best describes HOW MUCH that experience has DISTRESSED or BOTHERED you during the PAST MONTH.",
+  "source_url": "https://pcl.psychiatry.uw.edu/wp-content/uploads/2025/04/OCI-R-Scale-and-Manual.pdf",
+  "text_source": "OCI-R form ('Copyright by Edna B. Foa 2002') as reproduced by the University of Washington Psychiatry Consultation Line, transcribed verbatim 2026-09-16 (line-wrapped items joined). The same document's scoring page suggests a total of 18 or more and reports subscale means; this app keeps the sum scoring and the cutoff of 21 from Foa et al. 2002.",
+  "license_url": "https://pcl.psychiatry.uw.edu/wp-content/uploads/2025/04/OCI-R-Scale-and-Manual.pdf"
 }

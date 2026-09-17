@@ -2,7 +2,7 @@
   "key": "prqc",
   "name": "Perceived Relationship Quality Components (PRQC) Inventory",
   "source_citation": "Fletcher, Simpson & Thomas (2000). The measurement of perceived relationship quality components: a confirmatory factor analytic approach. Personality and Social Psychology Bulletin, 26(3), 340–354.",
-  "license_note": "Free for research and clinical use with citation; see source.",
+  "license_note": "Distributed free for administration by the authors' Relationship Science Online site; cite Fletcher, Simpson & Thomas (2000) when referencing the PRQC.",
   "layer": 1,
   "passes": [
     "single"
@@ -10,400 +10,400 @@
   "items": [
     {
       "item_id": "prqc_1",
-      "text": "TODO: populate from source",
+      "text": "How satisfied are you with your relationship?",
       "descriptor": "satisfaction item 1",
       "scale": {
         "min": 1,
         "max": 7,
         "labels": [
-          "Not at all",
+          "not at all",
           "",
           "",
           "",
           "",
           "",
-          "Extremely"
+          "extremely"
         ]
       },
       "reverse_scored": false
     },
     {
       "item_id": "prqc_2",
-      "text": "TODO: populate from source",
-      "descriptor": "satisfaction item 2",
+      "text": "How committed are you to your relationship?",
+      "descriptor": "commitment item 1",
       "scale": {
         "min": 1,
         "max": 7,
         "labels": [
-          "Not at all",
+          "not at all",
           "",
           "",
           "",
           "",
           "",
-          "Extremely"
+          "extremely"
         ]
       },
       "reverse_scored": false
     },
     {
       "item_id": "prqc_3",
-      "text": "TODO: populate from source",
-      "descriptor": "satisfaction item 3",
+      "text": "How intimate is your relationship?",
+      "descriptor": "intimacy item 1",
       "scale": {
         "min": 1,
         "max": 7,
         "labels": [
-          "Not at all",
+          "not at all",
           "",
           "",
           "",
           "",
           "",
-          "Extremely"
+          "extremely"
         ]
       },
       "reverse_scored": false
     },
     {
       "item_id": "prqc_4",
-      "text": "TODO: populate from source",
-      "descriptor": "commitment item 1",
+      "text": "How much do you trust your partner?",
+      "descriptor": "trust item 1",
       "scale": {
         "min": 1,
         "max": 7,
         "labels": [
-          "Not at all",
+          "not at all",
           "",
           "",
           "",
           "",
           "",
-          "Extremely"
+          "extremely"
         ]
       },
       "reverse_scored": false
     },
     {
       "item_id": "prqc_5",
-      "text": "TODO: populate from source",
-      "descriptor": "commitment item 2",
+      "text": "How passionate is your relationship?",
+      "descriptor": "passion item 1",
       "scale": {
         "min": 1,
         "max": 7,
         "labels": [
-          "Not at all",
+          "not at all",
           "",
           "",
           "",
           "",
           "",
-          "Extremely"
+          "extremely"
         ]
       },
       "reverse_scored": false
     },
     {
       "item_id": "prqc_6",
-      "text": "TODO: populate from source",
-      "descriptor": "commitment item 3",
+      "text": "How much do you love your partner?",
+      "descriptor": "love item 1",
       "scale": {
         "min": 1,
         "max": 7,
         "labels": [
-          "Not at all",
+          "not at all",
           "",
           "",
           "",
           "",
           "",
-          "Extremely"
+          "extremely"
         ]
       },
       "reverse_scored": false
     },
     {
       "item_id": "prqc_7",
-      "text": "TODO: populate from source",
-      "descriptor": "intimacy item 1",
+      "text": "How content are you with your relationship?",
+      "descriptor": "satisfaction item 2",
       "scale": {
         "min": 1,
         "max": 7,
         "labels": [
-          "Not at all",
+          "not at all",
           "",
           "",
           "",
           "",
           "",
-          "Extremely"
+          "extremely"
         ]
       },
       "reverse_scored": false
     },
     {
       "item_id": "prqc_8",
-      "text": "TODO: populate from source",
-      "descriptor": "intimacy item 2",
+      "text": "How dedicated are you to your relationship?",
+      "descriptor": "commitment item 2",
       "scale": {
         "min": 1,
         "max": 7,
         "labels": [
-          "Not at all",
+          "not at all",
           "",
           "",
           "",
           "",
           "",
-          "Extremely"
+          "extremely"
         ]
       },
       "reverse_scored": false
     },
     {
       "item_id": "prqc_9",
-      "text": "TODO: populate from source",
-      "descriptor": "intimacy item 3",
+      "text": "How close is your relationship?",
+      "descriptor": "intimacy item 2",
       "scale": {
         "min": 1,
         "max": 7,
         "labels": [
-          "Not at all",
+          "not at all",
           "",
           "",
           "",
           "",
           "",
-          "Extremely"
+          "extremely"
         ]
       },
       "reverse_scored": false
     },
     {
       "item_id": "prqc_10",
-      "text": "TODO: populate from source",
-      "descriptor": "trust item 1",
+      "text": "How much can you count on your partner?",
+      "descriptor": "trust item 2",
       "scale": {
         "min": 1,
         "max": 7,
         "labels": [
-          "Not at all",
+          "not at all",
           "",
           "",
           "",
           "",
           "",
-          "Extremely"
+          "extremely"
         ]
       },
       "reverse_scored": false
     },
     {
       "item_id": "prqc_11",
-      "text": "TODO: populate from source",
-      "descriptor": "trust item 2",
+      "text": "How lustful is your relationship?",
+      "descriptor": "passion item 2",
       "scale": {
         "min": 1,
         "max": 7,
         "labels": [
-          "Not at all",
+          "not at all",
           "",
           "",
           "",
           "",
           "",
-          "Extremely"
+          "extremely"
         ]
       },
       "reverse_scored": false
     },
     {
       "item_id": "prqc_12",
-      "text": "TODO: populate from source",
-      "descriptor": "trust item 3",
+      "text": "How much do you adore your partner?",
+      "descriptor": "love item 2",
       "scale": {
         "min": 1,
         "max": 7,
         "labels": [
-          "Not at all",
+          "not at all",
           "",
           "",
           "",
           "",
           "",
-          "Extremely"
+          "extremely"
         ]
       },
       "reverse_scored": false
     },
     {
       "item_id": "prqc_13",
-      "text": "TODO: populate from source",
-      "descriptor": "passion item 1",
+      "text": "How happy are you with your relationship?",
+      "descriptor": "satisfaction item 3",
       "scale": {
         "min": 1,
         "max": 7,
         "labels": [
-          "Not at all",
+          "not at all",
           "",
           "",
           "",
           "",
           "",
-          "Extremely"
+          "extremely"
         ]
       },
       "reverse_scored": false
     },
     {
       "item_id": "prqc_14",
-      "text": "TODO: populate from source",
-      "descriptor": "passion item 2",
+      "text": "How devoted are you to your relationship?",
+      "descriptor": "commitment item 3",
       "scale": {
         "min": 1,
         "max": 7,
         "labels": [
-          "Not at all",
+          "not at all",
           "",
           "",
           "",
           "",
           "",
-          "Extremely"
+          "extremely"
         ]
       },
       "reverse_scored": false
     },
     {
       "item_id": "prqc_15",
-      "text": "TODO: populate from source",
-      "descriptor": "passion item 3",
+      "text": "How connected are you to your partner?",
+      "descriptor": "intimacy item 3",
       "scale": {
         "min": 1,
         "max": 7,
         "labels": [
-          "Not at all",
+          "not at all",
           "",
           "",
           "",
           "",
           "",
-          "Extremely"
+          "extremely"
         ]
       },
       "reverse_scored": false
     },
     {
       "item_id": "prqc_16",
-      "text": "TODO: populate from source",
-      "descriptor": "love item 1",
+      "text": "How dependable is your partner?",
+      "descriptor": "trust item 3",
       "scale": {
         "min": 1,
         "max": 7,
         "labels": [
-          "Not at all",
+          "not at all",
           "",
           "",
           "",
           "",
           "",
-          "Extremely"
+          "extremely"
         ]
       },
       "reverse_scored": false
     },
     {
       "item_id": "prqc_17",
-      "text": "TODO: populate from source",
-      "descriptor": "love item 2",
+      "text": "How sexually intense is your relationship?",
+      "descriptor": "passion item 3",
       "scale": {
         "min": 1,
         "max": 7,
         "labels": [
-          "Not at all",
+          "not at all",
           "",
           "",
           "",
           "",
           "",
-          "Extremely"
+          "extremely"
         ]
       },
       "reverse_scored": false
     },
     {
       "item_id": "prqc_18",
-      "text": "TODO: populate from source",
+      "text": "How much do you cherish your partner?",
       "descriptor": "love item 3",
       "scale": {
         "min": 1,
         "max": 7,
         "labels": [
-          "Not at all",
+          "not at all",
           "",
           "",
           "",
           "",
           "",
-          "Extremely"
+          "extremely"
         ]
       },
       "reverse_scored": false
     }
   ],
   "scoring": {
-    "version": "1.0.0",
+    "version": "1.1.0",
     "subscales": [
       {
         "name": "satisfaction",
         "items": [
           "prqc_1",
-          "prqc_2",
-          "prqc_3"
+          "prqc_7",
+          "prqc_13"
         ],
         "method": "mean"
       },
       {
         "name": "commitment",
         "items": [
-          "prqc_4",
-          "prqc_5",
-          "prqc_6"
+          "prqc_2",
+          "prqc_8",
+          "prqc_14"
         ],
         "method": "mean"
       },
       {
         "name": "intimacy",
         "items": [
-          "prqc_7",
-          "prqc_8",
-          "prqc_9"
+          "prqc_3",
+          "prqc_9",
+          "prqc_15"
         ],
         "method": "mean"
       },
       {
         "name": "trust",
         "items": [
+          "prqc_4",
           "prqc_10",
-          "prqc_11",
-          "prqc_12"
+          "prqc_16"
         ],
         "method": "mean"
       },
       {
         "name": "passion",
         "items": [
-          "prqc_13",
-          "prqc_14",
-          "prqc_15"
+          "prqc_5",
+          "prqc_11",
+          "prqc_17"
         ],
         "method": "mean"
       },
       {
         "name": "love",
         "items": [
-          "prqc_16",
-          "prqc_17",
+          "prqc_6",
+          "prqc_12",
           "prqc_18"
         ],
         "method": "mean"
@@ -411,6 +411,9 @@
     ],
     "cutoffs": []
   },
-  "scoring_key_verified": false,
-  "notes": "Optional instrument. Six 3-item subscales scored as means (1–7)."
+  "scoring_key_verified": true,
+  "notes": "Optional instrument. Six 3-item components scored as means (1–7); no published cutoffs. Key verified 2026-09-16 against the form's scoring section (satisfaction 1, 7, 13; commitment 2, 8, 14; intimacy 3, 9, 15; trust 4, 10, 16; passion 5, 11, 17; love 6, 12, 18). Before that date the config assumed items grouped by component, which was wrong.",
+  "instructions": "Please read each of the following items carefully and, using the rating scale, rate your current partner and relationship (ranging from 1 = not at all to 7 = extremely).",
+  "source_url": "https://relationshipscienceonline.com/wp-content/uploads/2020/10/RSO-PRQC.pdf",
+  "text_source": "Relationship Health Assessment (PRQC) form from relationshipscienceonline.com, transcribed verbatim 2026-09-16. Items are administered interleaved (satisfaction, commitment, intimacy, trust, passion, love, repeated three times). Subscale membership follows the form's scoring section; its item-composition table labels item 18 'Satisfaction', which contradicts the scoring section (love = 6, 12, 18) and was treated as a typo."
 }
