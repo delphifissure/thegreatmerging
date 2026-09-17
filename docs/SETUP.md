@@ -4,13 +4,17 @@ Everything the app needs that a person has to create by hand. Fill `.env.local` 
 
 ## 1. Supabase (database, auth, storage)
 
-1. Create a project at supabase.com. Choose a region close to you. Save the database password.
-2. Project Settings → API: copy the **Project URL** into `NEXT_PUBLIC_SUPABASE_URL`, the **anon** key into `NEXT_PUBLIC_SUPABASE_ANON_KEY`, and the **service_role** key into `SUPABASE_SERVICE_ROLE_KEY` (server only).
-3. Project Settings → Database → Connection string → **Transaction** pooler (port 6543): copy into `DATABASE_URL`, replacing `[YOUR-PASSWORD]`.
-4. Authentication → Providers: enable **Email** (password sign-in and magic links both work with the sign-in screen). Authentication → URL Configuration: set the Site URL to your `APP_URL` and add `<APP_URL>/auth/callback` to the redirect list.
-5. Storage: create a private bucket named `exports` (the export job uploads there and serves 15-minute signed URLs).
+Free plan is enough for development with test data (checked 2026-09-16): 2 active projects, 500 MB database, 1 GB storage, no backups, and projects pause after a week of inactivity (resume from the dashboard). Real people's data needs the Pro plan ($25/month) plus the HIPAA add-on and a signed BAA.
+
+If `pnpm` is not on your PATH, prefix every `pnpm` command with `corepack` (for example `corepack pnpm db:migrate`); it uses the version pinned in `package.json`.
+
+1. Create a project at supabase.com (New project). Pick a region close to you, set a database password and save it.
+2. Settings → API Keys: copy the **Project URL** into `NEXT_PUBLIC_SUPABASE_URL`. Copy the **publishable** key (`sb_publishable_…`, or the legacy `anon` key) into `NEXT_PUBLIC_SUPABASE_ANON_KEY`. Copy a **secret** key (`sb_secret_…`, or the legacy `service_role` key) into `SUPABASE_SERVICE_ROLE_KEY`. The secret key is used only on the server (seed script and export job). Supabase is retiring the legacy keys by the end of 2026, so prefer the new ones.
+3. Click **Connect** at the top of the project page and copy the **Transaction pooler** string (port 6543) into `DATABASE_URL`, replacing `[YOUR-PASSWORD]`. The app already disables prepared statements, which this pooler requires. If `pnpm db:migrate` fails through it, run the migration once with the **Session pooler** string (port 5432) instead.
+4. Authentication → Sign In / Providers: keep **Email** enabled. Authentication → URL Configuration: set the Site URL to your `APP_URL` (`http://localhost:3000` for now) and add `<APP_URL>/auth/callback` to the redirect URLs. The built-in email sender is rate-limited and meant for testing; configure custom SMTP (Authentication → Emails) before inviting real users.
+5. Storage → New bucket: create a **private** bucket named `exports` (the export job uploads there and serves 15-minute signed URLs).
 6. Apply the schema and policies: `pnpm db:migrate`. Then `pnpm db:seed` (adds the instrument definitions). With `E2E_SEED=1` the seed also creates two test users (Ana and Ben) in one couple with children and a solo Square One user; their password is `E2E_PASSWORD`.
-7. Project Settings → Database: confirm encryption at rest is on (it is by default). For HIPAA-grade handling, the HIPAA add-on and a signed BAA are required before real data.
+7. Encryption at rest is on by default. For HIPAA-grade handling, the HIPAA add-on and a signed BAA are required before real data.
 
 ## 2. Anthropic (the interpreter, prober, summarizer, guardrail and concreteness roles)
 
@@ -21,8 +25,10 @@ Everything the app needs that a person has to create by hand. Fill `.env.local` 
 
 ## 3. Inngest (jobs)
 
-- Local development: run `npx inngest-cli@latest dev -u http://localhost:3000/api/inngest` alongside `pnpm dev`. No keys needed.
-- Production: create an app at app.inngest.com, copy the **Event key** into `INNGEST_EVENT_KEY` and the **Signing key** into `INNGEST_SIGNING_KEY`, and register `<APP_URL>/api/inngest` as the serve endpoint after the first deploy.
+No account is needed for local development. The free Hobby plan covers a deployed app with test traffic (checked 2026-09-16): 50,000 executions a month (each function run and each step counts), 5 concurrent steps, 24 hours of logs, no credit card. Paid plans start at $99/month; a BAA for real health data is a paid add-on.
+
+- Local development: run `npx inngest-cli@latest dev -u http://localhost:3000/api/inngest` alongside `pnpm dev`, then open http://localhost:8288 to watch jobs. Leave `INNGEST_EVENT_KEY` and `INNGEST_SIGNING_KEY` as they are.
+- Production: sign up at app.inngest.com and stay in the **Production** environment. Manage → Event Keys → **+ Create Event Key**, then copy it into `INNGEST_EVENT_KEY`. Manage → Signing Key, then copy it into `INNGEST_SIGNING_KEY`. After the first deploy, either install Inngest's Vercel integration, which sets both keys and syncs on every deploy, or open Apps → **Sync New App** and paste `<APP_URL>/api/inngest`.
 - The PDF export job launches Playwright's Chromium. Run it on a worker with Chromium available (self-hosted Inngest worker or a serverless Chromium build); default Vercel functions cannot.
 
 ## 4. Vercel (hosting)
