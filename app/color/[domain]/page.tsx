@@ -36,8 +36,8 @@ export default async function ColorDomainPage({ params }: { params: Promise<{ do
   return (
     <div className="space-y-4">
       <div>
-        <Link href="/color" className="text-sm underline">
-          All flagged domains
+        <Link href="/color" className="text-sm text-muted underline decoration-rule underline-offset-4 hover:text-ink">
+          All topics
         </Link>
         <h1 className="mt-2 text-2xl font-semibold">{config.title}</h1>
         <p className="text-sm text-muted" role="status">
@@ -63,14 +63,14 @@ export default async function ColorDomainPage({ params }: { params: Promise<{ do
         <Card>
           <p>{config.common.transitions.complete}</p>
           <div className="mt-3 flex flex-wrap gap-3">
-            <LinkButton href="/color">Next domain</LinkButton>
+            <LinkButton href="/color">Next topic</LinkButton>
             <LinkButton href="/brief" variant="secondary">
               Brief
             </LinkButton>
           </div>
         </Card>
       ) : waitingForProbes ? (
-        <Waiting title="Checking for follow-ups…">
+        <Waiting title="Reading your answers for follow-ups.">
           {config.common.transitions.consistency}
           <RetryProbes sessionId={session.id} />
         </Waiting>
@@ -87,7 +87,7 @@ export default async function ColorDomainPage({ params }: { params: Promise<{ do
           <p className="text-sm text-muted">Every answer is saved as you go. Only you can see them until you have both finished, and you can pause any time.</p>
         </>
       ) : (
-        <Waiting title="Loading the next question…" />
+        <Waiting title="Loading the next question." />
       )}
     </div>
   );

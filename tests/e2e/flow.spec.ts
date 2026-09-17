@@ -21,7 +21,7 @@ test.describe("seeded flow", () => {
     await expect(page.getByRole("heading", { name: "Setup" })).toBeVisible();
 
     await page.goto("/instruments");
-    await expect(page.getByRole("heading", { name: "Instruments" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Questionnaires" })).toBeVisible();
     await page.getByRole("link", { name: "Mini-IPIP" }).click();
     await page.waitForURL(/\/instruments\/mini_ipip/);
 

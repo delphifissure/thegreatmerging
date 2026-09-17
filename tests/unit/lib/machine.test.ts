@@ -357,7 +357,7 @@ describe("end of queue: consistency, prober and probes", () => {
     expect(s1.queue.at(-2)).toEqual({ id: "probe:1", step: "consistency", kind: "probe", text: PROBES[0].question_text, reason_text: PROBES[0].reason_text, template_id: 4 });
     expect(s1.queue.at(-1)).toEqual({ id: "probe:2", step: "consistency", kind: "probe", text: PROBES[1].question_text, reason_text: PROBES[1].reason_text, template_id: 7 });
     expect(currentItem(s1)?.id).toBe("probe:1");
-    expect(progressLabel(s1, household)).toBe("A few follow-ups. Each has a reason attached and a skip button., 1 of 2");
+    expect(progressLabel(s1, household)).toBe("A few follow-ups, written from your own answers. Each says why it is being asked, and skipping is fine., 1 of 2");
 
     const r2 = step(s1, answer("Because it keeps the peace."));
     expect(r2.effects).toEqual([{ type: "persist" }]);

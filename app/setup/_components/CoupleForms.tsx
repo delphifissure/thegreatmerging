@@ -17,7 +17,7 @@ export function CreateCoupleForm() {
       {!state.ok ? <Notice tone="warn">{state.error}</Notice> : null}
       {state.ok && state.message ? <Notice>{state.message}</Notice> : null}
       <Button type="submit" disabled={pending} aria-busy={pending}>
-        {pending ? "Creating…" : "Create our couple"}
+        {pending ? "Starting…" : "Start together"}
       </Button>
     </form>
   );

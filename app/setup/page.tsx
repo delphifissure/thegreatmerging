@@ -25,8 +25,7 @@ export default async function SetupPage() {
       <Card>
         <h2 className="text-lg font-semibold">Names and roles</h2>
         <p className="mt-1 text-sm text-muted">
-          You are {user.displayName}
-          {couple && user.side ? ` (partner ${user.side.toUpperCase()})` : ""}. {partner ? `Your partner is ${partner.display_name}.` : ""}
+          You are {user.displayName}. {partner ? `Your partner is ${partner.display_name}.` : ""}
         </p>
         <div className="mt-3">
           <NameForm current={user.displayName} />
@@ -35,7 +34,7 @@ export default async function SetupPage() {
 
       {!couple ? (
         <Card>
-          <h2 className="text-lg font-semibold">Start a couple</h2>
+          <h2 className="text-lg font-semibold">Start together</h2>
           <p className="mt-1 text-sm text-muted">One of you starts it and invites the other. If your partner already started, use the invitation link they sent you instead.</p>
           <div className="mt-3">
             <CreateCoupleForm />
@@ -62,7 +61,7 @@ export default async function SetupPage() {
       {couple ? (
         <Card>
           <h2 className="text-lg font-semibold">Children</h2>
-          <p className="mt-1 text-sm text-muted">With children in the picture, Layer 1 adds the co-parenting and parenting-style instruments.</p>
+          <p className="mt-1 text-sm text-muted">With children in the picture, the part about the two of you adds questionnaires on co-parenting and parenting style.</p>
           <div className="mt-3">
             <HasChildrenSwitch value={couple.has_children} />
           </div>
@@ -71,7 +70,7 @@ export default async function SetupPage() {
 
       {couple && consent ? (
         <Card>
-          <h2 className="text-lg font-semibold">What your partner and the interpreter may see</h2>
+          <h2 className="text-lg font-semibold">What your partner, and the app, may see</h2>
           <p className="mt-1 text-sm text-muted">These are your switches only; your partner has their own. Every change is one tap and is logged.</p>
           <div className="mt-3">
             <ConsentSwitches
@@ -90,7 +89,7 @@ export default async function SetupPage() {
 
       <Card>
         <h2 className="text-lg font-semibold">Scheduling</h2>
-        <p className="mt-1 text-sm text-muted">When will each of you sit down for Layer 0 and Layer 1? Stored only on this device, as a reminder to yourselves.</p>
+        <p className="mt-1 text-sm text-muted">When will each of you sit down for the two parts? Stored only on this device, as a reminder to yourselves.</p>
         <div className="mt-3">
           <SchedulingNotes />
         </div>
@@ -98,12 +97,12 @@ export default async function SetupPage() {
 
       {couple ? (
         <div className="flex flex-wrap gap-3">
-          <LinkButton href="/instruments">Go to the instruments</LinkButton>
+          <LinkButton href="/instruments">Go to the questionnaires</LinkButton>
           <LinkButton href="/extended/caregiver" variant="secondary">
-            Extended: caregiver
+            A third caregiver
           </LinkButton>
           <LinkButton href="/extended/child" variant="secondary">
-            Extended: child conversation
+            Talking with a child
           </LinkButton>
         </div>
       ) : null}

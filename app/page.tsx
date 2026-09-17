@@ -1,11 +1,83 @@
+import Link from "next/link";
 import { currentUser } from "@/lib/supabase/server";
+import { APP_NAME } from "@/lib/brand";
+import { GENERATED_NOTE } from "@/lib/copy";
+import { requireAppUser } from "@/app/_lib/session";
+import { buildJourney, type Step } from "@/app/_lib/journey";
 import { Card } from "@/app/_components/Card";
 import { PageHeader } from "@/app/_components/PageHeader";
+import { ProgressBar } from "@/app/_components/ProgressBar";
 import { LinkButton } from "@/app/_components/Button";
-import { APP_NAME } from "@/lib/brand";
 
-export default async function LandingPage() {
-  const user = await currentUser();
+function Dot({ state, n }: { state: Step["state"]; n: number }) {
+  const cls =
+    state === "done"
+      ? "border-good bg-good text-accent-ink"
+      : state === "now"
+        ? "border-accent text-accent"
+        : state === "skipped"
+          ? "border-rule text-muted line-through"
+          : "border-rule text-muted";
+  return (
+    <span aria-hidden="true" className={`grid h-6 w-6 place-items-center rounded-full border font-sans text-xs font-semibold ${cls}`}>
+      {state === "done" ? "✓" : n}
+    </span>
+  );
+}
+
+const STATE_WORD: Record<Step["state"], string> = { done: "done", now: "current step", locked: "not yet", skipped: "skipped" };
+
+async function Home() {
+  const user = await requireAppUser();
+  const journey = await buildJourney(user);
+  const first = user.displayName.split(" ")[0];
+  return (
+    <div className="space-y-6">
+      <PageHeader
+        title={journey.next ? `Where you are, ${first}` : `All done, ${first}`}
+        lede="Each of you answers alone. Nothing is compared until you have both finished, and you read your own results first."
+      />
+      <Card>
+        <ol className="divide-y divide-rule">
+          {journey.steps.map((s, i) => (
+            <li key={s.key} className="grid grid-cols-[28px_1fr_auto] items-baseline gap-x-3 gap-y-1 py-3 first:pt-0 last:pb-0">
+              <Dot state={s.state} n={i + 1} />
+              <span className={`font-display text-[19px] ${s.state === "locked" || s.state === "skipped" ? "text-muted" : ""}`}>
+                {s.state === "now" || s.state === "done" ? (
+                  <Link href={s.href} className="hover:underline">
+                    {s.title}
+                  </Link>
+                ) : (
+                  s.title
+                )}
+                <span className="sr-only">, {STATE_WORD[s.state]}</span>
+              </span>
+              <span className="text-right text-sm text-muted tabular-nums">{s.detail}</span>
+              {s.progress ? (
+                <div className="col-start-2 col-span-2">
+                  <ProgressBar value={s.progress.value} max={s.progress.max} label={`${s.title} progress`} showLabel={false} />
+                </div>
+              ) : null}
+            </li>
+          ))}
+        </ol>
+        <div className="mt-5 flex flex-wrap gap-3">
+          {journey.next ? <LinkButton href={journey.next.href}>{journey.next.state === "now" && journey.next.key === "setup" ? "Set up together" : `Continue: ${journey.next.title}`}</LinkButton> : <LinkButton href="/revisit">Revisits</LinkButton>}
+          {user.couple ? (
+            <LinkButton href="/waiting" variant="secondary">
+              {journey.partnerName ? `Where ${journey.partnerName} is` : "Where you both are"}
+            </LinkButton>
+          ) : null}
+        </div>
+      </Card>
+      <p className="reading max-w-prose text-[15px] text-muted">
+        No screen here says whether two people should stay together or names anything about a person. Scores carry the questionnaire they came from. Anything the app wrote is marked &ldquo;{GENERATED_NOTE}&rdquo;
+      </p>
+    </div>
+  );
+}
+
+function Landing() {
   return (
     <div className="space-y-6">
       <PageHeader
@@ -13,29 +85,32 @@ export default async function LandingPage() {
         lede="Two people answer the same questions separately. Each sees their own results first. Only then do you read one brief together and write a plan you both keep."
       />
       <Card>
-        <h2 className="text-lg font-semibold">How it works</h2>
-        <ol className="list-decimal ml-5 mt-2 space-y-1">
+        <h2 className="text-[22px]">How it works</h2>
+        <ol className="reading mt-3 list-decimal space-y-2 pl-5 text-[17px]">
           <li>Set up together: names, who sees what, and when each of you will sit down.</li>
-          <li>Each of you, alone: Layer 0 (about yourself) and Layer 1 (about the relationship). Save and return any time.</li>
+          <li>Each of you, alone: a part about you, then a part about the two of you. Save and come back any time.</li>
           <li>Nothing is compared until both of you are done. Each of you reads your own results privately first.</li>
-          <li>Where something flagged, a few written questions, one domain at a time, still alone.</li>
-          <li>Then the brief and the plan, together, one domain per sitting, with dates to look again.</li>
+          <li>Where something came up, a few questions in your own words, one topic at a time, still alone.</li>
+          <li>Then the brief and the plan, together, one topic per sitting, with dates to look again.</li>
         </ol>
-        <div className="mt-4 flex flex-wrap gap-3">
-          {user ? <LinkButton href="/setup">Continue to setup</LinkButton> : <LinkButton href="/sign-in">Sign in</LinkButton>}
+        <div className="mt-5 flex flex-wrap gap-3">
+          <LinkButton href="/sign-in">Sign in</LinkButton>
           <LinkButton href="/square-one" variant="secondary">
-            Square One (before a relationship)
+            Square One, before a relationship
           </LinkButton>
         </div>
       </Card>
       <Card>
-        <h2 className="text-lg font-semibold">What it is not</h2>
-        <p className="mt-2 text-sm">
-          No screen here says whether two people should stay together or names anything about a person. Instrument scores are
-          labelled with the instrument they came from. Anything written by the interpreter is labelled &ldquo;generated by the
-          interpreter; not validated.&rdquo;
+        <h2 className="text-[22px]">What you won&rsquo;t find here</h2>
+        <p className="reading mt-2 text-[17px]">
+          No screen says whether two people should stay together, and nothing names anything about a person. Scores carry the questionnaire they came from. Anything the app wrote is marked &ldquo;{GENERATED_NOTE}&rdquo;
         </p>
       </Card>
     </div>
   );
+}
+
+export default async function HomePage() {
+  const user = await currentUser();
+  return user ? <Home /> : <Landing />;
 }

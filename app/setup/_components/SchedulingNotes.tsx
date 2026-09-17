@@ -43,10 +43,10 @@ export function SchedulingNotes() {
   };
   return (
     <div className="grid gap-3 sm:grid-cols-2">
-      <Field label="I will do Layer 0 on" htmlFor="sched-l0">
+      <Field label="I will do the part about me on" htmlFor="sched-l0">
         <input id="sched-l0" type="date" value={s.layer0} onChange={(e) => update({ layer0: e.target.value })} />
       </Field>
-      <Field label="I will do Layer 1 on" htmlFor="sched-l1">
+      <Field label="I will do the part about the two of us on" htmlFor="sched-l1">
         <input id="sched-l1" type="date" value={s.layer1} onChange={(e) => update({ layer1: e.target.value })} />
       </Field>
       <p className="text-xs text-muted sm:col-span-2">Informational only. Stored in this browser, not on the server.</p>

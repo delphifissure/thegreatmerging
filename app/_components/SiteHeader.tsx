@@ -5,7 +5,7 @@ import { Mark } from "./Mark";
 
 const NAV = [
   { href: "/", label: "Home" },
-  { href: "/instruments", label: "Questions" },
+  { href: "/instruments", label: "Questionnaires" },
   { href: "/results", label: "Results" },
   { href: "/brief", label: "Brief" },
   { href: "/plan", label: "Plan" },

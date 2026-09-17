@@ -10,10 +10,10 @@ import { updateConsentAction, updateTherapistEmailAction } from "../actions";
 type Field = "share_relationship_scores" | "share_mental_health_scores" | "share_written_answers_verbatim" | "allow_interpreter_to_quote_prior_answers" | "share_profile_with_therapist";
 
 const SWITCHES: Array<{ field: Field; label: string; explain: string }> = [
-  { field: "share_relationship_scores", label: "Partner may see my relationship scores", explain: "Your CSI-16, RDAS and other relationship-instrument scores, after both of you have finished." },
+  { field: "share_relationship_scores", label: "Partner may see my relationship scores", explain: "Your scores on the relationship questionnaires, after both of you have finished." },
   { field: "share_mental_health_scores", label: "Partner may see my PHQ-9, GAD-7 and OCI-R scores", explain: "Off keeps these private to you; they are never used in any couple-level comparison either way." },
-  { field: "share_written_answers_verbatim", label: "Written answers I mark shareable may appear word for word", explain: "Otherwise the brief carries the interpreter's summary of what you wrote, never your exact words." },
-  { field: "allow_interpreter_to_quote_prior_answers", label: "The interpreter may quote my earlier answers back to me", explain: "Only in follow-up questions shown to you; your partner never sees them." },
+  { field: "share_written_answers_verbatim", label: "Written answers I mark shareable may appear word for word", explain: "Otherwise the brief carries the app's summary of what you wrote, never your exact words." },
+  { field: "allow_interpreter_to_quote_prior_answers", label: "The app may quote my earlier answers back to me", explain: "Only in follow-up questions shown to you; your partner never sees them." },
   { field: "share_profile_with_therapist", label: "My profile may be shared with a therapist", explain: "By a link you create yourself. The couple brief is included only if both of you switch this on." },
 ];
 

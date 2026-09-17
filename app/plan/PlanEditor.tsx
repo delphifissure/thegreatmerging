@@ -5,6 +5,7 @@ import type { PlanItem, ParentingLines } from "@/lib/data/brief_plan";
 import { isMismatch, normalizeItems, PARENTING_LINES, validateForClose, validateForSave, type PlanIssue } from "@/lib/plan/rules";
 import type { Domain } from "@/instruments/schema";
 import { Button } from "@/app/_components/Button";
+import { Card, Chip } from "@/app/_components/Card";
 import { Notice } from "@/app/_components/Field";
 import { savePlan } from "./actions";
 
@@ -12,6 +13,13 @@ type DomainTab = { domain: Domain; title: string; weight: number };
 
 const EMPTY_LINES: ParentingLines = { children_questioning_adults: "", who_corrects_and_how: "", structure_vs_freedom: "", language_and_modeling_standard: "", adults_disagreeing_in_front_of_child: "" };
 
+const STATUS_LABEL: Record<PlanItem["status"], string> = { active: "Active", parked: "Parked", closed: "Closed" };
+
+/**
+ * The plan, one topic per card. Rules from lib/plan/rules: a requirement for both is pinned and
+ * takes no date; one requirement against one preference needs a date; parked items stay parked;
+ * the parenting topic needs its five lines before it can close. Every save is a new version.
+ */
 export function PlanEditor({ initialItems, initialLines, domains, names, hasChildren, version }: { initialItems: PlanItem[]; initialLines: ParentingLines | null; domains: DomainTab[]; names: { a: string; b: string }; hasChildren: boolean; version: number | null }) {
   const [items, setItems] = useState<PlanItem[]>(() => normalizeItems(initialItems));
   const [lines, setLines] = useState<ParentingLines>(initialLines ?? EMPTY_LINES);
@@ -26,6 +34,7 @@ export function PlanEditor({ initialItems, initialLines, domains, names, hasChil
   const rows = items.map((it, index) => ({ it, index })).filter((r) => r.it.domain === tab);
   const parentingLines = hasChildren ? lines : null;
   const domainClosed = (d: Domain) => validateForClose(items, d, parentingLines).length === 0 && items.some((it) => it.domain === d);
+  const tabTitle = domains.find((d) => d.domain === tab)?.title ?? tab;
 
   const update = (index: number, patch: Partial<PlanItem>) => {
     setItems((prev) => normalizeItems(prev.map((it, i) => (i === index ? { ...it, ...patch } : it))));
@@ -60,7 +69,7 @@ export function PlanEditor({ initialItems, initialLines, domains, names, hasChil
 
   return (
     <div className="space-y-4">
-      <div role="tablist" aria-label="Domains, one per sitting" className="flex flex-wrap gap-2">
+      <div role="tablist" aria-label="Topics, one per sitting" className="flex flex-wrap gap-2">
         {domains.map((d) => (
           <button
             key={d.domain}
@@ -71,7 +80,7 @@ export function PlanEditor({ initialItems, initialLines, domains, names, hasChil
               setTab(d.domain);
               setCloseIssues([]);
             }}
-            className={`rounded border px-3 py-1.5 text-sm ${tab === d.domain ? "border-accent bg-accent text-accent-contrast" : "border-border bg-surface"}`}
+            className={`rounded-full border px-4 py-2 text-sm font-medium transition-colors ${tab === d.domain ? "border-accent bg-accent text-accent-ink" : "border-rule bg-surface hover:bg-tint"}`}
           >
             {d.title}
             {domainClosed(d.domain) ? " ✓" : ""}
@@ -80,119 +89,117 @@ export function PlanEditor({ initialItems, initialLines, domains, names, hasChil
       </div>
 
       <div role="tabpanel" className="space-y-4">
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm">
-            <thead>
-              <tr>
-                <th scope="col">Topic</th>
-                <th scope="col">What we agreed</th>
-                <th scope="col">{names.a} does</th>
-                <th scope="col">{names.b} does</th>
-                <th scope="col">Revisit</th>
-                <th scope="col">Status</th>
-                <th scope="col">
-                  <span className="sr-only">Remove</span>
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {rows.length === 0 ? (
-                <tr>
-                  <td colSpan={7} className="text-muted">
-                    No items in this domain yet.
-                  </td>
-                </tr>
-              ) : null}
-              {rows.map(({ it, index }) => {
-                const rowIssues = issuesFor(index);
-                return (
-                  <tr key={index} className={it.pinned ? "bg-bar-track" : undefined}>
-                    <td>
-                      <label className="sr-only" htmlFor={`topic-${index}`}>
-                        Topic
-                      </label>
-                      <input id={`topic-${index}`} type="text" value={it.topic} onChange={(e) => update(index, { topic: e.target.value })} className="w-40" aria-invalid={issuesFor(index, "topic").length > 0} />
-                      {it.pinned ? <p className="mt-1 text-xs">Requirement for both: pinned, settled.</p> : null}
-                      {isMismatch(it) ? <p className="mt-1 text-xs text-muted">One requirement, one preference: needs a date.</p> : null}
-                      {it.a_tag || it.b_tag ? (
-                        <p className="mt-1 text-xs text-muted">
-                          {names.a}: {it.a_tag ?? "no tag"}; {names.b}: {it.b_tag ?? "no tag"}
-                        </p>
-                      ) : null}
-                      {rowIssues.map((i, k) => (
-                        <p key={k} role="alert" className="mt-1 text-xs text-warn-border">
-                          {i.message}
-                        </p>
+        {rows.length === 0 ? (
+          <Card dashed as="div">
+            <p className="reading text-[17px] text-muted">Nothing in {tabTitle} yet.</p>
+          </Card>
+        ) : null}
+
+        {rows.map(({ it, index }) => {
+          const topicIssues = issuesFor(index, "topic");
+          const dateIssues = issuesFor(index, "revisit_date");
+          return (
+            <Card key={index} as="article" className={it.pinned ? "border-accent/40" : ""}>
+              <div className="flex flex-wrap items-center gap-2">
+                {it.pinned ? <Chip tone="accent">Requirement for both, settled</Chip> : null}
+                {it.status !== "active" && !it.pinned ? <Chip>{STATUS_LABEL[it.status]}</Chip> : null}
+                {it.a_tag || it.b_tag ? (
+                  <span className="text-xs text-muted">
+                    {names.a}: {it.a_tag ?? "no tag"} · {names.b}: {it.b_tag ?? "no tag"}
+                  </span>
+                ) : null}
+              </div>
+
+              <label htmlFor={`topic-${index}`} className="mt-3 block text-sm font-medium">
+                Topic
+              </label>
+              <input id={`topic-${index}`} type="text" value={it.topic} onChange={(e) => update(index, { topic: e.target.value })} className="mt-1 w-full font-display text-[19px]" aria-invalid={topicIssues.length > 0} placeholder="What this is about" />
+              {topicIssues.map((i, k) => (
+                <p key={k} role="alert" className="mt-1 text-sm text-warn">
+                  {i.message}
+                </p>
+              ))}
+
+              <label htmlFor={`agreed-${index}`} className="mt-4 block text-sm font-medium">
+                What we agreed
+              </label>
+              <textarea id={`agreed-${index}`} rows={2} value={it.agreed} onChange={(e) => update(index, { agreed: e.target.value })} className="mt-1 w-full" />
+
+              <div className="mt-4 grid gap-4 sm:grid-cols-2">
+                <div>
+                  <label htmlFor={`a-${index}`} className="block text-sm font-medium">
+                    {names.a} does
+                  </label>
+                  <textarea id={`a-${index}`} rows={2} value={it.a_does} onChange={(e) => update(index, { a_does: e.target.value })} className="mt-1 w-full" />
+                </div>
+                <div>
+                  <label htmlFor={`b-${index}`} className="block text-sm font-medium">
+                    {names.b} does
+                  </label>
+                  <textarea id={`b-${index}`} rows={2} value={it.b_does} onChange={(e) => update(index, { b_does: e.target.value })} className="mt-1 w-full" />
+                </div>
+              </div>
+
+              <div className="mt-4 flex flex-wrap items-end justify-between gap-4 border-t border-rule/70 pt-4">
+                <div className="flex flex-wrap items-end gap-4">
+                  <div>
+                    <label htmlFor={`date-${index}`} className="block text-sm font-medium">
+                      Look at it again on
+                    </label>
+                    <input id={`date-${index}`} type="date" value={it.revisit_date ?? ""} disabled={!!it.pinned} onChange={(e) => update(index, { revisit_date: e.target.value || null })} aria-invalid={dateIssues.length > 0} className="mt-1" />
+                  </div>
+                  <div>
+                    <label htmlFor={`status-${index}`} className="block text-sm font-medium">
+                      Status
+                    </label>
+                    <select id={`status-${index}`} value={it.status} onChange={(e) => update(index, { status: e.target.value as PlanItem["status"] })} className="mt-1">
+                      {(["active", "parked", "closed"] as const).map((s) => (
+                        <option key={s} value={s}>
+                          {STATUS_LABEL[s]}
+                        </option>
                       ))}
-                    </td>
-                    <td>
-                      <label className="sr-only" htmlFor={`agreed-${index}`}>
-                        What we agreed
-                      </label>
-                      <textarea id={`agreed-${index}`} rows={2} value={it.agreed} onChange={(e) => update(index, { agreed: e.target.value })} className="w-48" />
-                    </td>
-                    <td>
-                      <label className="sr-only" htmlFor={`a-${index}`}>
-                        {names.a} does
-                      </label>
-                      <textarea id={`a-${index}`} rows={2} value={it.a_does} onChange={(e) => update(index, { a_does: e.target.value })} className="w-36" />
-                    </td>
-                    <td>
-                      <label className="sr-only" htmlFor={`b-${index}`}>
-                        {names.b} does
-                      </label>
-                      <textarea id={`b-${index}`} rows={2} value={it.b_does} onChange={(e) => update(index, { b_does: e.target.value })} className="w-36" />
-                    </td>
-                    <td>
-                      <label className="sr-only" htmlFor={`date-${index}`}>
-                        Revisit date
-                      </label>
-                      <input id={`date-${index}`} type="date" value={it.revisit_date ?? ""} disabled={!!it.pinned} onChange={(e) => update(index, { revisit_date: e.target.value || null })} aria-invalid={issuesFor(index, "revisit_date").length > 0} />
-                    </td>
-                    <td>
-                      <label className="sr-only" htmlFor={`status-${index}`}>
-                        Status
-                      </label>
-                      <select id={`status-${index}`} value={it.status} onChange={(e) => update(index, { status: e.target.value as PlanItem["status"] })}>
-                        <option value="active">active</option>
-                        <option value="parked">parked</option>
-                        <option value="closed">closed</option>
-                      </select>
-                    </td>
-                    <td>
-                      <button type="button" onClick={() => remove(index)} className="text-xs underline" aria-label={`Remove item ${it.topic || index + 1}`}>
-                        Remove
-                      </button>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
+                    </select>
+                  </div>
+                </div>
+                <button type="button" onClick={() => remove(index)} className="text-sm text-muted underline decoration-rule underline-offset-4 hover:text-ink" aria-label={`Remove ${it.topic || `item ${index + 1}`}`}>
+                  Remove
+                </button>
+              </div>
+              {it.pinned ? <p className="mt-2 text-sm text-muted">Settled between you; it takes no date.</p> : null}
+              {isMismatch(it) ? <p className="mt-2 text-sm text-muted">One of you called this a requirement and the other a preference, so it needs a date to look at it again.</p> : null}
+              {dateIssues.map((i, k) => (
+                <p key={k} role="alert" className="mt-1 text-sm text-warn">
+                  {i.message}
+                </p>
+              ))}
+            </Card>
+          );
+        })}
+
         <Button type="button" variant="secondary" onClick={add}>
-          Add an item to {domains.find((d) => d.domain === tab)?.title ?? tab}
+          Add a topic to {tabTitle}
         </Button>
 
         {tab === "parenting" && hasChildren ? (
-          <fieldset className="rounded border border-border p-3">
-            <legend className="font-medium">The five parenting lines (required before this domain can close)</legend>
-            <div className="mt-2 grid gap-3">
+          <Card as="section">
+            <h3 className="text-[20px]">The five parenting lines</h3>
+            <p className="reading mt-1 text-[16px] text-muted">Parenting can close for this sitting once each of these has a line.</p>
+            <div className="mt-3 grid gap-4">
               {PARENTING_LINES.map((l) => (
                 <div key={l.key}>
-                  <label htmlFor={`line-${l.key}`} className="block text-sm">
+                  <label htmlFor={`line-${l.key}`} className="block text-sm font-medium">
                     {l.label}
                   </label>
-                  <textarea id={`line-${l.key}`} rows={2} required value={lines[l.key]} onChange={(e) => setLines((s) => ({ ...s, [l.key]: e.target.value }))} className="w-full" />
+                  <textarea id={`line-${l.key}`} rows={2} required value={lines[l.key]} onChange={(e) => setLines((s) => ({ ...s, [l.key]: e.target.value }))} className="mt-1 w-full" />
                 </div>
               ))}
             </div>
-          </fieldset>
+          </Card>
         ) : null}
 
         {closeIssues.length > 0 ? (
-          <div role="alert" className="rounded border border-warn-border bg-warn-bg p-3 text-sm">
-            <p className="font-medium">This domain cannot close yet:</p>
+          <div role="alert" className="rounded-control border border-warn bg-warn-bg p-3.5 text-sm">
+            <p className="font-medium">{tabTitle} can&rsquo;t close yet:</p>
             <ul className="mt-1 list-disc pl-5">
               {closeIssues.map((i, k) => (
                 <li key={k}>{i.message}</li>
@@ -200,17 +207,17 @@ export function PlanEditor({ initialItems, initialLines, domains, names, hasChil
             </ul>
           </div>
         ) : null}
-        {msg ? <Notice tone={msg.ok ? "info" : "warn"}>{msg.text}</Notice> : null}
+        {msg ? <Notice tone={msg.ok ? "good" : "warn"}>{msg.text}</Notice> : null}
 
         <div className="flex flex-wrap gap-3">
           <Button type="button" onClick={() => persist()} disabled={pending || saveIssues.length > 0} aria-busy={pending}>
             {pending ? "Saving…" : version ? `Save as version ${version + 1}` : "Save version 1"}
           </Button>
           <Button type="button" variant="secondary" onClick={closeDomain} disabled={pending}>
-            Close this domain
+            Close {tabTitle} for this sitting
           </Button>
         </div>
-        {saveIssues.length > 0 ? <p className="text-xs text-muted">Saving is blocked until the items above are fixed.</p> : null}
+        {saveIssues.length > 0 ? <p className="text-sm text-muted">Saving waits until the notes above are sorted.</p> : null}
       </div>
     </div>
   );

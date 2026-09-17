@@ -18,14 +18,14 @@ export const metadata = { title: "The brief" };
 export default async function BriefPage() {
   const user = await requirePartner();
   const run = await data.getLatestRun(user.couple.id);
-  const header = <PageHeader title="The brief" lede="A reading view for the two of you at one screen. Everything here was written by the interpreter from what each of you answered; nothing is a verdict." />;
+  const header = <PageHeader title="The brief" lede="For the two of you at one screen. Everything here was written by the app from what each of you answered. Nothing is a verdict." />;
   if (!run || run.status !== "complete") {
     return (
       <div className="space-y-6">
         {header}
-        <Waiting title={run ? "Interpreting… this takes a few minutes." : "Your partner hasn't finished yet."}>
+        <Waiting title={run ? "Reading your answers." : "Your partner hasn't finished yet."}>
           <Link href="/waiting" className="underline">
-            Waiting room
+            Where you both are
           </Link>
         </Waiting>
       </div>
@@ -44,9 +44,8 @@ export default async function BriefPage() {
         <div className="space-y-6">
           {header}
           <Card>
-            <h2 className="text-lg font-semibold">No domain flagged</h2>
-            <GeneratedLabel />
-            <p className="mt-2 text-sm">There were no written questions to answer, so there is no domain brief. What lines up, by name:</p>
+            <h2 className="text-[22px]">Nothing came up</h2>
+            <p className="reading mt-2 text-[17px]">There were no questions to answer in your own words, so there is no topic-by-topic brief. What lines up, by name:</p>
             {aligned.length === 0 ? <p className="mt-2 text-sm text-muted">Nothing listed.</p> : (
               <ul className="mt-2 list-disc space-y-1 pl-5">
                 {aligned.map((a) => (
@@ -56,6 +55,7 @@ export default async function BriefPage() {
                 ))}
               </ul>
             )}
+            <GeneratedLabel className="mt-3" />
             <div className="mt-4">
               <LinkButton href="/plan">Go to the plan</LinkButton>
             </div>
@@ -69,16 +69,16 @@ export default async function BriefPage() {
       <div className="space-y-6">
         {header}
         {!mineDone ? (
-          <Waiting title="You haven't finished the color layer yet." refresh={false}>
+          <Waiting title="You haven't finished the questions in your own words yet." refresh={false}>
             <Link href="/color" className="underline">
-              Back to the written questions
+              Back to them
             </Link>
           </Waiting>
         ) : !status.both_complete ? (
-          <Waiting title="Your partner hasn't finished the color layer yet.">Nothing is shared until both of you are done.</Waiting>
+          <Waiting title="Your partner hasn't finished their written questions yet.">Nothing is shared until both of you are done.</Waiting>
         ) : (
-          <Waiting title="Writing the brief…">
-            This takes a few minutes.
+          <Waiting title="Writing the brief.">
+            This usually takes a few minutes.
             <RequestBrief />
           </Waiting>
         )}

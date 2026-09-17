@@ -10,14 +10,14 @@ import { fail, type ActionResult } from "@/app/_lib/actions";
 export async function startInterpretation(): Promise<ActionResult> {
   const user = await requirePartner();
   const both = await data.coupleCompletionStatus(user.couple.id);
-  if (!both.both) return fail("Both of you need to finish every required instrument first.");
+  if (!both.both) return fail("Both of you need to finish every required questionnaire first.");
   const run = await data.getLatestRun(user.couple.id);
-  if (run && run.status !== "failed") return fail("Interpretation is already underway.");
+  if (run && run.status !== "failed") return fail("Your answers are already being read.");
   try {
     await inngest.send({ name: "couple/layers.completed", data: { coupleId: user.couple.id } });
   } catch {
-    return fail("The interpretation job could not be started. Try again in a minute.");
+    return fail("That could not be started. Try again in a minute.");
   }
   refresh();
-  return { ok: true, message: "Interpretation started." };
+  return { ok: true, message: "Started. This usually takes a few minutes." };
 }

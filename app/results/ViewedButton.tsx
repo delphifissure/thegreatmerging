@@ -8,7 +8,7 @@ export function ViewedButton() {
   const [pending, start] = useTransition();
   return (
     <Button disabled={pending} aria-busy={pending} onClick={() => start(async () => void (await markViewed()))}>
-      {pending ? "Saving…" : "I have read my results"}
+      {pending ? "Saving…" : "I've read this, go on"}
     </Button>
   );
 }
