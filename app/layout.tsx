@@ -1,14 +1,16 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { APP_DESCRIPTION, APP_NAME } from "@/lib/brand";
 import { SiteHeader } from "./_components/SiteHeader";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "The Plan",
-  description: "A relationship alignment and planning tool for two partners.",
+  title: { default: APP_NAME, template: `%s · ${APP_NAME}` },
+  description: APP_DESCRIPTION,
+  applicationName: APP_NAME,
 };
 
 // Restore the high-contrast preference before first paint so the page does not flash.
@@ -28,7 +30,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           Skip to content
         </a>
         <SiteHeader />
-        <main id="main" className="flex-1">
+        <main id="main" className="mx-auto w-full max-w-3xl flex-1 px-4 py-6 sm:py-8">
           {children}
         </main>
       </body>

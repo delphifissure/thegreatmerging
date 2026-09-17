@@ -9,6 +9,8 @@ import { Waiting } from "@/app/_components/Waiting";
 import { LinkButton } from "@/app/_components/Button";
 import { ViewedButton } from "./ViewedButton";
 
+export const metadata = { title: "Your results" };
+
 function instrumentName(key: string): string {
   return isInstrumentKey(key) ? INSTRUMENTS[key].definition.name : key;
 }

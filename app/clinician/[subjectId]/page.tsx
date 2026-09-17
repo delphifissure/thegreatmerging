@@ -15,10 +15,10 @@ export default async function ClinicianSubjectPage({ params }: { params: Promise
   const result = await data.profileForClinician({ clinicianUserId: user.id, subjectUserId: subjectId });
   if (!result) {
     return (
-      <main className="mx-auto max-w-2xl p-6">
-        <h1 className="text-xl font-semibold">No access</h1>
+      <div className="space-y-6">
+        <h1 className="text-2xl font-semibold">No access</h1>
         <p className="mt-2">This person has not granted you access, or has revoked it.</p>
-      </main>
+      </div>
     );
   }
   const profile = (result.profile?.content ?? null) as ProfileContent | null;
@@ -27,7 +27,7 @@ export default async function ClinicianSubjectPage({ params }: { params: Promise
   const sentiment = coupleId ? await data.sentimentFlagsForClinician({ clinicianUserId: user.id, subjectUserId: subjectId, coupleId }) : [];
 
   return (
-    <main className="mx-auto max-w-3xl space-y-8 p-6">
+    <div className="space-y-8">
       <header>
         <h1 className="text-2xl font-semibold">Clinician view: {subject?.display_name ?? "subject"}</h1>
         <p className="mt-1 text-sm">Every access to this view is logged with the consent state at the time. Access ends the moment the person revokes it.</p>
@@ -99,6 +99,6 @@ export default async function ClinicianSubjectPage({ params }: { params: Promise
           </ul>
         </section>
       ) : null}
-    </main>
+    </div>
   );
 }

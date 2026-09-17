@@ -4,6 +4,8 @@ import { safeNext } from "@/app/_lib/actions";
 import { PageHeader } from "@/app/_components/PageHeader";
 import { SignInForm } from "./SignInForm";
 
+export const metadata = { title: "Sign in" };
+
 export default async function SignInPage({ searchParams }: { searchParams: Promise<{ next?: string; error?: string }> }) {
   const sp = await searchParams;
   const next = safeNext(sp.next);

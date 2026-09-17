@@ -13,6 +13,8 @@ import { flaggedDomainsFor } from "@/app/color/_lib/context";
 import { BriefSections } from "./_components/BriefSections";
 import { RequestBrief } from "./RequestBrief";
 
+export const metadata = { title: "The brief" };
+
 export default async function BriefPage() {
   const user = await requirePartner();
   const run = await data.getLatestRun(user.couple.id);
@@ -29,10 +31,9 @@ export default async function BriefPage() {
       </div>
     );
   }
-  const flagged = await flaggedDomainsFor(user.id, user.couple.id);
-  const members = await data.listCoupleUsers(user.couple.id);
+  const [flagged, members, briefRows] = await Promise.all([flaggedDomainsFor(user.id, user.couple.id), data.listCoupleUsers(user.couple.id), data.getBriefs(user.couple.id)]);
   const names = { a: members.find((m) => m.side === "a")?.display_name ?? "A", b: members.find((m) => m.side === "b")?.display_name ?? "B" };
-  const briefs: BriefDomain[] = (await data.getBriefs(user.couple.id)).map((b) => BriefDomainSchema.safeParse(b.content)).filter((r) => r.success).map((r) => r.data);
+  const briefs: BriefDomain[] = briefRows.map((b) => BriefDomainSchema.safeParse(b.content)).filter((r) => r.success).map((r) => r.data);
 
   if (briefs.length === 0) {
     if (flagged.length === 0) {

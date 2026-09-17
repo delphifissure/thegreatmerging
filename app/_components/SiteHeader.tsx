@@ -1,14 +1,17 @@
 import Link from "next/link";
 import { currentUser } from "@/lib/supabase/server";
+import { APP_NAME } from "@/lib/brand";
 import { HighContrastToggle } from "./HighContrastToggle";
+import { Mark } from "./Mark";
 
 export async function SiteHeader() {
   const user = await currentUser();
   return (
     <header className="border-b border-border">
       <div className="mx-auto flex w-full max-w-3xl flex-wrap items-center justify-between gap-2 px-4 py-3">
-        <Link href="/" className="font-semibold">
-          The Plan
+        <Link href="/" className="inline-flex items-center gap-2 font-semibold text-accent">
+          <Mark />
+          <span className="text-foreground">{APP_NAME}</span>
         </Link>
         <nav aria-label="Main" className="flex flex-wrap items-center gap-3 text-sm">
           {user ? (

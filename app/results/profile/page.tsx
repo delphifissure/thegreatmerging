@@ -12,6 +12,8 @@ import { ExportButtons } from "./_components/ExportButtons";
 import { ExportList } from "./_components/ExportList";
 import { ShareForm } from "./_components/ShareForm";
 
+export const metadata = { title: "Your individual profile" };
+
 type ShareView = { id: string; email: string; status: string; active: boolean };
 
 /** Share rows with their status computed once, outside render. */
@@ -27,9 +29,8 @@ async function shareViews(userId: string): Promise<ShareView[]> {
 
 export default async function ProfilePage() {
   const user = await requireAppUser();
-  const row = await data.getProfile(user.id);
+  const [row, shares] = await Promise.all([data.getProfile(user.id), shareViews(user.id)]);
   const profile = row?.content ? parseProfile(row.content) : null;
-  const shares = await shareViews(user.id);
 
   return (
     <div className="space-y-6">

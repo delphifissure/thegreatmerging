@@ -7,11 +7,12 @@ import { ConsentSwitches } from "./_components/ConsentSwitches";
 import { CreateCoupleForm, HasChildrenSwitch, InviteForm, NameForm } from "./_components/CoupleForms";
 import { SchedulingNotes } from "./_components/SchedulingNotes";
 
+export const metadata = { title: "Setup" };
+
 export default async function SetupPage() {
   const user = await requireAppUser();
   const couple = user.couple;
-  const consent = couple ? await data.getConsent(user.id, couple.id) : null;
-  const members = couple ? await data.listCoupleUsers(couple.id) : [];
+  const [consent, members] = couple ? await Promise.all([data.getConsent(user.id, couple.id), data.listCoupleUsers(couple.id)]) : [null, []];
   const partner = members.find((m) => m.id !== user.id) ?? null;
 
   return (

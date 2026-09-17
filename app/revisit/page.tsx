@@ -8,6 +8,8 @@ import { PageHeader } from "@/app/_components/PageHeader";
 import { LinkButton } from "@/app/_components/Button";
 import { RevisitForm } from "./RevisitForm";
 
+export const metadata = { title: "Revisits" };
+
 /** Revisits split by due state, computed once per request outside render. */
 async function loadRevisits(coupleId: string) {
   const plan = await data.getLatestPlan(coupleId);

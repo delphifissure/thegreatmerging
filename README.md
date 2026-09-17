@@ -1,6 +1,6 @@
-# The Plan
+# The Great Merging
 
-A relationship alignment and planning tool for two partners, extensible to a third caregiver and a child. It runs validated psychological instruments, scores them deterministically, uses an LLM only for conversational follow-up and summarization, and produces a written plan the couple writes together. It never produces a verdict about the relationship or a diagnosis of a person.
+Built from the "The Plan" build prompt; the product name lives in `lib/brand.ts`. A relationship alignment and planning tool for two partners, extensible to a third caregiver and a child. It runs validated psychological instruments, scores them deterministically, uses an LLM only for conversational follow-up and summarization, and produces a written plan the couple writes together. It never produces a verdict about the relationship or a diagnosis of a person.
 
 The design documents live in `docs/` (`the_plan_v2_generic.md`, `app_flow.html`, `question_inventory.md`, `square_one.md`, `instrument_acquisition.md`, `research_brief.md`). The build prompt that this codebase implements is `the-plan-docs/BUILD_PROMPT.md`.
 

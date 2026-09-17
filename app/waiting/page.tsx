@@ -7,12 +7,16 @@ import { Waiting } from "@/app/_components/Waiting";
 import { LinkButton } from "@/app/_components/Button";
 import { StartButton } from "./StartButton";
 
+export const metadata = { title: "Waiting room" };
+
 export default async function WaitingPage() {
   const user = await requirePartner();
-  const progress = await data.getProgress(user.id, user.couple.id);
-  const both = await data.coupleCompletionStatus(user.couple.id);
-  const run = await data.getLatestRun(user.couple.id);
-  const members = await data.listCoupleUsers(user.couple.id);
+  const [progress, both, run, members] = await Promise.all([
+    data.getProgress(user.id, user.couple.id),
+    data.coupleCompletionStatus(user.couple.id),
+    data.getLatestRun(user.couple.id),
+    data.listCoupleUsers(user.couple.id),
+  ]);
   const partner = members.find((m) => m.id !== user.id) ?? null;
   const layerDone = (list: data.InstrumentProgress[]) => list.filter((p) => p.required).every((p) => p.complete);
   const mine = { layer0: layerDone(progress.layer0), layer1: layerDone(progress.layer1) };

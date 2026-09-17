@@ -1,3 +1,4 @@
+import { AutoRefresh } from "./AutoRefresh";
 import { Card } from "./Card";
 import { RefreshButton } from "./RefreshButton";
 
@@ -11,6 +12,8 @@ export function Waiting({ title, children, refresh = true }: { title: string; ch
       {refresh ? (
         <div className="mt-3">
           <RefreshButton />
+          <AutoRefresh />
+          <p className="mt-2 text-xs text-muted">This page checks on its own every 20 seconds.</p>
         </div>
       ) : null}
     </Card>

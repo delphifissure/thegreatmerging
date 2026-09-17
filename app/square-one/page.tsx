@@ -6,6 +6,8 @@ import { PageHeader } from "@/app/_components/PageHeader";
 import { QuestionNote } from "./QuestionNote";
 import { RequirementsForm } from "./RequirementsForm";
 
+export const metadata = { title: "Square One" };
+
 export default async function SquareOnePage() {
   const user = await requireAppUser();
   const { notes, requirements } = await data.getSquareOne(user.id);

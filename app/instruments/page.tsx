@@ -7,6 +7,8 @@ import { ProgressBar } from "@/app/_components/ProgressBar";
 import { LinkButton } from "@/app/_components/Button";
 import { Notice } from "@/app/_components/Field";
 
+export const metadata = { title: "Instruments" };
+
 function LayerList({ title, lede, list }: { title: string; lede: string; list: data.InstrumentProgress[] }) {
   const required = list.filter((p) => p.required);
   const answered = required.reduce((s, p) => s + Math.min(p.answered, p.total), 0);
@@ -43,9 +45,8 @@ function LayerList({ title, lede, list }: { title: string; lede: string; list: d
 
 export default async function InstrumentsPage() {
   const user = await requirePartner();
-  const progress = await data.getProgress(user.id, user.couple.id);
+  const [progress, run] = await Promise.all([data.getProgress(user.id, user.couple.id), data.getLatestRun(user.couple.id)]);
   const allRequiredDone = [...progress.layer0, ...progress.layer1].filter((p) => p.required).every((p) => p.complete);
-  const run = await data.getLatestRun(user.couple.id);
   return (
     <div className="space-y-6">
       <PageHeader

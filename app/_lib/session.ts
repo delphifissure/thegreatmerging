@@ -4,8 +4,9 @@
  * visit only, so later edits are kept), and loads couple membership through lib/data.
  */
 import { redirect } from "next/navigation";
+import { cache } from "react";
 import * as data from "@/lib/data";
-import { supabaseServer, UnauthenticatedError } from "@/lib/supabase/server";
+import { authUser, UnauthenticatedError } from "@/lib/supabase/server";
 
 export type CoupleRow = NonNullable<Awaited<ReturnType<typeof data.getCouple>>>;
 
@@ -27,15 +28,14 @@ function nameFromAuth(meta: Record<string, unknown> | undefined, email: string |
   return "You";
 }
 
-export async function requireAppUser(): Promise<AppUser> {
-  const supabase = await supabaseServer();
-  const { data: auth } = await supabase.auth.getUser();
-  if (!auth.user) throw new UnauthenticatedError();
-  const id = auth.user.id;
-  const email = auth.user.email ?? null;
-  let row = await data.getUser(id);
-  if (!row) row = await data.ensureUser({ id, displayName: nameFromAuth(auth.user.user_metadata as Record<string, unknown> | undefined, email) });
-  const membership = await data.getCoupleForUser(id);
+/** Cached per request: a page and its layout share one lookup. */
+export const requireAppUser = cache(async (): Promise<AppUser> => {
+  const auth = await authUser();
+  if (!auth) throw new UnauthenticatedError();
+  const id = auth.id;
+  const email = auth.email ?? null;
+  const [existing, membership] = await Promise.all([data.getUser(id), data.getCoupleForUser(id)]);
+  const row = existing ?? (await data.ensureUser({ id, displayName: nameFromAuth(auth.user_metadata as Record<string, unknown> | undefined, email) }));
   return {
     id,
     email,
@@ -44,7 +44,7 @@ export async function requireAppUser(): Promise<AppUser> {
     side: membership?.side ?? null,
     role: membership?.role === "partner" ? "partner" : membership?.role === "caregiver" ? "caregiver" : membership?.role === "child_proxy" ? "child_proxy" : null,
   };
-}
+});
 
 /** A signed-in partner with a couple; otherwise send them to setup. */
 export async function requirePartner(): Promise<AppUser & { couple: CoupleRow; side: "a" | "b" }> {

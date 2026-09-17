@@ -9,6 +9,8 @@ import { Waiting } from "@/app/_components/Waiting";
 import { LinkButton } from "@/app/_components/Button";
 import { flaggedDomainsFor } from "./_lib/context";
 
+export const metadata = { title: "Written questions" };
+
 export default async function ColorIndexPage() {
   const user = await requirePartner();
   const run = await data.getLatestRun(user.couple.id);
@@ -24,8 +26,7 @@ export default async function ColorIndexPage() {
       </div>
     );
   }
-  const flagged = await flaggedDomainsFor(user.id, user.couple.id);
-  const sessions = await data.listOwnSessions(user.id, user.couple.id);
+  const [flagged, sessions] = await Promise.all([flaggedDomainsFor(user.id, user.couple.id), data.listOwnSessions(user.id, user.couple.id)]);
   const statusOf = (domain: string) => {
     const s = sessions.find((x) => x.domain === domain);
     if (!s) return "Not started";

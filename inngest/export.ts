@@ -9,6 +9,7 @@ import { briefMarkdown, markdownToHtml, planMarkdown, profileMarkdown } from "@/
 import type { PlanItem, ParentingLines } from "@/lib/data/brief_plan";
 import type { ProfileContent } from "@/lib/profile/build";
 import * as data from "@/lib/data";
+import { APP_NAME } from "@/lib/brand";
 import { inngest } from "./client";
 
 export const EXPORT_BUCKET = "exports";
@@ -38,7 +39,7 @@ export async function buildExportMarkdown(input: { coupleId: string | null; user
     const user = await data.getUser(input.userId);
     const profile = await data.getProfile(input.userId);
     if (!profile?.content) throw new Error("no profile yet");
-    return { markdown: profileMarkdown({ displayName: user?.display_name ?? "You", profile: profile.content as ProfileContent }), title: "Individual profile" };
+    return { markdown: profileMarkdown({ displayName: user?.display_name ?? "You", profile: profile.content as ProfileContent }), title: `${APP_NAME}: individual profile` };
   }
   if (!input.coupleId) throw new Error("couple required");
   const users = await data.listCoupleUsers(input.coupleId);
@@ -46,10 +47,10 @@ export async function buildExportMarkdown(input: { coupleId: string | null; user
   if (input.kind === "plan") {
     const plan = await data.getLatestPlan(input.coupleId);
     if (!plan) throw new Error("no plan yet");
-    return { markdown: planMarkdown({ coupleLabel, version: plan.version, items: plan.items as PlanItem[], parentingLines: (plan.parenting_lines as ParentingLines | null) ?? null }), title: "The Plan" };
+    return { markdown: planMarkdown({ coupleLabel, version: plan.version, items: plan.items as PlanItem[], parentingLines: (plan.parenting_lines as ParentingLines | null) ?? null }), title: `${APP_NAME}: our plan` };
   }
   const briefs = (await data.getBriefs(input.coupleId)).map((b) => BriefDomainSchema.parse(b.content));
-  return { markdown: briefMarkdown({ coupleLabel, briefs }), title: "Brief" };
+  return { markdown: briefMarkdown({ coupleLabel, briefs }), title: `${APP_NAME}: brief` };
 }
 
 export const exportDocument = inngest.createFunction(

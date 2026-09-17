@@ -2,13 +2,14 @@ import { currentUser } from "@/lib/supabase/server";
 import { Card } from "@/app/_components/Card";
 import { PageHeader } from "@/app/_components/PageHeader";
 import { LinkButton } from "@/app/_components/Button";
+import { APP_NAME } from "@/lib/brand";
 
 export default async function LandingPage() {
   const user = await currentUser();
   return (
     <div className="space-y-6">
       <PageHeader
-        title="The Plan"
+        title={APP_NAME}
         lede="Two people answer the same questions separately. Each sees their own results first. Only then do you read one brief together and write a plan you both keep."
       />
       <Card>

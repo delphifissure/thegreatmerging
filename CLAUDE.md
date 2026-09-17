@@ -1,6 +1,6 @@
 @AGENTS.md
 
-# Project conventions for The Plan
+# Project conventions for The Great Merging (built as "The Plan")
 
 - Read `the-plan-docs/BUILD_PROMPT.md` and `docs/` before changing behaviour. The seven principles in the build prompt (scoring is code; no characterization of a person; nothing compared until both partners are done; free text only where a number asked for it; consent enforced server-side and logged; the LLM component is versioned; the interpreter surfaces and asks, the couple decides) override convenience.
 - `lib/data/` is the only module that reads or writes PHI. Never import `db/client` or `db/schema` from `app/` or `inngest/` (except `inngest/reminders.ts`). Every cross-user read goes through `audit()` or `auditedCrossUserRead()`.

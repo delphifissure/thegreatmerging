@@ -26,7 +26,7 @@ export function scoreLine(s: Score): string {
 
 export function planMarkdown(input: { coupleLabel: string; version: number; items: PlanItem[]; parentingLines: ParentingLines | null; generatedAt?: Date }): string {
   const lines: string[] = [];
-  lines.push(`# The Plan, version ${input.version}`);
+  lines.push(`# Our plan, version ${input.version}`);
   lines.push("");
   lines.push(`${input.coupleLabel}. ${(input.generatedAt ?? new Date()).toISOString().slice(0, 10)}.`);
   lines.push("");

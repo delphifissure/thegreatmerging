@@ -2,6 +2,7 @@ import Link from "next/link";
 import { currentUser } from "@/lib/supabase/server";
 import { Card } from "@/app/_components/Card";
 import { PageHeader } from "@/app/_components/PageHeader";
+import { APP_NAME } from "@/lib/brand";
 import { AcceptForm } from "./AcceptForm";
 
 export default async function InvitePage({ params }: { params: Promise<{ token: string }> }) {
@@ -10,7 +11,7 @@ export default async function InvitePage({ params }: { params: Promise<{ token: 
   const here = `/invite/${encodeURIComponent(token)}`;
   return (
     <div className="space-y-6">
-      <PageHeader title="You have been invited" lede="Someone has asked you to join them on The Plan. Accepting links your account to theirs so the two of you can go through it together." />
+      <PageHeader title="You have been invited" lede={`Someone has asked you to join them on ${APP_NAME}. Accepting links your account to theirs so the two of you can go through it together.`} />
       <Card>
         <p className="text-sm text-muted">
           Each of you answers alone. Nothing you write is compared or shown until both of you have finished, and you choose what

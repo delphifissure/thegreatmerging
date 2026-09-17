@@ -15,6 +15,8 @@ import { ExportButtons } from "@/app/results/profile/_components/ExportButtons";
 import { ExportList } from "@/app/results/profile/_components/ExportList";
 import { PlanEditor } from "./PlanEditor";
 
+export const metadata = { title: "The plan" };
+
 /** First-version seed: tags side by side from each brief, parked items, then flagged items not already present. */
 async function seedItems(coupleId: string, descriptors: Record<string, string>): Promise<PlanItem[]> {
   const items: PlanItem[] = [];
@@ -58,10 +60,8 @@ export default async function PlanPage() {
       </div>
     );
   }
-  const flagged = await flaggedDomainsFor(user.id, user.couple.id);
-  const members = await data.listCoupleUsers(user.couple.id);
+  const [flagged, members, versions] = await Promise.all([flaggedDomainsFor(user.id, user.couple.id), data.listCoupleUsers(user.couple.id), data.listPlanVersions(user.couple.id)]);
   const names = { a: members.find((m) => m.side === "a")?.display_name ?? "A", b: members.find((m) => m.side === "b")?.display_name ?? "B" };
-  const versions = await data.listPlanVersions(user.couple.id);
   const latest = versions[versions.length - 1] ?? null;
   const previous = versions.length >= 2 ? versions[versions.length - 2] : null;
   const descriptors = descriptorMap();

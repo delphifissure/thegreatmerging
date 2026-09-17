@@ -1,5 +1,5 @@
 /**
- * Drizzle schema for The Plan. Every table carries created_at / updated_at / deleted_at.
+ * Drizzle schema for The Great Merging (built as "The Plan"). Every table carries created_at / updated_at / deleted_at.
  * Row-level security policies live as raw SQL in db/migrations/*_rls.sql next to these tables.
  *
  * `users.id` equals the Supabase auth user id (auth.uid()) so RLS policies can compare
