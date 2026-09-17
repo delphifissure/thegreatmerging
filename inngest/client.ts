@@ -12,4 +12,14 @@ export type Events = {
   "revisit/reminder.sent": { data: { coupleId: string; revisitId: string } };
 };
 
-export const inngest = new Inngest({ id: "the-plan" });
+/**
+ * The SDK defaults to Inngest Cloud unless INNGEST_DEV is set, which makes `next dev` fail to send
+ * events when no cloud keys exist. Under `next dev` with INNGEST_DEV unset, use the local dev server;
+ * an explicit INNGEST_DEV, and every production build, keep the SDK's own resolution.
+ */
+export function resolveIsDev(env: Record<string, string | undefined> = process.env): boolean | undefined {
+  return env.INNGEST_DEV === undefined && env.NODE_ENV === "development" ? true : undefined;
+}
+
+const isDev = resolveIsDev();
+export const inngest = new Inngest({ id: "the-plan", ...(isDev === undefined ? {} : { isDev }) });

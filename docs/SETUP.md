@@ -27,8 +27,8 @@ If `pnpm` is not on your PATH, prefix every `pnpm` command with `corepack` (for 
 
 No account is needed for local development. The free Hobby plan covers a deployed app with test traffic (checked 2026-09-16): 50,000 executions a month (each function run and each step counts), 5 concurrent steps, 24 hours of logs, no credit card. Paid plans start at $99/month; a BAA for real health data is a paid add-on.
 
-- Local development: run `npx inngest-cli@latest dev -u http://localhost:3000/api/inngest` alongside `pnpm dev`, then open http://localhost:8288 to watch jobs. Leave `INNGEST_EVENT_KEY` and `INNGEST_SIGNING_KEY` as they are.
-- Production: sign up at app.inngest.com and stay in the **Production** environment. Manage → Event Keys → **+ Create Event Key**, then copy it into `INNGEST_EVENT_KEY`. Manage → Signing Key, then copy it into `INNGEST_SIGNING_KEY`. After the first deploy, either install Inngest's Vercel integration, which sets both keys and syncs on every deploy, or open Apps → **Sync New App** and paste `<APP_URL>/api/inngest`.
+- Local development: keep `INNGEST_DEV=1` in `.env.local` and leave both Inngest keys commented out (the SDK otherwise defaults to Inngest Cloud). Run `npx inngest-cli@latest dev -u http://localhost:3000/api/inngest` alongside `pnpm dev`, then open http://localhost:8288 to watch jobs. The dev server must be running for interpretation, probes and exports to happen.
+- Production: remove `INNGEST_DEV`, sign up at app.inngest.com and stay in the **Production** environment. Manage → Event Keys → **+ Create Event Key**, then copy it into `INNGEST_EVENT_KEY`. Manage → Signing Key, then copy it into `INNGEST_SIGNING_KEY`. After the first deploy, either install Inngest's Vercel integration, which sets both keys and syncs on every deploy, or open Apps → **Sync New App** and paste `<APP_URL>/api/inngest`.
 - The PDF export job launches Playwright's Chromium. Run it on a worker with Chromium available (self-hosted Inngest worker or a serverless Chromium build); default Vercel functions cannot.
 
 ## 4. Vercel (hosting)
