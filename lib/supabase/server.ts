@@ -6,11 +6,13 @@
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 import { publicEnv } from "@/lib/env";
+import { serverRealtimeOptions } from "@/lib/supabase/server_realtime";
 
 export async function supabaseServer() {
   const cookieStore = await cookies();
   const { supabaseUrl, supabaseAnonKey } = publicEnv();
   return createServerClient(supabaseUrl, supabaseAnonKey, {
+    realtime: serverRealtimeOptions,
     cookies: {
       getAll() {
         return cookieStore.getAll();

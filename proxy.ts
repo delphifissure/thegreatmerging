@@ -5,6 +5,7 @@
  */
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
+import { serverRealtimeOptions } from "@/lib/supabase/server_realtime";
 
 const PUBLIC_PREFIXES = ["/", "/sign-in", "/invite", "/auth", "/share", "/api/inngest", "/api/health", "/_next", "/favicon.ico"];
 
@@ -20,6 +21,7 @@ export async function proxy(request: NextRequest) {
   if (!url || !key) return response;
 
   const supabase = createServerClient(url, key, {
+    realtime: serverRealtimeOptions,
     cookies: {
       getAll() {
         return request.cookies.getAll();

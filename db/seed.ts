@@ -11,6 +11,7 @@ import { createClient } from "@supabase/supabase-js";
 import { db, schema } from "@/db/client";
 import { INSTRUMENTS } from "@/instruments/registry";
 import * as data from "@/lib/data";
+import { serverRealtimeOptions } from "@/lib/supabase/server_realtime";
 
 export const SEED_USERS = {
   ana: { id: "11111111-1111-4111-8111-111111111111", email: "ana@example.test", name: "Ana" },
@@ -22,7 +23,7 @@ async function ensureAuthUser(u: { id: string; email: string; name: string }): P
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
   if (!url || !key) return u.id;
-  const admin = createClient(url, key, { auth: { persistSession: false } });
+  const admin = createClient(url, key, { auth: { persistSession: false }, realtime: serverRealtimeOptions });
   const password = process.env.E2E_PASSWORD ?? "the-plan-e2e";
   const { data: list } = await admin.auth.admin.listUsers({ perPage: 1000 });
   const existing = list?.users.find((x) => x.email === u.email);

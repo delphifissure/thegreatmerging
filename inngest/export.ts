@@ -3,6 +3,7 @@
  * with Playwright's Chromium; stored in Supabase Storage; served through short-lived signed URLs.
  */
 import { createClient } from "@supabase/supabase-js";
+import { serverRealtimeOptions } from "@/lib/supabase/server_realtime";
 import { BriefDomainSchema } from "@/lib/llm/schemas";
 import { briefMarkdown, markdownToHtml, planMarkdown, profileMarkdown } from "@/lib/export/markdown";
 import type { PlanItem, ParentingLines } from "@/lib/data/brief_plan";
@@ -16,7 +17,7 @@ function storage() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
   if (!url || !key) throw new Error("Supabase service credentials are not set");
-  return createClient(url, key, { auth: { persistSession: false } }).storage.from(EXPORT_BUCKET);
+  return createClient(url, key, { auth: { persistSession: false }, realtime: serverRealtimeOptions }).storage.from(EXPORT_BUCKET);
 }
 
 export async function renderPdf(html: string): Promise<Buffer> {
