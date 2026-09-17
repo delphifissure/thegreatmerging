@@ -3,6 +3,7 @@
 import { useActionState, useState, useTransition } from "react";
 import { Button } from "@/app/_components/Button";
 import { Field, Notice } from "@/app/_components/Field";
+import { Toggle } from "@/app/_components/Toggle";
 import { idle } from "@/app/_lib/actions";
 import { createCoupleAction, createInviteAction, updateHasChildrenAction, updateNameAction } from "../actions";
 
@@ -81,13 +82,14 @@ export function HasChildrenSwitch({ value }: { value: boolean }) {
   const [error, setError] = useState<string | null>(null);
   return (
     <div className="flex flex-wrap items-center gap-3">
-      <button
-        type="button"
-        role="switch"
-        aria-checked={on}
+      <span id="has-children-label" className="text-[15px]">
+        Children in the household
+      </span>
+      <Toggle
+        checked={on}
         disabled={pending}
-        onClick={() => {
-          const next = !on;
+        aria-labelledby="has-children-label"
+        onChange={(next) => {
           setOn(next);
           start(async () => {
             const r = await updateHasChildrenAction({ has_children: next });
@@ -97,10 +99,7 @@ export function HasChildrenSwitch({ value }: { value: boolean }) {
             } else setError(null);
           });
         }}
-        className="rounded border border-border px-3 py-1.5 text-sm"
-      >
-        Children in the household: {on ? "yes" : "no"}
-      </button>
+      />
       {error ? <Notice tone="warn">{error}</Notice> : null}
     </div>
   );

@@ -3,6 +3,7 @@
 import { useActionState, useState, useTransition } from "react";
 import { Button } from "@/app/_components/Button";
 import { Field, Notice } from "@/app/_components/Field";
+import { Toggle } from "@/app/_components/Toggle";
 import { idle } from "@/app/_lib/actions";
 import { updateConsentAction, updateTherapistEmailAction } from "../actions";
 
@@ -47,18 +48,7 @@ export function ConsentSwitches({ values, therapistEmail }: { values: Record<Fie
                 {s.explain}
               </p>
             </div>
-            <button
-              type="button"
-              role="switch"
-              aria-checked={state[s.field]}
-              aria-labelledby={`${s.field}-label`}
-              aria-describedby={`${s.field}-desc`}
-              disabled={pending}
-              onClick={() => toggle(s.field)}
-              className={`min-w-16 rounded border px-3 py-1.5 text-sm ${state[s.field] ? "border-accent bg-accent text-accent-contrast" : "border-border bg-surface"}`}
-            >
-              {state[s.field] ? "On" : "Off"}
-            </button>
+            <Toggle checked={state[s.field]} onChange={() => toggle(s.field)} disabled={pending} aria-labelledby={`${s.field}-label`} aria-describedby={`${s.field}-desc`} />
           </li>
         ))}
       </ul>

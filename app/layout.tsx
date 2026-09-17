@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Fraunces, Work_Sans } from "next/font/google";
 import "./globals.css";
 import { APP_DESCRIPTION, APP_NAME } from "@/lib/brand";
+import { SiteFooter } from "./_components/SiteFooter";
 import { SiteHeader } from "./_components/SiteHeader";
 
-const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
-const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
+// Fraunces carries the "soft" and "wonky" axes the design system sets on headings and questions.
+const fraunces = Fraunces({ subsets: ["latin"], axes: ["SOFT", "WONK", "opsz"], variable: "--font-fraunces", display: "swap" });
+const workSans = Work_Sans({ subsets: ["latin"], variable: "--font-work-sans", display: "swap" });
 
 export const metadata: Metadata = {
   title: { default: APP_NAME, template: `%s · ${APP_NAME}` },
@@ -18,14 +20,14 @@ const restoreContrast = `try{if(localStorage.getItem("the-plan:high-contrast")==
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
+    <html lang="en" className={`${fraunces.variable} ${workSans.variable} h-full antialiased`}>
       <head>
         <script dangerouslySetInnerHTML={{ __html: restoreContrast }} />
       </head>
       <body className="min-h-full flex flex-col bg-background text-foreground">
         <a
           href="#main"
-          className="sr-only focus:not-sr-only focus:absolute focus:left-2 focus:top-2 focus:z-50 focus:rounded focus:bg-surface focus:px-3 focus:py-2 focus:outline focus:outline-2 focus:outline-focus"
+          className="sr-only focus:not-sr-only focus:absolute focus:left-2 focus:top-2 focus:z-50 focus:rounded-full focus:bg-surface focus:px-3 focus:py-2 focus:outline focus:outline-2 focus:outline-focus"
         >
           Skip to content
         </a>
@@ -33,6 +35,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <main id="main" className="mx-auto w-full max-w-3xl flex-1 px-4 py-6 sm:py-8">
           {children}
         </main>
+        <SiteFooter />
       </body>
     </html>
   );

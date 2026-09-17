@@ -46,13 +46,13 @@ export default async function ColorDomainPage({ params }: { params: Promise<{ do
         </p>
       </div>
 
-      {transcript.length === 0 ? <p className="rounded border border-border bg-surface p-3 text-sm">{config.common.transitions.enter}</p> : null}
+      {transcript.length === 0 ? <p className="reading max-w-prose text-[17px] text-muted">{config.common.transitions.enter}</p> : null}
 
       {transcript.length > 0 ? (
-        <ol className="space-y-2" aria-label="Earlier questions and your answers">
+        <ol className="space-y-2.5" aria-label="Earlier questions and your answers">
           {transcript.map((t, i) => (
-            <li key={i} className={t.role === "user" ? "ml-6 rounded-lg border border-border bg-bar-track p-3 text-sm" : "mr-6 rounded-lg border border-border bg-surface p-3 text-sm"}>
-              <span className="sr-only">{t.role === "user" ? "You: " : "Question: "}</span>
+            <li key={i} className={`reading max-w-prose rounded-card p-4 text-[16px] ${t.role === "user" ? "ml-6 bg-tint" : "mr-6 border border-rule bg-surface"}`}>
+              <p className="eyebrow mb-1">{t.role === "user" ? "You wrote" : "Question"}</p>
               {t.content}
             </li>
           ))}
@@ -84,7 +84,7 @@ export default async function ColorDomainPage({ params }: { params: Promise<{ do
             tagCommentPrompt={config.common.tag_comment_prompt}
             skipLabel={config.common.probe_skip_label}
           />
-          <p className="text-xs text-muted">Every answer is saved as you go. You can pause and come back any time.</p>
+          <p className="text-sm text-muted">Every answer is saved as you go. Only you can see them until you have both finished, and you can pause any time.</p>
         </>
       ) : (
         <Waiting title="Loading the next question…" />

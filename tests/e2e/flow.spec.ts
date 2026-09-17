@@ -34,7 +34,8 @@ test.describe("seeded flow", () => {
       await expect(page.getByText(new RegExp(`Item ${i} of \\d+`))).toBeVisible();
       await page.getByRole("radio").first().check();
       await expect(page.getByText("Saved", { exact: true })).toBeVisible();
-      await page.getByRole("button", { name: "Next" }).click();
+      // Answering moves on by itself.
+      await expect(page.getByText(new RegExp(`Item ${i + 1} of \\d+`))).toBeVisible();
     }
 
     await page.reload();

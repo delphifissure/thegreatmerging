@@ -1,6 +1,7 @@
 "use client";
 
 import { useSyncExternalStore } from "react";
+import { Toggle } from "./Toggle";
 
 const KEY = "the-plan:high-contrast";
 const EVENT = "the-plan:contrast";
@@ -20,8 +21,7 @@ function snapshot(): boolean {
 
 export function HighContrastToggle() {
   const on = useSyncExternalStore(subscribe, snapshot, () => false);
-  const toggle = () => {
-    const next = !on;
+  const set = (next: boolean) => {
     document.documentElement.classList.toggle("high-contrast", next);
     try {
       localStorage.setItem(KEY, next ? "1" : "0");
@@ -31,8 +31,9 @@ export function HighContrastToggle() {
     window.dispatchEvent(new Event(EVENT));
   };
   return (
-    <button type="button" role="switch" aria-checked={on} onClick={toggle} className="rounded border border-border px-2 py-1 text-sm">
-      High contrast: {on ? "on" : "off"}
-    </button>
+    <span className="inline-flex items-center gap-2 text-sm">
+      <span id="hc-label">High contrast</span>
+      <Toggle checked={on} onChange={set} aria-labelledby="hc-label" />
+    </span>
   );
 }

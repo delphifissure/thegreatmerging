@@ -1,37 +1,44 @@
 import Link from "next/link";
 import { currentUser } from "@/lib/supabase/server";
 import { APP_NAME } from "@/lib/brand";
-import { HighContrastToggle } from "./HighContrastToggle";
 import { Mark } from "./Mark";
+
+const NAV = [
+  { href: "/", label: "Home" },
+  { href: "/instruments", label: "Questions" },
+  { href: "/results", label: "Results" },
+  { href: "/brief", label: "Brief" },
+  { href: "/plan", label: "Plan" },
+];
 
 export async function SiteHeader() {
   const user = await currentUser();
   return (
-    <header className="border-b border-border">
-      <div className="mx-auto flex w-full max-w-3xl flex-wrap items-center justify-between gap-2 px-4 py-3">
-        <Link href="/" className="inline-flex items-center gap-2 font-semibold text-accent">
-          <Mark />
-          <span className="text-foreground">{APP_NAME}</span>
+    <header className="border-b border-rule">
+      <div className="mx-auto flex w-full max-w-3xl flex-wrap items-center justify-between gap-x-4 gap-y-2 px-4 py-3.5">
+        <Link href="/" className="inline-flex items-center gap-2.5 font-display text-[22px] text-accent" style={{ fontVariationSettings: '"SOFT" 60, "WONK" 1' }}>
+          <Mark size={24} />
+          <span className="text-ink">{APP_NAME}</span>
         </Link>
-        <nav aria-label="Main" className="flex flex-wrap items-center gap-3 text-sm">
+        <nav aria-label="Main" className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm">
           {user ? (
             <>
-              <Link href="/setup">Setup</Link>
-              <Link href="/instruments">Instruments</Link>
-              <Link href="/results">Results</Link>
-              <Link href="/brief">Brief</Link>
-              <Link href="/plan">Plan</Link>
-              <Link href="/revisit">Revisit</Link>
+              {NAV.map((n) => (
+                <Link key={n.href} href={n.href} className="text-muted hover:text-ink">
+                  {n.label}
+                </Link>
+              ))}
               <form action="/sign-out" method="post">
-                <button type="submit" className="underline">
+                <button type="submit" className="text-muted underline decoration-rule underline-offset-4 hover:text-ink">
                   Sign out
                 </button>
               </form>
             </>
           ) : (
-            <Link href="/sign-in">Sign in</Link>
+            <Link href="/sign-in" className="text-ink">
+              Sign in
+            </Link>
           )}
-          <HighContrastToggle />
         </nav>
       </div>
     </header>
