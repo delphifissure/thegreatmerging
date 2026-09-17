@@ -1,6 +1,6 @@
 /**
- * An index card: paper surface, thin rule, soft shadow. With `eyebrow`, a small label sits at the
- * top with a ruled line under it, the way a card has a title line.
+ * A card on the desk: paper surface, thin rule, faint shadow. With `eyebrow`, a small label sits
+ * above the content.
  */
 export function Card({
   children,
@@ -17,7 +17,7 @@ export function Card({
 }) {
   return (
     <Tag className={`rounded-card border border-rule bg-surface p-5 shadow-card ${dashed ? "border-dashed shadow-none" : ""} ${className}`}>
-      {eyebrow ? <p className="eyebrow -mx-5 mb-4 border-b border-rule/70 px-5 pb-3">{eyebrow}</p> : null}
+      {eyebrow ? <p className="eyebrow mb-3">{eyebrow}</p> : null}
       {children}
     </Tag>
   );

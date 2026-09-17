@@ -18,7 +18,7 @@ export function Waiting({ title, children, refresh = true }: { title: string; ch
       <div className="flex items-start gap-4">
         <Pulse />
         <div className="min-w-0">
-          <p role="status" className="font-display text-xl" style={{ fontVariationSettings: '"SOFT" 60, "WONK" 1' }}>
+          <p role="status" className="font-display text-xl">
             {title}
           </p>
           {children ? <div className="mt-1.5 text-sm text-muted">{children}</div> : null}

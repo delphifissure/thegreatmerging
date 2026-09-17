@@ -16,7 +16,7 @@ export async function SiteHeader() {
   return (
     <header className="border-b border-rule">
       <div className="mx-auto flex w-full max-w-3xl flex-wrap items-center justify-between gap-x-4 gap-y-2 px-4 py-3.5">
-        <Link href="/" className="inline-flex items-center gap-2.5 font-display text-[22px] text-accent" style={{ fontVariationSettings: '"SOFT" 60, "WONK" 1' }}>
+        <Link href="/" className="inline-flex items-center gap-2.5 font-display text-[22px] text-accent">
           <Mark size={24} />
           <span className="text-ink">{APP_NAME}</span>
         </Link>

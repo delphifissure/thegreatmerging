@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
-import { Fraunces, Work_Sans } from "next/font/google";
+import { Newsreader, Source_Sans_3 } from "next/font/google";
 import "./globals.css";
 import { APP_DESCRIPTION, APP_NAME } from "@/lib/brand";
 import { SiteFooter } from "./_components/SiteFooter";
 import { SiteHeader } from "./_components/SiteHeader";
 
-// Fraunces carries the "soft" and "wonky" axes the design system sets on headings and questions.
-const fraunces = Fraunces({ subsets: ["latin"], axes: ["SOFT", "WONK", "opsz"], variable: "--font-fraunces", display: "swap" });
-const workSans = Work_Sans({ subsets: ["latin"], variable: "--font-work-sans", display: "swap" });
+// Newsreader's optical-size axis keeps small reading text sturdy and large headings fine.
+const newsreader = Newsreader({ subsets: ["latin"], axes: ["opsz"], style: ["normal", "italic"], variable: "--font-newsreader", display: "swap" });
+const sourceSans = Source_Sans_3({ subsets: ["latin"], variable: "--font-source-sans", display: "swap" });
 
 export const metadata: Metadata = {
   title: { default: APP_NAME, template: `%s · ${APP_NAME}` },
@@ -20,7 +20,7 @@ const restoreContrast = `try{if(localStorage.getItem("the-plan:high-contrast")==
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${fraunces.variable} ${workSans.variable} h-full antialiased`}>
+    <html lang="en" className={`${newsreader.variable} ${sourceSans.variable} h-full antialiased`}>
       <head>
         <script dangerouslySetInnerHTML={{ __html: restoreContrast }} />
       </head>

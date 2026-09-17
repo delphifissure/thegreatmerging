@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
   <title>The Great Merging</title>
-  <rect width="64" height="64" rx="14" fill="#fbfaf7"/>
-  <circle cx="25" cy="32" r="17" fill="#1f5f8b" fill-opacity="0.58"/>
-  <circle cx="39" cy="32" r="17" fill="#1f5f8b" fill-opacity="0.58"/>
+  <rect width="64" height="64" rx="12" fill="#f5f0e6"/>
+  <circle cx="25" cy="32" r="17" fill="#1e3f63" fill-opacity="0.58"/>
+  <circle cx="39" cy="32" r="17" fill="#1e3f63" fill-opacity="0.58"/>
 </svg>

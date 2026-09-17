@@ -1,27 +1,27 @@
 @import "tailwindcss";
 
 /*
- * Index-card design system. Kraft-tinted paper with a light grain, bottle green as the one accent,
- * Fraunces (soft) for anything read slowly, Work Sans for controls. Tokens carry the light palette
- * on :root, dark under prefers-color-scheme, and a high-contrast override toggled by the footer.
- * Legacy names (background, foreground, border, bar, bar-track, ...) alias the new ones so every
- * existing class keeps working.
+ * Letterpress design system. Ivory paper, ink blue as the one accent, Newsreader for anything read
+ * slowly, Source Sans 3 for controls, cards with a faint desk shadow. Tokens carry the light
+ * palette on :root, dark under prefers-color-scheme, and a high-contrast override toggled by the
+ * footer. Legacy names (background, foreground, border, bar, bar-track, ...) alias the new ones so
+ * every existing class keeps working.
  */
 :root {
-  --paper: #eee6d6;
-  --surface: #fbf7ee;
-  --ink: #2a241c;
-  --muted: #6f6656;
-  --rule: #d5c8ae;
-  --accent: #2f5d50;
-  --accent-ink: #f4efe4;
-  --tint: #e3ebe4;
-  --good: #2f5d50;
-  --warn-bg: #f6e6c9;
-  --warn: #8a5c12;
-  --focus: #2f5d50;
-  --shadow-card: 0 1px 0 rgba(42, 36, 28, 0.06), 0 14px 30px -22px rgba(42, 36, 28, 0.5);
-  --grain: 0.07;
+  --paper: #f5f0e6;
+  --surface: #fffcf5;
+  --ink: #1f1c18;
+  --muted: #6a6357;
+  --rule: #d9d1c1;
+  --accent: #1e3f63;
+  --accent-ink: #fffcf5;
+  --tint: #e7edf2;
+  --good: #3f6b4d;
+  --warn-bg: #f8ecd4;
+  --warn: #8e5a12;
+  --focus: #1e3f63;
+  --shadow-card: 0 1px 0 rgba(31, 28, 24, 0.05), 0 10px 26px -20px rgba(31, 28, 24, 0.45);
+  --grain: 0;
 
   --background: var(--paper);
   --foreground: var(--ink);
@@ -34,20 +34,20 @@
 
 @media (prefers-color-scheme: dark) {
   :root:not(.high-contrast) {
-    --paper: #1a1712;
-    --surface: #25201a;
-    --ink: #efe8da;
-    --muted: #a89f8e;
-    --rule: #3f382c;
-    --accent: #8fc7b3;
-    --accent-ink: #0f1a16;
-    --tint: #24332e;
-    --good: #8fc7b3;
+    --paper: #17140f;
+    --surface: #211d16;
+    --ink: #ede6d8;
+    --muted: #a79e8e;
+    --rule: #3a342a;
+    --accent: #93b7da;
+    --accent-ink: #10161c;
+    --tint: #26303a;
+    --good: #8cc39b;
     --warn-bg: #3a2c12;
     --warn: #e0b25c;
-    --focus: #8fc7b3;
-    --shadow-card: 0 1px 0 rgba(0, 0, 0, 0.3), 0 14px 30px -20px rgba(0, 0, 0, 0.7);
-    --grain: 0.05;
+    --focus: #93b7da;
+    --shadow-card: 0 1px 0 rgba(0, 0, 0, 0.3), 0 10px 26px -18px rgba(0, 0, 0, 0.7);
+    --grain: 0;
   }
 }
 
@@ -91,12 +91,12 @@
   --color-bar-track: var(--bar-track);
   --color-warn-border: var(--warn-border);
 
-  --font-sans: var(--font-work-sans), "Helvetica Neue", Arial, sans-serif;
-  --font-display: var(--font-fraunces), "Iowan Old Style", Georgia, serif;
+  --font-sans: var(--font-source-sans), "Helvetica Neue", Arial, sans-serif;
+  --font-display: var(--font-newsreader), "Iowan Old Style", Georgia, "Times New Roman", serif;
   --font-mono: ui-monospace, "SF Mono", Menlo, monospace;
 
-  --radius-card: 12px;
-  --radius-control: 10px;
+  --radius-card: 6px;
+  --radius-control: 6px;
   --shadow-card: var(--shadow-card);
 }
 
@@ -114,7 +114,7 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  /* Paper grain, fixed behind everything. Opacity 0 in high contrast. */
+  /* Paper grain, kept for directions that use it; Letterpress sets --grain to 0. */
   body::before {
     content: "";
     position: fixed;
@@ -135,7 +135,7 @@
   h3 {
     font-family: var(--font-display);
     font-weight: 500;
-    font-variation-settings: "SOFT" 60, "WONK" 1;
+    font-optical-sizing: auto;
     line-height: 1.15;
     letter-spacing: -0.005em;
     text-wrap: balance;
@@ -163,14 +163,13 @@
     background: var(--paper);
     color: var(--ink);
     border: 1px solid var(--rule);
-    border-radius: 10px;
+    border-radius: 6px;
     padding: 0.6rem 0.8rem;
     font: inherit;
   }
 
   textarea {
     font-family: var(--font-display);
-    font-variation-settings: "SOFT" 60;
     font-size: 17px;
     line-height: 1.5;
   }
@@ -217,7 +216,7 @@
   /* Reading text: questions, results, briefs. */
   .reading {
     font-family: var(--font-display);
-    font-variation-settings: "SOFT" 60;
+    font-optical-sizing: auto;
   }
 
   .eyebrow {
