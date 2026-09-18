@@ -42,7 +42,7 @@ A small validated core stays, as vital signs and as the avatar's calibration tes
 
 ## Amendments to the seven principles
 
-Scoring stays code. Consent stays server-side and logged, extended with disclosure tiers and rehearsal consent. The model stays versioned, and each avatar is a versioned artifact of constitution vN and history vN. Nothing attributed to you is compared or shown until you sign it, which replaces "nothing compared until both are done". Three principles change outright: free text becomes the main event rather than the exception; "no characterization of a person" becomes "only the person characterizes themselves, and the app offers observations as questions"; and "surfaces and asks" widens to allow empathy and nudges.
+Scoring stays code. Consent stays server-side and logged, extended with disclosure tiers and rehearsal consent. The model stays versioned, and each avatar is a versioned artifact of constitution vN and history vN. Your own words reach your partner only by your choice, and avatar output is always labelled as such, which together replace "nothing compared until both are done". Three principles change outright: free text becomes the main event rather than the exception; "no characterization of a person" becomes "only the person characterizes themselves, and the app offers observations as questions"; and "surfaces and asks" widens to allow empathy and nudges.
 
 ## First prototype
 
@@ -50,6 +50,6 @@ One topic, money or household, with the two owners as the couple. Three biograph
 
 ## Open questions
 
-- Does a person ever read their partner's signed avatar lines, or only a debrief of the rehearsal?
+- When someone spars with your avatar, does anything flow back to you, and who approves it?
 - Voice or text for the biographer interviews? The cited study used voice.
 - How much history is enough before rehearsals are worth running?
