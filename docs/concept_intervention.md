@@ -1,6 +1,6 @@
 # Concept note: the intervention premise
 
-Status: proposal, 18 September 2026. Nothing changes in the app until the owner accepts it. If accepted, it amends the build prompt's principles as listed near the end. The rehearsal engine is worked out in `concept_simulation.md`, and the longer-horizon idea in `concept_ancestor_sim.md`.
+Status: proposal, 18 September 2026. Nothing changes in the app until the owner accepts it. If accepted, it amends the build prompt's principles as listed near the end. The rehearsal engine is worked out in `concept_simulation.md`, and the longer-horizon idea in `concept_ancestor_sim.md`. The white paper, with all references, is a living document: https://claude.ai/code/artifact/b0687113-86cb-486b-ae22-34579d468d97 (private to the owner unless shared).
 
 ## Premise
 
