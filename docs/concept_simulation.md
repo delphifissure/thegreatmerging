@@ -59,6 +59,43 @@ Rules for the third axis:
 - **Near, wanted, and helpful.** A variation is only worth reporting if the discriminator says it is near the person, the person says it is a self they would want to be, and the evaluator says it helped.
 - **Symmetric burden.** A search for harmony will find that the more accommodating partner is cheaper to change, and would quietly optimize that person away. The reporter must always show leverage on both sides and joint moves, and must never rank who should change.
 
+## Many versions of you, right now
+
+The owner's point, 18 September 2026: permutations are not only fuel for the engine, and not only the one-notch-ahead self or the long horizon. They are also "a bunch of versions of me, right now", and that deserves to be a thing a person can meet.
+
+A person is a range, not a point. Over two to three weeks of daily life the typical person showed nearly every level of every trait, while their averages stayed almost perfectly stable (Fleeson, 2001). Personality shows up as stable if-then patterns across situations (Mischel and Shoda, 1995). A single fixed avatar is the person's average, and hard conversations are decided on the days that are not average. Which version of you arrives is often the most consequential variable in the conversation, and it is one the couple can choose.
+
+Three kinds of self, by what they cost to act on:
+
+| Self | What differs from you today | Question | Cost |
+| --- | --- | --- | --- |
+| Many versions of you, right now | State, moves, framing, the room you are in, open lines one at a time | Which of me could show up, and what does each do? | Often nothing: pick the time, the opening, the state |
+| You, one notch ahead | A small step along what you are working on | What would I do a little further along? | Practice, over weeks |
+| The two of you over years | Habits, run forward | Where do our habits take us? | One habit, four real weeks |
+
+The one-notch-ahead self is one version from the edge of the range, chosen by its owner. The hundred-by-hundred design is two ranges meeting.
+
+**A fifth source of versions: the room.** Beside state, moves, disposition and framing, there is the person as they already are elsewhere: at work, with friends, with their own family. Someone who asks three questions before disagreeing at work, and none at home, already owns the move they need. The nearest nearby self is one you already are in another room.
+
+**It has to be designed in.** A model given a persona does not vary with state by itself: in a dataset of 1,667 people measured across contexts, 74% of the variance was within the person, and models answered much the same whatever the state (Harry and colleagues, 2026; a preprint on Reddit users). So each version is the ratified documents plus one small, named change: a state preamble, an instructed opening, a reframed topic, a room, or one open line altered. One change at a time, combinations by design, and the change shown to the person as a difference from their own document.
+
+**The solo panel ("ask all of me").** Before any rehearsal with a partner's avatar, a person puts one situation to a panel of their own versions and reads the answers side by side.
+
+1. Rate each: "me", "me on a bad day", "not me". These ratings draw the edge of the self as its owner sees it. That answers the open question below about how distance from the real person is measured: by the person first, with the discriminator learning from their ratings.
+2. Read what never changes. A response every version gives is a candidate for a settled line.
+3. Read what flips. If every rested version agrees and no depleted version does, the finding is about when to talk, and nobody has to change.
+4. Borrow from another room.
+
+**Noise is not a version.** The same avatar run twice gives different words. A version counts as different only when it departs from the person by more than reruns of the person depart from each other, so every version is replicated, and random sampling is never presented as another you.
+
+**Rules.** You meet only your own versions. Each is labelled as a test run with its one change stated. A version's words are never quoted to your partner. Every version is you: the panel is for choosing conditions and practising moves, never for disowning what the tired version said.
+
+Prototype shape, not built: the one-notch-ahead page gains a panel mode. One question, four to six versions answering side by side from the same ratified lines, each with its change stated and the three-way rating under it.
+
+- Fleeson, W. (2001). Toward a structure- and process-integrated view of personality: Traits as density distributions of states. *Journal of Personality and Social Psychology, 80*(6), 1011–1027. https://pubmed.ncbi.nlm.nih.gov/11414368/
+- Mischel, W., & Shoda, Y. (1995). A cognitive-affective system theory of personality. *Psychological Review, 102*(2), 246–268. https://psycnet.apa.org/record/1995-25136-001
+- Harry, T., Ngong, I., Nweke, C., Feng, Y., & Near, J. (2026). *Beyond fixed psychological personas: State beats trait, but language models are state-blind.* arXiv:2601.15395. https://arxiv.org/abs/2601.15395
+
 ## The hundred-by-hundred design
 
 The owner's thesis: let 100 permutations of you negotiate a hard topic with 100 permutations of your partner. If few succeed, what is different about the versions that did, and, if the real people like that outcome, how would each have to adjust?

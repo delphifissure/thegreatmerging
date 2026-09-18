@@ -69,7 +69,9 @@ Built on 18 September 2026 behind `BIOGRAPHER_ENABLED=1`: the biographer, the dr
 
 The biographer adapts to how a person answers. It judges depth by what an account contains (the moment, what they did, what they felt, what it taught them), not by its length, and asks for the missing part once. People who answer in a few words get smaller questions and places to start that they can tap; people who write at length see the things they mentioned kept as a list they can return to. The person chooses per conversation whether to keep it light (events and behaviour, and nothing placed side by side) or go deeper, and nothing is placed side by side before the third answer either way; both rules are enforced in code. When a conversation closes, the drafter also leaves questions for next time about the sections that are still thin.
 
-How an avatar should sound, including registers, imported writing samples and the gap between what is meant and how it lands, is in `concept_voice.md`. Not built: the avatar of record for rehearsals, the discriminator beyond self-recognition ratings, the Aligner, the model of the other, the charter, and disclosure tiers beyond storing them.
+How an avatar should sound, including registers, imported writing samples and the gap between what is meant and how it lands, is in `concept_voice.md`.
+
+A person is a range, not a point. "Many versions of you, right now" in `concept_simulation.md` makes the permutations something a person can meet alone, beside the one-notch-ahead self and the long horizon. Not built: the avatar of record for rehearsals, the discriminator beyond self-recognition ratings, the Aligner, the model of the other, the charter, and disclosure tiers beyond storing them.
 
 ## Open questions
 
