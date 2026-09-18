@@ -35,6 +35,17 @@ Four tests, each reported per topic, because an avatar can be good on money and 
 
 Low confidence on a topic means more interviewing, not a rehearsal. Confidence is shown wherever an avatar appears: "about 70% you on this topic".
 
+## Two rehearsals, side by side
+
+Each person carries a working copy of their partner, written down as their model of the other. That allows two rehearsals of the same topic:
+
+- **The fight you expect.** Your avatar against your own model of your partner. This is the argument you have already been having in your head.
+- **The one more likely to happen.** Your avatar against the avatar your partner authored.
+
+The difference between the two is the most useful thing the engine can show a person early, because it locates the conflict in the stale copy rather than in the partner. It is shown only to the person whose model it is.
+
+Where a topic shows the two of you holding opposite poles, the Aligner treats it as the entity's ambivalence rather than a contest, and asks which of you is carrying it for both.
+
 ## Permutations: three axes, scoped by consent
 
 - **State.** The same person on a different day: depleted, stressed, just had a win. Always allowed, and often the most practical finding, such as "this topic only goes wrong when either of you is tired".

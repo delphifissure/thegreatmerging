@@ -8,9 +8,15 @@ The app stops trying to assess a couple and starts helping one. It is for two pe
 
 ## What a partnership is
 
-Two minds that have each moved part of themselves into the other: memory, regulation, prediction and purpose. The result is one system that lives in two bodies, runs apart most of the day, and comes back together over a narrow, lossy channel of words, touch and behaviour. To act for the pair while apart, each person carries a working copy of the other in their head. Most conflict is between a person and that copy, which is stale or wrong. The system has finite resources, including each person's capacity to change, and it can reproduce: children, homes, traditions, and the constitutions it writes into new minds.
+Two minds that have each moved part of themselves into the other: memory, regulation, prediction and purpose. The result is one system in two bodies. It runs apart most of the day and comes back together over a narrow, lossy channel of words, touch and behaviour. It has finite resources, and it can reproduce: children, homes, traditions, and the constitutions it writes into new minds. This is the owner's image of a distributed entity with a bicameral mind, and the research supports it. Couples hold memory jointly, each knowing what the other knows (Wegner and colleagues, 1991). The brain appears to fold a trusted partner into its representation of the self and to budget risk and effort as if the partner's resources were its own (Coan and Sbarra, 2015); holding a spouse's hand dampens the neural response to threat, more so in better marriages (Coan and colleagues, 2006).
 
-Its health is the quality of three things: the **models** each holds of the other, the **channel** between them, and the **shared state**, meaning the story, the plan and the ledger of resources and debts. Conflict is divergence in any of the three. Many standing disagreements are the entity's own ambivalence, split across two bodies: one carries the worry and the other the hope, and each overcorrects for the other. Growth is the entity amending its constitution without either mind being overwritten.
+Three consequences shape the product.
+
+- **Each of you already runs an avatar of the other.** To act for the pair while apart, you carry a working copy of your partner in your head. Most conflict is between you and that copy, which is stale or wrong. Hence the fourth document below, your model of the other. Set beside their own constitution, it is the map of your misunderstandings, and a rehearsal can show you the fight you expect next to the one more likely to happen.
+- **Standing disagreements are often the entity's own ambivalence, split across two bodies.** One of you carries the worry and the other the hope, and each overcorrects for the other. The resolution is the entity owning both halves, not one of you winning. The Aligner's question is "which of you is carrying this for both of you?"
+- **Resources are shared and finite, and that includes the capacity to change.** Time, money, attention and energy are pooled. So is accommodation. Each person's willingness to adjust is a budget the entity spends, which is why the adjustments a rehearsal suggests must not keep falling to the same person.
+
+The entity's health is the quality of three things: the **models** each holds of the other, the **channel** between them, and the **shared state**, meaning the story, the plan and the ledger of resources and debts. Conflict is divergence in any of the three. Growth is the entity amending its constitution without either mind being overwritten.
 
 The partnership has no source of wants beyond what both people have ratified. So it is a first-class object with state, and it may be given a voice in rehearsals and sessions, but that voice speaks only for the charter. It can say "we agreed this" and "this serves what we both said we want". It can never invent a want or outrank a person's settled requirement, because "for the sake of the relationship" is how pressure gets applied.
 
@@ -62,3 +68,13 @@ One topic, money or household, with the two owners as the couple. Three biograph
 - When someone spars with your avatar, does anything flow back to you, and who approves it?
 - Voice or text for the biographer interviews? The cited study used voice.
 - How much history is enough before rehearsals are worth running?
+
+## References
+
+Checked against their sources on 18 September 2026.
+
+- Park, J. S., and colleagues (2024). *Generative Agent Simulations of 1,000 People.* arXiv:2411.10109. https://arxiv.org/abs/2411.10109
+- Wegner, D. M., Erber, R., & Raymond, P. (1991). Transactive memory in close relationships. *Journal of Personality and Social Psychology, 61*, 923–929.
+- Coan, J. A., Schaefer, H. S., & Davidson, R. J. (2006). Lending a hand: Social regulation of the neural response to threat. *Psychological Science, 17*(12), 1032–1039. https://doi.org/10.1111/j.1467-9280.2006.01832.x
+- Beckes, L., & Coan, J. A. (2011). Social baseline theory: The role of social proximity in emotion and economy of action. *Social and Personality Psychology Compass.* https://doi.org/10.1111/j.1751-9004.2011.00400.x
+- Coan, J. A., & Sbarra, D. A. (2015). Social baseline theory: The social regulation of risk and effort. *Current Opinion in Psychology.* https://pmc.ncbi.nlm.nih.gov/articles/PMC4375548/
