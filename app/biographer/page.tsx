@@ -99,8 +99,11 @@ export default async function BiographerIndex() {
           An avatar built only from lines you have ratified: you, rested, a little further along on what you said you are working on. It can be wrong, and it never speaks for you.
         </p>
         {readiness.ready ? (
-          <div className="mt-3">
+          <div className="mt-3 flex flex-wrap gap-3">
             <LinkButton href="/mentor">Talk to it</LinkButton>
+            <LinkButton href="/mentor/panel" variant="secondary">
+              Ask all of me
+            </LinkButton>
           </div>
         ) : (
           <p className="mt-3 text-sm text-muted">

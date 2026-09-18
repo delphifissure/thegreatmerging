@@ -71,7 +71,7 @@ The biographer adapts to how a person answers. It judges depth by what an accoun
 
 How an avatar should sound, including registers, imported writing samples and the gap between what is meant and how it lands, is in `concept_voice.md`.
 
-A person is a range, not a point. "Many versions of you, right now" in `concept_simulation.md` makes the permutations something a person can meet alone, beside the one-notch-ahead self and the long horizon. Not built: the avatar of record for rehearsals, the discriminator beyond self-recognition ratings, the Aligner, the model of the other, the charter, and disclosure tiers beyond storing them.
+A person is a range, not a point. "Many versions of you, right now" in `concept_simulation.md` makes the permutations something a person can meet alone, beside the one-notch-ahead self and the long horizon. Its first form is built: "Ask all of me" at `/mentor/panel` puts one situation to up to eight versions of the person side by side, takes their verdict on each (me, me on a bad day, not me), and then reads across them. Not built: the avatar of record for rehearsals, the discriminator beyond self-recognition ratings, the Aligner, the model of the other, the charter, and disclosure tiers beyond storing them.
 
 ## Open questions
 

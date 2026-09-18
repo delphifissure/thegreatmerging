@@ -9,15 +9,22 @@ import { db, schema } from "@/db/client";
 import { decryptText, encryptText } from "@/lib/crypto";
 import { audit } from "./audit";
 
-export type ThreadKind = "biographer" | "mentor";
+export type ThreadKind = "biographer" | "mentor" | "panel";
 export type TurnRole = "guide" | "person" | "avatar";
-export type TurnRating = "like_me" | "not_like_me";
+export type TurnRating = "like_me" | "not_like_me" | "bad_day";
 export type DocumentKindValue = "history" | "constitution";
 export type EntryStatus = "proposed" | "ratified" | "rejected";
 export type EntryMark = "settled" | "open";
 export type EntryTier = "private" | "avatar_only" | "shareable";
 
-export type TurnExtras = { options: string[]; threads: string[] };
+/** Encrypted companions to a turn that echo the person's words: places to start, threads, a version's opening line and change, a panel reading. */
+export type TurnExtras = {
+  options: string[];
+  threads: string[];
+  opening_line?: string | null;
+  change?: string | null;
+  reading?: { same: string[]; differs: Array<{ observation: string; versions: string[] }> } | null;
+};
 export type Turn = { id: string; seq: number; role: TurnRole; text: string; note: string | null; extras: TurnExtras | null; meta: Record<string, unknown>; rating: TurnRating | null; created_at: Date };
 export type DocumentEntry = {
   id: string;
@@ -80,7 +87,14 @@ function readExtras(userId: string, enc: Buffer | null): TurnExtras | null {
   try {
     const raw = JSON.parse(decryptText(enc, turnCtx(userId, "extras"))) as Partial<TurnExtras>;
     const strings = (v: unknown) => (Array.isArray(v) ? v.filter((x): x is string => typeof x === "string") : []);
-    return { options: strings(raw.options), threads: strings(raw.threads) };
+    const reading = raw.reading && typeof raw.reading === "object" ? raw.reading : null;
+    return {
+      options: strings(raw.options),
+      threads: strings(raw.threads),
+      opening_line: typeof raw.opening_line === "string" ? raw.opening_line : null,
+      change: typeof raw.change === "string" ? raw.change : null,
+      reading: reading ? { same: strings(reading.same), differs: (Array.isArray(reading.differs) ? reading.differs : []).map((d) => ({ observation: String(d?.observation ?? ""), versions: strings(d?.versions) })) } : null,
+    };
   } catch {
     return null;
   }
@@ -177,16 +191,51 @@ export async function saveNextTimeQuestions(input: { threadId: string; userId: s
   }
 }
 
-/** How the person has rated their avatar so far: the self-recognition test. */
+/** How the person has rated their one-notch-ahead avatar so far: the self-recognition test. Panel versions are counted separately. */
 export async function avatarRatings(userId: string): Promise<{ like_me: number; not_like_me: number }> {
   const rows = await db()
     .select({ rating: schema.conversation_turns.rating, n: sql<number>`count(*)` })
     .from(schema.conversation_turns)
-    .where(and(eq(schema.conversation_turns.user_id, userId), eq(schema.conversation_turns.role, "avatar"), isNull(schema.conversation_turns.deleted_at)))
+    .innerJoin(schema.conversation_threads, eq(schema.conversation_threads.id, schema.conversation_turns.thread_id))
+    .where(and(eq(schema.conversation_turns.user_id, userId), eq(schema.conversation_turns.role, "avatar"), eq(schema.conversation_threads.kind, "mentor"), isNull(schema.conversation_turns.deleted_at)))
     .groupBy(schema.conversation_turns.rating);
   const out = { like_me: 0, not_like_me: 0 };
-  for (const r of rows) if (r.rating) out[r.rating] = Number(r.n);
+  for (const r of rows) if (r.rating === "like_me" || r.rating === "not_like_me") out[r.rating] = Number(r.n);
   return out;
+}
+
+export type VersionTally = { like_me: number; bad_day: number; not_like_me: number };
+
+/**
+ * The person's verdicts on each version of themselves, across every panel: where they draw the
+ * edge of "me". Keyed by version key, which is structure, not something they wrote.
+ */
+export async function versionRatings(userId: string): Promise<Record<string, VersionTally>> {
+  const version = sql<string>`${schema.conversation_turns.meta} ->> 'version'`;
+  const rows = await db()
+    .select({ version, rating: schema.conversation_turns.rating, n: sql<number>`count(*)` })
+    .from(schema.conversation_turns)
+    .innerJoin(schema.conversation_threads, eq(schema.conversation_threads.id, schema.conversation_turns.thread_id))
+    .where(and(eq(schema.conversation_turns.user_id, userId), eq(schema.conversation_turns.role, "avatar"), eq(schema.conversation_threads.kind, "panel"), isNull(schema.conversation_turns.deleted_at)))
+    .groupBy(version, schema.conversation_turns.rating);
+  const out: Record<string, VersionTally> = {};
+  for (const r of rows) {
+    if (!r.version || !r.rating) continue;
+    (out[r.version] ??= { like_me: 0, bad_day: 0, not_like_me: 0 })[r.rating] = Number(r.n);
+  }
+  return out;
+}
+
+/** The situation each panel was asked, newest first, for the list of earlier panels. */
+export async function listPanels(userId: string, limit = 10): Promise<Array<{ id: string; created_at: Date; situation: string }>> {
+  const rows = await db()
+    .select({ id: schema.conversation_threads.id, created_at: schema.conversation_threads.created_at, content_enc: schema.conversation_turns.content_enc })
+    .from(schema.conversation_threads)
+    .innerJoin(schema.conversation_turns, and(eq(schema.conversation_turns.thread_id, schema.conversation_threads.id), eq(schema.conversation_turns.seq, 1)))
+    .where(and(eq(schema.conversation_threads.user_id, userId), eq(schema.conversation_threads.kind, "panel"), isNull(schema.conversation_threads.deleted_at)))
+    .orderBy(desc(schema.conversation_threads.created_at))
+    .limit(limit);
+  return rows.map((r) => ({ id: r.id, created_at: r.created_at, situation: decryptText(r.content_enc, turnCtx(userId, "content")) }));
 }
 
 export async function recordTextSafetyEvent(input: { userId: string; threadId: string; kind: string }) {

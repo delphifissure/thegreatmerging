@@ -23,6 +23,7 @@ import { checkOutput, checkOutputDeterministic, formatViolations, type ModelChec
 import { hashInput, sha256Hex, stableStringify } from "@/lib/hash";
 import { loadRolePrompt } from "@/lib/prompts";
 import { GuardrailOutputSchema } from "@/lib/llm/schemas";
+import { repairLeakedParameters } from "@/lib/llm/repair";
 import { staticContextFor } from "@/lib/llm/static_context";
 
 export type CallContext = {
@@ -285,7 +286,7 @@ export async function validateResult<T>(
   ctx: CallContext,
 ): Promise<{ ok: true; value: T } | { ok: false; problem: string; kind: "validation_failed" | "guardrail_failed" }> {
   const cfg = LLM_CONFIG[role];
-  const raw = extractToolInput(role, res);
+  const raw = repairLeakedParameters(extractToolInput(role, res));
   if (raw === undefined) {
     return { ok: false, kind: "validation_failed", problem: `You did not call the \`${cfg.tool_name}\` tool. Call it exactly once with the full output.` };
   }

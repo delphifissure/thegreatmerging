@@ -52,7 +52,8 @@ export default async function MentorPage() {
             id: t.id,
             role: t.role,
             text: t.text,
-            rating: t.rating,
+            // "Me on a bad day" belongs to the panel; this conversation only ever stores the other two.
+            rating: t.rating === "bad_day" ? null : t.rating,
             safety: t.meta.kind === "safety",
             unsure: t.meta.unsure === true,
             question: t.note,
@@ -66,7 +67,11 @@ export default async function MentorPage() {
         <Link href="/documents" className="underline">
           your documents
         </Link>
-        . Amend a line there and the avatar changes with it.
+        . Amend a line there and the avatar changes with it. This is one version of you. To put one situation to several at once,{" "}
+        <Link href="/mentor/panel" className="underline">
+          ask all of me
+        </Link>
+        .
       </p>
     </div>
   );

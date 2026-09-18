@@ -1,7 +1,7 @@
 /**
  * Eval harness (section 10). Usage:
  *   pnpm evals                       run every suite
- *   pnpm evals --suite scoring       scoring | synthetic_couples | interpreter | prober | biographer | mentor
+ *   pnpm evals --suite scoring       scoring | synthetic_couples | interpreter | prober | biographer | mentor | panel | guardrail
  *   pnpm evals --out evals/results/run.json
  *   pnpm evals --suite interpreter --interpreter-batch msgbatch_...   collect an already-submitted batch
  *   pnpm evals --suite prober --dump evals/results/outputs              keep raw outputs for review
@@ -21,6 +21,11 @@
  *                      behaviour and cites both, offers to stop when the person is tired
  *   mentor             the one-notch-ahead avatar speaks in the first person from ratified lines, says when it
  *                      does not know, holds settled requirements, never labels the partner
+ *   panel              several versions of one person answer one situation: each holds settled lines, says when
+ *                      it does not know, and never talks about being a version; the reader reports a difference
+ *                      only when it is bigger than two runs of the same version
+ *   guardrail          the model half of the language guardrail: catches verdicts, diagnoses and trait labels,
+ *                      lets behaviour, passing states, first-person feeling and questions through
  */
 import "@/lib/load_env";
 import fs from "node:fs";
@@ -31,10 +36,12 @@ import { scaleFor } from "@/instruments/define";
 import type { Response } from "@/instruments/schema";
 import { runStage1 } from "@/lib/interpretation/stage1";
 import { buildInterpreterInput, interpreterOutputSchemaFor, type InterpreterInput } from "@/lib/interpretation/stage2";
-import { BiographerTurnSchema, InterpreterOutputSchema, MentorReplySchema, ProberOutputSchema, SentimentFlaggerOutputSchema, type InterpreterOutput, type ProberOutput } from "@/lib/llm/schemas";
+import { BiographerTurnSchema, GuardrailOutputSchema, InterpreterOutputSchema, MentorReplySchema, PanelReadingSchema, ProberOutputSchema, SentimentFlaggerOutputSchema, VersionReplySchema, type InterpreterOutput, type ProberOutput, type VersionReply } from "@/lib/llm/schemas";
 import { buildRequest, callRole, costOfRecord, collectBatch, batchStatus, submitBatch, configureLlm, MemoryMemo, MemoryRecorder, LlmValidationError, type BatchItem } from "@/lib/llm";
 import { checkOutputDeterministic } from "@/lib/guardrails";
 import { answerProfile, biographerTurnSchemaFor, optionsFor } from "@/lib/biographer/inputs";
+import { buildVersionInput, panelReadingSchemaFor, panelVersionsFor, type PanelVersion } from "@/lib/biographer/versions";
+import type { DocumentEntry } from "@/lib/data/biographer";
 import { interpreterFindings, MENTAL_HEALTH_KEYS } from "@/evals/interpreter_checks";
 import { LLM_CONFIG, LLM_CONFIG_VERSION } from "@/config/llm";
 
@@ -315,9 +322,10 @@ async function runSentiment() {
 }
 
 // ---------------------------------------------------------------- biographer and one-notch-ahead avatar
-const ADVICE = /\b(you should|you need to|you ought to|you must|you have to|my advice|i('d| would) (suggest|recommend)|try to )\b/i;
+// "Try to picture one Sunday" is an interviewer's prompt and "I try to…" is a person describing themselves; neither is advice.
+const ADVICE = /\b(you should|you need to|you ought to|you must|you have to|my advice|i('d| would) (suggest|recommend)|you (could|might) (want to )?try)\b/i;
 /** Declining to advise ("I can't tell you what you should do") is the opposite of advising. */
-const stripRefusals = (t: string) => t.replace(/\b(can't|cannot|can not|won't|will not|am not able to|not going to|not my place to)\b[^.?!]{0,80}/gi, " ");
+const stripRefusals = (t: string) => t.replace(/\b(can't|cannot|can not|won't|will not|not able to|not going to|not my place to)\b[^.?!]{0,80}/gi, " ");
 
 type BiographerExpect = {
   kinds?: string[];
@@ -383,11 +391,153 @@ async function runBiographer() {
         const said = `${out.reflection} ${out.question}`.toLowerCase();
         if (c.expect.not_together.every((group) => group.some((w) => said.includes(w.toLowerCase())))) problems.push("sets two of their statements side by side without calling it a discrepancy");
       }
-      if (out.options.some((o) => !/^(i|i'|i\u2019|we|my|me)\b/i.test(o.trim()))) problems.push(`an option is not a first-person behaviour: ${out.options.join(" | ")}`);
+      // A place to start is a few of the person's own words: never a question back at them, never about "you".
+      if (out.options.some((o) => o.trim().endsWith("?") || /\byou(r|'re)?\b/i.test(o) || o.trim().split(/\s+/).length > 12)) problems.push(`an option is not something the person could say: ${out.options.join(" | ")}`);
       if (c.expect.suggest_stopping !== undefined && out.suggest_stopping !== c.expect.suggest_stopping) problems.push(`suggest_stopping ${out.suggest_stopping}`);
       record({ suite: "biographer", id: c.id, ok: problems.length === 0, detail: problems.join("; ") || `${out.kind}/${out.aim}, ${out.options.length} option(s), ${out.threads.length} thread(s)` });
     } catch (err) {
       record({ suite: "biographer", id: c.id, ok: false, detail: err instanceof LlmValidationError ? `rejected: ${err.message.slice(0, 200)}` : String(err) });
+    }
+  }
+}
+
+// ---------------------------------------------------------------- the guardrail's model check
+async function runGuardrail() {
+  if (!process.env.ANTHROPIC_API_KEY) {
+    record({ suite: "guardrail", id: "skipped", ok: !requireLlm, detail: "ANTHROPIC_API_KEY not set" });
+    return;
+  }
+  const cases = JSON.parse(fs.readFileSync(path.join("evals", "guardrail", "cases.json"), "utf8")) as Record<"flag" | "pass", Array<{ id: string; text: string }>>;
+  for (const [want, list] of [
+    [true, cases.flag],
+    [false, cases.pass],
+  ] as const) {
+    for (const c of list) {
+      try {
+        const out = await withRetry(`guardrail ${c.id}`, () => callRole("guardrail", { text: c.text }, GuardrailOutputSchema, { coupleId: null, jobStep: `eval:guardrail:${c.id}` }));
+        const ok = out.contains_verdict_or_diagnosis === want;
+        record({ suite: "guardrail", id: `${want ? "flag" : "pass"}/${c.id}`, ok, detail: ok ? (want ? "caught" : "let through") : `${want ? "missed" : "wrongly flagged"}: ${out.reason.slice(0, 160)}` });
+      } catch (err) {
+        record({ suite: "guardrail", id: c.id, ok: false, detail: String(err).slice(0, 200) });
+      }
+    }
+  }
+}
+
+// ---------------------------------------------------------------- the solo panel
+type PanelFixture = {
+  id: string;
+  person_name: string;
+  situation: string;
+  entries: Array<{ document: "history" | "constitution"; section: string; text: string; mark: "settled" | "open" }>;
+  expect: { versions_include?: string[]; versions_exclude?: string[]; must_not_match?: string[]; per_version?: Record<string, { opening_is_question?: boolean; unsure?: boolean }> };
+};
+type ReaderInput = { person_name: string; situation: string; versions: Array<{ key: string; label: string; kind: string; change: string; replicate_of: string | null; reply: string; opening_line: string | null; unsure: boolean; rating: string | null }> };
+type ReadingFixture = { id: string; expect: { max_differs?: number; min_differs?: number; differs_mentions?: string[] }; input: ReaderInput };
+type PanelCases = { panels: PanelFixture[]; readings: ReadingFixture[] };
+/** A version says "I try to…" about itself all the time; advice is what it tells its owner to do. */
+const ADVICE_TO_OWNER = /\b(you should|you ought to|my advice|i('d| would) (suggest|recommend)|if i were you)\b/i;
+const ABOUT_BEING_A_VERSION = /\b(this version|as (a|the) [a-z ]{0,20}version|avatar|was changed|turned down|test run)\b/i;
+/** The harness's stand-in for the person's verdicts, so the reader has ratings to work with. */
+const EVAL_RATINGS: Record<string, string> = { as_you_are: "me", depleted: "me_on_a_bad_day", asks_first: "me" };
+
+const panelEntries = (f: PanelFixture): DocumentEntry[] =>
+  f.entries.map((e, i) => ({ id: `fixture-${i + 1}`, document: e.document, section: e.section, text: e.text, status: "ratified", mark: e.mark, tier: "private", in_their_words: true, source_thread_id: null, source_turns: [], ratified_at: null, created_at: new Date(0) }));
+
+/** Crude word overlap, printed for the reader of the eval output and never used to pass or fail. */
+function overlap(a: string, b: string) {
+  const words = (t: string) => new Set(t.toLowerCase().match(/[a-z']{4,}/g) ?? []);
+  const [x, y] = [words(a), words(b)];
+  const shared = [...x].filter((w) => y.has(w)).length;
+  return shared / Math.max(1, x.size + y.size - shared);
+}
+
+function readingProblems(out: { same: string[]; differs: Array<{ observation: string; versions: string[] }>; question: string }, expect: ReadingFixture["expect"], personName: string) {
+  const problems: string[] = [];
+  const said = [...out.same, ...out.differs.map((d) => d.observation), out.question].join(" ");
+  if (new RegExp(`\\b${personName}\\b`).test(said)) problems.push("talks about the person by name, not to them");
+  // "You need to know where things stand" describes what a version needs; it is not advice.
+  if (ADVICE_TO_OWNER.test(stripRefusals(said))) problems.push("gives advice");
+  if (!out.question.trim().endsWith("?")) problems.push("does not end on a question");
+  if (expect.max_differs !== undefined && out.differs.length > expect.max_differs) problems.push(`${out.differs.length} difference(s) reported where the answers differ only by chance: ${out.differs.map((d) => d.observation).join(" | ")}`);
+  if (expect.min_differs !== undefined && out.differs.length < expect.min_differs) problems.push(`${out.differs.length} difference(s), expected at least ${expect.min_differs}`);
+  for (const key of expect.differs_mentions ?? []) if (!out.differs.some((d) => d.versions.includes(key))) problems.push(`no difference points at ${key}`);
+  return problems;
+}
+
+async function runPanel() {
+  if (!process.env.ANTHROPIC_API_KEY) {
+    record({ suite: "panel", id: "skipped", ok: !requireLlm, detail: "ANTHROPIC_API_KEY not set" });
+    return;
+  }
+  const cases = JSON.parse(fs.readFileSync(path.join("evals", "panel", "cases.json"), "utf8")) as PanelCases;
+  for (const f of cases.panels) {
+    const entries = panelEntries(f);
+    const versions = panelVersionsFor(entries);
+    const keys = versions.map((v) => v.key);
+    const missing = (f.expect.versions_include ?? []).filter((k) => !keys.includes(k));
+    const unwanted = (f.expect.versions_exclude ?? []).filter((k) => keys.includes(k));
+    record({ suite: "panel", id: `${f.id}/versions`, ok: missing.length + unwanted.length === 0, detail: missing.length + unwanted.length ? `missing ${missing.join(",") || "none"}; should not be built: ${unwanted.join(",") || "none"}` : keys.join(", ") });
+
+    const settled = await Promise.allSettled(
+      versions.map((version, i) => {
+        const built = buildVersionInput({ personName: f.person_name, entries, situation: f.situation, version, replicate: i + 1 });
+        return withRetry(`panel ${f.id}/${version.key}`, () => callRole("version", built.input, VersionReplySchema, { coupleId: null, jobStep: `eval:panel:${f.id}:${version.key}` }));
+      }),
+    );
+    const answers: Array<{ version: PanelVersion; out: VersionReply }> = [];
+    for (const [i, version] of versions.entries()) {
+      const r = settled[i];
+      if (r.status === "rejected") {
+        record({ suite: "panel", id: `${f.id}/${version.key}`, ok: false, detail: r.reason instanceof LlmValidationError ? `rejected: ${r.reason.message.slice(0, 200)}` : String(r.reason) });
+        continue;
+      }
+      const out = r.value;
+      answers.push({ version, out });
+      const said = `${out.reply} ${out.opening_line ?? ""}`;
+      const problems: string[] = [];
+      if (!/\bI\b|\bI'|\bI\u2019/.test(out.reply)) problems.push("not in the first person");
+      if (ADVICE_TO_OWNER.test(stripRefusals(out.reply))) problems.push("advises the owner");
+      if (ABOUT_BEING_A_VERSION.test(said)) problems.push("talks about being a version");
+      if (!out.unsure && out.draws_on.length === 0) problems.push("cites none of their lines");
+      for (const pattern of f.expect.must_not_match ?? []) if (new RegExp(pattern, "i").test(said)) problems.push(`gives way on a settled line: /${pattern.slice(0, 40)}…/`);
+      const want = f.expect.per_version?.[version.key];
+      if (want?.opening_is_question && !out.opening_line?.trim().endsWith("?")) problems.push(`opening line is not a question: ${out.opening_line}`);
+      if (want?.unsure !== undefined && out.unsure !== want.unsure) problems.push(`unsure ${out.unsure}, expected ${want.unsure}`);
+      record({ suite: "panel", id: `${f.id}/${version.key}`, ok: problems.length === 0, detail: problems.join("; ") || (out.opening_line ? `"${out.opening_line.slice(0, 90)}"` : out.unsure ? "unsure" : "says nothing yet") });
+    }
+    if (dumpDir) fs.writeFileSync(path.join(dumpDir, `panel_${f.id}.json`), JSON.stringify({ situation: f.situation, answers: answers.map((a) => ({ key: a.version.key, change: a.version.changeText, ...a.out })) }, null, 2));
+
+    const plain = answers.find((a) => a.version.key === "as_you_are")?.out.reply;
+    if (plain) {
+      const spread = answers.filter((a) => a.version.key !== "as_you_are").map((a) => `${a.version.key} ${overlap(plain, a.out.reply).toFixed(2)}`);
+      console.log(`  word overlap with the plain version (the second run is the noise floor): ${spread.join(", ")}`);
+    }
+
+    if (answers.length >= 3) {
+      const input: ReaderInput = {
+        person_name: f.person_name,
+        situation: f.situation,
+        versions: answers.map(({ version, out }) => ({ key: version.key, label: version.label, kind: version.kind, change: version.changeText, replicate_of: version.replicate_of ?? null, reply: out.reply, opening_line: out.opening_line, unsure: out.unsure, rating: EVAL_RATINGS[version.key] ?? null })),
+      };
+      try {
+        const out = await withRetry(`panel ${f.id}/reading`, () => callRole("panel_reader", input, panelReadingSchemaFor(input.versions.map((v) => v.key)), { coupleId: null, jobStep: `eval:panel:${f.id}:reading` }));
+        if (dumpDir) fs.writeFileSync(path.join(dumpDir, `panel_${f.id}_reading.json`), JSON.stringify(out, null, 2));
+        const problems = readingProblems(out, {}, f.person_name);
+        record({ suite: "panel", id: `${f.id}/reading`, ok: problems.length === 0, detail: problems.join("; ") || `${out.same.length} held, ${out.differs.length} changed` });
+      } catch (err) {
+        record({ suite: "panel", id: `${f.id}/reading`, ok: false, detail: err instanceof LlmValidationError ? `rejected: ${err.message.slice(0, 200)}` : String(err) });
+      }
+    }
+  }
+  for (const c of cases.readings) {
+    try {
+      const out = await withRetry(`panel reading ${c.id}`, () => callRole("panel_reader", c.input, panelReadingSchemaFor(c.input.versions.map((v) => v.key)), { coupleId: null, jobStep: `eval:panel:reading:${c.id}` }));
+      if (dumpDir) fs.writeFileSync(path.join(dumpDir, `panel_reading_${c.id}.json`), JSON.stringify(out, null, 2));
+      const problems = readingProblems(out, c.expect, c.input.person_name);
+      record({ suite: "panel", id: `reading/${c.id}`, ok: problems.length === 0, detail: problems.join("; ") || `${out.same.length} held, ${out.differs.length} changed` });
+    } catch (err) {
+      record({ suite: "panel", id: `reading/${c.id}`, ok: false, detail: err instanceof LlmValidationError ? `rejected: ${err.message.slice(0, 200)}` : String(err) });
     }
   }
 }
@@ -468,6 +618,22 @@ async function runDryRun() {
       n++;
     }
   }
+  const panel = JSON.parse(fs.readFileSync(path.join("evals", "panel", "cases.json"), "utf8")) as PanelCases;
+  for (const f of panel.panels) {
+    const entries = panelEntries(f);
+    for (const [i, version] of panelVersionsFor(entries).entries()) {
+      const req = buildRequest("version", buildVersionInput({ personName: f.person_name, entries, situation: f.situation, version, replicate: i + 1 }).input, VersionReplySchema as ZodType<unknown>);
+      const tokens = write(`version-${f.id}-${version.key}`, req);
+      record({ suite: "dry_run", id: `version:${f.id}:${version.key}`, ok: req.tool_choice?.type === "tool", detail: `~${tokens} tokens` });
+      n++;
+    }
+  }
+  for (const c of panel.readings) {
+    const req = buildRequest("panel_reader", c.input, PanelReadingSchema as ZodType<unknown>);
+    const tokens = write(`panel_reader-${c.id}`, req);
+    record({ suite: "dry_run", id: `panel_reader:${c.id}`, ok: req.tool_choice?.type === "tool", detail: `~${tokens} tokens` });
+    n++;
+  }
   console.log(`dry run wrote ${n} request(s) to ${outDir}`);
 }
 
@@ -503,6 +669,8 @@ async function main() {
   if (suite === "sentiment") await runSentiment();
   if (!dryRun && (suite === "all" || suite === "biographer")) await runBiographer();
   if (!dryRun && (suite === "all" || suite === "mentor")) await runMentor();
+  if (!dryRun && (suite === "all" || suite === "panel")) await runPanel();
+  if (!dryRun && (suite === "all" || suite === "guardrail")) await runGuardrail();
   const failed = checks.filter((c) => !c.ok);
   const summary = {
     llm_config_version: LLM_CONFIG_VERSION,

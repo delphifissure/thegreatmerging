@@ -225,3 +225,29 @@ export const MentorReplySchema = z
     if (r.unsure && !r.question_for_biographer?.trim()) ctx.addIssue({ code: "custom", path: ["question_for_biographer"], message: "when unsure, give the one question the biographer should ask" });
   });
 export type MentorReply = z.infer<typeof MentorReplySchema>;
+
+/** One version of a person answering one situation (the solo panel). */
+export const VersionReplySchema = z
+  .object({
+    /** The first thing this version would say out loud, word for word. */
+    opening_line: Prose(400).nullable(),
+    unsure: z.boolean(),
+    question_for_biographer: z.string().max(400).nullable(),
+    draws_on: z.array(z.string().min(1).max(40)).max(8),
+    // The long field comes last. When it came first, the model closed it in its native tool format
+    // and wrote the next parameter inside the string (see lib/llm/repair.ts).
+    reply: Prose(1100),
+  })
+  .superRefine((r, ctx) => {
+    if (r.unsure && !r.question_for_biographer?.trim()) ctx.addIssue({ code: "custom", path: ["question_for_biographer"], message: "when unsure, give the one question the biographer should ask" });
+  });
+export type VersionReply = z.infer<typeof VersionReplySchema>;
+
+/** What held and what changed across the versions, as observations and one question. */
+export const PanelReadingSchema = z.object({
+  same: z.array(Prose(300)).max(3),
+  // The prompt asks for four at most; one over is kept rather than spending a retry on it.
+  differs: z.array(z.object({ observation: Prose(400), versions: z.array(z.string().min(1).max(40)).min(1).max(8) })).max(5),
+  question: Prose(400),
+});
+export type PanelReading = z.infer<typeof PanelReadingSchema>;

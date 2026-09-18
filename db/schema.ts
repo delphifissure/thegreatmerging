@@ -73,6 +73,8 @@ export const llmRoleEnum = pgEnum("llm_role", [
   "biographer",
   "drafter",
   "mentor",
+  "version",
+  "panel_reader",
 ]);
 export const runStatusEnum = pgEnum("run_status", ["pending", "running", "complete", "failed"]);
 export const exportKindEnum = pgEnum("export_kind", ["brief", "plan", "profile"]);
@@ -733,11 +735,12 @@ export const research_agreements = pgTable("research_agreements", {
 // Intervention prototype (docs/concept_intervention.md). Everything here is private to its owner.
 // Free text is stored only in *_enc columns (lib/crypto.ts encryptText).
 // ---------------------------------------------------------------------------------------------
-export const conversationKindEnum = pgEnum("conversation_kind", ["biographer", "mentor"]);
+export const conversationKindEnum = pgEnum("conversation_kind", ["biographer", "mentor", "panel"]);
 export const conversationStatusEnum = pgEnum("conversation_status", ["open", "closed"]);
 export const conversationDepthEnum = pgEnum("conversation_depth", ["light", "deeper"]);
 export const turnRoleEnum = pgEnum("turn_role", ["guide", "person", "avatar"]);
-export const turnRatingEnum = pgEnum("turn_rating", ["like_me", "not_like_me"]);
+/** A panel version can also be "me on a bad day", which is neither of the other two. */
+export const turnRatingEnum = pgEnum("turn_rating", ["like_me", "not_like_me", "bad_day"]);
 export const documentKindEnum = pgEnum("document_kind", ["history", "constitution"]);
 export const entryStatusEnum = pgEnum("entry_status", ["proposed", "ratified", "rejected"]);
 export const entryMarkEnum = pgEnum("entry_mark", ["settled", "open"]);

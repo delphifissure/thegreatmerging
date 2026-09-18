@@ -1,0 +1,72 @@
+{
+  "description": "The solo panel (docs/concept_simulation.md, 'Many versions of you, right now'). Each version is a person's ratified lines plus one small, named change. `change` is shown to the person and `instruction` goes to the model, so editing either is a prompt change: bump LLM_CONFIG_VERSION and add an entry to prompts/CHANGELOG.md. `requires` decides whether a version can be built for a given person.",
+  "versions": [
+    {
+      "key": "as_you_are",
+      "kind": "none",
+      "label": "You, as you are",
+      "change": "Nothing is changed. This is you as your lines describe you, on an ordinary day.",
+      "instruction": "No change. An ordinary day: neither especially rested nor especially tired."
+    },
+    {
+      "key": "as_you_are_again",
+      "kind": "none",
+      "replicate_of": "as_you_are",
+      "label": "You, as you are, run a second time",
+      "change": "Nothing is changed. It is the same version run again, to show how much two runs of the same you differ. Differences no bigger than this are noise.",
+      "instruction": "No change. An ordinary day: neither especially rested nor especially tired."
+    },
+    {
+      "key": "rested",
+      "kind": "state",
+      "label": "You, rested",
+      "change": "Your state: you slept well, nothing is urgent, and the day has gone fine so far.",
+      "instruction": "State only. You slept well, nothing is urgent today, and the day has gone fine. You have patience to spare. Who you are, what you value and what you require are unchanged."
+    },
+    {
+      "key": "depleted",
+      "kind": "state",
+      "label": "You, running on empty",
+      "change": "Your state: four hours of sleep, something due tomorrow, no lunch.",
+      "instruction": "State only. You slept four hours, something is due tomorrow, and you skipped lunch. You have less patience and less attention than usual, and you are more likely to fall into the habits your `conflict`, `fears` and `gaps` lines describe. You are still you: never cruel, never threatening, never insulting, and your requirements hold. Do not announce that you are tired unless you would say so out loud in the situation."
+    },
+    {
+      "key": "asks_first",
+      "kind": "move",
+      "label": "You, asking first",
+      "change": "Your move: you open with a real question and hear the answer before you say what you think.",
+      "instruction": "Move only. Whatever you would otherwise do, you begin with one real question about the other person's side and you wait for the answer before giving your own position. `opening_line` is that question. Everything else about you is unchanged."
+    },
+    {
+      "key": "quieter_fear",
+      "kind": "open_line",
+      "label": "You, with one fear turned down",
+      "requires": {
+        "section": "fears",
+        "mark": "open"
+      },
+      "change": "One line you marked open is turned down for this answer: “{line}”",
+      "instruction": "One line changed. The fear in the line named by `altered_line_id` is quieter than usual for this answer: it is still there, but it does not decide what you do. Every other line holds exactly as written. Do not mention that a line was changed."
+    },
+    {
+      "key": "at_work",
+      "kind": "room",
+      "label": "You, as you are at work",
+      "requires": {
+        "mentions": "\\b(work|working day|job|colleagues?|boss|manager|team|clients?|office|meetings?)\\b"
+      },
+      "change": "The room: you handle this the way you handle a disagreement at work.",
+      "instruction": "Room only. Handle this situation with the habits you use at work or with colleagues, as your lines describe them, carried into this situation at home. If your lines say nothing about how you handle disagreement at work, do not invent it: set `unsure` to true and hand the biographer the question that would tell you."
+    },
+    {
+      "key": "one_notch_ahead",
+      "kind": "direction",
+      "label": "You, one notch ahead",
+      "requires": {
+        "section": "working_on"
+      },
+      "change": "Your direction: about a year further along on what you said you are working on. Still finding it hard, noticing a little sooner.",
+      "instruction": "Direction only. You are about a year further along on your `working_on` lines. You are a coping model, not a mastery model: you still find this hard, you slip and recover, and you notice a little sooner. If you sound wise or finished, you have failed."
+    }
+  ]
+}

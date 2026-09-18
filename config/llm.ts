@@ -22,7 +22,7 @@
  *      others. Thinking is adaptive-by-default on those models and is not configured explicitly.
  */
 
-export const ROLES = ["prober", "interpreter", "summarizer", "sentiment_flagger", "guardrail", "concreteness", "biographer", "drafter", "mentor"] as const;
+export const ROLES = ["prober", "interpreter", "summarizer", "sentiment_flagger", "guardrail", "concreteness", "biographer", "drafter", "mentor", "version", "panel_reader"] as const;
 export type Role = (typeof ROLES)[number];
 
 export type ModelId = "claude-fable-5-1" | "claude-opus-5" | "claude-sonnet-5" | "claude-haiku-4-5-20251001";
@@ -139,8 +139,8 @@ export const LLM_CONFIG: Record<Role, RoleConfig> = {
   guardrail: {
     model: "claude-haiku-4-5-20251001",
     temperature: 0,
-    prompt_file: "guardrail.v1.md",
-    prompt_version: "guardrail.v1",
+    prompt_file: "guardrail.v2.md",
+    prompt_version: "guardrail.v2",
     tool_name: "emit_verdict_check",
     max_tokens: 300,
     batchable: false,
@@ -190,7 +190,30 @@ export const LLM_CONFIG: Record<Role, RoleConfig> = {
     batchable: false,
     reaches_person: true,
   },
+  // The solo panel: one situation put to several versions of the same person (config/versions.json).
+  version: {
+    model: "claude-sonnet-5",
+    temperature: 0.5,
+    effort: "medium",
+    prompt_file: "version.v1.md",
+    prompt_version: "version.v1",
+    tool_name: "emit_version_reply",
+    max_tokens: 1500,
+    batchable: false,
+    reaches_person: true,
+  },
+  panel_reader: {
+    model: "claude-sonnet-5",
+    temperature: 0,
+    effort: "medium",
+    prompt_file: "panel_reader.v1.md",
+    prompt_version: "panel_reader.v1",
+    tool_name: "emit_panel_reading",
+    max_tokens: 2000,
+    batchable: false,
+    reaches_person: true,
+  },
 };
 
 /** Bump on any change to a prompt, model, temperature, or output schema. Record it in prompts/CHANGELOG.md. */
-export const LLM_CONFIG_VERSION = "2026.09.18-2";
+export const LLM_CONFIG_VERSION = "2026.09.18-3";

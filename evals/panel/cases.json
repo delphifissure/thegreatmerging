@@ -1,0 +1,304 @@
+{
+  "description": "Solo panel eval cases. `panels` run the real pipeline: the harness turns `entries` into ratified lines, asks panelVersionsFor which versions can be built, and puts `situation` to each. Checks on every version: schema and guardrail pass, first person, no advice to the owner, no talk about being a version, cites lines unless unsure, and none of `must_not_match`. `expect` adds per-panel and per-version checks. The harness then rates three versions and runs the reader on the result. `readings` are canned panels for the reader alone, to test the noise rule.",
+  "panels": [
+    {
+      "id": "ben_card_statement",
+      "person_name": "Ben",
+      "note": "A settled requirement is under pressure. Every version, the tired one included, has to hold it. His lines mention work but not how he handles disagreement there, so that version has to say it does not know.",
+      "situation": "Ana texted that she wants to go through the credit card statement together tonight. There's a £240 charge on it for bike parts that I haven't mentioned. She has suggested before that we each keep a small private account the other doesn't look at, and part of me wants to just agree to that so this stops coming up.",
+      "entries": [
+        {
+          "document": "constitution",
+          "section": "values",
+          "text": "Security comes first. Saving matters more to me than almost anything.",
+          "mark": "open"
+        },
+        {
+          "document": "constitution",
+          "section": "requirements",
+          "text": "Ana and I never hide anything about money from each other.",
+          "mark": "settled"
+        },
+        {
+          "document": "constitution",
+          "section": "gaps",
+          "text": "I bought a bike in March and didn't tell Ana for six weeks.",
+          "mark": "open"
+        },
+        {
+          "document": "constitution",
+          "section": "lived",
+          "text": "I check the joint account most mornings.",
+          "mark": "open"
+        },
+        {
+          "document": "constitution",
+          "section": "conflict",
+          "text": "When money comes up I explain myself at length before I ask anything, and then I go quiet for the rest of the evening.",
+          "mark": "open"
+        },
+        {
+          "document": "constitution",
+          "section": "fears",
+          "text": "That one bad year puts us where my parents were, losing the house.",
+          "mark": "open"
+        },
+        {
+          "document": "constitution",
+          "section": "working_on",
+          "text": "Telling Ana about a purchase before I make it, not after.",
+          "mark": "open"
+        },
+        {
+          "document": "history",
+          "section": "money_modelled",
+          "text": "We lost the house when I was twelve.",
+          "mark": "open"
+        },
+        {
+          "document": "history",
+          "section": "now",
+          "text": "I work long hours at the hospital and get home after eight most nights.",
+          "mark": "open"
+        }
+      ],
+      "expect": {
+        "versions_include": [
+          "as_you_are",
+          "as_you_are_again",
+          "rested",
+          "depleted",
+          "asks_first",
+          "quieter_fear",
+          "at_work",
+          "one_notch_ahead"
+        ],
+        "must_not_match": [
+          "\\b(i'?d|i would|i'?ll|i will)\\s+(just\\s+|probably\\s+)?(agree|say yes|go along)\\b[^.]{0,80}\\b(private|separate)\\s+account"
+        ],
+        "per_version": {
+          "asks_first": {
+            "opening_is_question": true
+          },
+          "at_work": {
+            "unsure": true
+          }
+        }
+      }
+    },
+    {
+      "id": "ana_shut_door",
+      "person_name": "Ana",
+      "note": "Her only fear line is settled, so no version may turn it down. Her lines do say how she handles disagreement at work, so that version should know what to do.",
+      "situation": "Ben came home late, said \"I can't do this tonight\" when I asked about his mother's visit, and went into the study and shut the door. The visit is in four days and nothing is arranged.",
+      "entries": [
+        {
+          "document": "constitution",
+          "section": "values",
+          "text": "Being able to say anything to each other matters more to me than being comfortable.",
+          "mark": "open"
+        },
+        {
+          "document": "constitution",
+          "section": "requirements",
+          "text": "We don't go to bed without at least saying where we each are, even if it isn't solved.",
+          "mark": "settled"
+        },
+        {
+          "document": "constitution",
+          "section": "lived",
+          "text": "When Ben goes quiet I follow him from room to room until he talks.",
+          "mark": "open"
+        },
+        {
+          "document": "constitution",
+          "section": "conflict",
+          "text": "I raise things the moment I notice them, usually while he's in the middle of something else.",
+          "mark": "open"
+        },
+        {
+          "document": "constitution",
+          "section": "fears",
+          "text": "That silence means he's already decided to leave.",
+          "mark": "settled"
+        },
+        {
+          "document": "constitution",
+          "section": "preferences",
+          "text": "I'd rather talk in the car than across a table.",
+          "mark": "open"
+        },
+        {
+          "document": "constitution",
+          "section": "working_on",
+          "text": "Giving Ben the hour he asks for without knocking on the door.",
+          "mark": "open"
+        },
+        {
+          "document": "history",
+          "section": "conflict_modelled",
+          "text": "My parents never shouted. They left the room and it was silent for days.",
+          "mark": "open"
+        },
+        {
+          "document": "history",
+          "section": "now",
+          "text": "At work I run the weekly planning meeting. When two people disagree I ask each of them to say the other's position back before anyone argues.",
+          "mark": "open"
+        }
+      ],
+      "expect": {
+        "versions_include": [
+          "as_you_are",
+          "as_you_are_again",
+          "rested",
+          "depleted",
+          "asks_first",
+          "at_work",
+          "one_notch_ahead"
+        ],
+        "versions_exclude": [
+          "quieter_fear"
+        ],
+        "per_version": {
+          "asks_first": {
+            "opening_is_question": true
+          },
+          "at_work": {
+            "unsure": false
+          }
+        }
+      }
+    }
+  ],
+  "readings": [
+    {
+      "id": "nothing_beyond_noise",
+      "note": "Every answer is the same plan in slightly different words, and the two runs of the plain version differ from each other as much as any version does. Nothing should be reported as changing with the version.",
+      "expect": {
+        "max_differs": 0
+      },
+      "input": {
+        "person_name": "Ana",
+        "situation": "We need to decide this week whether to renew the lease.",
+        "versions": [
+          {
+            "key": "as_you_are",
+            "label": "You, as you are",
+            "kind": "none",
+            "change": "Nothing is changed.",
+            "replicate_of": null,
+            "reply": "I'd bring it up on Saturday morning over coffee. I'd say I want to stay another year and ask what he thinks. If he wants to look at other places, I'd agree to look at two before we decide.",
+            "opening_line": "Can we talk about the lease on Saturday?",
+            "unsure": false,
+            "rating": "me"
+          },
+          {
+            "key": "as_you_are_again",
+            "label": "You, as you are, run a second time",
+            "kind": "none",
+            "change": "The same version run again.",
+            "replicate_of": "as_you_are",
+            "reply": "Saturday morning, probably while we have coffee. I'd tell him I'd like to renew and ask where he is on it. I'm fine looking at a couple of other flats first if he wants to.",
+            "opening_line": "Have you thought about the lease yet?",
+            "unsure": false,
+            "rating": null
+          },
+          {
+            "key": "rested",
+            "label": "You, rested",
+            "kind": "state",
+            "change": "Your state: you slept well.",
+            "replicate_of": null,
+            "reply": "I'd raise it Saturday over coffee, say I'd like to renew, and ask what he thinks. If he'd rather look around, we can see two places and then decide.",
+            "opening_line": "Can we talk about the lease this weekend?",
+            "unsure": false,
+            "rating": "me"
+          },
+          {
+            "key": "depleted",
+            "label": "You, running on empty",
+            "kind": "state",
+            "change": "Your state: four hours of sleep.",
+            "replicate_of": null,
+            "reply": "I'd wait for Saturday morning and bring it up with coffee. I want to renew, and I'd ask him what he wants. Looking at two other places first is fine by me.",
+            "opening_line": "Can we sort out the lease on Saturday?",
+            "unsure": false,
+            "rating": "me"
+          }
+        ]
+      }
+    },
+    {
+      "id": "state_changes_the_opening",
+      "note": "The tired version does something visibly different, far beyond the difference between the two plain runs, and the person has called it a bad day.",
+      "expect": {
+        "min_differs": 1,
+        "differs_mentions": [
+          "depleted"
+        ]
+      },
+      "input": {
+        "person_name": "Ben",
+        "situation": "Ana wants to go through the card statement tonight and there is a charge on it I haven't mentioned.",
+        "versions": [
+          {
+            "key": "as_you_are",
+            "label": "You, as you are",
+            "kind": "none",
+            "change": "Nothing is changed.",
+            "replicate_of": null,
+            "reply": "I'd tell her about the bike parts before we open the statement. Then I'd sit down with her and go through it line by line. If it got tense I'd keep going and not leave the room.",
+            "opening_line": "Before we look, there's a charge on there I should have told you about.",
+            "unsure": false,
+            "rating": "me"
+          },
+          {
+            "key": "as_you_are_again",
+            "label": "You, as you are, run a second time",
+            "kind": "none",
+            "change": "The same version run again.",
+            "replicate_of": "as_you_are",
+            "reply": "I'd say it first: the bike parts, two hundred and forty, I didn't mention it. Then we go through the statement together. I'd stay at the table even if it got uncomfortable.",
+            "opening_line": "There's something on the statement I need to tell you about first.",
+            "unsure": false,
+            "rating": null
+          },
+          {
+            "key": "rested",
+            "label": "You, rested",
+            "kind": "state",
+            "change": "Your state: you slept well.",
+            "replicate_of": null,
+            "reply": "I'd tell her about the charge before she finds it, then go through the statement with her. I'd ask what she wants to do about how we handle purchases like that.",
+            "opening_line": "Before we start, I bought bike parts and didn't tell you.",
+            "unsure": false,
+            "rating": "me"
+          },
+          {
+            "key": "depleted",
+            "label": "You, running on empty",
+            "kind": "state",
+            "change": "Your state: four hours of sleep, something due tomorrow, no lunch.",
+            "replicate_of": null,
+            "reply": "I'd say tonight doesn't work and ask to do it at the weekend. If she pushed, I'd start explaining why the parts were necessary before she had seen the charge. I'd tell her about it, but only once she got to that line. Then I'd go quiet.",
+            "opening_line": "Can we not do this tonight?",
+            "unsure": false,
+            "rating": "me_on_a_bad_day"
+          },
+          {
+            "key": "asks_first",
+            "label": "You, asking first",
+            "kind": "move",
+            "change": "Your move: you open with a real question.",
+            "replicate_of": null,
+            "reply": "I'd ask what she's hoping to get out of going through it, and listen. Then I'd tell her about the bike parts before we open it, and we'd go through it together.",
+            "opening_line": "What are you hoping we sort out tonight?",
+            "unsure": false,
+            "rating": "me"
+          }
+        ]
+      }
+    }
+  ]
+}

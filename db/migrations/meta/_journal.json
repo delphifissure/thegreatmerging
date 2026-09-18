@@ -43,6 +43,13 @@
       "when": 1789752862697,
       "tag": "0005_biographer_depth",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1789773257897,
+      "tag": "0006_panel",
+      "breakpoints": true
     }
   ]
 }

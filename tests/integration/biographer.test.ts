@@ -12,7 +12,7 @@ import { connect, DB_TESTS_ENABLED, deleteFixture, prepareDatabase, runAs, SKIP_
 process.env.FIELD_ENCRYPTION_KEY ||= generateKeyBase64();
 
 import { getSql } from "@/db/client";
-import { addOwnEntry, appendTurn, avatarRatings, closeThread, createThread, getOwnThread, listOpenQuestions, listOwnEntries, listTurns, proposeEntries, rateTurn, ratifyEntry, rejectEntry, removeEntry, saveNextTimeQuestions, setThreadDepth } from "@/lib/data";
+import { addOwnEntry, appendTurn, avatarRatings, closeThread, createThread, getOwnThread, listOpenQuestions, listOwnEntries, listTurns, proposeEntries, rateTurn, ratifyEntry, rejectEntry, removeEntry, saveNextTimeQuestions, setThreadDepth, listPanels, versionRatings } from "@/lib/data";
 import { threadsToReturnTo } from "@/lib/biographer/inputs";
 
 const suite = DB_TESTS_ENABLED ? describe : describe.skip;
@@ -115,7 +115,7 @@ suite(`biographer data ${DB_TESTS_ENABLED ? "" : SKIP_MESSAGE}`, () => {
     await appendTurn({ threadId: thread.id, userId: A, role: "person", text: "A long answer about Leeds and my brother." });
     await appendTurn({ threadId: thread.id, userId: A, role: "guide", text: "Tell me about the tin.", extras: { options: ["I hid my pocket money"], threads: ["my brother's loan"] }, meta: { kind: "follow_up", aim: "moment" } });
     const turns = await listTurns(thread.id, A);
-    expect(turns[1].extras).toEqual({ options: ["I hid my pocket money"], threads: ["my brother's loan"] });
+    expect(turns[1].extras).toMatchObject({ options: ["I hid my pocket money"], threads: ["my brother's loan"] });
     expect(turns[0].extras).toBeNull();
     expect(threadsToReturnTo(turns)).toEqual(["my brother's loan"]);
     const [raw] = await sql<Array<{ extras_enc: Buffer; meta: unknown }>>`select extras_enc, meta from conversation_turns where thread_id = ${thread.id} and seq = 2`;
@@ -131,6 +131,34 @@ suite(`biographer data ${DB_TESTS_ENABLED ? "" : SKIP_MESSAGE}`, () => {
     expect(await listOpenQuestions(B, 20)).toEqual([]);
     // They are stored with the thread and marked, so the transcript and the model can leave them out.
     expect((await listTurns(thread.id, A)).filter((t) => t.meta.kind === "next_time")).toHaveLength(2);
+  });
+
+  it("keeps a panel of versions: three-way verdicts tallied per version, apart from the one-notch-ahead ratings", async () => {
+    const before = await avatarRatings(A);
+    const thread = await createThread({ userId: A, kind: "panel", focus: null });
+    await appendTurn({ threadId: thread.id, userId: A, role: "person", text: "Ana wants to go through the card statement tonight." });
+    const plain = await appendTurn({ threadId: thread.id, userId: A, role: "avatar", text: "I'd tell her first.", extras: { options: [], threads: [], opening_line: "There's a charge I should have told you about.", change: "Nothing is changed." }, meta: { version: "as_you_are", draws_on: [], unsure: false } });
+    const tired = await appendTurn({ threadId: thread.id, userId: A, role: "avatar", text: "I'd ask to do it at the weekend.", extras: { options: [], threads: [], opening_line: null, change: "Your state: four hours of sleep." }, meta: { version: "depleted", draws_on: [], unsure: false } });
+    await appendTurn({ threadId: thread.id, userId: A, role: "guide", text: "Which is closer to the nights that go badly?", extras: { options: [], threads: [], reading: { same: ["Every version tells her."], differs: [{ observation: "The version short on sleep asks to move it.", versions: ["depleted"] }] } }, meta: { kind: "panel_reading" } });
+
+    await rateTurn({ turnId: plain.id, userId: A, rating: "like_me" });
+    await rateTurn({ turnId: tired.id, userId: A, rating: "bad_day" });
+    await rateTurn({ turnId: tired.id, userId: B, rating: "not_like_me" });
+    expect(await versionRatings(A)).toEqual({ as_you_are: { like_me: 1, bad_day: 0, not_like_me: 0 }, depleted: { like_me: 0, bad_day: 1, not_like_me: 0 } });
+    expect(await versionRatings(B)).toEqual({});
+    // Verdicts on panel versions do not leak into the self-recognition count for the one-notch-ahead avatar.
+    expect(await avatarRatings(A)).toEqual(before);
+
+    const turns = await listTurns(thread.id, A);
+    expect(turns[1].extras).toMatchObject({ opening_line: "There's a charge I should have told you about.", change: "Nothing is changed." });
+    expect(turns[3].extras?.reading).toEqual({ same: ["Every version tells her."], differs: [{ observation: "The version short on sleep asks to move it.", versions: ["depleted"] }] });
+    const [raw] = await sql<Array<{ extras_enc: Buffer; meta: unknown }>>`select extras_enc, meta from conversation_turns where id = ${plain.id}`;
+    expect(raw.extras_enc.toString("utf8")).not.toContain("charge");
+    expect(JSON.stringify(raw.meta)).not.toMatch(/charge|statement/);
+
+    const panels = await listPanels(A);
+    expect(panels[0]).toMatchObject({ id: thread.id, situation: "Ana wants to go through the card statement tonight." });
+    expect(await listPanels(B)).toEqual([]);
   });
 
   it("row-level security hides every table from the partner and from anonymous sessions", async () => {
