@@ -43,10 +43,28 @@ Low confidence on a topic means more interviewing, not a rehearsal. Confidence i
 
 Rules for the third axis:
 
-- **Settled and open.** Each entry in a constitution is marked settled or open to explore, by its owner. The engine perturbs only what is open. Growth areas are self-selected.
+- **Settled and open.** Every line in a constitution is either settled, meaning "this is me, do not vary it", or open, meaning "I am willing to see what a different me would do here". Requirements are settled by default and everything else is open by default; the owner can change any mark. Variations of a person touch only open lines, so these marks are the dimensions of that person's permutation space.
 - **Whose objective defines the variation.** You may meet your own variations. With your partner's consent you may meet the version of them that they are working toward, authored by them. Nobody is ever shown a partner optimized for themselves. See `concept_ancestor_sim.md`.
 - **Near, wanted, and helpful.** A variation is only worth reporting if the discriminator says it is near the person, the person says it is a self they would want to be, and the evaluator says it helped.
 - **Symmetric burden.** A search for harmony will find that the more accommodating partner is cheaper to change, and would quietly optimize that person away. The reporter must always show leverage on both sides and joint moves, and must never rank who should change.
+
+## The hundred-by-hundred design
+
+The owner's thesis: let 100 permutations of you negotiate a hard topic with 100 permutations of your partner. If few succeed, what is different about the versions that did, and, if the real people like that outcome, how would each have to adjust?
+
+One success in ten thousand is not evidence. With that many runs and that many features, something will always look special about the winner, and the same pair rerun with a different seed may fail. The rigorous form of the thesis is to estimate the success surface, not to find the one winning universe:
+
+- **Design the permutations.** Vary each person along a handful of open lines, states and moves, using a fractional design so 100 versions cover the space evenly. Add a fourth axis: the **framing** of the topic itself.
+- **Replicate.** Run pairs more than once, and stop unpromising ones early, so cost stays in the hundreds of dollars on small models.
+- **Read effects, not winners.** Which of my factors raise the success rate whichever partner-version I face? Which of theirs? Which work only in combination? The last kind are joint moves and are reported to both people.
+- **Rank by leverage.** Effect on success, divided by how far the variation sits from the real person. Moves and framings are cheap to adopt; dispositions are dear. Winning worlds usually differ by path, not by who the people are.
+- **If success stays rare everywhere,** the finding is about the topic. There is no zone of agreement under this framing, so split it, widen it, or park it.
+
+**Adoption, outcome first.** Show both people the destination that the successful worlds reached, without the path. If both like it, each privately sees what their successful versions did differently, ranked by leverage, and both see the joint moves. Then rehearse the path with the real person in the loop, and then do it for real. The script will not survive contact; the opening moves and the principles will.
+
+**The change budget.** Each person's capacity to accommodate is one of the entity's finite resources. Each person sees their own leverage privately. If, across topics, the adjustments keep falling to one person, the Aligner raises that openly as a fairness question for the couple.
+
+The broad design finds where success lives. Branching finds the moves.
 
 ## The search: branch at ruptures
 
@@ -79,7 +97,8 @@ The owner is right that this is useful. Rehearsing a hard conversation is an est
 - Both agree to be sparred with. The avatar is always labelled, with its confidence and whether it is a variation.
 - Disclosure tiers hold. Asked about anything private, the avatar says that is a question for the real person.
 - **The publicity test.** Coaching is limited to approaches you would be comfortable with your partner knowing you practised. "Lead with appreciation, ask before advising" passes. "Wait until she is tired" fails. This is the line between skill and manipulation, since the same tool can optimize persuasion against a model of someone's psychology.
-- What you say while sparring is yours. It reaches your partner, or their biographer, only if you choose.
+- What you say while sparring is yours. You get the transcript, a post-game summary of what you tried and what landed, and trends across sessions in your own behaviour: how you open, how soon it ruptures, how often you repair.
+- The modelled person receives none of your words. With your approval, two things can flow back: moments where their avatar was unsure how they would respond, turned into general questions for their biographer, and a post-game you choose to share.
 - The Aligner watches for substitution: practising forever, or venting at the avatar, in place of the real conversation.
 
 ## The Aligner: disclosed goal, quiet method, honest on request
@@ -106,6 +125,6 @@ Cost is small at this scale. With avatars on Claude Sonnet 5, the Aligner and ev
 
 ## Open questions
 
-- Is the partnership itself an agent with the charter as its constitution, or is that simply the Aligner's stance?
-- What flows back to a person whose avatar was sparred with: nothing, or questions for their biographer that the sparring partner has approved?
-- How many open entries does a constitution need before disposition variations say anything useful?
+- How reliable is the automated evaluator across ten thousand runs? It needs calibrating against the couple's own ratings of a sample of outcomes.
+- How is "distance from the real person" measured for the leverage ranking: by the discriminator, by the person, or both?
+- Should each person's model of the other be elicited before or after they read the other's constitution?

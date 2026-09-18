@@ -6,10 +6,19 @@ Status: proposal, 18 September 2026. Nothing changes in the app until the owner 
 
 The app stops trying to assess a couple and starts helping one. It is for two people who are fully committed, are not looking for a way out, and are willing to grow both as individuals and for the partnership, treated as a third thing they both look after. The work is to help each person see themselves clearly, see the other clearly, and find what their disagreements have in common: shared ends behind different means, and fears that turn out to be the same fear.
 
-## Three documents, owned by the people
+## What a partnership is
+
+Two minds that have each moved part of themselves into the other: memory, regulation, prediction and purpose. The result is one system that lives in two bodies, runs apart most of the day, and comes back together over a narrow, lossy channel of words, touch and behaviour. To act for the pair while apart, each person carries a working copy of the other in their head. Most conflict is between a person and that copy, which is stale or wrong. The system has finite resources, including each person's capacity to change, and it can reproduce: children, homes, traditions, and the constitutions it writes into new minds.
+
+Its health is the quality of three things: the **models** each holds of the other, the **channel** between them, and the **shared state**, meaning the story, the plan and the ledger of resources and debts. Conflict is divergence in any of the three. Many standing disagreements are the entity's own ambivalence, split across two bodies: one carries the worry and the other the hope, and each overcorrects for the other. Growth is the entity amending its constitution without either mind being overwritten.
+
+The partnership has no source of wants beyond what both people have ratified. So it is a first-class object with state, and it may be given a voice in rehearsals and sessions, but that voice speaks only for the charter. It can say "we agreed this" and "this serves what we both said we want". It can never invent a want or outrank a person's settled requirement, because "for the sake of the relationship" is how pressure gets applied.
+
+## Four documents, owned by the people
 
 - **History**, one each, private. The story of a life as it bears on the partnership: family, earlier relationships, how money, sex, conflict and parenting were modelled, what happened and what it taught.
 - **Constitution**, one each. What I value, ranked. How I actually spend time, money and attention. Where those two differ. My requirements and preferences. How I fight and repair. What I fear. What I am working on. The app drafts and the person ratifies; nothing enters without their signature, and it is amended over time.
+- **Model of the other**, one each. How I think my partner would answer, and what I think they want. Set beside their own constitution, it is the map of our misunderstandings, and it lets a rehearsal show the difference between the fight you expect and the one more likely to happen.
 - **Charter**, one, shared. What we both want. Where we differ and what sits underneath. Our loops. Agreements and experiments, with dates. How we disagree well. What each of us is growing toward alone, which the other supports. This is today's brief and plan, merged and kept alive.
 
 ## Five roles for the model
