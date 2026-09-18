@@ -1,6 +1,6 @@
 # Design note: how an avatar should sound
 
-Companion to `concept_intervention.md` and `concept_simulation.md`. Status: proposal, 18 September 2026. The owner's question: can an avatar adopt the writing patterns of its human, is there anything to do ahead of time besides talking with the person a lot, and is the gap between how someone speaks and how they write a bug or a feature?
+Companion to `concept_intervention.md` and `concept_simulation.md`. Status: proposal, 18 September 2026. Summarized in the white paper under "How an avatar should sound" (https://claude.ai/code/artifact/b0687113-86cb-486b-ae22-34579d468d97). The owner's question: can an avatar adopt the writing patterns of its human, is there anything to do ahead of time besides talking with the person a lot, and is the gap between how someone speaks and how they write a bug or a feature?
 
 ## Two kinds of fidelity
 
