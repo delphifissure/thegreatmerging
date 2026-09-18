@@ -12,7 +12,8 @@ import { connect, DB_TESTS_ENABLED, deleteFixture, prepareDatabase, runAs, SKIP_
 process.env.FIELD_ENCRYPTION_KEY ||= generateKeyBase64();
 
 import { getSql } from "@/db/client";
-import { addOwnEntry, appendTurn, avatarRatings, closeThread, createThread, getOwnThread, listOpenQuestions, listOwnEntries, listTurns, proposeEntries, rateTurn, ratifyEntry, rejectEntry, removeEntry } from "@/lib/data";
+import { addOwnEntry, appendTurn, avatarRatings, closeThread, createThread, getOwnThread, listOpenQuestions, listOwnEntries, listTurns, proposeEntries, rateTurn, ratifyEntry, rejectEntry, removeEntry, saveNextTimeQuestions, setThreadDepth } from "@/lib/data";
+import { threadsToReturnTo } from "@/lib/biographer/inputs";
 
 const suite = DB_TESTS_ENABLED ? describe : describe.skip;
 
@@ -101,6 +102,35 @@ suite(`biographer data ${DB_TESTS_ENABLED ? "" : SKIP_MESSAGE}`, () => {
     await rateTurn({ turnId: unsure.id, userId: A, rating: "not_like_me" });
     await rateTurn({ turnId: sure.id, userId: B, rating: "not_like_me" });
     expect(await avatarRatings(A)).toEqual({ like_me: 1, not_like_me: 1 });
+  });
+
+  it("keeps the depth the person chose, their option and thread labels encrypted, and the drafter's questions for next time", async () => {
+    const thread = await createThread({ userId: A, kind: "biographer", focus: "money" });
+    expect(thread.depth).toBe("light");
+    await setThreadDepth({ threadId: thread.id, userId: B, depth: "deeper" });
+    expect((await getOwnThread(thread.id, A))?.depth).toBe("light");
+    await setThreadDepth({ threadId: thread.id, userId: A, depth: "deeper" });
+    expect((await getOwnThread(thread.id, A))?.depth).toBe("deeper");
+
+    await appendTurn({ threadId: thread.id, userId: A, role: "person", text: "A long answer about Leeds and my brother." });
+    await appendTurn({ threadId: thread.id, userId: A, role: "guide", text: "Tell me about the tin.", extras: { options: ["I hid my pocket money"], threads: ["my brother's loan"] }, meta: { kind: "follow_up", aim: "moment" } });
+    const turns = await listTurns(thread.id, A);
+    expect(turns[1].extras).toEqual({ options: ["I hid my pocket money"], threads: ["my brother's loan"] });
+    expect(turns[0].extras).toBeNull();
+    expect(threadsToReturnTo(turns)).toEqual(["my brother's loan"]);
+    const [raw] = await sql<Array<{ extras_enc: Buffer; meta: unknown }>>`select extras_enc, meta from conversation_turns where thread_id = ${thread.id} and seq = 2`;
+    expect(raw.extras_enc.toString("utf8")).not.toContain("brother");
+    expect(JSON.stringify(raw.meta)).not.toMatch(/brother|pocket/);
+
+    const before = await listOpenQuestions(A, 20);
+    await saveNextTimeQuestions({ threadId: thread.id, userId: A, questions: ["  What did a good week with money look like in your first flat?  ", "", "Who taught you to save?"] });
+    const after = await listOpenQuestions(A, 20);
+    expect(after).toHaveLength(before.length + 2);
+    expect(after).toContain("What did a good week with money look like in your first flat?");
+    expect(after).toContain("Who taught you to save?");
+    expect(await listOpenQuestions(B, 20)).toEqual([]);
+    // They are stored with the thread and marked, so the transcript and the model can leave them out.
+    expect((await listTurns(thread.id, A)).filter((t) => t.meta.kind === "next_time")).toHaveLength(2);
   });
 
   it("row-level security hides every table from the partner and from anonymous sessions", async () => {

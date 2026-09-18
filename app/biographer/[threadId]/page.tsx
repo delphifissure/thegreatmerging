@@ -2,13 +2,14 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { FEATURES } from "@/config/features";
 import * as data from "@/lib/data";
-import { focusByKey } from "@/lib/biographer/inputs";
+import { focusByKey, threadsToReturnTo } from "@/lib/biographer/inputs";
 import { requireAppUser } from "@/app/_lib/session";
 import { Card } from "@/app/_components/Card";
 import { Button, LinkButton } from "@/app/_components/Button";
 import { Notice } from "@/app/_components/Field";
 import { finishThread } from "../actions";
 import { BiographerForm } from "./BiographerForm";
+import { DepthToggle } from "./DepthToggle";
 
 export const metadata = { title: "Biographer" };
 
@@ -20,8 +21,10 @@ export default async function BiographerThreadPage({ params }: { params: Promise
   const thread = await data.getOwnThread(threadId, user.id);
   if (!thread || thread.kind !== "biographer") notFound();
   const focus = focusByKey(thread.focus);
-  const turns = await data.listTurns(thread.id, user.id);
+  // Questions the drafter kept for a later conversation are stored with the thread but are not part of it.
+  const turns = (await data.listTurns(thread.id, user.id)).filter((t) => t.meta.kind !== "next_time");
   const last = turns[turns.length - 1];
+  const threadsLeft = threadsToReturnTo(turns);
   const earlier = thread.status === "open" && last?.role === "guide" ? turns.slice(0, -1) : turns;
   const said = turns.filter((t) => t.role === "person").length;
   const suggestStopping = last?.role === "guide" && last.meta.suggest_stopping === true;
@@ -34,6 +37,7 @@ export default async function BiographerThreadPage({ params }: { params: Promise
         </Link>
         <h1 className="mt-2 text-2xl sm:text-[28px]">{focus?.title ?? "Conversation"}</h1>
         <p className="text-sm text-muted">Private to you. Saved as you go; stop whenever you like.</p>
+        {thread.status === "open" ? <DepthToggle threadId={thread.id} depth={thread.depth} /> : null}
       </div>
 
       {earlier.length > 0 ? (
@@ -49,7 +53,7 @@ export default async function BiographerThreadPage({ params }: { params: Promise
 
       {thread.status === "open" && last?.role === "guide" ? (
         <>
-          <BiographerForm threadId={thread.id} question={last.text} why={last.note} safety={last.meta.kind === "safety"} />
+          <BiographerForm key={last.id} threadId={thread.id} question={last.text} why={last.note} safety={last.meta.kind === "safety"} options={last.extras?.options ?? []} threads={threadsLeft} />
           {suggestStopping ? <Notice>This looks like a good place to rest. You can stop here and the app will draft lines from what you said.</Notice> : null}
         </>
       ) : thread.status === "open" ? (

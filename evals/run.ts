@@ -34,6 +34,7 @@ import { buildInterpreterInput, interpreterOutputSchemaFor, type InterpreterInpu
 import { BiographerTurnSchema, InterpreterOutputSchema, MentorReplySchema, ProberOutputSchema, SentimentFlaggerOutputSchema, type InterpreterOutput, type ProberOutput } from "@/lib/llm/schemas";
 import { buildRequest, callRole, costOfRecord, collectBatch, batchStatus, submitBatch, configureLlm, MemoryMemo, MemoryRecorder, LlmValidationError, type BatchItem } from "@/lib/llm";
 import { checkOutputDeterministic } from "@/lib/guardrails";
+import { answerProfile, biographerTurnSchemaFor, optionsFor } from "@/lib/biographer/inputs";
 import { interpreterFindings, MENTAL_HEALTH_KEYS } from "@/evals/interpreter_checks";
 import { LLM_CONFIG, LLM_CONFIG_VERSION } from "@/config/llm";
 
@@ -318,7 +319,32 @@ const ADVICE = /\b(you should|you need to|you ought to|you must|you have to|my a
 /** Declining to advise ("I can't tell you what you should do") is the opposite of advising. */
 const stripRefusals = (t: string) => t.replace(/\b(can't|cannot|can not|won't|will not|am not able to|not going to|not my place to)\b[^.?!]{0,80}/gi, " ");
 
-type BiographerCase = { id: string; expect: { kinds?: string[]; references_all?: string[]; suggest_stopping?: boolean; no_verdict?: boolean }; input: unknown };
+type BiographerExpect = {
+  kinds?: string[];
+  not_kinds?: string[];
+  references_all?: string[];
+  suggest_stopping?: boolean;
+  no_verdict?: boolean;
+  min_options?: number;
+  max_options?: number;
+  min_threads?: number;
+  aim_in?: string[];
+  aim_not?: string[];
+  max_question_words?: number;
+  no_length_remark?: boolean;
+  /** Two groups of words from two statements; the turn must not bring both up, under any `kind`. */
+  not_together?: [string[], string[]];
+  /** Words the question itself must leave alone for now. */
+  question_avoids?: string[];
+};
+type BiographerFixture = { turns: Array<{ id: string; role: "guide" | "person"; text: string }>; depth?: "light" | "deeper"; threads_to_return_to?: string[] } & Record<string, unknown>;
+type BiographerCase = { id: string; expect: BiographerExpect; input: BiographerFixture };
+const LENGTH_REMARK = /\b(short|brief|long|lengthy|detailed) (answers?|repl(y|ies)|responses?)\b|\bfew words\b|\bman of few\b|\bkeep(ing)? it (short|brief)\b/i;
+
+/** Fixtures carry the conversation; the computed fields are filled in the same way the app fills them. */
+function completeBiographerInput(input: BiographerFixture) {
+  return { ...input, depth: input.depth ?? "light", answer_profile: answerProfile(input.turns), threads_to_return_to: input.threads_to_return_to ?? [] };
+}
 type MentorCase = { id: string; expect: { unsure?: boolean; draws_on_any?: string[]; draws_on_all?: string[]; no_verdict?: boolean }; input: unknown };
 
 async function runBiographer() {
@@ -329,17 +355,37 @@ async function runBiographer() {
   const cases = JSON.parse(fs.readFileSync(path.join("evals", "biographer", "cases.json"), "utf8")) as { cases: BiographerCase[] };
   for (const c of cases.cases) {
     try {
-      const out = await withRetry(`biographer ${c.id}`, () => callRole("biographer", c.input, BiographerTurnSchema, { coupleId: null, jobStep: `eval:biographer:${c.id}` }));
-      if (dumpDir) fs.writeFileSync(path.join(dumpDir, `biographer_${c.id}.json`), JSON.stringify({ input: c.input, output: out }, null, 2));
+      const input = completeBiographerInput(c.input);
+      const raw = await withRetry(`biographer ${c.id}`, () => callRole("biographer", input, biographerTurnSchemaFor({ answers: input.answer_profile.answers, depth: input.depth }), { coupleId: null, jobStep: `eval:biographer:${c.id}` }));
+      // Checked as the person would see it: the app only shows places to start to people who answer briefly.
+      const out = { ...raw, options: optionsFor(input.answer_profile, raw.options) };
+      if (dumpDir) fs.writeFileSync(path.join(dumpDir, `biographer_${c.id}.json`), JSON.stringify({ input, output: out }, null, 2));
       const problems: string[] = [];
       const marks = (out.question.match(/\?/g) ?? []).length;
-      if (marks < 1) problems.push("no question asked");
+      // "Tell me about the tin." is an ask; the prompt prefers it to "how do you feel about".
+      if (marks < 1 && !/^(tell me|describe|walk me through|take me (back )?to)\b/i.test(out.question.trim())) problems.push("no question asked");
       if (marks > 2) problems.push(`${marks} questions in one turn`);
       if (ADVICE.test(stripRefusals(`${out.reflection} ${out.question}`))) problems.push("gives advice");
       if (c.expect.kinds && !c.expect.kinds.includes(out.kind)) problems.push(`kind ${out.kind}, expected ${c.expect.kinds.join(" or ")}`);
+      if (c.expect.not_kinds?.includes(out.kind)) problems.push(`kind ${out.kind} is too early or out of place here`);
       for (const r of c.expect.references_all ?? []) if (!out.references.includes(r)) problems.push(`does not cite ${r}`);
+      if (c.expect.min_options !== undefined && out.options.length < c.expect.min_options) problems.push(`${out.options.length} option(s), expected at least ${c.expect.min_options}`);
+      if (c.expect.max_options !== undefined && out.options.length > c.expect.max_options) problems.push(`${out.options.length} option(s), expected at most ${c.expect.max_options}`);
+      if (c.expect.min_threads !== undefined && out.threads.length < c.expect.min_threads) problems.push(`${out.threads.length} thread(s) kept, expected at least ${c.expect.min_threads}`);
+      if (c.expect.aim_in && !c.expect.aim_in.includes(out.aim)) problems.push(`aim ${out.aim}, expected ${c.expect.aim_in.join(" or ")}`);
+      if (c.expect.aim_not?.includes(out.aim)) problems.push(`aim ${out.aim}: asks again for what was declined, or goes past the depth chosen`);
+      const questionWords = out.question.trim().split(/\s+/).length;
+      if (c.expect.max_question_words !== undefined && questionWords > c.expect.max_question_words) problems.push(`question is ${questionWords} words, expected at most ${c.expect.max_question_words}`);
+      if (c.expect.no_length_remark && LENGTH_REMARK.test(`${out.reflection} ${out.question}`)) problems.push("remarks on how much the person writes");
+      const avoided = (c.expect.question_avoids ?? []).filter((w) => out.question.toLowerCase().includes(w.toLowerCase()));
+      if (avoided.length) problems.push(`the question goes straight to: ${avoided.join(", ")}`);
+      if (c.expect.not_together) {
+        const said = `${out.reflection} ${out.question}`.toLowerCase();
+        if (c.expect.not_together.every((group) => group.some((w) => said.includes(w.toLowerCase())))) problems.push("sets two of their statements side by side without calling it a discrepancy");
+      }
+      if (out.options.some((o) => !/^(i|i'|i\u2019|we|my|me)\b/i.test(o.trim()))) problems.push(`an option is not a first-person behaviour: ${out.options.join(" | ")}`);
       if (c.expect.suggest_stopping !== undefined && out.suggest_stopping !== c.expect.suggest_stopping) problems.push(`suggest_stopping ${out.suggest_stopping}`);
-      record({ suite: "biographer", id: c.id, ok: problems.length === 0, detail: problems.join("; ") || out.kind });
+      record({ suite: "biographer", id: c.id, ok: problems.length === 0, detail: problems.join("; ") || `${out.kind}/${out.aim}, ${out.options.length} option(s), ${out.threads.length} thread(s)` });
     } catch (err) {
       record({ suite: "biographer", id: c.id, ok: false, detail: err instanceof LlmValidationError ? `rejected: ${err.message.slice(0, 200)}` : String(err) });
     }
@@ -416,7 +462,7 @@ async function runDryRun() {
   ] as const) {
     const set = JSON.parse(fs.readFileSync(file, "utf8")) as { cases: Array<{ id: string; input: unknown }> };
     for (const c of set.cases) {
-      const req = buildRequest(role, c.input, schema as ZodType<unknown>);
+      const req = buildRequest(role, role === "biographer" ? completeBiographerInput(c.input as BiographerFixture) : c.input, schema as ZodType<unknown>);
       const tokens = write(`${role}-${c.id}`, req);
       record({ suite: "dry_run", id: `${role}:${c.id}`, ok: req.tool_choice?.type === "tool", detail: `~${tokens} tokens` });
       n++;

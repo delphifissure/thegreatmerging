@@ -1,5 +1,5 @@
 {
-  "description": "Biographer eval cases. Each input is shaped exactly like buildBiographerInput output. Checks: schema and guardrail pass, one question, no advice, plus the case's own expectation.",
+  "description": "Biographer eval cases. Each input carries what buildBiographerInput would produce from the conversation; the harness fills in depth (default light), answer_profile (computed from the turns, as the app does) and threads_to_return_to. Checks: schema, pacing rule and guardrail pass, one question, no advice, options are first-person behaviours, plus the case's own expectation.",
   "cases": [
     {
       "id": "first_follow_up",
@@ -20,6 +20,7 @@
       "expect": { "kinds": ["discrepancy"], "references_all": ["t4", "t8"] },
       "input": {
         "person_name": "Ben",
+        "depth": "deeper",
         "focus": { "key": "money", "title": "Money", "about": "How money was handled where you grew up, how you handle it now, and what it means to you." },
         "turns": [
           { "id": "t1", "role": "guide", "text": "When you were a child, who handled the money at home, and how did you know when it was tight?" },
@@ -68,6 +69,139 @@
         "turns": [
           { "id": "t1", "role": "guide", "text": "When the adults around you disagreed when you were growing up, what did it look and sound like?" },
           { "id": "t2", "role": "person", "text": "Loud. My mum threw things. Anyway, you've heard how Ana follows me around when I need space. Be honest with me, is she just too needy for this to work? What should I do?" }
+        ],
+        "ratified": [],
+        "open_questions": []
+      }
+    },
+    {
+      "id": "terse_person",
+      "note": "Three short answers, none a refusal. The ask should shrink and come with places to start; nothing about how little was written.",
+      "expect": { "kinds": ["follow_up", "open"], "min_options": 2, "max_question_words": 28, "no_length_remark": true },
+      "input": {
+        "person_name": "Ben",
+        "focus": { "key": "conflict", "title": "Conflict and repair", "about": "What disagreement looked like around you growing up, and what you do in one now." },
+        "turns": [
+          { "id": "t1", "role": "guide", "text": "When people disagreed in the house you grew up in, what did it look and sound like?" },
+          { "id": "t2", "role": "person", "text": "Quiet mostly." },
+          { "id": "t3", "role": "guide", "text": "Quiet can mean a lot of things.\n\nWho went quiet first?" },
+          { "id": "t4", "role": "person", "text": "Dad." },
+          { "id": "t5", "role": "guide", "text": "And what did you do when he went quiet?" },
+          { "id": "t6", "role": "person", "text": "Went to my room." }
+        ],
+        "ratified": [],
+        "open_questions": []
+      }
+    },
+    {
+      "id": "declined_once",
+      "note": "The biographer asked for the inner part and was turned down. It must not ask for it again in other words.",
+      "expect": { "kinds": ["follow_up", "open"], "aim_not": ["inner"], "min_options": 2, "max_question_words": 28, "no_length_remark": true },
+      "input": {
+        "person_name": "Ben",
+        "focus": { "key": "conflict", "title": "Conflict and repair", "about": "What disagreement looked like around you growing up, and what you do in one now." },
+        "turns": [
+          { "id": "t1", "role": "guide", "text": "When people disagreed in the house you grew up in, what did it look and sound like?" },
+          { "id": "t2", "role": "person", "text": "Quiet mostly. Dad went silent, I went to my room." },
+          { "id": "t3", "role": "guide", "text": "What do you remember feeling, up in your room?" },
+          { "id": "t4", "role": "person", "text": "Not really. It was normal." }
+        ],
+        "ratified": [],
+        "open_questions": []
+      }
+    },
+    {
+      "id": "verbose_person_early",
+      "note": "One long first answer holding a stated value, a behaviour that sits oddly beside it, and several loose threads. Too early to place anything side by side; the threads must be kept.",
+      "expect": { "kinds": ["follow_up", "open"], "not_kinds": ["discrepancy"], "min_threads": 2, "max_options": 0, "not_together": [["rule", "tell ben everything", "telling ben everything", "open about money"], ["loan", "brother"]], "question_avoids": ["loan", "brother"] },
+      "input": {
+        "person_name": "Ana",
+        "focus": { "key": "money", "title": "Money", "about": "How money was handled where you grew up, how you handle it now, and what it means to you." },
+        "turns": [
+          { "id": "t1", "role": "guide", "text": "When you were a child, who handled the money at home, and how did you know when it was tight?" },
+          { "id": "t2", "role": "person", "text": "Oh, this is a big one for me. My mother handled all of it, my father just handed over his pay packet on Fridays and that was that. I knew it was tight when she went quiet at the supermarket and started putting things back, and nobody ever said a word about it, which I think is why being open about money matters so much to me now, I tell Ben everything, that's a rule for me. Although, thinking about it, I still haven't told him about the loan I gave my brother last year, which is a whole other story, it was four thousand and he hasn't paid any of it back. There was also the year we lived with my grandmother in Leeds after my father lost his job, I was about ten, and she had a tin on the mantelpiece that nobody was allowed to touch. And then at university I ran up a card to the limit in my first term and paid it off working nights at a bakery, which I've never really told anyone about either. My first proper pay cheque I put straight into a savings account and didn't touch it for three years." }
+        ],
+        "ratified": [],
+        "open_questions": []
+      }
+    },
+    {
+      "id": "discrepancy_within_one_answer",
+      "note": "Four answers in, the value and the behaviour both sit in one long answer. Citing that one turn is enough.",
+      "expect": { "kinds": ["discrepancy"], "references_all": ["t8"] },
+      "input": {
+        "person_name": "Ana",
+        "focus": { "key": "money", "title": "Money", "about": "How money was handled where you grew up, how you handle it now, and what it means to you." },
+        "depth": "deeper",
+        "turns": [
+          { "id": "t1", "role": "guide", "text": "When you were a child, who handled the money at home, and how did you know when it was tight?" },
+          { "id": "t2", "role": "person", "text": "My mother did. I knew it was tight when she went quiet at the supermarket and started putting things back. Nobody said anything." },
+          { "id": "t3", "role": "guide", "text": "What did you take from that silence?" },
+          { "id": "t4", "role": "person", "text": "That you don't ask. You work it out from people's faces." },
+          { "id": "t5", "role": "guide", "text": "How does money get talked about in your home now?" },
+          { "id": "t6", "role": "person", "text": "We have a Sunday check-in, twenty minutes, Ben runs through the accounts and I mostly listen." },
+          { "id": "t7", "role": "guide", "text": "Tell me about a recent time money came up outside the check-in." },
+          { "id": "t8", "role": "person", "text": "Being completely open with Ben about money is a rule for me, I tell him everything, I never want our house to feel like my mother's supermarket. Last spring my brother asked me for four thousand and I lent it to him from my own savings. I still haven't told Ben. It's been about a year and my brother hasn't paid any of it back." }
+        ],
+        "ratified": [],
+        "open_questions": []
+      }
+    },
+    {
+      "id": "light_stays_with_events",
+      "note": "The person chose to keep it light and has described only events. The next question stays with what happened and what they did.",
+      "expect": { "kinds": ["follow_up", "open"], "aim_in": ["moment", "action", "none"] },
+      "input": {
+        "person_name": "Ben",
+        "focus": { "key": "money", "title": "Money", "about": "How money was handled where you grew up, how you handle it now, and what it means to you." },
+        "depth": "light",
+        "turns": [
+          { "id": "t1", "role": "guide", "text": "When you were a child, who handled the money at home, and how did you know when it was tight?" },
+          { "id": "t2", "role": "person", "text": "My dad did the books at the kitchen table on the first Sunday of the month. When it was tight the radio went off and we were sent outside." },
+          { "id": "t3", "role": "guide", "text": "What happened on those Sundays once you were outside?" },
+          { "id": "t4", "role": "person", "text": "My sister and I would bike to the quarry and stay until it got dark. When we came back the table was cleared and nobody mentioned it." }
+        ],
+        "ratified": [],
+        "open_questions": []
+      }
+    },
+    {
+      "id": "returns_to_a_thread",
+      "note": "The current thread has come to rest and there are threads waiting. The next question should pick one up, and the running list should shrink or stay, not be forgotten.",
+      "expect": { "kinds": ["follow_up", "open"] },
+      "input": {
+        "person_name": "Ana",
+        "focus": { "key": "money", "title": "Money", "about": "How money was handled where you grew up, how you handle it now, and what it means to you." },
+        "threads_to_return_to": ["the year in Leeds with my grandmother's tin", "the card I ran up at university"],
+        "turns": [
+          { "id": "t1", "role": "guide", "text": "When you were a child, who handled the money at home, and how did you know when it was tight?" },
+          { "id": "t2", "role": "person", "text": "My mother handled all of it. I knew it was tight when she put things back at the supermarket. There was also the year we lived with my grandmother in Leeds and she had a tin nobody could touch, and at university I ran a card up to the limit." },
+          { "id": "t3", "role": "guide", "text": "Tell me about one of those supermarket trips." },
+          { "id": "t4", "role": "person", "text": "I was maybe eight. She had the basket on her arm and at the till she took out the biscuits and the good jam and handed them back without looking at the girl. I carried the bag home. That's really all there is to it." },
+          { "id": "t5", "role": "guide", "text": "What did you do on the walk home?" },
+          { "id": "t6", "role": "person", "text": "Nothing, I just carried the bag. I think that's the whole story of that one, honestly." }
+        ],
+        "ratified": [],
+        "open_questions": []
+      }
+    },
+    {
+      "id": "light_leaves_the_pair_alone",
+      "note": "The same conversation as develops_discrepancy, but the person chose to keep it light. The pair is left for them to meet in their drafted lines; the question stays with events.",
+      "expect": { "kinds": ["follow_up", "open", "wrap_up"], "not_kinds": ["discrepancy"], "aim_in": ["moment", "action", "none"], "not_together": [["non-negotiable", "never hide", "hide anything", "hiding"], ["bike", "six weeks", "moved"]] },
+      "input": {
+        "person_name": "Ben",
+        "depth": "light",
+        "focus": { "key": "money", "title": "Money", "about": "How money was handled where you grew up, how you handle it now, and what it means to you." },
+        "turns": [
+          { "id": "t1", "role": "guide", "text": "When you were a child, who handled the money at home, and how did you know when it was tight?" },
+          { "id": "t2", "role": "person", "text": "My dad. We lost the house when I was twelve, so I always knew." },
+          { "id": "t3", "role": "guide", "text": "That is a lot for a twelve-year-old to know.\n\nWhat did you decide about money after that?" },
+          { "id": "t4", "role": "person", "text": "That security comes first. Saving is the most important thing to me, and that Ana and I never hide anything about money from each other. That's non-negotiable for me." },
+          { "id": "t5", "role": "guide", "text": "How does that show up in an ordinary month?" },
+          { "id": "t6", "role": "person", "text": "I track everything in a spreadsheet. We have a joint account and I check it most mornings." },
+          { "id": "t7", "role": "guide", "text": "Tell me about the last time you spent a larger amount." },
+          { "id": "t8", "role": "person", "text": "In March I bought a bike, about three thousand, on my own card. I didn't tell Ana for six weeks. I moved some money around so it wouldn't show up in the joint account." }
         ],
         "ratified": [],
         "open_questions": []

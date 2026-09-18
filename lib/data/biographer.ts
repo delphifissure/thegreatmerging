@@ -17,7 +17,8 @@ export type EntryStatus = "proposed" | "ratified" | "rejected";
 export type EntryMark = "settled" | "open";
 export type EntryTier = "private" | "avatar_only" | "shareable";
 
-export type Turn = { id: string; seq: number; role: TurnRole; text: string; note: string | null; meta: Record<string, unknown>; rating: TurnRating | null; created_at: Date };
+export type TurnExtras = { options: string[]; threads: string[] };
+export type Turn = { id: string; seq: number; role: TurnRole; text: string; note: string | null; extras: TurnExtras | null; meta: Record<string, unknown>; rating: TurnRating | null; created_at: Date };
 export type DocumentEntry = {
   id: string;
   document: DocumentKindValue;
@@ -33,7 +34,7 @@ export type DocumentEntry = {
   created_at: Date;
 };
 
-const turnCtx = (userId: string, field: "content" | "note") => ({ user_id: userId, instrument_key: "conversation", field });
+const turnCtx = (userId: string, field: "content" | "note" | "extras") => ({ user_id: userId, instrument_key: "conversation", field });
 const entryCtx = (userId: string) => ({ user_id: userId, instrument_key: "document", field: "text" });
 
 // ---------------------------------------------------------------- threads
@@ -59,6 +60,13 @@ export async function listOwnThreads(userId: string, kind: ThreadKind) {
     .orderBy(desc(schema.conversation_threads.created_at));
 }
 
+export async function setThreadDepth(input: { threadId: string; userId: string; depth: "light" | "deeper" }) {
+  await db()
+    .update(schema.conversation_threads)
+    .set({ depth: input.depth, updated_at: new Date() })
+    .where(and(eq(schema.conversation_threads.id, input.threadId), eq(schema.conversation_threads.user_id, input.userId)));
+}
+
 export async function closeThread(input: { threadId: string; userId: string; drafted?: boolean }) {
   await db()
     .update(schema.conversation_threads)
@@ -67,6 +75,17 @@ export async function closeThread(input: { threadId: string; userId: string; dra
 }
 
 // ---------------------------------------------------------------- turns
+function readExtras(userId: string, enc: Buffer | null): TurnExtras | null {
+  if (!enc) return null;
+  try {
+    const raw = JSON.parse(decryptText(enc, turnCtx(userId, "extras"))) as Partial<TurnExtras>;
+    const strings = (v: unknown) => (Array.isArray(v) ? v.filter((x): x is string => typeof x === "string") : []);
+    return { options: strings(raw.options), threads: strings(raw.threads) };
+  } catch {
+    return null;
+  }
+}
+
 function toTurn(userId: string, r: typeof schema.conversation_turns.$inferSelect): Turn {
   return {
     id: r.id,
@@ -74,6 +93,7 @@ function toTurn(userId: string, r: typeof schema.conversation_turns.$inferSelect
     role: r.role,
     text: decryptText(r.content_enc, turnCtx(userId, "content")),
     note: r.note_enc ? decryptText(r.note_enc, turnCtx(userId, "note")) : null,
+    extras: readExtras(userId, r.extras_enc),
     meta: (r.meta as Record<string, unknown>) ?? {},
     rating: r.rating,
     created_at: r.created_at,
@@ -81,7 +101,7 @@ function toTurn(userId: string, r: typeof schema.conversation_turns.$inferSelect
 }
 
 /** Append a turn at the next position. The unique (thread, seq) index settles races; one retry. */
-export async function appendTurn(input: { threadId: string; userId: string; role: TurnRole; text: string; note?: string | null; meta?: Record<string, unknown> }): Promise<Turn> {
+export async function appendTurn(input: { threadId: string; userId: string; role: TurnRole; text: string; note?: string | null; extras?: TurnExtras | null; meta?: Record<string, unknown> }): Promise<Turn> {
   const thread = await getOwnThread(input.threadId, input.userId);
   if (!thread) throw new Error("thread not found");
   for (let attempt = 0; attempt < 2; attempt++) {
@@ -98,6 +118,7 @@ export async function appendTurn(input: { threadId: string; userId: string; role
         role: input.role,
         content_enc: encryptText(input.text, turnCtx(input.userId, "content")),
         note_enc: input.note ? encryptText(input.note, turnCtx(input.userId, "note")) : null,
+        extras_enc: input.extras ? encryptText(JSON.stringify(input.extras), turnCtx(input.userId, "extras")) : null,
         meta: input.meta ?? {},
       })
       .onConflictDoNothing()
@@ -126,15 +147,34 @@ export async function rateTurn(input: { turnId: string; userId: string; rating: 
     .where(and(eq(schema.conversation_turns.id, input.turnId), eq(schema.conversation_turns.user_id, input.userId), eq(schema.conversation_turns.role, "avatar")));
 }
 
-/** Questions the avatar could not answer about its owner, newest first: seeds for the next biographer session. */
+/**
+ * Seeds for the next biographer session, newest first: what the avatar could not answer about its
+ * owner, and the thin spots the drafter noticed when a conversation closed.
+ */
 export async function listOpenQuestions(userId: string, limit = 5): Promise<string[]> {
   const rows = await db()
     .select()
     .from(schema.conversation_turns)
-    .where(and(eq(schema.conversation_turns.user_id, userId), eq(schema.conversation_turns.role, "avatar"), isNull(schema.conversation_turns.deleted_at), sql`${schema.conversation_turns.meta} ->> 'unsure' = 'true'`))
+    .where(
+      and(
+        eq(schema.conversation_turns.user_id, userId),
+        isNull(schema.conversation_turns.deleted_at),
+        sql`((${schema.conversation_turns.role} = 'avatar' and ${schema.conversation_turns.meta} ->> 'unsure' = 'true') or ${schema.conversation_turns.meta} ->> 'kind' = 'next_time')`,
+      ),
+    )
     .orderBy(desc(schema.conversation_turns.created_at))
     .limit(limit);
-  return rows.flatMap((r) => (r.note_enc ? [decryptText(r.note_enc, turnCtx(userId, "note"))] : []));
+  return rows.flatMap((r) => {
+    if (r.role === "avatar") return r.note_enc ? [decryptText(r.note_enc, turnCtx(userId, "note"))] : [];
+    return [decryptText(r.content_enc, turnCtx(userId, "content"))];
+  });
+}
+
+/** Keep the drafter's questions for a later conversation. They are not part of the transcript. */
+export async function saveNextTimeQuestions(input: { threadId: string; userId: string; questions: string[] }) {
+  for (const q of input.questions.map((x) => x.trim()).filter(Boolean)) {
+    await appendTurn({ threadId: input.threadId, userId: input.userId, role: "guide", text: q, meta: { kind: "next_time" } });
+  }
 }
 
 /** How the person has rated their avatar so far: the self-recognition test. */

@@ -4,7 +4,8 @@
  * afterwards, so no database id reaches a prompt.
  */
 import biographerConfig from "@/config/biographer.json";
-import { sectionBelongsTo, type BiographerTurn, type DrafterOutput } from "@/lib/llm/schemas";
+import type { z } from "zod";
+import { BiographerTurnSchema, DOCUMENT_SECTIONS, sectionBelongsTo, type BiographerTurn, type DrafterOutput } from "@/lib/llm/schemas";
 import type { DocumentEntry, Turn } from "@/lib/data/biographer";
 
 export type Focus = { key: string; title: string; about: string; opening: string; lands_in: string[] };
@@ -26,22 +27,85 @@ const modelTurns = (turns: Turn[]) => turns.map((t) => ({ id: turnId(t.seq), rol
 
 const ratifiedLines = (entries: DocumentEntry[]) => entries.filter((e) => e.status === "ratified").map((e) => ({ document: e.document, section: e.section, text: e.text }));
 
-export function buildBiographerInput(input: { personName: string; focus: Focus; turns: Turn[]; entries: DocumentEntry[]; openQuestions: string[] }) {
+export type Depth = "light" | "deeper";
+
+/** Answers this short that also read as a refusal are not pushed on a second time. */
+const DECLINED = /\b(not really|don'?t know|dunno|idk|no idea|nothing( really)?|can'?t (remember|recall|say)|rather not|pass|skip|it was (normal|fine)|no)\b/i;
+const words = (t: string) => t.trim().split(/\s+/).filter(Boolean).length;
+
+/** Facts about how this person answers, computed so the model does not have to guess. */
+export function answerProfile(turns: Array<Pick<Turn, "role" | "text">>) {
+  const counts = turns.filter((t) => t.role === "person").map((t) => words(t.text));
+  const sorted = [...counts].sort((a, b) => a - b);
+  const median = sorted.length === 0 ? 0 : sorted.length % 2 ? sorted[(sorted.length - 1) / 2] : Math.round((sorted[sorted.length / 2 - 1] + sorted[sorted.length / 2]) / 2);
+  const lastPerson = [...turns].reverse().find((t) => t.role === "person");
+  const last = lastPerson ? words(lastPerson.text) : 0;
+  return { answers: counts.length, median_words: median, last_words: last, declined_last: !!lastPerson && last <= 8 && DECLINED.test(lastPerson.text) };
+}
+
+/** Under this median, a person counts as answering briefly. The prompt uses the same number. */
+export const BRIEF_MEDIAN_WORDS = 15;
+
+/**
+ * Places to start are for people who answer briefly or have just declined. For anyone else they
+ * narrow an answer that was going to be fuller without them, so the app does not show them.
+ */
+export function optionsFor(profile: ReturnType<typeof answerProfile>, options: string[]): string[] {
+  const brief = profile.answers > 0 && (profile.median_words < BRIEF_MEDIAN_WORDS || profile.declined_last);
+  return brief ? options.map((o) => o.trim()).filter(Boolean).slice(0, 4) : [];
+}
+
+/**
+ * The running list of things mentioned and not yet explored. The biographer returns the whole
+ * list each turn, so the newest guide turn that carries one is the current state; a fallback
+ * question carries none and leaves the list as it was.
+ */
+export function threadsToReturnTo(turns: Turn[], limit = 6): string[] {
+  const latest = [...turns].reverse().find((t) => t.role === "guide" && t.extras !== null);
+  const seen = new Set<string>();
+  return (latest?.extras?.threads ?? [])
+    .map((label) => label.trim())
+    .filter((label) => label && !seen.has(label.toLowerCase()) && !!seen.add(label.toLowerCase()))
+    .slice(0, limit);
+}
+
+export function buildBiographerInput(input: { personName: string; focus: Focus; turns: Turn[]; entries: DocumentEntry[]; openQuestions: string[]; depth?: Depth }) {
+  // Turns the app wrote for a later session are not part of this conversation.
+  const spoken = input.turns.filter((t) => t.meta.kind !== "next_time");
   return {
     person_name: input.personName,
     focus: { key: input.focus.key, title: input.focus.title, about: input.focus.about },
-    turns: modelTurns(input.turns),
+    depth: input.depth ?? "light",
+    turns: modelTurns(spoken),
+    answer_profile: answerProfile(spoken),
+    threads_to_return_to: threadsToReturnTo(spoken),
     ratified: ratifiedLines(input.entries),
     open_questions: input.openQuestions.slice(0, 5),
   };
 }
 
+/** Engage before you evoke: no side-by-side question until the person has given three answers. */
+export const ANSWERS_BEFORE_DISCREPANCY = 3;
+
+export function biographerTurnSchemaFor(input: { answers: number; depth: Depth }): z.ZodType<BiographerTurn> {
+  return BiographerTurnSchema.superRefine((t, ctx) => {
+    if (t.kind === "discrepancy" && input.depth === "light") {
+      ctx.addIssue({ code: "custom", path: ["kind"], message: "the person chose to keep this conversation light; do not place two things side by side, in the reflection or the question. Ask about what happened or what they did." });
+    } else if (t.kind === "discrepancy" && input.answers < ANSWERS_BEFORE_DISCREPANCY) {
+      ctx.addIssue({ code: "custom", path: ["kind"], message: `the person has given ${input.answers} answer(s); do not place two things side by side before ${ANSWERS_BEFORE_DISCREPANCY}, in the reflection or the question. Ask a question that only seeks to understand, and keep the rest as threads.` });
+    }
+  });
+}
+
 export function buildDrafterInput(input: { personName: string; focus: Focus; turns: Turn[]; entries: DocumentEntry[] }) {
+  const ratified = input.entries.filter((e) => e.status === "ratified");
+  const coverage = Object.fromEntries(DOCUMENT_SECTIONS.map((s) => [s, ratified.filter((e) => e.section === s).length]));
   return {
     person_name: input.personName,
     focus: { key: input.focus.key, title: input.focus.title, about: input.focus.about },
-    turns: modelTurns(input.turns),
+    turns: modelTurns(input.turns.filter((t) => t.meta.kind !== "next_time")),
     already_ratified: ratifiedLines(input.entries),
+    coverage,
   };
 }
 
@@ -57,9 +121,9 @@ export function entriesFromDraft(output: DrafterOutput, turns: Turn[]) {
 }
 
 /** The biographer may only point at turns that exist. */
-export function cleanReferences(turn: BiographerTurn, turns: Turn[]): number[] {
+export function cleanReferences(turn: Pick<BiographerTurn, "references">, turns: Turn[]): number[] {
   const seqs = new Set(turns.map((t) => t.seq));
-  return turn.references.map(seqOfTurnId).filter((n): n is number => n !== null && seqs.has(n));
+  return [...new Set(turn.references.map(seqOfTurnId).filter((n): n is number => n !== null && seqs.has(n)))];
 }
 
 export type MentorReadiness = { ready: boolean; ratifiedConstitution: number; hasDirection: boolean; needed: number };
@@ -94,5 +158,5 @@ export function buildMentorInput(input: { personName: string; entries: DocumentE
 }
 
 /** Shown if the model's output is rejected twice, so a conversation never dead-ends. */
-export const BIOGRAPHER_FALLBACK = { reflection: "", question: "Can you tell me a bit more about that, maybe a specific time it happened?", why: "I'd like to understand this better before moving on.", kind: "follow_up" as const };
+export const BIOGRAPHER_FALLBACK = { reflection: "", question: "Can you tell me a bit more about that, maybe a specific time it happened?", why: "I'd like to understand this better before moving on.", kind: "follow_up" as const, aim: "moment" as const, options: [] as string[], threads: [] as string[] };
 export const MENTOR_FALLBACK = "I'm not sure how I'd put this one. Can you tell me a bit more about what happened?";

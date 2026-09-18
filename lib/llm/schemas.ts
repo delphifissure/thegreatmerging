@@ -176,11 +176,17 @@ export const BiographerTurnSchema = z
     why: Prose(400),
     kind: z.enum(["open", "follow_up", "discrepancy", "wrap_up"]),
     references: z.array(z.string().min(1).max(40)).max(6),
+    /** Which part of a full account the question goes after. */
+    aim: z.enum(["moment", "action", "inner", "meaning", "none"]),
+    /** Short first-person behaviours a brief answerer can tap to get started. */
+    options: z.array(Prose(90)).max(4),
+    /** The running list of things the person mentioned that have not been explored yet. */
+    threads: z.array(Prose(90)).max(6),
     suggest_stopping: z.boolean(),
   })
   .superRefine((t, ctx) => {
-    // Placing two things side by side needs two things.
-    if (t.kind === "discrepancy" && t.references.length < 2) ctx.addIssue({ code: "custom", path: ["references"], message: "a discrepancy question must reference the two turns it places side by side" });
+    // Two statements side by side must point somewhere; both may sit in one long answer.
+    if (t.kind === "discrepancy" && t.references.length < 1) ctx.addIssue({ code: "custom", path: ["references"], message: "a discrepancy question must reference the turn or turns its two statements come from" });
   });
 export type BiographerTurn = z.infer<typeof BiographerTurnSchema>;
 
@@ -198,6 +204,8 @@ export const DrafterOutputSchema = z
         }),
       )
       .max(20),
+    /** Second-person questions for a later conversation, about sections that are still thin. */
+    thin_spots: z.array(Prose(300)).max(5),
   })
   .superRefine((o, ctx) => {
     o.entries.forEach((e, i) => {

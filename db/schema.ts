@@ -735,6 +735,7 @@ export const research_agreements = pgTable("research_agreements", {
 // ---------------------------------------------------------------------------------------------
 export const conversationKindEnum = pgEnum("conversation_kind", ["biographer", "mentor"]);
 export const conversationStatusEnum = pgEnum("conversation_status", ["open", "closed"]);
+export const conversationDepthEnum = pgEnum("conversation_depth", ["light", "deeper"]);
 export const turnRoleEnum = pgEnum("turn_role", ["guide", "person", "avatar"]);
 export const turnRatingEnum = pgEnum("turn_rating", ["like_me", "not_like_me"]);
 export const documentKindEnum = pgEnum("document_kind", ["history", "constitution"]);
@@ -753,6 +754,8 @@ export const conversation_threads = pgTable(
     /** Biographer focus key from config/biographer.json; null for mentor threads. */
     focus: text("focus"),
     status: conversationStatusEnum("status").notNull().default("open"),
+    /** Chosen by the person: how far the biographer may go in this conversation. */
+    depth: conversationDepthEnum("depth").notNull().default("light"),
     /** Set when the drafter has proposed lines from this thread. */
     drafted_at: timestamp("drafted_at", { withTimezone: true }),
     ...timestamps,
@@ -778,6 +781,8 @@ export const conversation_turns = pgTable(
     meta: jsonb("meta").notNull().default({}),
     /** Encrypted companions to meta: the "why" of a question, a question for the biographer. */
     note_enc: bytea("note_enc"),
+    /** Encrypted JSON: tappable options and the running list of threads. Both echo the person's words. */
+    extras_enc: bytea("extras_enc"),
     /** The person's verdict on an avatar reply: the self-recognition test. */
     rating: turnRatingEnum("rating"),
     ...timestamps,

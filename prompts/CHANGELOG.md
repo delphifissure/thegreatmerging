@@ -2,6 +2,25 @@
 
 The LLM component is versioned as part of the instrument. Any change to a prompt file, a model identifier, a temperature, an effort setting, or an output schema requires a version bump here and, when it alters any eval result, a note of which evals changed.
 
+## 2026.09.18-2
+
+The biographer adapts to how a person answers. A live probe of `biographer.v1` showed two failures: with a person who answered in three or four words it kept asking questions of the same size, and with a person who wrote two hundred words it placed two statements side by side on its second turn, cited the same turn twice to satisfy the two-reference rule, and dropped four other things they had mentioned.
+
+- `biographer.v2`:
+  - Depth is judged by what is present, not by length. A full account has four parts (the moment, what they did, what they felt or wanted, what it taught them); the question goes after the missing one and says which in `aim`.
+  - Ask once. A refusal ("not really", "it was normal") is accepted and not approached again in other words.
+  - For people who answer briefly or have just declined: a shorter, more concrete question plus two to four `options`, first-person behaviours they can tap to start a sentence. The app discards `options` for anyone else (`optionsFor`).
+  - For people who answer at length: one thread for the question, the rest kept in `threads`, a running list the model returns whole each turn. It is shown to the person, who can tap one to go there, and comes back as `threads_to_return_to`.
+  - Engage before you evoke: under three answers, no side-by-side question and no side-by-side reflection; a pair noticed early is held in `threads` and the question starts elsewhere.
+  - `depth`, chosen by the person per conversation and defaulting to `light`: on `light`, events and behaviour only and never `discrepancy`; the person meets the pair in their drafted lines instead. On `deeper`, all four parts and discrepancy questions.
+  - A discrepancy may rest on one long answer, so it needs one reference, not two; duplicates are removed in code.
+  - New computed input: `answer_profile {answers, median_words, last_words, declined_last}`.
+- `drafter.v2`: also returns `thin_spots`, up to five second-person questions for a later conversation, from a per-section `coverage` count and what stayed vague. They are stored encrypted with the thread, kept out of the transcript and the model's view of it, and join the avatar's unanswered questions as seeds for the next session. A `gaps` line joins its two halves with "and", never "but".
+- Enforced in code, not only in the prompt (`biographerTurnSchemaFor`): `discrepancy` is rejected on `light` and before the third answer, with a message that tells the model what to do instead on its retry.
+- Option and thread labels echo the person's words, so they are stored in a new encrypted column (`conversation_turns.extras_enc`), not in `meta`. Migration `0005_biographer_depth`.
+
+**Eval baseline (2026-09-18):** biographer 11/11 on the live model (seven new cases: brief answers, a refusal, a long first answer, a discrepancy inside one answer, a returning thread, and two on `light`). First run 9/10: `light` was not binding until the prompt gave example questions, and the long-answer case passed the label check while still setting the two statements against each other in its reflection, which is why the suite now has a `not_together` check. On `light` the model still reaches for `discrepancy` first in the confession case about half the time; the code rule turns that into one retry. About seven cents per run.
+
 ## 2026.09.18-1
 
 Intervention prototype (`docs/concept_intervention.md`), behind `BIOGRAPHER_ENABLED=1`. Three new roles, all on `claude-sonnet-5`, interactive and never batched. Existing prompts are unchanged.

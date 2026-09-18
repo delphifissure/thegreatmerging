@@ -70,13 +70,13 @@ export default async function BiographerIndex() {
       </Card>
 
       {openQuestions.length > 0 ? (
-        <Card eyebrow="Things your avatar couldn't answer about you">
+        <Card eyebrow="Questions kept for next time">
           <ul className="reading list-disc space-y-1 pl-5 text-[16px]">
             {openQuestions.map((q) => (
               <li key={q}>{q}</li>
             ))}
           </ul>
-          <p className="mt-2 text-sm text-muted">The biographer will work these in when they fit the topic.</p>
+          <p className="mt-2 text-sm text-muted">Some came from places your documents are still thin, some from things your avatar couldn&rsquo;t answer about you. The biographer works them in when they fit the topic.</p>
         </Card>
       ) : null}
 
