@@ -1,0 +1,111 @@
+# Design note: the rehearsal engine
+
+Companion to `concept_intervention.md`. Status: proposal, 18 September 2026. This digs into what the owner calls the ancestor-simulation premise: run many simulated conversations between two people's avatars, learn what helps, and bring that back to the real people before the real conversation.
+
+## The bet
+
+A real couple gets one trajectory through a hard conversation. It is high stakes and path dependent, and a bad run leaves scar tissue. A simulation gives many cheap trajectories with none. The bet is that the shape of those trajectories depends on three things we can vary: who the people are, what state they are in, and which moves they make. If so, many runs draw a map: where the cliffs are, where the bridges are, and which small changes in a person shift the most outcomes.
+
+The map is for the people, not for the app. An insight counts only when the person it is about recognizes it.
+
+## What a simulation can and cannot say
+
+- **Landscape claims, fairly robust.** "This topic goes over a cliff when it opens as criticism." These rest on general conversational dynamics and a coarse persona.
+- **Person-specific claims, moderate.** "You tend to defend before you ask." These depend on avatar fidelity and are checked by the person's own recognition.
+- **Dyad forecasts, weak.** "If you say X, she will do Y." The engine never makes these.
+
+The simulation is a mirror and a sandbox, never an oracle.
+
+## The cast, with separation of powers
+
+- **Avatar.** Built from a ratified constitution and history. Inside avatar-to-avatar rehearsals it is not told it is an avatar, because a persona that knows it is in a simulation turns agreeable and meta. With any human it is always labelled as an avatar that can be wrong and may be a deliberate variation, a test run. It never speaks for the person.
+- **Discriminator.** Judges one thing: is this avatar like the person?
+- **Aligner.** Facilitates rehearsals and later the real sessions, on the side of each person in turn and of the partnership as an entity. It knows the avatars are avatars.
+- **Evaluator.** Scores rehearsal outcomes. It is never the Aligner, because the agent that steers must not grade itself, and it runs on a different model from the avatars to reduce self-preference.
+- **Reporter.** Turns results into private debriefs.
+
+## Fidelity: the discriminator
+
+Four tests, each reported per topic, because an avatar can be good on money and poor on sex.
+
+1. **Scores.** The avatar takes the short questionnaires the person took. Compare item by item.
+2. **Held-out answers.** Keep some of the person's written answers out of the avatar's prompt. The discriminator sees the real answer and the avatar's answer to the same question and tries to tell them apart.
+3. **Self-recognition.** The person rates sample avatar replies: sounds like me, or doesn't. This is the gold label, and every "I wouldn't say that" becomes a biographer question.
+4. **Partner recognition,** with consent. The constitution is the stated self; the partner sees the exhibited self. An avatar the person endorses and the partner does not recognize marks exactly the stated-versus-exhibited gap this product exists to explore. Handle gently, and only if both agree.
+
+Low confidence on a topic means more interviewing, not a rehearsal. Confidence is shown wherever an avatar appears: "about 70% you on this topic".
+
+## Permutations: three axes, scoped by consent
+
+- **State.** The same person on a different day: depleted, stressed, just had a win. Always allowed, and often the most practical finding, such as "this topic only goes wrong when either of you is tired".
+- **Moves.** The same person with a different opening or strategy: soft start or criticism, asking or telling, now or later. This is skill exploration, which is what a therapist coaches.
+- **Disposition.** A nearby self: holds a requirement as a preference, defends a notch less, swaps two adjacent values. This is the owner's "discover more aligned values" idea, and it is the most powerful and the most loaded.
+
+Rules for the third axis:
+
+- **Settled and open.** Each entry in a constitution is marked settled or open to explore, by its owner. The engine perturbs only what is open. Growth areas are self-selected.
+- **You only ever see your own counterfactuals.** Nobody is shown a better version of their partner.
+- **Near, wanted, and helpful.** A variation is only worth reporting if the discriminator says it is near the person, the person says it is a self they would want to be, and the evaluator says it helped.
+- **Symmetric burden.** A search for harmony will find that the more accommodating partner is cheaper to change, and would quietly optimize that person away. The reporter must always show leverage on both sides and joint moves, and must never rank who should change.
+
+## The search: branch at ruptures
+
+A full grid of N by N permutations is wasteful and hard to read. Do what a therapist does instead.
+
+1. Rehearse the topic with the two true avatars under a few states.
+2. The evaluator marks ruptures: the turn where it went wrong.
+3. Rewind to the turn before and try several alternative moves, and variations where allowed.
+4. Report at the level of the moment: "Here, versions of you that asked a question recovered in 4 of 5 runs. Versions that explained recovered in 1 of 5."
+
+This is cheaper, and the output is already in the form a person can use.
+
+## The objective is a vector, never agreement
+
+If the Aligner or evaluator rewards agreement or pleasantness, the engine learns capitulation and conflict avoidance. Score instead, for every rehearsal:
+
+- each side felt understood;
+- each side's settled requirements intact, as a hard constraint;
+- rupture followed by repair;
+- agreement reached, or consciously parked;
+- concessions roughly balanced across runs;
+- no contempt, criticism, defensiveness or stonewalling markers. The existing sentiment-flagger role already detects these and can be pointed at avatar transcripts.
+
+Long-run success is measured on the real people, with the vital-sign questionnaires at each revisit.
+
+## Talking to your partner's avatar
+
+The owner is right that this is useful. Rehearsing a hard conversation is an established technique, and a sparring partner that reacts like your partner is a low-risk way to get there faster. The earlier blanket ban is withdrawn. Conditions:
+
+- Both agree to be sparred with. The avatar is always labelled, with its confidence and whether it is a variation.
+- Disclosure tiers hold. Asked about anything private, the avatar says that is a question for the real person.
+- **The publicity test.** Coaching is limited to approaches you would be comfortable with your partner knowing you practised. "Lead with appreciation, ask before advising" passes. "Wait until she is tired" fails. This is the line between skill and manipulation, since the same tool can optimize persuasion against a model of someone's psychology.
+- What you say while sparring is yours. It reaches your partner, or their biographer, only if you choose.
+- The Aligner watches for substitution: practising forever, or venting at the avatar, in place of the real conversation.
+
+## The Aligner: disclosed goal, quiet method, honest on request
+
+The owner wants it to work subtly. Among avatars it can be as subtle as it likes. With people, covert steering is manipulation even when benevolent, and discovery would cost the trust everything else rests on. A therapist resolves this the same way we should: the goal is disclosed and consented to at the start; individual moves are not narrated as they happen; and "why did you ask me that?" always gets a true answer. The "Why this is being asked" control already exists.
+
+The Aligner knows both private sides. It may use private material to choose its questions. It may never reveal it, and it must not make it inferable, which is harder: "have you considered she might be afraid of X" is a leak. Nudges drawn from a partner's private material must be phrased as questions a therapist would ask anyone, and leak evals must test inferability, not just quotation.
+
+## What comes back, and when the loop stops
+
+Each person privately receives one to three moments, their own avatar's lines, a description of how the other side reacted, the alternatives that worked, and one question for their constitution. Whether a partner's avatar lines are shown verbatim is the modelled person's choice. Ratify or amend, rebuild the avatar, run again. Stop when fidelity and outcomes are stable, or when the people feel ready. Then hold the real conversation with an agenda and each person's chosen moves to try. Afterwards, compare it with the rehearsals. With consent, the real transcript is the best data the avatars will ever get, so the engine improves for this couple over time.
+
+## Known failure modes of model-on-model simulation
+
+Agents agree too readily. Personas drift over long dialogues, so re-ground every turn and keep sessions short. Personas become caricatures of their stated traits. Runs collapse into sameness, so vary state and opening and measure diversity. Judges prefer fluent, therapeutic-sounding talk, so score behavioural markers and calibrate against human-rated transcripts. Shared base models share blind spots. Any single metric will be gamed.
+
+## How to find out cheaply whether it works
+
+1. Single-avatar fidelity, as above.
+2. **Backtest a remembered fight.** Each of you separately describes a past disagreement. Rehearse it from the state before. If neither of you recognizes the shape, the engine is not ready for future ones.
+3. Prospective check: rehearse, then talk for real, then compare.
+
+Cost is small at this scale. With avatars on Claude Sonnet 5, the Aligner and evaluator on Claude Opus 5, and prompt caching, a full rehearsal is about sixty cents and a branch about fifteen. A topic cycle is roughly five to ten dollars.
+
+## Open questions
+
+- Is the partnership itself an agent with the charter as its constitution, or is that simply the Aligner's stance?
+- What flows back to a person whose avatar was sparred with: nothing, or questions for their biographer that the sparring partner has approved?
+- How many open entries does a constitution need before disposition variations say anything useful?
