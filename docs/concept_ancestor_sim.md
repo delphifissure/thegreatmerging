@@ -9,7 +9,7 @@ It is policy search by simulated rollout, with a human carrying out the policy. 
 ## Why it deserves to be taken seriously
 
 - **A partnership is a long-horizon system with delayed feedback.** Small habits compound over years: bids turned away, money left undiscussed, repairs that don't land. People get almost no usable signal, because consequences arrive late and tangled with everything else. Compressing time makes consequences visible. Flight simulators, war games and Monte Carlo retirement plans all work this way. Nobody believes a retirement simulation predicts their future. It shows the spread of outcomes under different habits and which levers matter. That is the honest frame for this too.
-- **Vivid possible selves change present behaviour.** People shown age-progressed images of themselves saved more for retirement (Hershfield and colleagues, 2011). In a pre-registered trial with 188 people, half an hour of conversation with an AI-generated future self lowered anxiety and strengthened the sense of connection with that future self ([MIT Media Lab, Future You](https://www.media.mit.edu/projects/future-you/overview/)).
+- **Vivid possible selves change present behaviour.** People shown age-progressed images of themselves allocated more to retirement saving (Hershfield and colleagues, 2011). In the Future You study, 344 people were split across four conditions. Those who chatted for 10 to 30 minutes with an AI-generated future self reported lower anxiety, less negative emotion and a stronger sense of connection with that future self than controls (Pataranutaporn and colleagues, 2024). Full references are at the end.
 - **Couples research already says the long run is made of small repeated moves.** A simulation that compounds them would make that finding personal.
 
 ## Where it breaks
@@ -34,7 +34,7 @@ It is policy search by simulated rollout, with a human carrying out the policy. 
 | A season | Does the effect hold through ordinary shocks? | A backtest of the couple's own last six months |
 | Years | Nothing checkable | Parable only, and perhaps never built |
 
-**Let the model write scenes and let a small equation run the years.** There is precedent. Gottman and Murray modelled marital interaction as coupled difference equations: each partner has a set point, an inertia, and an influence function describing how the other's last move shifts their next one, with later terms for repair (The Mathematics of Marriage, 2002). Those parameters can be estimated for one couple from rehearsal transcripts. A habit is then a parameter shift, such as repair landing more often. Thousands of worlds, with outside shocks, run in milliseconds, and every assumption is written down where it can be argued with. The language model returns at the end, to turn sampled trajectories into letters from possible futures, because stories are what move people and the numbers keep the stories honest. This sidesteps the second failure above: the long run is carried by explicit parameters, not by narrative priors.
+**Let the model write scenes and let a small equation run the years.** There is precedent. Gottman, Murray and colleagues modelled marital interaction as coupled difference equations: each partner has a set point, an inertia, and an influence function describing how the other's last move shifts their next one, with later terms for repair (2002). Those parameters can be estimated for one couple from rehearsal transcripts. A habit is then a parameter shift, such as repair landing more often. Thousands of worlds, with outside shocks, run in milliseconds, and every assumption is written down where it can be argued with. The language model returns at the end, to turn sampled trajectories into letters from possible futures, because stories are what move people and the numbers keep the stories honest. This sidesteps the second failure above: the long run is carried by explicit parameters, not by narrative priors.
 
 **Compare a handful of habits. Do not evolve a person.** An evolutionary search over selves optimizes a fiction and converges on the evaluator's taste. Once variations must be near you, wanted by you, and faithful to what you have marked settled, the space is small. Take three or four candidate habits, mostly chosen by the person, and run each through the same set of worlds. Report only what wins robustly across worlds.
 
@@ -71,3 +71,12 @@ Model-written scenes on a small model cost about five cents each. A four-week co
 2. The four-week habit simulation, tied to a real experiment in the charter.
 3. Parameter estimation from rehearsals, and the small dynamical model.
 4. Years: parable mode, and only if the first three have earned it.
+
+## References
+
+All three were checked against their sources on 18 September 2026.
+
+- Pataranutaporn, P., Winson, K., Yin, P., Lapapirojn, A., Ouppaphan, P., Lertsutthiwong, M., Maes, P., & Hershfield, H. (2024). *Future You: A Conversation with an AI-Generated Future Self Reduces Anxiety, Negative Emotions, and Increases Future Self-Continuity.* arXiv:2405.12514, submitted 21 May 2024; listed by the MIT Media Lab as presented at IEEE Frontiers in Education 2024. https://arxiv.org/abs/2405.12514. The paper reports a final sample of 344 across four conditions: Future You, a generic chatbot, a questionnaire only, and a control. The Media Lab's project page separately describes "a pre-registered randomized controlled trial with 188 participants"; the paper's own figure is used here. Against control, the Future You condition changed anxiety by −0.68 versus +0.21, negative emotion by −0.63 versus +0.07, and future self-continuity by +0.42 versus 0.00, each at p = 0.001.
+- Hershfield, H. E., Goldstein, D. G., Sharpe, W. F., Fox, J., Yeykelis, L., Carstensen, L. L., & Bailenson, J. N. (2011). Increasing saving behavior through age-progressed renderings of the future self. *Journal of Marketing Research, 48*(SPL), S23–S37. https://doi.org/10.1509/jmkr.48.SPL.S23
+- Gottman, J. M., Murray, J. D., Swanson, C. C., Tyson, R., & Swanson, K. R. (2002). *The Mathematics of Marriage: Dynamic Nonlinear Models.* MIT Press.
+
