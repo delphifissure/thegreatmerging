@@ -29,6 +29,13 @@
       "when": 1789533244028,
       "tag": "0003_rls_scores_consent_fix",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1789750689271,
+      "tag": "0004_biographer",
+      "breakpoints": true
     }
   ]
 }

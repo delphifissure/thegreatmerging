@@ -22,7 +22,7 @@
  *      others. Thinking is adaptive-by-default on those models and is not configured explicitly.
  */
 
-export const ROLES = ["prober", "interpreter", "summarizer", "sentiment_flagger", "guardrail", "concreteness"] as const;
+export const ROLES = ["prober", "interpreter", "summarizer", "sentiment_flagger", "guardrail", "concreteness", "biographer", "drafter", "mentor"] as const;
 export type Role = (typeof ROLES)[number];
 
 export type ModelId = "claude-fable-5-1" | "claude-opus-5" | "claude-sonnet-5" | "claude-haiku-4-5-20251001";
@@ -156,7 +156,41 @@ export const LLM_CONFIG: Record<Role, RoleConfig> = {
     batchable: false,
     reaches_person: false,
   },
+  // Intervention prototype (docs/concept_intervention.md). Interactive, so never batched.
+  biographer: {
+    model: "claude-sonnet-5",
+    temperature: 0.5,
+    effort: "medium",
+    prompt_file: "biographer.v1.md",
+    prompt_version: "biographer.v1",
+    tool_name: "emit_biographer_turn",
+    max_tokens: 1500,
+    batchable: false,
+    reaches_person: true,
+  },
+  drafter: {
+    model: "claude-sonnet-5",
+    temperature: 0,
+    effort: "medium",
+    prompt_file: "drafter.v1.md",
+    prompt_version: "drafter.v1",
+    tool_name: "emit_document_entries",
+    max_tokens: 6000,
+    batchable: false,
+    reaches_person: true,
+  },
+  mentor: {
+    model: "claude-sonnet-5",
+    temperature: 0.5,
+    effort: "medium",
+    prompt_file: "mentor.v1.md",
+    prompt_version: "mentor.v1",
+    tool_name: "emit_mentor_reply",
+    max_tokens: 1500,
+    batchable: false,
+    reaches_person: true,
+  },
 };
 
 /** Bump on any change to a prompt, model, temperature, or output schema. Record it in prompts/CHANGELOG.md. */
-export const LLM_CONFIG_VERSION = "2026.09.16-2";
+export const LLM_CONFIG_VERSION = "2026.09.18-1";

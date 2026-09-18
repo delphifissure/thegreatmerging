@@ -48,6 +48,10 @@ Repository → Settings → Secrets and variables → Actions:
 
 The unit and integration jobs need no secrets: integration tests run against an embedded Postgres (`pnpm test:integration:local`).
 
+## 5a. The intervention prototype (optional)
+
+Set `BIOGRAPHER_ENABLED=1` in `.env.local` to switch on the biographer (`/biographer`), your documents (`/documents`) and the one-notch-ahead avatar (`/mentor`). They need `ANTHROPIC_API_KEY` and migration `0004_biographer` (`pnpm db:migrate`). Everything in them is private to the signed-in person and encrypted at rest; no partner is needed to try them. Background: `docs/concept_intervention.md`.
+
 ## 6. Instruments
 
 `pnpm check:instruments` lists which instrument files still carry placeholder text or an unverified scoring key. Follow `docs/instrument_acquisition.md` and `docs/instrument_sources.md` to obtain and transcribe the remaining ones. Keep the repository private: the item text is licensed for personal use.

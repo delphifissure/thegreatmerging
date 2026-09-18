@@ -1,0 +1,45 @@
+{
+  "version": "1.0.0",
+  "description": "Focus areas for biographer sessions. The opening question is fixed copy; every later question is written by the biographer role. Section lists tell the person where lines from this focus usually land.",
+  "foci": [
+    {
+      "key": "story",
+      "title": "Your story",
+      "about": "Where you come from: the house you grew up in, who was there, and what you learned there about closeness.",
+      "opening": "Let's start a long way back. Where did you grow up, and who was in the house?",
+      "lands_in": ["family", "turning_points"]
+    },
+    {
+      "key": "earlier",
+      "title": "Earlier relationships",
+      "about": "The relationships before this one, and what each taught you.",
+      "opening": "Think of a relationship before this one that mattered. How did it begin, and how did it end?",
+      "lands_in": ["earlier_relationships", "fears"]
+    },
+    {
+      "key": "money",
+      "title": "Money",
+      "about": "How money was handled where you grew up, how you handle it now, and what it means to you.",
+      "opening": "When you were a child, who handled the money at home, and how did you know when it was tight?",
+      "lands_in": ["money_modelled", "values", "lived", "gaps"]
+    },
+    {
+      "key": "conflict",
+      "title": "Conflict and repair",
+      "about": "What disagreement looked like around you growing up, and what you do in one now.",
+      "opening": "When the adults around you disagreed when you were growing up, what did it look and sound like?",
+      "lands_in": ["conflict_modelled", "conflict", "requirements"]
+    },
+    {
+      "key": "working_on",
+      "title": "What you're working on",
+      "about": "What you care about most, how your days actually go, and what you'd like to be different a year from now.",
+      "opening": "Picture an ordinary weekday a year from now that went the way you'd want. What are you doing differently from today?",
+      "lands_in": ["values", "lived", "gaps", "working_on"]
+    }
+  ],
+  "mentor": {
+    "min_ratified_constitution_lines": 5,
+    "requires_section": "working_on"
+  }
+}

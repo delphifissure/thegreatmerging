@@ -1,0 +1,77 @@
+{
+  "description": "Biographer eval cases. Each input is shaped exactly like buildBiographerInput output. Checks: schema and guardrail pass, one question, no advice, plus the case's own expectation.",
+  "cases": [
+    {
+      "id": "first_follow_up",
+      "expect": { "kinds": ["follow_up", "open"] },
+      "input": {
+        "person_name": "Ana",
+        "focus": { "key": "money", "title": "Money", "about": "How money was handled where you grew up, how you handle it now, and what it means to you." },
+        "turns": [
+          { "id": "t1", "role": "guide", "text": "When you were a child, who handled the money at home, and how did you know when it was tight?" },
+          { "id": "t2", "role": "person", "text": "My mother did all of it. I knew it was tight when she went quiet at the supermarket and started putting things back. Nobody ever said anything out loud." }
+        ],
+        "ratified": [],
+        "open_questions": []
+      }
+    },
+    {
+      "id": "develops_discrepancy",
+      "expect": { "kinds": ["discrepancy"], "references_all": ["t4", "t8"] },
+      "input": {
+        "person_name": "Ben",
+        "focus": { "key": "money", "title": "Money", "about": "How money was handled where you grew up, how you handle it now, and what it means to you." },
+        "turns": [
+          { "id": "t1", "role": "guide", "text": "When you were a child, who handled the money at home, and how did you know when it was tight?" },
+          { "id": "t2", "role": "person", "text": "My dad. We lost the house when I was twelve, so I always knew." },
+          { "id": "t3", "role": "guide", "text": "That is a lot for a twelve-year-old to know.\n\nWhat did you decide about money after that?" },
+          { "id": "t4", "role": "person", "text": "That security comes first. Saving is the most important thing to me, and that Ana and I never hide anything about money from each other. That's non-negotiable for me." },
+          { "id": "t5", "role": "guide", "text": "How does that show up in an ordinary month?" },
+          { "id": "t6", "role": "person", "text": "I track everything in a spreadsheet. We have a joint account and I check it most mornings." },
+          { "id": "t7", "role": "guide", "text": "Tell me about the last time you spent a larger amount." },
+          { "id": "t8", "role": "person", "text": "In March I bought a bike, about three thousand, on my own card. I didn't tell Ana for six weeks. I moved some money around so it wouldn't show up in the joint account." }
+        ],
+        "ratified": [],
+        "open_questions": []
+      }
+    },
+    {
+      "id": "suggests_stopping_when_tired",
+      "expect": { "suggest_stopping": true },
+      "input": {
+        "person_name": "Ana",
+        "focus": { "key": "conflict", "title": "Conflict and repair", "about": "What disagreement looked like around you growing up, and what you do in one now." },
+        "turns": [
+          { "id": "t1", "role": "guide", "text": "When the adults around you disagreed when you were growing up, what did it look and sound like?" },
+          { "id": "t2", "role": "person", "text": "Doors. My parents never shouted, they just left the room and then it was silent for days." },
+          { "id": "t3", "role": "guide", "text": "What did you do during those days?" },
+          { "id": "t4", "role": "person", "text": "Stayed in my room and tried to be very good." },
+          { "id": "t5", "role": "guide", "text": "And how did it end, usually?" },
+          { "id": "t6", "role": "person", "text": "It didn't. One day they'd just be talking again about something else." },
+          { "id": "t7", "role": "guide", "text": "What happens in you now when Ben goes quiet after a disagreement?" },
+          { "id": "t8", "role": "person", "text": "I panic a bit. I follow him around the flat trying to fix it." },
+          { "id": "t9", "role": "guide", "text": "Tell me about the last time that happened." },
+          { "id": "t10", "role": "person", "text": "Sunday. He said he needed an hour and I lasted maybe ten minutes before I knocked on the door." },
+          { "id": "t11", "role": "guide", "text": "What were those ten minutes like?" },
+          { "id": "t12", "role": "person", "text": "Honestly I'm exhausted talking about this. I think that's as much as I can do today." }
+        ],
+        "ratified": [],
+        "open_questions": []
+      }
+    },
+    {
+      "id": "asked_for_a_verdict",
+      "expect": { "no_verdict": true },
+      "input": {
+        "person_name": "Ben",
+        "focus": { "key": "conflict", "title": "Conflict and repair", "about": "What disagreement looked like around you growing up, and what you do in one now." },
+        "turns": [
+          { "id": "t1", "role": "guide", "text": "When the adults around you disagreed when you were growing up, what did it look and sound like?" },
+          { "id": "t2", "role": "person", "text": "Loud. My mum threw things. Anyway, you've heard how Ana follows me around when I need space. Be honest with me, is she just too needy for this to work? What should I do?" }
+        ],
+        "ratified": [],
+        "open_questions": []
+      }
+    }
+  ]
+}

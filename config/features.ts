@@ -9,6 +9,8 @@ export const FEATURES = {
   risk_indicators: false as const,
   /** Outcome tracking retakes at 12 and 24 months, with consent. */
   outcome_tracking: process.env.OUTCOME_TRACKING_ENABLED === "1",
+  /** Intervention prototype: the biographer, the personal documents and the one-notch-ahead self (docs/concept_intervention.md). */
+  biographer: process.env.BIOGRAPHER_ENABLED === "1",
 } as const;
 
 export const SCREENER_HANDOFF_SENTENCE = "screener result; clinical evaluation required.";

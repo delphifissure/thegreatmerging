@@ -63,6 +63,10 @@ Scoring stays code. Consent stays server-side and logged, extended with disclosu
 
 One topic, money or household, with the two owners as the couple. Three biographer sessions each, one calibration, one rehearsal cycle, one real conversation. Measures: how often you correct your avatar, whether the real conversation reached an agreement, satisfaction before and after, and whether each of you felt understood.
 
+## Prototype status
+
+Built on 18 September 2026 behind `BIOGRAPHER_ENABLED=1`: the biographer, the drafter, ratification of history and constitution lines with settled and open marks, and the one-notch-ahead self with a "sounds like me" rating on every reply and a hand-off of what it could not answer back to the biographer. Not built: the avatar of record for rehearsals, the discriminator beyond self-recognition ratings, the Aligner, the model of the other, the charter, and disclosure tiers beyond storing them.
+
 ## Open questions
 
 - When someone spars with your avatar, does anything flow back to you, and who approves it?

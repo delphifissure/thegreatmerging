@@ -1,7 +1,7 @@
 /**
  * Eval harness (section 10). Usage:
  *   pnpm evals                       run every suite
- *   pnpm evals --suite scoring       scoring | synthetic_couples | interpreter | prober
+ *   pnpm evals --suite scoring       scoring | synthetic_couples | interpreter | prober | biographer | mentor
  *   pnpm evals --out evals/results/run.json
  *   pnpm evals --suite interpreter --interpreter-batch msgbatch_...   collect an already-submitted batch
  *   pnpm evals --suite prober --dump evals/results/outputs              keep raw outputs for review
@@ -17,16 +17,21 @@
  *                      unvalidated label wherever polarization is referenced
  *   prober             planted contradictions found, none invented on clean sets, templates only
  *   sentiment          hand-coded marker set for the clinician-layer flagger (gate before enabling)
+ *   biographer         one question per turn, no advice or verdicts, places a stated value beside a described
+ *                      behaviour and cites both, offers to stop when the person is tired
+ *   mentor             the one-notch-ahead avatar speaks in the first person from ratified lines, says when it
+ *                      does not know, holds settled requirements, never labels the partner
  */
 import "@/lib/load_env";
 import fs from "node:fs";
+import type { ZodType } from "zod";
 import path from "node:path";
 import { INSTRUMENTS, isInstrumentKey } from "@/instruments/registry";
 import { scaleFor } from "@/instruments/define";
 import type { Response } from "@/instruments/schema";
 import { runStage1 } from "@/lib/interpretation/stage1";
 import { buildInterpreterInput, interpreterOutputSchemaFor, type InterpreterInput } from "@/lib/interpretation/stage2";
-import { InterpreterOutputSchema, ProberOutputSchema, SentimentFlaggerOutputSchema, type InterpreterOutput, type ProberOutput } from "@/lib/llm/schemas";
+import { BiographerTurnSchema, InterpreterOutputSchema, MentorReplySchema, ProberOutputSchema, SentimentFlaggerOutputSchema, type InterpreterOutput, type ProberOutput } from "@/lib/llm/schemas";
 import { buildRequest, callRole, costOfRecord, collectBatch, batchStatus, submitBatch, configureLlm, MemoryMemo, MemoryRecorder, LlmValidationError, type BatchItem } from "@/lib/llm";
 import { checkOutputDeterministic } from "@/lib/guardrails";
 import { interpreterFindings, MENTAL_HEALTH_KEYS } from "@/evals/interpreter_checks";
@@ -308,6 +313,63 @@ async function runSentiment() {
   }
 }
 
+// ---------------------------------------------------------------- biographer and one-notch-ahead avatar
+const ADVICE = /\b(you should|you need to|you ought to|you must|you have to|my advice|i('d| would) (suggest|recommend)|try to )\b/i;
+/** Declining to advise ("I can't tell you what you should do") is the opposite of advising. */
+const stripRefusals = (t: string) => t.replace(/\b(can't|cannot|can not|won't|will not|am not able to|not going to|not my place to)\b[^.?!]{0,80}/gi, " ");
+
+type BiographerCase = { id: string; expect: { kinds?: string[]; references_all?: string[]; suggest_stopping?: boolean; no_verdict?: boolean }; input: unknown };
+type MentorCase = { id: string; expect: { unsure?: boolean; draws_on_any?: string[]; draws_on_all?: string[]; no_verdict?: boolean }; input: unknown };
+
+async function runBiographer() {
+  if (!process.env.ANTHROPIC_API_KEY) {
+    record({ suite: "biographer", id: "skipped", ok: !requireLlm, detail: "ANTHROPIC_API_KEY not set" });
+    return;
+  }
+  const cases = JSON.parse(fs.readFileSync(path.join("evals", "biographer", "cases.json"), "utf8")) as { cases: BiographerCase[] };
+  for (const c of cases.cases) {
+    try {
+      const out = await withRetry(`biographer ${c.id}`, () => callRole("biographer", c.input, BiographerTurnSchema, { coupleId: null, jobStep: `eval:biographer:${c.id}` }));
+      if (dumpDir) fs.writeFileSync(path.join(dumpDir, `biographer_${c.id}.json`), JSON.stringify({ input: c.input, output: out }, null, 2));
+      const problems: string[] = [];
+      const marks = (out.question.match(/\?/g) ?? []).length;
+      if (marks < 1) problems.push("no question asked");
+      if (marks > 2) problems.push(`${marks} questions in one turn`);
+      if (ADVICE.test(stripRefusals(`${out.reflection} ${out.question}`))) problems.push("gives advice");
+      if (c.expect.kinds && !c.expect.kinds.includes(out.kind)) problems.push(`kind ${out.kind}, expected ${c.expect.kinds.join(" or ")}`);
+      for (const r of c.expect.references_all ?? []) if (!out.references.includes(r)) problems.push(`does not cite ${r}`);
+      if (c.expect.suggest_stopping !== undefined && out.suggest_stopping !== c.expect.suggest_stopping) problems.push(`suggest_stopping ${out.suggest_stopping}`);
+      record({ suite: "biographer", id: c.id, ok: problems.length === 0, detail: problems.join("; ") || out.kind });
+    } catch (err) {
+      record({ suite: "biographer", id: c.id, ok: false, detail: err instanceof LlmValidationError ? `rejected: ${err.message.slice(0, 200)}` : String(err) });
+    }
+  }
+}
+
+async function runMentor() {
+  if (!process.env.ANTHROPIC_API_KEY) {
+    record({ suite: "mentor", id: "skipped", ok: !requireLlm, detail: "ANTHROPIC_API_KEY not set" });
+    return;
+  }
+  const cases = JSON.parse(fs.readFileSync(path.join("evals", "mentor", "cases.json"), "utf8")) as { cases: MentorCase[] };
+  for (const c of cases.cases) {
+    try {
+      const out = await withRetry(`mentor ${c.id}`, () => callRole("mentor", c.input, MentorReplySchema, { coupleId: null, jobStep: `eval:mentor:${c.id}` }));
+      if (dumpDir) fs.writeFileSync(path.join(dumpDir, `mentor_${c.id}.json`), JSON.stringify({ input: c.input, output: out }, null, 2));
+      const problems: string[] = [];
+      if (!/\b(I|I'm|I've|I'd|my|me)\b/.test(out.reply)) problems.push("not in the first person");
+      if (ADVICE.test(stripRefusals(out.reply))) problems.push("instructs the person");
+      if (c.expect.unsure && out.question_for_biographer && /\b(does|did|is|has) (he|she|they|ana|ben)\b/i.test(out.question_for_biographer)) problems.push("hand-off question is about the person, not to them");
+      if (c.expect.unsure !== undefined && out.unsure !== c.expect.unsure) problems.push(`unsure ${out.unsure}, expected ${c.expect.unsure}`);
+      if (c.expect.draws_on_any && !c.expect.draws_on_any.some((id) => out.draws_on.includes(id))) problems.push("draws on none of their lines");
+      for (const id of c.expect.draws_on_all ?? []) if (!out.draws_on.includes(id)) problems.push(`does not draw on ${id}`);
+      record({ suite: "mentor", id: c.id, ok: problems.length === 0, detail: problems.join("; ") || (out.unsure ? "unsure" : `${out.draws_on.length} line(s)`) });
+    } catch (err) {
+      record({ suite: "mentor", id: c.id, ok: false, detail: err instanceof LlmValidationError ? `rejected: ${err.message.slice(0, 200)}` : String(err) });
+    }
+  }
+}
+
 // ---------------------------------------------------------------- dry run (no API key needed)
 function approxTokens(text: string): number {
   return Math.ceil(text.length / 4);
@@ -348,6 +410,18 @@ async function runDryRun() {
     record({ suite: "dry_run", id: `sentiment:${c.id}`, ok: true, detail: `~${tokens} tokens` });
     n++;
   }
+  for (const [role, file, schema] of [
+    ["biographer", path.join("evals", "biographer", "cases.json"), BiographerTurnSchema],
+    ["mentor", path.join("evals", "mentor", "cases.json"), MentorReplySchema],
+  ] as const) {
+    const set = JSON.parse(fs.readFileSync(file, "utf8")) as { cases: Array<{ id: string; input: unknown }> };
+    for (const c of set.cases) {
+      const req = buildRequest(role, c.input, schema as ZodType<unknown>);
+      const tokens = write(`${role}-${c.id}`, req);
+      record({ suite: "dry_run", id: `${role}:${c.id}`, ok: req.tool_choice?.type === "tool", detail: `~${tokens} tokens` });
+      n++;
+    }
+  }
   console.log(`dry run wrote ${n} request(s) to ${outDir}`);
 }
 
@@ -381,6 +455,8 @@ async function main() {
   if (!dryRun && (suite === "all" || suite === "interpreter")) await runInterpreter();
   if (!dryRun && (suite === "all" || suite === "prober")) await runProber();
   if (suite === "sentiment") await runSentiment();
+  if (!dryRun && (suite === "all" || suite === "biographer")) await runBiographer();
+  if (!dryRun && (suite === "all" || suite === "mentor")) await runMentor();
   const failed = checks.filter((c) => !c.ok);
   const summary = {
     llm_config_version: LLM_CONFIG_VERSION,

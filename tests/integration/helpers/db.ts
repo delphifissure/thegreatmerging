@@ -68,6 +68,9 @@ export async function deleteFixture(sql: Sql, userIds: string[], coupleIds: stri
   if (userIds.length === 0) return;
   const u = userIds;
   const c = coupleIds.length ? coupleIds : ["00000000-0000-0000-0000-000000000000"];
+  await sql`delete from document_entries where user_id in ${sql(u)}`;
+  await sql`delete from conversation_turns where user_id in ${sql(u)}`;
+  await sql`delete from conversation_threads where user_id in ${sql(u)}`;
   await sql`delete from sentiment_flags where couple_id in ${sql(c)} or user_id in ${sql(u)}`;
   await sql`delete from revisits where couple_id in ${sql(c)}`;
   await sql`delete from plans where couple_id in ${sql(c)}`;

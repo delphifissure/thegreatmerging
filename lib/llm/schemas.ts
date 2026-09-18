@@ -144,3 +144,76 @@ export const ROLE_SCHEMAS = {
   guardrail: GuardrailOutputSchema,
   concreteness: ConcretenessOutputSchema,
 } as const;
+
+// ---------------------------------------------------------------------------------------------
+// Intervention prototype (docs/concept_intervention.md): biographer, drafter, one-notch-ahead self.
+// ---------------------------------------------------------------------------------------------
+
+export const HISTORY_SECTIONS = ["family", "earlier_relationships", "money_modelled", "conflict_modelled", "turning_points", "now"] as const;
+export const CONSTITUTION_SECTIONS = ["values", "lived", "gaps", "requirements", "preferences", "conflict", "fears", "working_on"] as const;
+export const DOCUMENT_SECTIONS = [...HISTORY_SECTIONS, ...CONSTITUTION_SECTIONS] as const;
+export type DocumentKind = "history" | "constitution";
+export type DocumentSection = (typeof DOCUMENT_SECTIONS)[number];
+
+export function sectionBelongsTo(document: DocumentKind, section: string): boolean {
+  return document === "history" ? (HISTORY_SECTIONS as readonly string[]).includes(section) : (CONSTITUTION_SECTIONS as readonly string[]).includes(section);
+}
+
+/** Tool-call markup sometimes leaks into a string field; text shown to a person must never carry it. */
+const LEAKED_MARKUP = /<\/?\s*(parameter|invoke|reply|question|reflection|function_calls|antml)[\s>:]/i;
+const Prose = (max: number, min = 1) =>
+  z
+    .string()
+    .min(min)
+    .max(max)
+    .refine((t) => !LEAKED_MARKUP.test(t), { message: "contains tool-call markup; put each value in its own field and write plain prose" });
+
+/** One biographer turn: an optional reflection, exactly one question, and the honest reason for it. */
+export const BiographerTurnSchema = z
+  .object({
+    reflection: Prose(500, 0),
+    question: Prose(500),
+    why: Prose(400),
+    kind: z.enum(["open", "follow_up", "discrepancy", "wrap_up"]),
+    references: z.array(z.string().min(1).max(40)).max(6),
+    suggest_stopping: z.boolean(),
+  })
+  .superRefine((t, ctx) => {
+    // Placing two things side by side needs two things.
+    if (t.kind === "discrepancy" && t.references.length < 2) ctx.addIssue({ code: "custom", path: ["references"], message: "a discrepancy question must reference the two turns it places side by side" });
+  });
+export type BiographerTurn = z.infer<typeof BiographerTurnSchema>;
+
+export const DrafterOutputSchema = z
+  .object({
+    entries: z
+      .array(
+        z.object({
+          document: z.enum(["history", "constitution"]),
+          section: z.enum(DOCUMENT_SECTIONS),
+          text: Prose(600),
+          in_their_words: z.boolean(),
+          source_turn_ids: z.array(z.string().min(1).max(40)).min(1).max(8),
+          suggested_mark: z.enum(["settled", "open"]),
+        }),
+      )
+      .max(20),
+  })
+  .superRefine((o, ctx) => {
+    o.entries.forEach((e, i) => {
+      if (!sectionBelongsTo(e.document, e.section)) ctx.addIssue({ code: "custom", path: ["entries", i, "section"], message: `${e.section} is not a section of the ${e.document}` });
+    });
+  });
+export type DrafterOutput = z.infer<typeof DrafterOutputSchema>;
+
+export const MentorReplySchema = z
+  .object({
+    reply: Prose(1500),
+    draws_on: z.array(z.string().min(1).max(40)).max(8),
+    unsure: z.boolean(),
+    question_for_biographer: z.string().max(400).nullable(),
+  })
+  .superRefine((r, ctx) => {
+    if (r.unsure && !r.question_for_biographer?.trim()) ctx.addIssue({ code: "custom", path: ["question_for_biographer"], message: "when unsure, give the one question the biographer should ask" });
+  });
+export type MentorReply = z.infer<typeof MentorReplySchema>;

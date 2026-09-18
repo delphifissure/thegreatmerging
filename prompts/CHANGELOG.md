@@ -2,6 +2,18 @@
 
 The LLM component is versioned as part of the instrument. Any change to a prompt file, a model identifier, a temperature, an effort setting, or an output schema requires a version bump here and, when it alters any eval result, a note of which evals changed.
 
+## 2026.09.18-1
+
+Intervention prototype (`docs/concept_intervention.md`), behind `BIOGRAPHER_ENABLED=1`. Three new roles, all on `claude-sonnet-5`, interactive and never batched. Existing prompts are unchanged.
+
+- `biographer.v1`: a solo interviewer whose only aim is to understand. One question per turn, an optional short reflection, an honest `why` for every question, and the motivational-interviewing move of placing a stated value beside a described behaviour (`kind: discrepancy`, which must cite both turns). May be warm and may nudge with questions; never advises, labels, diagnoses or gives a verdict.
+- `drafter.v1`: proposes first-person lines for a person's history and constitution from one finished conversation. Only what the person said; every line cites the person's own turns, and lines resting on nothing they said are dropped in code. Nothing is part of a document until its owner ratifies it.
+- `mentor.v1`: the one-notch-ahead self. Speaks in the first person from ratified lines only, as a coping model rather than a mastery model, cites the lines it drew on, holds settled requirements, and when the lines do not cover something says so and hands a second-person question back to the biographer.
+- These roles record usage in `llm_calls` but never write to `llm_memo`, because their outputs echo what a person wrote and that table is not encrypted.
+- Output schemas reject tool-call markup leaking into any text a person reads. The first live run produced one avatar reply containing `</reply><parameter name="draws_on">…` with its citations lost; it is now a validation failure that the wrapper retries.
+
+**Eval baseline (2026-09-18):** biographer 4/4 and mentor 4/4 on the live model after the markup guard; the first run was 7/8, the miss being an eval check that read a refusal ("I can't tell you what you should do") as advice. About five cents per suite. Dry run now writes 40 requests.
+
 ## 2026.09.16-2
 
 - `interpreter.v2` replaces `interpreter.v1` (kept for history). The v1 wording asked for a private-summary sentence for masked mental-health scores, and Claude Sonnet 5 answered with placeholders such as "Your depression symptom score is masked and not shown here." v2 tells the model to write no PHQ-9, GAD-7 or OCI-R sentence at all (code writes them in `privateResultsFor`, which already discarded model sentences, so nothing reached a person), never to say a score is masked or withheld, and to leave `flagged` empty in a domain without flags.

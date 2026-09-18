@@ -14,3 +14,4 @@ export * from "./llm";
 export * from "./square_one";
 export * from "./clinician";
 export * from "./extended";
+export * from "./biographer";

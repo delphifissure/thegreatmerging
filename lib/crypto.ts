@@ -62,6 +62,32 @@ export function decryptNumber(blob: Buffer, ctx: EncryptionContext, key = loadKe
   return n;
 }
 
+/**
+ * Free text (biographer conversations, history and constitution lines). Same wire format and the
+ * same context binding as numbers, so a line cannot be moved between users or tables.
+ */
+export function encryptText(value: string, ctx: EncryptionContext, key = loadKey()): Buffer {
+  const iv = randomBytes(IV_BYTES);
+  const cipher = createCipheriv("aes-256-gcm", key, iv);
+  cipher.setAAD(aad(ctx));
+  const ct = Buffer.concat([cipher.update(Buffer.from(value, "utf8")), cipher.final()]);
+  const tag = cipher.getAuthTag();
+  return Buffer.concat([Buffer.from([VERSION]), iv, tag, ct]);
+}
+
+export function decryptText(blob: Buffer, ctx: EncryptionContext, key = loadKey()): string {
+  if (blob.length < 1 + IV_BYTES + TAG_BYTES) throw new Error("ciphertext too short");
+  const version = blob[0];
+  if (version !== VERSION) throw new Error(`unsupported ciphertext version ${version}`);
+  const iv = blob.subarray(1, 1 + IV_BYTES);
+  const tag = blob.subarray(1 + IV_BYTES, 1 + IV_BYTES + TAG_BYTES);
+  const ct = blob.subarray(1 + IV_BYTES + TAG_BYTES);
+  const decipher = createDecipheriv("aes-256-gcm", key, iv);
+  decipher.setAAD(aad(ctx));
+  decipher.setAuthTag(tag);
+  return Buffer.concat([decipher.update(ct), decipher.final()]).toString("utf8");
+}
+
 /** Constant-time comparison for share tokens and similar secrets. */
 export function safeEqual(a: string, b: string): boolean {
   const ba = Buffer.from(a);

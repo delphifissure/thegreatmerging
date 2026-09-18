@@ -70,6 +70,9 @@ export const llmRoleEnum = pgEnum("llm_role", [
   "concreteness",
   "guardrail",
   "sentiment_flagger",
+  "biographer",
+  "drafter",
+  "mentor",
 ]);
 export const runStatusEnum = pgEnum("run_status", ["pending", "running", "complete", "failed"]);
 export const exportKindEnum = pgEnum("export_kind", ["brief", "plan", "profile"]);
@@ -724,3 +727,85 @@ export const research_agreements = pgTable("research_agreements", {
   revoked_at: timestamp("revoked_at", { withTimezone: true }),
   ...timestamps,
 });
+
+
+// ---------------------------------------------------------------------------------------------
+// Intervention prototype (docs/concept_intervention.md). Everything here is private to its owner.
+// Free text is stored only in *_enc columns (lib/crypto.ts encryptText).
+// ---------------------------------------------------------------------------------------------
+export const conversationKindEnum = pgEnum("conversation_kind", ["biographer", "mentor"]);
+export const conversationStatusEnum = pgEnum("conversation_status", ["open", "closed"]);
+export const turnRoleEnum = pgEnum("turn_role", ["guide", "person", "avatar"]);
+export const turnRatingEnum = pgEnum("turn_rating", ["like_me", "not_like_me"]);
+export const documentKindEnum = pgEnum("document_kind", ["history", "constitution"]);
+export const entryStatusEnum = pgEnum("entry_status", ["proposed", "ratified", "rejected"]);
+export const entryMarkEnum = pgEnum("entry_mark", ["settled", "open"]);
+export const entryTierEnum = pgEnum("entry_tier", ["private", "avatar_only", "shareable"]);
+
+export const conversation_threads = pgTable(
+  "conversation_threads",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    user_id: uuid("user_id")
+      .notNull()
+      .references(() => users.id),
+    kind: conversationKindEnum("kind").notNull(),
+    /** Biographer focus key from config/biographer.json; null for mentor threads. */
+    focus: text("focus"),
+    status: conversationStatusEnum("status").notNull().default("open"),
+    /** Set when the drafter has proposed lines from this thread. */
+    drafted_at: timestamp("drafted_at", { withTimezone: true }),
+    ...timestamps,
+  },
+  (t) => [index("conversation_threads_user_idx").on(t.user_id, t.kind)],
+);
+
+export const conversation_turns = pgTable(
+  "conversation_turns",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    thread_id: uuid("thread_id")
+      .notNull()
+      .references(() => conversation_threads.id),
+    user_id: uuid("user_id")
+      .notNull()
+      .references(() => users.id),
+    /** Position in the thread, from 1. Turn ids given to the model are "t<seq>". */
+    seq: integer("seq").notNull(),
+    role: turnRoleEnum("role").notNull(),
+    content_enc: bytea("content_enc").notNull(),
+    /** Non-sensitive structure only: kind, references, draws_on, unsure. Never text a person wrote. */
+    meta: jsonb("meta").notNull().default({}),
+    /** Encrypted companions to meta: the "why" of a question, a question for the biographer. */
+    note_enc: bytea("note_enc"),
+    /** The person's verdict on an avatar reply: the self-recognition test. */
+    rating: turnRatingEnum("rating"),
+    ...timestamps,
+  },
+  (t) => [uniqueIndex("conversation_turns_thread_seq").on(t.thread_id, t.seq)],
+);
+
+export const document_entries = pgTable(
+  "document_entries",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    user_id: uuid("user_id")
+      .notNull()
+      .references(() => users.id),
+    document: documentKindEnum("document").notNull(),
+    section: text("section").notNull(),
+    text_enc: bytea("text_enc").notNull(),
+    status: entryStatusEnum("status").notNull().default("proposed"),
+    /** settled: never varied. open: the owner is willing to see what a different self would do. */
+    mark: entryMarkEnum("mark").notNull().default("open"),
+    /** private | avatar_only | shareable. Nothing is shareable unless the owner says so. */
+    tier: entryTierEnum("tier").notNull().default("private"),
+    source_thread_id: uuid("source_thread_id").references(() => conversation_threads.id),
+    /** Turn sequence numbers in the source thread that the line rests on. */
+    source_turns: jsonb("source_turns").notNull().default([]),
+    in_their_words: boolean("in_their_words").notNull().default(false),
+    ratified_at: timestamp("ratified_at", { withTimezone: true }),
+    ...timestamps,
+  },
+  (t) => [index("document_entries_user_idx").on(t.user_id, t.document, t.status)],
+);
