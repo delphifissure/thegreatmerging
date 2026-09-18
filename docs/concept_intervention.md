@@ -1,6 +1,6 @@
 # Concept note: the intervention premise
 
-Status: proposal, 18 September 2026. Nothing changes in the app until the owner accepts it. If accepted, it amends the build prompt's principles as listed near the end. The rehearsal engine is worked out in `concept_simulation.md`.
+Status: proposal, 18 September 2026. Nothing changes in the app until the owner accepts it. If accepted, it amends the build prompt's principles as listed near the end. The rehearsal engine is worked out in `concept_simulation.md`, and the longer-horizon idea in `concept_ancestor_sim.md`.
 
 ## Premise
 
@@ -32,7 +32,7 @@ Two things make this more than a gimmick. People correct a draft far more easily
 2. **Disclosure tiers.** Every entry in a history or constitution is one of: private; usable by my avatar but never sayable; shareable. The Aligner and an output filter enforce this, with leak evals that test inferability as well as quotation.
 3. **Sparring with a partner's avatar is allowed, on conditions.** Both agree to it, the avatar is labelled with its confidence, private entries stay private, and coaching is limited to approaches you would be comfortable with your partner knowing you practised. Either person can delete their avatar at any time.
 4. **Calibrate before rehearsing.** The discriminator checks scores, held-out answers and the person's own "sounds like me" ratings. Poor agreement means more interviewing, not a rehearsal.
-5. **Resist easy harmony.** Model agents agree too readily. Avatars hold their requirements, every topic gets a bad-day run, and success is never scored as agreement. "We differ, and we have parked it" remains a good outcome. Variations of a person touch only what that person marked open to explore, and nobody is shown a better version of their partner.
+5. **Resist easy harmony.** Model agents agree too readily. Avatars hold their requirements, every topic gets a bad-day run, and success is never scored as agreement. "We differ, and we have parked it" remains a good outcome. Variations of a person touch only what that person marked open to explore. Nobody is shown a partner optimized for themselves; with consent, you may meet the version of your partner that they are working toward.
 6. **Commitment is the couple's premise, not the app's verdict.** Both affirm it at the start. The app still never says stay or leave. Each person has a private safety check and can privately suspend the premise, which pauses joint work without saying why.
 7. **Not therapy.** Crisis resources and the clinician hand-off stay.
 

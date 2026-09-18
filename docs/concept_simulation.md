@@ -44,7 +44,7 @@ Low confidence on a topic means more interviewing, not a rehearsal. Confidence i
 Rules for the third axis:
 
 - **Settled and open.** Each entry in a constitution is marked settled or open to explore, by its owner. The engine perturbs only what is open. Growth areas are self-selected.
-- **You only ever see your own counterfactuals.** Nobody is shown a better version of their partner.
+- **Whose objective defines the variation.** You may meet your own variations. With your partner's consent you may meet the version of them that they are working toward, authored by them. Nobody is ever shown a partner optimized for themselves. See `concept_ancestor_sim.md`.
 - **Near, wanted, and helpful.** A variation is only worth reporting if the discriminator says it is near the person, the person says it is a self they would want to be, and the evaluator says it helped.
 - **Symmetric burden.** A search for harmony will find that the more accommodating partner is cheaper to change, and would quietly optimize that person away. The reporter must always show leverage on both sides and joint moves, and must never rank who should change.
 
