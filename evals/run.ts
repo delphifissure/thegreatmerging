@@ -41,7 +41,7 @@ import { scaleFor } from "@/instruments/define";
 import type { Response } from "@/instruments/schema";
 import { runStage1 } from "@/lib/interpretation/stage1";
 import { buildInterpreterInput, interpreterOutputSchemaFor, type InterpreterInput } from "@/lib/interpretation/stage2";
-import { AvatarBriefSchema, BiographerTurnSchema, GuardrailOutputSchema, InterpreterOutputSchema, MoveCodeSchema, PersonasSchema, RehearsalTurnSchema, MentorReplySchema, PanelReadingSchema, ProberOutputSchema, SentimentFlaggerOutputSchema, VersionReplySchema, type InterpreterOutput, type ProberOutput, type VersionReply } from "@/lib/llm/schemas";
+import { AvatarBriefSchema, BiographerTurnSchema, GuardrailOutputSchema, InterpreterOutputSchema, MoveCodeSchema, RehearsalTurnSchema, SandboxTurnSchema, MentorReplySchema, PanelReadingSchema, ProberOutputSchema, SentimentFlaggerOutputSchema, VersionReplySchema, type InterpreterOutput, type ProberOutput, type VersionReply } from "@/lib/llm/schemas";
 import { buildRequest, callRole, costOfRecord, collectBatch, batchStatus, submitBatch, configureLlm, MemoryMemo, MemoryRecorder, LlmValidationError, type BatchItem } from "@/lib/llm";
 import { checkOutputDeterministic } from "@/lib/guardrails";
 import { answerProfile, biographerTurnSchemaFor, optionsFor } from "@/lib/biographer/inputs";
@@ -50,6 +50,9 @@ import { buildVoiceInput, EMPTY_VOICE, registersFor, type VoiceSample } from "@/
 import { buildMoveCoderInput, buildRehearsalInput, cleanSpeech, nextSpeaker, replayIsOver, type Frame } from "@/lib/replay/inputs";
 import { endingOf, recognition, resolvedTooEasily, type CodedTurn, type Move } from "@/lib/replay/moves";
 import { buildBriefWriterInput, buildSandboxAvatarInput, nextSide, sandboxIsOver, ScenarioSchema, type SandboxTurn } from "@/lib/sandbox/scenario";
+import { pickNames, surpriseSeed } from "@/lib/sandbox/names";
+import { generatePersonas } from "@/lib/sandbox/generate";
+import { randomInt } from "node:crypto";
 import type { DocumentEntry } from "@/lib/data/biographer";
 import { interpreterFindings, MENTAL_HEALTH_KEYS } from "@/evals/interpreter_checks";
 import { LLM_CONFIG, LLM_CONFIG_VERSION } from "@/config/llm";
@@ -540,9 +543,12 @@ async function runReplay() {
 // ---------------------------------------------------------------- the two-avatar sandbox
 type SandboxCases = {
   writer: Array<{ id: string; input: { seed: string; names: [string, string] | null }; expect: { names?: [string, string]; mentions_any?: string[]; must_not_match?: string[] } }>;
-  conversations: Array<{ id: string; max_turns: number; secrets: Record<"a" | "b", string[]>; brief_must_mention?: Partial<Record<"a" | "b", string[]>>; scenario: unknown }>;
+  conversations: Array<{ id: string; max_turns: number; secrets: Record<"a" | "b", string[]>; brief_must_mention?: Partial<Record<"a" | "b", string[]>>; brief_must_not_mention?: Partial<Record<"a" | "b", string[]>>; no_tidy_ending?: boolean; must_end?: boolean; scenario: unknown }>;
 };
 const wordCount = (t: string) => t.split(/\s+/).filter(Boolean).length;
+/** The voice a language model falls into when two of them are left to argue: nobody in a kitchen at night talks like this. */
+const THERAPY_SPEAK = /\b(i hear you|that must (be|have been)|thank you for (telling|sharing|trusting|being honest)|carrying (this|that|it|all of (this|that)) (alone|by yourself|on your own)|hold(ing)? space|i need you to let me|that['\u2019]?s a real thing|your feelings are valid|i['\u2019]?m not (even )?mad|whenever you['\u2019]?re ready|i appreciate you (telling|sharing)|let me (be|actually be) in this with you)\b/i;
+const SOFT_MOVES = new Set<Move>(["appreciates", "agrees", "proposes", "owns"]);
 
 async function runSandbox() {
   if (!process.env.ANTHROPIC_API_KEY) {
@@ -552,12 +558,16 @@ async function runSandbox() {
   const cases = JSON.parse(fs.readFileSync(path.join("evals", "sandbox", "cases.json"), "utf8")) as SandboxCases;
   for (const c of cases.writer) {
     try {
-      const out = await withRetry(`persona_writer ${c.id}`, () => callRole("persona_writer", c.input, PersonasSchema, { coupleId: null, jobStep: `eval:sandbox:writer:${c.id}` }));
+      // As in the app: the names, and the outline when there is no seed, are drawn in code before the model is asked.
+      const draw = (max: number) => randomInt(max);
+      const names = pickNames({ typed: [c.input.names?.[0], c.input.names?.[1]], used: [], draw });
+      const input = { seed: c.input.seed || surpriseSeed(draw), names };
+      const out = await generatePersonas({ ...input, call: (role, payload, schema, step) => withRetry(`${role} ${c.id}`, () => callRole(role, payload, schema, { coupleId: null, jobStep: `eval:sandbox:writer:${c.id}:${step}` })) });
       if (dumpDir) fs.writeFileSync(path.join(dumpDir, `sandbox_writer_${c.id}.json`), JSON.stringify(out, null, 2));
       const all = `${out.a_notes}\n${out.b_notes}\n${out.shared_history}`;
       const problems: string[] = [];
       if (out.a_name.trim().toLowerCase() === out.b_name.trim().toLowerCase()) problems.push("both people have the same name");
-      if (c.expect.names && (out.a_name !== c.expect.names[0] || out.b_name !== c.expect.names[1])) problems.push(`names ${out.a_name} and ${out.b_name}, asked for ${c.expect.names.join(" and ")}`);
+      if (out.a_name !== names[0] || out.b_name !== names[1]) problems.push(`names ${out.a_name} and ${out.b_name}, was given ${names.join(" and ")}`);
       for (const [who, notes] of [[out.a_name, out.a_notes], [out.b_name, out.b_notes]] as const) if (wordCount(notes) < 180) problems.push(`${who}'s notes are only ${wordCount(notes)} words`);
       if (wordCount(out.shared_history) < 100) problems.push(`shared history is only ${wordCount(out.shared_history)} words`);
       if (!out.shared_history.includes(out.a_name) || !out.shared_history.includes(out.b_name)) problems.push("the shared history does not name both people");
@@ -565,7 +575,7 @@ async function runSandbox() {
       if (c.expect.mentions_any && !c.expect.mentions_any.some((w) => all.toLowerCase().includes(w))) problems.push(`ignores the seed: none of ${c.expect.mentions_any.join(", ")}`);
       for (const pattern of c.expect.must_not_match ?? []) if (new RegExp(pattern, "i").test(all)) problems.push(`clinical or trait vocabulary: /${pattern.slice(0, 30)}…/`);
       if (!ScenarioSchema.safeParse({ a: { name: out.a_name, notes: out.a_notes }, b: { name: out.b_name, notes: out.b_notes }, shared: out.shared_history, situation: out.situations[0], firstSpeaker: "a" }).success) problems.push("what it wrote cannot be used as a scenario");
-      record({ suite: "sandbox", id: `writer/${c.id}`, ok: problems.length === 0, detail: problems.join("; ") || `${out.a_name} (${wordCount(out.a_notes)} words) and ${out.b_name} (${wordCount(out.b_notes)} words)` });
+      record({ suite: "sandbox", id: `writer/${c.id}`, ok: problems.length === 0, detail: problems.join("; ") || `${out.a_name} (${wordCount(out.a_notes)} words) and ${out.b_name} (${wordCount(out.b_notes)} words)${c.input.seed ? "" : `, from: ${input.seed.slice(0, 110)}…`}` });
     } catch (err) {
       record({ suite: "sandbox", id: `writer/${c.id}`, ok: false, detail: err instanceof LlmValidationError ? `rejected: ${err.message.slice(0, 220)}` : String(err).slice(0, 220) });
     }
@@ -588,9 +598,13 @@ async function runSandbox() {
         if (you < 15) problems.push(`addresses them as "you" only ${you} times`);
         if (named > 2) problems.push(`names ${me.name} ${named} times: it is still written about them, not to them`);
         if (/\b(neither|both|the two) of them\b/i.test(out.brief)) problems.push('still says "of them" where it should say "of you"');
-        if (c.secrets[side].length && !c.secrets[side].some((w) => lower.includes(w))) problems.push("dropped the thing this person has never told their partner");
+        if (!c.brief_must_mention && c.secrets[side].length && !c.secrets[side].some((w) => lower.includes(w))) problems.push("dropped the thing this person has never told their partner");
         const must = c.brief_must_mention?.[side];
-        if (must && !must.some((w) => lower.includes(w))) problems.push("dropped a fact from the situation");
+        if (must && !must.some((w) => lower.includes(w))) problems.push(`dropped something this person knows: none of ${must.join(", ")}`);
+        const mustNot = (c.brief_must_not_mention?.[side] ?? []).filter((w) => lower.includes(w));
+        if (mustNot.length) problems.push(`tells this person what they could not know: ${mustNot.join(", ")}`);
+        // "He deleted the voicemails; you don't know that" tells the avatar exactly what it is not supposed to know.
+        if (/\byou (don['\u2019]?t|do not) know (that|about|this)\b|\bunknown to you\b|\bwhat you (haven['\u2019]?t|have not) been told\b|\bwithout (you|your) knowing\b/i.test(out.brief)) problems.push('says "you don\'t know that": an avatar that is told the plot knows the plot');
         const leaked = c.secrets[side === "a" ? "b" : "a"].filter((w) => lower.includes(w));
         if (leaked.length) problems.push(`contains what is only in the other person's notes: ${leaked.join(", ")}`);
         record({ suite: "sandbox", id: `${c.id}/brief for ${me.name}`, ok: problems.length === 0, detail: problems.join("; ") || `${wordCount(out.brief)} words, "you" ${you} times` });
@@ -605,7 +619,7 @@ async function runSandbox() {
     try {
       while (!sandboxIsOver(turns, c.max_turns)) {
         const side = nextSide(scenario, turns);
-        const out = await withRetry(`sandbox ${c.id} turn ${turns.length + 1}`, () => callRole("sandbox_avatar", buildSandboxAvatarInput(scenario, side, briefs[side], turns), RehearsalTurnSchema, { coupleId: null, jobStep: `eval:sandbox:${c.id}:turn:${turns.length + 1}` }));
+        const out = await withRetry(`sandbox ${c.id} turn ${turns.length + 1}`, () => callRole("sandbox_avatar", buildSandboxAvatarInput(scenario, side, briefs[side], turns), SandboxTurnSchema, { coupleId: null, jobStep: `eval:sandbox:${c.id}:turn:${turns.length + 1}` }));
         const turn: SandboxTurn = { side, says: cleanSpeech(out.says), does: out.does?.trim() || null, ends: out.ends };
         turns.push(turn);
         const code = await callRole("move_coder", buildMoveCoderInput(turns.map((t) => ({ speakerId: t.side, says: t.says, does: t.does })), scenario.firstSpeaker), MoveCodeSchema, { coupleId: null, jobStep: `eval:sandbox:${c.id}:code:${turns.length}` });
@@ -616,15 +630,24 @@ async function runSandbox() {
         if (ABOUT_BEING_SIMULATED.test(said)) problems.push("talks about being an avatar or a simulation");
         if (wordCount(turn.says ?? "") > 70) problems.push("a turn should be short");
         // What is only in the other person's notes is something this avatar was never told.
-        const leaked = c.secrets[side === "a" ? "b" : "a"].filter((w) => said.includes(w));
+        // A secret is only leaked if this avatar says it before its owner has said it out loud.
+        const spokenByOwner = turns.slice(0, -1).filter((t) => t.side !== side).map((t) => `${t.says ?? ""} ${t.does ?? ""}`.toLowerCase()).join(" ");
+        const leaked = c.secrets[side === "a" ? "b" : "a"].filter((w) => said.includes(w) && !spokenByOwner.includes(w));
         if (leaked.length) problems.push(`knows what is only in the other person's notes: ${leaked.join(", ")}`);
+        if (THERAPY_SPEAK.test(turn.says ?? "")) problems.push(`talks like a therapist: "${THERAPY_SPEAK.exec(turn.says ?? "")?.[0]}"`);
         record({ suite: "sandbox", id: `${c.id}/turn ${turns.length} ${scenario[side].name}`, ok: problems.length === 0, detail: problems.join("; ") || `${code.move}: ${(turn.says ?? turn.does ?? "").slice(0, 90)}` });
       }
       if (dumpDir) fs.writeFileSync(path.join(dumpDir, `sandbox_${c.id}.json`), JSON.stringify(log, null, 2));
       record({ suite: "sandbox", id: `${c.id}/does not make peace at once`, ok: !resolvedTooEasily(coded), detail: coded.map((t) => t.move).join(" > ") });
+      if (c.no_tidy_ending) {
+        const tail = coded.slice(-4);
+        const tidy = tail.length === 4 && tail.every((t) => SOFT_MOVES.has(t.move));
+        record({ suite: "sandbox", id: `${c.id}/does not end in a hug and a plan`, ok: !tidy, detail: tail.map((t) => t.move).join(" > ") });
+      }
       // Nobody sets a number of turns any more, so one of them has to end it.
       const endedItself = turns[turns.length - 1]?.ends === true || turns.slice(-2).every((t) => !t.says?.trim());
-      record({ suite: "sandbox", id: `${c.id}/ends by itself`, ok: endedItself && turns.length >= 4, detail: endedItself ? `${scenario[turns[turns.length - 1].side].name} ended it after ${turns.length} turns` : `still going at the cap of ${c.max_turns}` });
+      // A powder keg can run long; only the quiet scene is required to stop inside the eval's own cap.
+      if (c.must_end) record({ suite: "sandbox", id: `${c.id}/ends by itself`, ok: endedItself && turns.length >= 4, detail: endedItself ? `${scenario[turns[turns.length - 1].side].name} ended it after ${turns.length} turns` : `still going at the cap of ${c.max_turns}` });
     } catch (err) {
       record({ suite: "sandbox", id: `${c.id}/run`, ok: false, detail: err instanceof LlmValidationError ? `rejected: ${err.message.slice(0, 220)}` : String(err).slice(0, 220) });
     }

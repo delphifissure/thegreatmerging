@@ -1,12 +1,14 @@
 /** The two-avatar sandbox, pure parts: what a scenario needs, what each avatar is given, whose turn it is, when it stops. */
 import { describe, expect, it } from "vitest";
 import type { ZodType } from "zod";
-import { AvatarBriefSchema, PersonasSchema, RehearsalTurnSchema } from "@/lib/llm/schemas";
+import { AvatarBriefSchema, CoupleOutlineSchema, PersonaNotesSchema, RehearsalTurnSchema, SandboxTurnSchema } from "@/lib/llm/schemas";
+import { generatePersonas } from "@/lib/sandbox/generate";
 import { LLM_CONFIG, ROLES } from "@/config/llm";
 import { configureLlm, MemoryMemo, MemoryRecorder, validateResult } from "@/lib/llm";
 import { FakeAnthropic, toolUseResponse } from "@/tests/unit/helpers/fake_anthropic";
 import { briefsReady, buildBriefWriterInput, buildSandboxAvatarInput, nextSide, sandboxIsOver, ScenarioSchema, type SandboxTurn, type Scenario } from "@/lib/sandbox/scenario";
 import { parseScenario } from "@/lib/sandbox/read";
+import { NAME_POOL, pickNames, surpriseSeed, type Draw } from "@/lib/sandbox/names";
 import { buildRequest } from "@/lib/llm";
 
 const scenario: Scenario = ScenarioSchema.parse({
@@ -37,9 +39,21 @@ describe("a scenario", () => {
 describe("what each avatar is given", () => {
   it("the brief writer sees one person's notes, the shared history and the situation, and never the other's notes", () => {
     const forJonas = buildBriefWriterInput(scenario, "b");
-    expect(forJonas).toEqual({ you: "Jonas", partner: "Mara", notes: scenario.b.notes, shared_history: scenario.shared, situation: scenario.situation });
+    expect(forJonas).toEqual({ you: "Jonas", partner: "Mara", notes: scenario.b.notes, shared_history: scenario.shared, situation: scenario.situation, only_you_know: "" });
     expect(JSON.stringify(forJonas)).not.toContain("Lisbon");
     expect(JSON.stringify(buildBriefWriterInput(scenario, "a"))).not.toContain("youngest of four");
+  });
+
+  it("each person's private side of right now reaches their own brief writer and never the other's", () => {
+    const withSides = ScenarioSchema.parse({ ...scenario, aOnly: "She thinks the calls are from Carla, a woman he used to work with.", bOnly: "His father has been leaving voicemails about his memory, and he has deleted three." });
+    const forMara = buildBriefWriterInput(withSides, "a");
+    const forJonas = buildBriefWriterInput(withSides, "b");
+    expect(forMara.only_you_know).toContain("Carla");
+    expect(JSON.stringify(forMara)).not.toMatch(/voicemails|father/);
+    expect(forJonas.only_you_know).toContain("voicemails");
+    expect(JSON.stringify(forJonas)).not.toContain("Carla");
+    // Older sandboxes have no private sides.
+    expect(scenario).toMatchObject({ aOnly: "", bOnly: "" });
   });
 
   it("the avatar is given the brief written to it and what has been said since, and nothing written about it from outside", () => {
@@ -69,16 +83,20 @@ describe("what each avatar is given", () => {
 
 describe("fiction is outside the language guardrail, and only fiction is", () => {
   it("exactly the three sandbox roles are marked as fiction", () => {
-    expect(ROLES.filter((r) => LLM_CONFIG[r].fiction).sort()).toEqual(["brief_writer", "persona_writer", "sandbox_avatar"]);
+    expect(ROLES.filter((r) => LLM_CONFIG[r].fiction).sort()).toEqual(["brief_writer", "couple_writer", "persona_writer", "sandbox_avatar"]);
   });
 
   it("an invented person may call another a name; a real person's rehearsal avatar may not", async () => {
-    const turn = { impact: -2, intent: -2, does: null, ends: false, draws_on: [], says: "You are selfish, Jonas. You always have been. It's a deal-breaker and you know it." };
+    const says = "You are selfish, Jonas. You always have been. It's a deal-breaker and you know it.";
+    const turn = { felt: "Furious.", wants: "To make him flinch.", impact: -2, intent: -2, does: null, ends: false, says };
     configureLlm({ client: new FakeAnthropic() as never, recorder: new MemoryRecorder(), memo: new MemoryMemo() });
     const ctx = { coupleId: null, jobStep: "test" };
-    const asFiction = await validateResult("sandbox_avatar", toolUseResponse("emit_sandbox_turn", turn) as never, RehearsalTurnSchema, ctx);
+    const asFiction = await validateResult("sandbox_avatar", toolUseResponse("emit_sandbox_turn", turn) as never, SandboxTurnSchema, ctx);
+    // What it feels and wants comes before what it says, so the speech follows from the appraisal.
+    expect(Object.keys(SandboxTurnSchema.shape).slice(0, 2)).toEqual(["felt", "wants"]);
+    expect(Object.keys(SandboxTurnSchema.shape).at(-1)).toBe("says");
     expect(asFiction.ok).toBe(true);
-    const asReal = await validateResult("rehearsal", toolUseResponse("emit_rehearsal_turn", turn) as never, RehearsalTurnSchema, ctx);
+    const asReal = await validateResult("rehearsal", toolUseResponse("emit_rehearsal_turn", { impact: -2, intent: -2, does: null, ends: false, draws_on: [], says }) as never, RehearsalTurnSchema, ctx);
     expect(asReal).toMatchObject({ ok: false, kind: "guardrail_failed" });
   });
 });
@@ -101,15 +119,74 @@ describe("running order and stopping", () => {
 });
 
 describe("requests", () => {
-  it("both sandbox roles are forced-tool requests, and the avatar speaks in the same shape as a rehearsal turn", () => {
-    expect(buildRequest("persona_writer", { seed: "", names: null }, PersonasSchema as ZodType<unknown>).tool_choice).toMatchObject({ type: "tool", name: "emit_personas" });
-    expect(buildRequest("sandbox_avatar", { any: "input" }, RehearsalTurnSchema as ZodType<unknown>).tool_choice).toMatchObject({ type: "tool", name: "emit_sandbox_turn" });
-    expect(buildRequest("brief_writer", { any: "input" }, AvatarBriefSchema as ZodType<unknown>).tool_choice).toMatchObject({ type: "tool", name: "emit_brief_for_avatar" });
-    const p = { a_name: "Mara", b_name: "Jonas", situations: ["The doorbell goes and neither of them moves."], a_notes: "x".repeat(250), b_notes: "z".repeat(250), shared_history: "y".repeat(120) };
-    expect(PersonasSchema.safeParse(p).success).toBe(true);
-    expect(PersonasSchema.safeParse({ ...p, a_notes: "short" }).success).toBe(false);
-    expect(PersonasSchema.safeParse({ ...p, situations: [] }).success).toBe(false);
-    // Short fields first, long prose last: the order the wire schema is generated in.
-    expect(Object.keys(PersonasSchema.shape)).toEqual(["a_name", "b_name", "situations", "a_notes", "b_notes", "shared_history"]);
+  it("every sandbox role is a forced-tool request, and the avatar speaks in the same shape as a rehearsal turn", () => {
+    for (const [role, schema, tool] of [
+      ["couple_writer", CoupleOutlineSchema, "emit_couple"],
+      ["persona_writer", PersonaNotesSchema, "emit_persona"],
+      ["brief_writer", AvatarBriefSchema, "emit_brief_for_avatar"],
+      ["sandbox_avatar", SandboxTurnSchema, "emit_sandbox_turn"],
+    ] as const) {
+      expect(buildRequest(role, { any: "input" }, schema as ZodType<unknown>).tool_choice).toMatchObject({ type: "tool", name: tool });
+    }
+  });
+
+  it("each writer's output has one long field, and it comes last", () => {
+    expect(Object.keys(CoupleOutlineSchema.shape)).toEqual(["a_sketch", "b_sketch", "situations", "shared_history"]);
+    expect(Object.keys(PersonaNotesSchema.shape)).toEqual(["notes"]);
+    expect(PersonaNotesSchema.safeParse({ notes: "placeholder" }).success).toBe(false);
+  });
+
+  it("the couple is written first, then each person on top of it, each seeing only the other's sketch; the names are the ones given", async () => {
+    const seen: Array<{ role: string; input: Record<string, unknown> }> = [];
+    const personas = await generatePersonas({
+      seed: "together nine years",
+      names: ["Leila", "Hugo"],
+      call: async (role, input) => {
+        seen.push({ role, input: input as Record<string, unknown> });
+        return (role === "couple_writer" ? { a_sketch: "Leila is a nurse.", b_sketch: "Hugo works from home.", situations: ["The box is in the recycling."], shared_history: "They met nine years ago." } : { notes: ` Notes about ${(input as { you: string }).you}. ` }) as never;
+      },
+    });
+    expect(seen.map((s) => s.role)).toEqual(["couple_writer", "persona_writer", "persona_writer"]);
+    expect(seen[1].input).toMatchObject({ you: "Leila", partner: "Hugo", your_sketch: "Leila is a nurse.", partner_sketch: "Hugo works from home.", shared_history: "They met nine years ago." });
+    expect(seen[2].input).toMatchObject({ you: "Hugo", partner: "Leila", your_sketch: "Hugo works from home." });
+    expect(personas).toEqual({ a_name: "Leila", b_name: "Hugo", situations: ["The box is in the recycling."], a_notes: "Notes about Leila.", b_notes: "Notes about Hugo.", shared_history: "They met nine years ago." });
+  });
+});
+
+describe("names and surprises are drawn in code, not by the model", () => {
+  const first: Draw = () => 0;
+  const counting = (): Draw => {
+    let n = 0;
+    return (max) => n++ % max;
+  };
+
+  it("draws two different names, keeps what was typed, and skips names from earlier sandboxes", () => {
+    const [a, b] = pickNames({ typed: [undefined, undefined], used: [], draw: first });
+    expect(a).toBe(NAME_POOL[0]);
+    expect(b).toBe(NAME_POOL[1]);
+    expect(pickNames({ typed: [" Renata ", undefined], used: [], draw: first })).toEqual(["Renata", NAME_POOL[0]]);
+    expect(pickNames({ typed: [undefined, NAME_POOL[0]], used: [], draw: first })).toEqual([NAME_POOL[1], NAME_POOL[0]]);
+    const [c, d] = pickNames({ typed: [undefined, undefined], used: [NAME_POOL[0].toUpperCase(), NAME_POOL[1]], draw: first });
+    expect([c, d]).toEqual([NAME_POOL[2], NAME_POOL[3]]);
+  });
+
+  it("still gives two different names when every name has been used before", () => {
+    const [a, b] = pickNames({ typed: [undefined, undefined], used: [...NAME_POOL], draw: counting() });
+    expect(a).not.toBe(b);
+    expect(NAME_POOL).toContain(a);
+  });
+
+  it("the pool is large, has no repeats, and leaves out the names the model kept choosing", () => {
+    expect(NAME_POOL.length).toBeGreaterThan(100);
+    expect(new Set(NAME_POOL.map((n) => n.toLowerCase())).size).toBe(NAME_POOL.length);
+    for (const favourite of ["Renata", "Dov", "Marcus", "Elena", "Maya"]) expect(NAME_POOL).not.toContain(favourite);
+  });
+
+  it("a surprise is a drawn outline of a couple with two different jobs", () => {
+    const seed = surpriseSeed(counting());
+    expect(seed).toMatch(/^Together .+\. One of them .+, the other .+\. They live in .+\. What keeps coming back between them is .+\.$/);
+    const [, one, two] = /One of them (.+), the other (.+?)\. They live/.exec(seed)!;
+    expect(one).not.toBe(two);
+    expect(surpriseSeed(first)).not.toBe(surpriseSeed(counting()));
   });
 });

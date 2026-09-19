@@ -22,7 +22,7 @@
  *      others. Thinking is adaptive-by-default on those models and is not configured explicitly.
  */
 
-export const ROLES = ["prober", "interpreter", "summarizer", "sentiment_flagger", "guardrail", "concreteness", "biographer", "drafter", "mentor", "version", "panel_reader", "rehearsal", "move_coder", "persona_writer", "sandbox_avatar", "brief_writer"] as const;
+export const ROLES = ["prober", "interpreter", "summarizer", "sentiment_flagger", "guardrail", "concreteness", "biographer", "drafter", "mentor", "version", "panel_reader", "rehearsal", "move_coder", "persona_writer", "sandbox_avatar", "brief_writer", "couple_writer"] as const;
 export type Role = (typeof ROLES)[number];
 
 export type ModelId = "claude-fable-5-1" | "claude-opus-5" | "claude-sonnet-5" | "claude-haiku-4-5-20251001";
@@ -249,10 +249,10 @@ export const LLM_CONFIG: Record<Role, RoleConfig> = {
     model: "claude-sonnet-5",
     temperature: 0.9,
     effort: "medium",
-    prompt_file: "persona_writer.v1.md",
-    prompt_version: "persona_writer.v1",
-    tool_name: "emit_personas",
-    max_tokens: 5000,
+    prompt_file: "persona_writer.v3.md",
+    prompt_version: "persona_writer.v3",
+    tool_name: "emit_persona",
+    max_tokens: 3000,
     batchable: false,
     reaches_person: false,
     fiction: true,
@@ -261,10 +261,23 @@ export const LLM_CONFIG: Record<Role, RoleConfig> = {
     model: "claude-sonnet-5",
     temperature: 0.7,
     effort: "medium",
-    prompt_file: "sandbox_avatar.v3.md",
-    prompt_version: "sandbox_avatar.v3",
+    prompt_file: "sandbox_avatar.v4.md",
+    prompt_version: "sandbox_avatar.v4",
     tool_name: "emit_sandbox_turn",
     max_tokens: 1000,
+    batchable: false,
+    reaches_person: false,
+    fiction: true,
+  },
+  // The life two invented people share, written first; each person is then written separately on top of it.
+  couple_writer: {
+    model: "claude-sonnet-5",
+    temperature: 0.9,
+    effort: "medium",
+    prompt_file: "couple_writer.v1.md",
+    prompt_version: "couple_writer.v1",
+    tool_name: "emit_couple",
+    max_tokens: 3000,
     batchable: false,
     reaches_person: false,
     fiction: true,
@@ -274,8 +287,8 @@ export const LLM_CONFIG: Record<Role, RoleConfig> = {
     model: "claude-sonnet-5",
     temperature: 0,
     effort: "medium",
-    prompt_file: "brief_writer.v1.md",
-    prompt_version: "brief_writer.v1",
+    prompt_file: "brief_writer.v2.md",
+    prompt_version: "brief_writer.v2",
     tool_name: "emit_brief_for_avatar",
     max_tokens: 5000,
     batchable: false,
@@ -285,4 +298,4 @@ export const LLM_CONFIG: Record<Role, RoleConfig> = {
 };
 
 /** Bump on any change to a prompt, model, temperature, or output schema. Record it in prompts/CHANGELOG.md. */
-export const LLM_CONFIG_VERSION = "2026.09.18-9";
+export const LLM_CONFIG_VERSION = "2026.09.18-11";

@@ -36,6 +36,18 @@ export default async function SandboxPage({ params }: { params: Promise<{ thread
           {s.a.name} and {s.b.name}
         </h1>
         <p className="reading mt-1 max-w-prose text-[16px] text-muted">{s.situation}</p>
+        {s.aOnly || s.bOnly ? (
+          <dl className="mt-2 max-w-prose space-y-1 text-sm text-muted">
+            {(["a", "b"] as const).map((side) =>
+              (side === "a" ? s.aOnly : s.bOnly) ? (
+                <div key={side}>
+                  <dt className="inline font-medium text-ink">Only {s[side].name} knows or thinks: </dt>
+                  <dd className="inline">{side === "a" ? s.aOnly : s.bOnly}</dd>
+                </div>
+              ) : null,
+            )}
+          </dl>
+        ) : null}
       </div>
 
       {safety ? (
@@ -49,7 +61,7 @@ export default async function SandboxPage({ params }: { params: Promise<{ thread
         <details className="rounded-card border border-rule bg-surface p-5" open={!started}>
           <summary className="cursor-pointer font-medium text-accent">What each of them is told</summary>
           <p className="mt-2 max-w-prose text-sm text-muted">
-            Each brief is written to that person, from their own notes, the life they share and the situation, and never from the other&rsquo;s notes. Beyond it, each is told only this (<code>prompts/sandbox_avatar.v2.md</code>): you are this person and this is happening now; say what you would really say, however unfair, and don&rsquo;t make it easier than it would be; keep turns short. They can say whatever they like to each other. The one stop is physical violence, threats of it, or self-harm.
+            Each brief is written to that person, from their own notes, the life they share, what both can see of the situation and their own private side of it. It is never made from the other&rsquo;s notes or the other&rsquo;s side, and anything its person couldn&rsquo;t know is left out, not written as &ldquo;you don&rsquo;t know that&rdquo;. Beyond it, each is told only this (<code>prompts/sandbox_avatar.v4.md</code>): you are this person and this is happening now; feel it before you speak, and react in proportion; say what you would really say, however unfair; you are not a therapist; what you have been hiding stays hidden unless it comes out badly; most of these end unfinished, not in a hug; keep turns short. They can say whatever they like to each other. The one stop is physical violence, threats of it, or self-harm.
             {started ? "" : " You can change either brief until someone speaks."}
           </p>
           <div className="mt-3 grid gap-4 md:grid-cols-2">

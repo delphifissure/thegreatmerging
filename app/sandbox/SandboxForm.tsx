@@ -6,9 +6,9 @@ import { Notice } from "@/app/_components/Field";
 import type { Scenario } from "@/lib/sandbox/scenario";
 import { createSandboxAction, generatePersonasAction } from "./actions";
 
-type Draft = { aName: string; aNotes: string; bName: string; bNotes: string; shared: string; situation: string; firstSpeaker: "a" | "b"; openingLine: string };
-const EMPTY: Draft = { aName: "", aNotes: "", bName: "", bNotes: "", shared: "", situation: "", firstSpeaker: "a", openingLine: "" };
-const fromScenario = (s: Scenario): Draft => ({ aName: s.a.name, aNotes: s.a.notes, bName: s.b.name, bNotes: s.b.notes, shared: s.shared, situation: s.situation, firstSpeaker: s.firstSpeaker, openingLine: s.openingLine });
+type Draft = { aName: string; aNotes: string; bName: string; bNotes: string; shared: string; situation: string; aOnly: string; bOnly: string; firstSpeaker: "a" | "b"; openingLine: string };
+const EMPTY: Draft = { aName: "", aNotes: "", bName: "", bNotes: "", shared: "", situation: "", aOnly: "", bOnly: "", firstSpeaker: "a", openingLine: "" };
+const fromScenario = (s: Scenario): Draft => ({ aName: s.a.name, aNotes: s.a.notes, bName: s.b.name, bNotes: s.b.notes, shared: s.shared, situation: s.situation, aOnly: s.aOnly, bOnly: s.bOnly, firstSpeaker: s.firstSpeaker, openingLine: s.openingLine });
 
 /** Write two people, or have them written, then put them in a situation. Everything stays editable until the conversation starts. */
 export function SandboxForm({ initial }: { initial: Scenario | null }) {
@@ -29,12 +29,14 @@ export function SandboxForm({ initial }: { initial: Scenario | null }) {
       if (!r.ok) return setError(r.error);
       setD((x) => ({ ...x, aName: r.personas.a_name, aNotes: r.personas.a_notes, bName: r.personas.b_name, bNotes: r.personas.b_notes, shared: r.personas.shared_history, situation: x.situation || r.personas.situations[0] || "" }));
       setSituations(r.personas.situations);
+      // A surprise is drawn from lists in code; showing it says where this couple came from, and it can be changed and run again.
+      if (!seed.trim()) setSeed(r.seedUsed);
     });
 
   const create = () =>
     startCreate(async () => {
       setError(null);
-      const r = await createSandboxAction({ a: { name: d.aName, notes: d.aNotes }, b: { name: d.bName, notes: d.bNotes }, shared: d.shared, situation: d.situation, firstSpeaker: d.firstSpeaker, openingLine: d.openingLine });
+      const r = await createSandboxAction({ a: { name: d.aName, notes: d.aNotes }, b: { name: d.bName, notes: d.bNotes }, shared: d.shared, situation: d.situation, aOnly: d.aOnly, bOnly: d.bOnly, firstSpeaker: d.firstSpeaker, openingLine: d.openingLine });
       if (r && !r.ok) setError(r.error);
     });
 
@@ -45,7 +47,7 @@ export function SandboxForm({ initial }: { initial: Scenario | null }) {
         <label htmlFor="seed" className="reading block text-[19px]">
           Have two people written for you
         </label>
-        <p className="mt-1 text-sm text-muted">A few words is enough: &ldquo;together nine years, she&rsquo;s a nurse on nights, he hides purchases, they never talk about his mother.&rdquo; Leave it empty for a surprise. Names you have already typed below are kept. Everything it writes lands in the boxes below, for you to change.</p>
+        <p className="mt-1 text-sm text-muted">A few words is enough: &ldquo;together nine years, she&rsquo;s a nurse on nights, he hides purchases, they never talk about his mother.&rdquo; Leave it empty for a surprise: the outline is drawn at random and shown here afterwards. Names you type below are kept; otherwise they are drawn from a list, skipping any you have had before. Everything it writes lands in the boxes below, for you to change.</p>
         <textarea id="seed" rows={2} value={seed} onChange={(e) => setSeed(e.target.value)} className="mt-2 w-full" disabled={busy} />
         <div className="mt-3 flex flex-wrap items-center gap-3">
           <Button type="button" variant="secondary" disabled={busy} aria-busy={generating} onClick={generate}>
@@ -91,7 +93,9 @@ export function SandboxForm({ initial }: { initial: Scenario | null }) {
           <label htmlFor="situation" className="reading block text-[19px]">
             The situation
           </label>
-          <p className="text-sm text-muted">What is happening, up to the moment before someone speaks. They talk until one of them ends it.</p>
+          <p className="text-sm text-muted">
+            What <em>both</em> of them can see, up to the moment before someone speaks. Both are told this, so nothing secret goes here: an avatar that reads &ldquo;she doesn&rsquo;t know he deleted the voicemails&rdquo; knows he deleted the voicemails.
+          </p>
           <textarea id="situation" rows={3} value={d.situation} onChange={(e) => set("situation", e.target.value)} className={field} disabled={busy} />
           {situations.length > 0 ? (
             <div className="mt-2 flex flex-col gap-1.5">
@@ -102,6 +106,21 @@ export function SandboxForm({ initial }: { initial: Scenario | null }) {
               ))}
             </div>
           ) : null}
+
+          <div className="mt-4 grid gap-4 md:grid-cols-2">
+            {(["a", "b"] as const).map((side) => {
+              const name = (side === "a" ? d.aName : d.bName).trim() || (side === "a" ? "the first person" : "the second person");
+              return (
+                <div key={side}>
+                  <label htmlFor={`${side}-only`} className="block text-sm font-medium">
+                    Only {name} knows or thinks this <span className="font-normal text-muted">(optional)</span>
+                  </label>
+                  <p className="text-sm text-muted">Their side of right now: what they alone know, suspect, fear or intend. It goes into their brief and nowhere else. It doesn&rsquo;t have to be true.</p>
+                  <textarea id={`${side}-only`} rows={3} value={side === "a" ? d.aOnly : d.bOnly} onChange={(e) => set(side === "a" ? "aOnly" : "bOnly", e.target.value)} className="mt-1 w-full text-[15px]" disabled={busy} />
+                </div>
+              );
+            })}
+          </div>
 
           <div className="mt-4 grid gap-4 sm:grid-cols-[auto_1fr]">
             <fieldset>
@@ -117,7 +136,7 @@ export function SandboxForm({ initial }: { initial: Scenario | null }) {
             </fieldset>
             <div>
               <label htmlFor="opening" className="block text-sm font-medium">
-                Their first line <span className="font-normal text-muted">(optional; otherwise they choose it)</span>
+                Their first words, exactly as spoken <span className="font-normal text-muted">(optional; otherwise they choose. What they are thinking goes in the box above, not here.)</span>
               </label>
               <input id="opening" type="text" maxLength={300} value={d.openingLine} onChange={(e) => set("openingLine", e.target.value)} className={field} disabled={busy} />
             </div>

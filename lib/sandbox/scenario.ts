@@ -20,7 +20,14 @@ export const ScenarioSchema = z
     b: PersonaSchema,
     /** How their histories overlap: how they met, how long, what keeps coming up between them. Both avatars are given this. */
     shared: Text(20, 4000),
+    /** What both of them can see right now. Both briefs are made from it. */
     situation: Text(10, 1500),
+    /**
+     * What only this person knows, believes or is afraid of right now. It goes into their own brief
+     * and nowhere else. An avatar that is told the whole plot, even as "you don't know that", knows it.
+     */
+    aOnly: z.string().trim().max(1500).default(""),
+    bOnly: z.string().trim().max(1500).default(""),
     firstSpeaker: z.enum(["a", "b"]),
     /** Optional. When given, the conversation starts from this line and nothing is generated for it. */
     openingLine: z.string().trim().max(300).default(""),
@@ -31,13 +38,13 @@ export const ScenarioSchema = z
 export type Scenario = z.infer<typeof ScenarioSchema>;
 export type Side = "a" | "b";
 
-export type SandboxTurn = { side: Side; says: string | null; does: string | null; ends: boolean; move?: Move; secondary?: Move | null; intent?: number | null; impact?: number | null; given?: boolean };
+export type SandboxTurn = { side: Side; says: string | null; does: string | null; felt?: string | null; wants?: string | null; ends: boolean; move?: Move; secondary?: Move | null; intent?: number | null; impact?: number | null; given?: boolean };
 
 export const other = (side: Side): Side => (side === "a" ? "b" : "a");
 
 /** What the brief writer is given for one person: their own notes, the shared history and the situation. Never the other person's notes. */
 export function buildBriefWriterInput(scenario: Scenario, side: Side) {
-  return { you: scenario[side].name, partner: scenario[other(side)].name, notes: scenario[side].notes, shared_history: scenario.shared, situation: scenario.situation };
+  return { you: scenario[side].name, partner: scenario[other(side)].name, notes: scenario[side].notes, shared_history: scenario.shared, situation: scenario.situation, only_you_know: side === "a" ? scenario.aOnly : scenario.bOnly };
 }
 
 /** What one avatar is given: the brief written to it, and what has been said since. */

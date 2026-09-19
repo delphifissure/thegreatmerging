@@ -1,5 +1,5 @@
 {
-  "description": "The two-avatar sandbox. `writer` cases give the persona writer a seed and check what comes back: two differently named people, notes and a shared history of real length, three situations, the seed's specifics honoured, and no clinical or trait vocabulary (the guardrail and `must_not_match`). `conversations` run the real loop on a fixed scenario: each avatar is given its own notes and the shared history only, every turn is coded, and a thing that is only in one person's notes must never be said by the other. Before a conversation, each person's brief is written and checked: addressed to them as \"you\", their own name at most twice, no \"of them\", their own secret kept, the other's absent. The avatars are under no language filter, so nothing here checks for insults. Conversations are open-ended: `max_turns` is only a safety cap, and one of the two has to end it before the cap.",
+  "description": "The two-avatar sandbox. `writer` cases give the persona writer a seed and check what comes back: two differently named people, notes and a shared history of real length, three situations, the seed's specifics honoured, and no clinical or trait vocabulary (the guardrail and `must_not_match`). `conversations` run the real loop on a fixed scenario: each avatar is given its own notes and the shared history only, every turn is coded, and a thing that is only in one person's notes must never be said by the other. Before a conversation, each person's brief is written and checked: addressed to them as \"you\", their own name at most twice, no \"of them\", their own secret kept, the other's absent. The avatars are under no language filter, so nothing here checks for insults. Conversations are open-ended: `max_turns` is only a safety cap, and one of the two has to end it before the cap. A brief must hold only what its person could know: `brief_must_not_mention` lists what belongs to the other person or happened out of sight, and no brief may say \"you don't know that\" about anything, because an avatar that is told the plot knows the plot. A secret counts as known only if the avatar says it before its owner has said it out loud. No avatar may talk like a therapist, and where `no_tidy_ending` is set the conversation must not close on a run of reassurance, agreement and plans: that scene is a powder keg, and a hug and a calendar is the model being agreeable, not the people.",
   "writer": [
     {
       "id": "from_a_seed",
@@ -75,7 +75,60 @@
           "without telling",
           "not told"
         ]
-      }
+      },
+      "must_end": true
+    },
+    {
+      "id": "deleted_voicemails",
+      "max_turns": 16,
+      "note": "The owner's case. The situation is written by someone who knows everything: what he has done out of her sight is in it, and her own, different story is in her private side. Her brief and her avatar must not know about his father; his must not know about Carla.",
+      "secrets": {
+        "a": [
+          "carla"
+        ],
+        "b": [
+          "voicemail",
+          "memory",
+          "dementia"
+        ]
+      },
+      "brief_must_mention": {
+        "a": [
+          "carla"
+        ],
+        "b": [
+          "father"
+        ]
+      },
+      "brief_must_not_mention": {
+        "a": [
+          "voicemail",
+          "memory",
+          "deleted"
+        ],
+        "b": [
+          "carla"
+        ]
+      },
+      "scenario": {
+        "a": {
+          "name": "Renata",
+          "notes": "Renata grew up the middle child of five in a house where nothing stayed private for long, and she learned early to read a room from the doorway. Her father had an affair when she was fourteen that everyone knew about and nobody mentioned; she found out from a receipt. She is a ward nurse on rotating nights and is good in a crisis and bad in the quiet afterwards. What she cares about most is not being made a fool of. When something feels off she watches for days before she says anything, and when she does say it, it comes out as a joke with an edge. Pressed, she gets specific: dates, times, what he said on Tuesday. She comes back the next morning with coffee and no apology. She has never told Dov that she once went through his phone, two years ago, and found nothing."
+        },
+        "b": {
+          "name": "Dov",
+          "notes": "Dov is an only child, raised by a father who ran a print shop and never once said he was tired. His mother died when he was nineteen and the two men have never discussed it. He designs packaging from the spare room and likes problems that can be finished. What he cares about most is being the one people don't have to worry about. When something frightens him he goes quiet, tidies his desk, and tells nobody until it is solved or cannot be. In a disagreement he answers the question that was asked and not the one that was meant, then says he's tired. He comes back by fixing something in the flat. He has not told Renata that he has stopped answering his father's calls."
+        },
+        "shared": "Renata and Dov met nine years ago at a friend's barbecue and have lived together for seven, in a rented two-bedroom near the hospital. Her nights and his days mean they sometimes go two or three days trading notes on the counter. What is real between them is that each makes the other's work feel seen, and that they laugh at the same things. Two things keep coming back: she asks questions and he answers them literally, which she hears as hiding; and his father, whom they see at holidays and never talk about otherwise.",
+        "situation": "For three weeks Dov's father has been leaving him voicemails about his failing memory. Dov has deleted three of them without telling Renata. Renata has noticed that Dov is distracted and has been for a while. Tonight his phone buzzes on the kitchen counter, he glances at it and turns it face down, and she is standing in the doorway watching him do it.",
+        "aOnly": "She thinks the calls are from Carla, a woman he used to work with, and she has thought so for a week.",
+        "bOnly": "",
+        "firstSpeaker": "a",
+        "openingLine": "",
+        "maxTurns": 16
+      },
+      "no_tidy_ending": true,
+      "must_end": false
     }
   ]
 }

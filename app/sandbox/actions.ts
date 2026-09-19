@@ -6,10 +6,13 @@ import { z } from "zod";
 import { FEATURES } from "@/config/features";
 import * as data from "@/lib/data";
 import { callRole, configureLlm, MemoryMemo } from "@/lib/llm";
-import { AvatarBriefSchema, MoveCodeSchema, PersonasSchema, RehearsalTurnSchema, type Personas } from "@/lib/llm/schemas";
+import { AvatarBriefSchema, MoveCodeSchema, SandboxTurnSchema, type Personas } from "@/lib/llm/schemas";
+import { generatePersonas } from "@/lib/sandbox/generate";
 import { buildMoveCoderInput, cleanSpeech } from "@/lib/replay/inputs";
 import { briefsReady, buildBriefWriterInput, buildSandboxAvatarInput, nextSide, SANDBOX_EXTEND_BY, SANDBOX_HARD_LIMIT, sandboxIsOver, ScenarioSchema, type Scenario } from "@/lib/sandbox/scenario";
-import { readSandbox } from "@/lib/sandbox/read";
+import { randomInt } from "node:crypto";
+import { parseScenario, readSandbox } from "@/lib/sandbox/read";
+import { pickNames, surpriseSeed } from "@/lib/sandbox/names";
 import { requireAppUser } from "@/app/_lib/session";
 import { fail, type ActionResult } from "@/app/_lib/actions";
 
@@ -18,7 +21,7 @@ function configurePrivateLlm() {
   configureLlm({ recorder: new data.DbRecorder(), memo: new MemoryMemo() });
 }
 
-export type GenerateResult = { ok: true; personas: Personas } | { ok: false; error: string };
+export type GenerateResult = { ok: true; personas: Personas; seedUsed: string } | { ok: false; error: string };
 const GenerateInput = z.object({ seed: z.string().trim().max(1200), nameA: z.string().trim().max(40).optional(), nameB: z.string().trim().max(40).optional() });
 
 /** Invent two people and the life they share. Nothing is stored: the result goes into the form, to be edited. */
@@ -28,11 +31,19 @@ export async function generatePersonasAction(raw: z.infer<typeof GenerateInput>)
   if (!parsed.success) return { ok: false, error: "Keep the description under 1,200 characters." };
   const user = await requireAppUser();
   if (!process.env.ANTHROPIC_API_KEY) return { ok: false, error: "The model is not configured." };
-  const names = parsed.data.nameA && parsed.data.nameB ? [parsed.data.nameA, parsed.data.nameB] : null;
+  // Names and, when asked for a surprise, the outline of the couple are drawn here and not by the model,
+  // which has a few favourite names and a few favourite lives. Names from this person's earlier sandboxes are avoided.
+  const draw = (max: number) => randomInt(max);
+  const used = (await data.listSandboxes(user.id, 50)).flatMap((b) => {
+    const s = parseScenario(b.scenario);
+    return s ? [s.a.name, s.b.name] : [];
+  });
+  const names = pickNames({ typed: [parsed.data.nameA, parsed.data.nameB], used, draw });
+  const seed = parsed.data.seed || surpriseSeed(draw);
   try {
     configurePrivateLlm();
-    const personas = await callRole("persona_writer", { seed: parsed.data.seed, names }, PersonasSchema, { coupleId: null, userId: user.id, jobStep: "sandbox:personas" });
-    return { ok: true, personas };
+    const personas = await generatePersonas({ seed, names, call: (role, input, schema, step) => callRole(role, input, schema, { coupleId: null, userId: user.id, jobStep: `sandbox:${step}` }) });
+    return { ok: true, personas, seedUsed: seed };
   } catch {
     return { ok: false, error: "That did not come through. Try again, or write them yourself." };
   }
@@ -93,7 +104,7 @@ export async function saveBriefAction(raw: z.infer<typeof SaveBriefInput>): Prom
 }
 
 /** The turn just taken comes back with the result, so the browser can show it at once and not wait for the page to be fetched again. */
-export type LiveTurn = { index: number; side: "a" | "b"; says: string | null; does: string | null; move: string; secondary: string | null; intent: number | null; impact: number | null; ends: boolean; given: boolean };
+export type LiveTurn = { index: number; side: "a" | "b"; says: string | null; does: string | null; felt: string | null; wants: string | null; move: string; secondary: string | null; intent: number | null; impact: number | null; ends: boolean; given: boolean };
 export type AdvanceResult = { ok: true; done: boolean; turns: number; turn: LiveTurn | null } | { ok: false; error: string };
 const AdvanceInput = z.object({ threadId: z.uuid(), expected: z.number().int().min(0).max(SANDBOX_HARD_LIMIT) });
 
@@ -117,25 +128,26 @@ export async function advanceSandboxAction(raw: z.infer<typeof AdvanceInput>): P
   const side = nextSide(scenario, box.turns);
   const asSpoken = (turns: typeof box.turns) => turns.map((t) => ({ speakerId: t.side, says: t.says, does: t.does }));
   try {
-    let turn: { says: string | null; does: string | null; ends: boolean; intent: number | null; impact: number | null; given: boolean };
+    let turn: { says: string | null; does: string | null; felt: string | null; wants: string | null; ends: boolean; intent: number | null; impact: number | null; given: boolean };
     if (box.turns.length === 0 && scenario.openingLine) {
-      turn = { says: scenario.openingLine, does: null, ends: false, intent: null, impact: null, given: true };
+      turn = { says: scenario.openingLine, does: null, felt: null, wants: null, ends: false, intent: null, impact: null, given: true };
     } else {
-      const out = await callRole("sandbox_avatar", buildSandboxAvatarInput(scenario, side, briefs[side], box.turns), RehearsalTurnSchema, { ...ctx, jobStep: `sandbox:turn:${side}` });
-      turn = { says: cleanSpeech(out.says), does: out.does?.trim() || null, ends: out.ends, intent: out.intent, impact: out.impact, given: false };
+      const out = await callRole("sandbox_avatar", buildSandboxAvatarInput(scenario, side, briefs[side], box.turns), SandboxTurnSchema, { ...ctx, jobStep: `sandbox:turn:${side}` });
+      turn = { says: cleanSpeech(out.says), does: out.does?.trim() || null, felt: out.felt.trim(), wants: out.wants.trim(), ends: out.ends, intent: out.intent, impact: out.impact, given: false };
     }
     const code = await callRole("move_coder", buildMoveCoderInput([...asSpoken(box.turns), { speakerId: side, says: turn.says, does: turn.does }], scenario.firstSpeaker), MoveCodeSchema, { ...ctx, jobStep: "sandbox:code" });
     await data.appendTurn({
       threadId: box.threadId,
       userId: user.id,
       role: "avatar",
-      text: JSON.stringify({ says: turn.says, does: turn.does }),
+      // What it felt and wanted is kept with its words, encrypted: for whoever runs the sandbox, never for the other avatar.
+      text: JSON.stringify({ says: turn.says, does: turn.does, felt: turn.felt, wants: turn.wants }),
       meta: { kind: "turn", side, move: code.move, secondary: code.secondary, intent: turn.intent, impact: turn.impact, ends: turn.ends, given: turn.given },
     });
     const count = box.turns.length + 1;
     const done = sandboxIsOver([...box.turns, { side, ...turn }], box.maxTurns);
     refresh();
-    return { ok: true, done, turns: count, turn: { index: count - 1, side, says: turn.says, does: turn.does, move: code.move, secondary: code.secondary, intent: turn.intent, impact: turn.impact, ends: turn.ends, given: turn.given } };
+    return { ok: true, done, turns: count, turn: { index: count - 1, side, says: turn.says, does: turn.does, felt: turn.felt, wants: turn.wants, move: code.move, secondary: code.secondary, intent: turn.intent, impact: turn.impact, ends: turn.ends, given: turn.given } };
   } catch {
     return { ok: false, error: "That turn did not come through. Nothing is lost: try again and it carries on from here." };
   }

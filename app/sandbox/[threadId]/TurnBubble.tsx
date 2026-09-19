@@ -4,7 +4,7 @@ const MEANT: Record<string, string> = { "-2": "to push back hard", "-1": "coolly
 const LANDED: Record<string, string> = { "-2": "it stung", "-1": "it grated", "0": "neither way", "1": "it eased things", "2": "it warmed them" };
 const signed = (n: number) => (n > 0 ? `+${n}` : String(n));
 
-export type BubbleTurn = { side: "a" | "b"; says: string | null; does: string | null; move?: string | null; secondary?: string | null; intent?: number | null; given?: boolean };
+export type BubbleTurn = { side: "a" | "b"; says: string | null; does: string | null; felt?: string | null; wants?: string | null; move?: string | null; secondary?: string | null; intent?: number | null; given?: boolean };
 
 /** One turn of a sandbox conversation. Used by the page for saved turns and by the runner for the turn that has just arrived. */
 export function TurnBubble({ turn: t, name, otherName, landed, fresh = false }: { turn: BubbleTurn; name: string; otherName: string; landed: number | null; fresh?: boolean }) {
@@ -19,6 +19,13 @@ export function TurnBubble({ turn: t, name, otherName, landed, fresh = false }: 
       </p>
       {t.says ? <p className="reading whitespace-pre-line text-[17px]">&ldquo;{t.says}&rdquo;</p> : null}
       {t.does ? <p className="reading text-[16px] italic text-muted">{t.does}</p> : null}
+      {t.felt || t.wants ? (
+        <p className="mt-2 border-l-2 border-rule pl-2.5 text-sm text-muted">
+          {t.felt ? <span>Felt: {t.felt}</span> : null}
+          {t.felt && t.wants ? <br /> : null}
+          {t.wants ? <span>Wanted: {t.wants}</span> : null}
+        </p>
+      ) : null}
       {t.intent != null || landed != null ? (
         <p className="mt-2 text-sm text-muted">
           {t.intent != null ? `Meant ${MEANT[String(t.intent)]} (${signed(t.intent)})` : ""}

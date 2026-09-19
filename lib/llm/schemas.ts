@@ -262,25 +262,39 @@ export const RehearsalTurnSchema = z
   });
 export type RehearsalTurn = z.infer<typeof RehearsalTurnSchema>;
 
+/**
+ * One turn by a sandbox avatar. What it feels and wants come before what it says, so the speech
+ * follows from an appraisal and not from a wish to be reasonable. Both are shown to whoever runs
+ * the sandbox and never to the other avatar. The long field comes last.
+ */
+export const SandboxTurnSchema = z
+  .object({
+    felt: Prose(300),
+    wants: Prose(300),
+    impact: Valence.nullable(),
+    intent: Valence,
+    does: Prose(200).nullable(),
+    ends: z.boolean(),
+    says: Prose(700).nullable(),
+  })
+  .superRefine((t, ctx) => {
+    if (!t.says?.trim() && !t.does?.trim()) ctx.addIssue({ code: "custom", path: ["says"], message: "a turn must say or do something; going quiet is something you do" });
+  });
+export type SandboxTurnOut = z.infer<typeof SandboxTurnSchema>;
+
 const MOVE_KEYS = ["asks", "states_position", "explains", "criticizes", "contempt", "defends", "owns", "appreciates", "proposes", "agrees", "disagrees", "withdraws", "deflects", "pauses", "leaves", "other"] as const;
 /** The move a turn makes. An enum and nothing else, because this is what crosses between two people. */
 export const MoveCodeSchema = z.object({ move: z.enum(MOVE_KEYS), secondary: z.enum(MOVE_KEYS).nullable() });
 export type MoveCode = z.infer<typeof MoveCodeSchema>;
 
 /**
- * Two invented people and the life they share, for the sandbox. Flat, with the short fields first
- * and the long prose last: nested long strings followed by an array came back with the array empty,
- * the same slip lib/llm/repair.ts exists for, and the repair only reaches top-level fields.
+ * The sandbox's writers. Each output has exactly one long field, and it comes last: with three long
+ * strings in one output the model derailed after the first about one time in two.
  */
-export const PersonasSchema = z.object({
-  a_name: Prose(40),
-  b_name: Prose(40),
-  situations: z.array(Prose(500, 10)).min(1).max(4),
-  a_notes: Prose(4500, 200),
-  b_notes: Prose(4500, 200),
-  shared_history: Prose(3500, 100),
-});
-export type Personas = z.infer<typeof PersonasSchema>;
+export const CoupleOutlineSchema = z.object({ a_sketch: Prose(500, 20), b_sketch: Prose(500, 20), situations: z.array(Prose(500, 10)).min(1).max(4), shared_history: Prose(3500, 100) });
+export const PersonaNotesSchema = z.object({ notes: Prose(4500, 200) });
+/** Two invented people and the life they share, assembled from those calls. */
+export type Personas = { a_name: string; b_name: string; situations: string[]; a_notes: string; b_notes: string; shared_history: string };
 
 /** One avatar's brief in the sandbox: its notes, the shared history and the situation, rewritten to it in the second person. */
 export const AvatarBriefSchema = z.object({ brief: Prose(9000, 200) });

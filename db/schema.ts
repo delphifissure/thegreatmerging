@@ -80,6 +80,7 @@ export const llmRoleEnum = pgEnum("llm_role", [
   "persona_writer",
   "sandbox_avatar",
   "brief_writer",
+  "couple_writer",
 ]);
 export const runStatusEnum = pgEnum("run_status", ["pending", "running", "complete", "failed"]);
 export const exportKindEnum = pgEnum("export_kind", ["brief", "plan", "profile"]);

@@ -23,9 +23,9 @@ export async function readSandbox(threadId: string, userId: string): Promise<San
   const turns: SandboxTurn[] = all
     .filter((t) => t.meta.kind === "turn")
     .map((t) => {
-      const words = JSON.parse(t.text) as { says: string | null; does: string | null };
+      const words = JSON.parse(t.text) as { says: string | null; does: string | null; felt?: string | null; wants?: string | null };
       const m = t.meta as { side: Side; move?: Move; secondary?: Move | null; intent?: number | null; impact?: number | null; ends?: boolean; given?: boolean };
-      return { side: m.side, says: words.says, does: words.does, ends: m.ends === true, move: m.move, secondary: m.secondary ?? null, intent: m.intent ?? null, impact: m.impact ?? null, given: m.given === true };
+      return { side: m.side, says: words.says, does: words.does, felt: words.felt ?? null, wants: words.wants ?? null, ends: m.ends === true, move: m.move, secondary: m.secondary ?? null, intent: m.intent ?? null, impact: m.impact ?? null, given: m.given === true };
     });
   // A brief can be rewritten before the conversation starts; the newest one for each side is the one in force.
   const briefs: Briefs = { a: null, b: null };
