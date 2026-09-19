@@ -249,8 +249,8 @@ export const LLM_CONFIG: Record<Role, RoleConfig> = {
     model: "claude-sonnet-5",
     temperature: 0.9,
     effort: "medium",
-    prompt_file: "persona_writer.v3.md",
-    prompt_version: "persona_writer.v3",
+    prompt_file: "persona_writer.v4.md",
+    prompt_version: "persona_writer.v4",
     tool_name: "emit_persona",
     max_tokens: 3000,
     batchable: false,
@@ -274,8 +274,8 @@ export const LLM_CONFIG: Record<Role, RoleConfig> = {
     model: "claude-sonnet-5",
     temperature: 0.9,
     effort: "medium",
-    prompt_file: "couple_writer.v1.md",
-    prompt_version: "couple_writer.v1",
+    prompt_file: "couple_writer.v2.md",
+    prompt_version: "couple_writer.v2",
     tool_name: "emit_couple",
     max_tokens: 3000,
     batchable: false,
@@ -298,4 +298,4 @@ export const LLM_CONFIG: Record<Role, RoleConfig> = {
 };
 
 /** Bump on any change to a prompt, model, temperature, or output schema. Record it in prompts/CHANGELOG.md. */
-export const LLM_CONFIG_VERSION = "2026.09.18-11";
+export const LLM_CONFIG_VERSION = "2026.09.19-1";

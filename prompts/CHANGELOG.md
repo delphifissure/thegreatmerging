@@ -2,6 +2,25 @@
 
 The LLM component is versioned as part of the instrument. Any change to a prompt file, a model identifier, a temperature, an effort setting, or an output schema requires a version bump here and, when it alters any eval result, a note of which evals changed.
 
+## 2026.09.19-1
+
+The invented life histories were one life written over and over. The owner noticed it from a phrase ("affection came out sideways"); measuring it on eight couples written from eight different drawn outlines showed how far it went. Of sixteen histories, every one opened "X grew up in…", nine had a kitchen table, seven had affection coming out "sideways", six had money "counted out loud at the kitchen table", eleven called affection "practical", ten used the sentence "when that fear is touched", and all sixteen had "cares most about" and "has never told". Of 120 pairs of histories, 89 shared three or more four-word phrases (mean 6, names and small words set aside).
+
+Two causes, and neither is temperature (these models ignore it).
+
+- **My prompt was a template.** `persona_writer.v3` listed seven things to cover, and the writer walked the list in order and borrowed its wording for the connecting sentences. The one example sentence in the rules ("leaves the room and comes back an hour later as if nothing happened") turned up in the personas too.
+- **The model has favourite lives, as it had favourite names.** Given a free choice of childhood it picks a terraced house, a reserved family that shows love by doing, a person who goes quiet when pressed and says "it's fine". And whatever the couple argues about (money, in several of the draws) became the key to both childhoods.
+
+The cure is the one that worked for names: what should vary is drawn in code, and the model writes on top of it.
+
+- `lib/sandbox/lives.ts` draws the bones of each life from long lists: age (never younger than the seed's years together or children allow), where they are from relative to where they live, the household they grew up in, how feeling and disagreement went in that house, an adult turning point, what they do in a disagreement, how they come back from it, how they talk, what they are afraid of, and the area the untold thing lies in. The two people never get the same item from any list. It also draws, for the couple, how they met, the good thing between them and the kind of episode they remember differently; and for each history a form: what the notes open with and the note-taker's manner. Everything in the lists is behaviour or circumstance, never a trait, and nothing involves violence, abuse or self-harm.
+- The surprise outline now draws a region as well (`lib/sandbox/names.ts`). The lists are in British English, and without a place nearly every couple lived in England.
+- `couple_writer.v2` and `persona_writer.v4`: the givens are binding and must appear as scenes, never as the phrase that was handed over; the seed wins where a given contradicts it; what the two argue about now is not the key to anyone's childhood; the list of what the notes must hold is "what must be findable, not a plan", not to be walked in order or borrowed from; write it the way people would where they live; the copied example sentence is gone. The couple writer is told only what a friend of the couple would know of each person; what each is afraid of and what each has never said go to that person's own writer alone.
+- The form shows, under each generated history, what was drawn for that person, so it is clear where a life came from. What is typed in the seed box wins over anything drawn.
+- `lib/sandbox/variety.ts` counts how alike a set of histories is, and the sandbox evals now write four extra couples from drawn outlines and compare all the histories pair by pair (`variety` in `evals/sandbox/cases.json`): at most a fifth of pairs may share three or more phrases, and the mean must be 1.5 or less.
+
+**Measured (2026-09-19), same probe, eight couples each:** pairs sharing three or more phrases 89 of 120 before, 5 of 120 after; mean shared phrases per pair 5.97 before, 0.45 after; phrases found in four or more of 24 texts: 39 four-word phrases before, 2 after. "Sideways", "kitchen table", "terraced", "ledger" and "practical" went from 7, 9, 4, 5 and 11 histories to none. Openings went from sixteen "grew up" to sixteen different ones. Still common: "goes quiet" in 8 of 16 (14 before), partly because two of the drawn ways of arguing are quiet ones.
+
 ## 2026.09.18-11
 
 Three faults the owner found by running the sandbox on a scene of their own: a man deleting his father's voicemails about failing memory, and a partner who thinks the calls are from another woman.

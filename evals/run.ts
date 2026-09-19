@@ -2,6 +2,7 @@
  * Eval harness (section 10). Usage:
  *   pnpm evals                       run every suite
  *   pnpm evals --suite scoring       scoring | synthetic_couples | interpreter | prober | biographer | mentor | panel | guardrail | replay | sandbox
+ *   pnpm evals --suite sandbox --only writer    the sandbox's writers and the variety check, without the conversations
  *   pnpm evals --out evals/results/run.json
  *   pnpm evals --suite interpreter --interpreter-batch msgbatch_...   collect an already-submitted batch
  *   pnpm evals --suite prober --dump evals/results/outputs              keep raw outputs for review
@@ -51,6 +52,8 @@ import { buildMoveCoderInput, buildRehearsalInput, cleanSpeech, nextSpeaker, rep
 import { endingOf, recognition, resolvedTooEasily, type CodedTurn, type Move } from "@/lib/replay/moves";
 import { buildBriefWriterInput, buildSandboxAvatarInput, nextSide, sandboxIsOver, ScenarioSchema, type SandboxTurn } from "@/lib/sandbox/scenario";
 import { pickNames, surpriseSeed } from "@/lib/sandbox/names";
+import { drawLives } from "@/lib/sandbox/lives";
+import { variety } from "@/lib/sandbox/variety";
 import { generatePersonas } from "@/lib/sandbox/generate";
 import { randomInt } from "node:crypto";
 import type { DocumentEntry } from "@/lib/data/biographer";
@@ -542,7 +545,9 @@ async function runReplay() {
 
 // ---------------------------------------------------------------- the two-avatar sandbox
 type SandboxCases = {
-  writer: Array<{ id: string; input: { seed: string; names: [string, string] | null }; expect: { names?: [string, string]; mentions_any?: string[]; must_not_match?: string[] } }>;
+  writer: Array<{ id: string; input: { seed: string; names: [string, string] | null }; expect: { names?: [string, string]; mentions_any?: string[]; must_match?: string[]; must_not_match?: string[] } }>;
+  /** Extra couples written from drawn outlines, only so that the histories can be compared with each other. */
+  variety: { extra_couples: number; max_share_of_pairs_sharing_three: number; max_mean_shared: number };
   conversations: Array<{ id: string; max_turns: number; secrets: Record<"a" | "b", string[]>; brief_must_mention?: Partial<Record<"a" | "b", string[]>>; brief_must_not_mention?: Partial<Record<"a" | "b", string[]>>; no_tidy_ending?: boolean; must_end?: boolean; scenario: unknown }>;
 };
 const wordCount = (t: string) => t.split(/\s+/).filter(Boolean).length;
@@ -556,12 +561,15 @@ async function runSandbox() {
     return;
   }
   const cases = JSON.parse(fs.readFileSync(path.join("evals", "sandbox", "cases.json"), "utf8")) as SandboxCases;
-  for (const c of cases.writer) {
+  const histories: Array<{ text: string; names: string[] }> = [];
+  const extras = Array.from({ length: cases.variety.extra_couples }, (_, i) => ({ id: `drawn_${i + 1}`, input: { seed: "", names: null }, expect: {} as SandboxCases["writer"][number]["expect"] }));
+  const written = await Promise.all([...cases.writer, ...extras].map(async (c) => {
     try {
-      // As in the app: the names, and the outline when there is no seed, are drawn in code before the model is asked.
+      // As in the app: the names, the outline when there is no seed, and the bones of each life are drawn in code before the model is asked.
       const draw = (max: number) => randomInt(max);
-      const names = pickNames({ typed: [c.input.names?.[0], c.input.names?.[1]], used: [], draw });
-      const input = { seed: c.input.seed || surpriseSeed(draw), names };
+      const seed = c.input.seed || surpriseSeed(draw);
+      const names = pickNames({ typed: [c.input.names?.[0], c.input.names?.[1]], used: [], draw, seed });
+      const input = { seed, names, lives: drawLives({ seed, draw }) };
       const out = await generatePersonas({ ...input, call: (role, payload, schema, step) => withRetry(`${role} ${c.id}`, () => callRole(role, payload, schema, { coupleId: null, jobStep: `eval:sandbox:writer:${c.id}:${step}` })) });
       if (dumpDir) fs.writeFileSync(path.join(dumpDir, `sandbox_writer_${c.id}.json`), JSON.stringify(out, null, 2));
       const all = `${out.a_notes}\n${out.b_notes}\n${out.shared_history}`;
@@ -573,14 +581,26 @@ async function runSandbox() {
       if (!out.shared_history.includes(out.a_name) || !out.shared_history.includes(out.b_name)) problems.push("the shared history does not name both people");
       if (out.situations.length < 3) problems.push(`${out.situations.length} situation(s), asked for three`);
       if (c.expect.mentions_any && !c.expect.mentions_any.some((w) => all.toLowerCase().includes(w))) problems.push(`ignores the seed: none of ${c.expect.mentions_any.join(", ")}`);
+      for (const pattern of c.expect.must_match ?? []) if (!new RegExp(pattern, "i").test(all)) problems.push(`the seed's own people were lost: nothing matches /${pattern.slice(0, 40)}/`);
       for (const pattern of c.expect.must_not_match ?? []) if (new RegExp(pattern, "i").test(all)) problems.push(`clinical or trait vocabulary: /${pattern.slice(0, 30)}…/`);
       if (!ScenarioSchema.safeParse({ a: { name: out.a_name, notes: out.a_notes }, b: { name: out.b_name, notes: out.b_notes }, shared: out.shared_history, situation: out.situations[0], firstSpeaker: "a" }).success) problems.push("what it wrote cannot be used as a scenario");
       record({ suite: "sandbox", id: `writer/${c.id}`, ok: problems.length === 0, detail: problems.join("; ") || `${out.a_name} (${wordCount(out.a_notes)} words) and ${out.b_name} (${wordCount(out.b_notes)} words)${c.input.seed ? "" : `, from: ${input.seed.slice(0, 110)}…`}` });
+      return [{ text: out.a_notes, names: [out.a_name, out.b_name] }, { text: out.b_notes, names: [out.a_name, out.b_name] }];
     } catch (err) {
       record({ suite: "sandbox", id: `writer/${c.id}`, ok: false, detail: err instanceof LlmValidationError ? `rejected: ${err.message.slice(0, 220)}` : String(err).slice(0, 220) });
+      return [];
     }
+  }));
+  histories.push(...written.flat());
+  // The histories must not be one life written over and over. Before the bones were drawn in code, 89 of 120 pairs shared three or more four-word phrases (mean 6); afterwards 5 of 120 (mean 0.5).
+  if (histories.length >= 6) {
+    const v = variety(histories);
+    const share = v.pairsSharingThree / v.pairs;
+    record({ suite: "sandbox", id: "writer/the histories are not one life written again", ok: share <= cases.variety.max_share_of_pairs_sharing_three && v.meanShared <= cases.variety.max_mean_shared, detail: `${histories.length} histories: ${v.pairsSharingThree} of ${v.pairs} pairs share three or more phrases, mean ${v.meanShared.toFixed(2)}, max ${v.maxShared}${v.worn.length ? `; worn: ${v.worn.slice(0, 5).map((w) => `"${w.phrase}" ×${w.texts}`).join(", ")}` : ""}` });
   }
 
+  // --only writer stops here: the conversations take several minutes and do not depend on how the people were written.
+  if (argOf("--only") === "writer") return;
   for (const c of cases.conversations) {
     const scenario = ScenarioSchema.parse(c.scenario);
     // Each person's brief: written to them, in the second person, without sight of the other's notes.

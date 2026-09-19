@@ -13,6 +13,7 @@ import { briefsReady, buildBriefWriterInput, buildSandboxAvatarInput, nextSide, 
 import { randomInt } from "node:crypto";
 import { parseScenario, readSandbox } from "@/lib/sandbox/read";
 import { pickNames, surpriseSeed } from "@/lib/sandbox/names";
+import { describeGivens, drawLives } from "@/lib/sandbox/lives";
 import { requireAppUser } from "@/app/_lib/session";
 import { fail, type ActionResult } from "@/app/_lib/actions";
 
@@ -21,7 +22,8 @@ function configurePrivateLlm() {
   configureLlm({ recorder: new data.DbRecorder(), memo: new MemoryMemo() });
 }
 
-export type GenerateResult = { ok: true; personas: Personas; seedUsed: string } | { ok: false; error: string };
+/** `drawn` says what was drawn in code for each person before the model wrote anything, so whoever set this up can see where a life came from. */
+export type GenerateResult = { ok: true; personas: Personas; seedUsed: string; drawn: { a: string; b: string } } | { ok: false; error: string };
 const GenerateInput = z.object({ seed: z.string().trim().max(1200), nameA: z.string().trim().max(40).optional(), nameB: z.string().trim().max(40).optional() });
 
 /** Invent two people and the life they share. Nothing is stored: the result goes into the form, to be edited. */
@@ -38,12 +40,14 @@ export async function generatePersonasAction(raw: z.infer<typeof GenerateInput>)
     const s = parseScenario(b.scenario);
     return s ? [s.a.name, s.b.name] : [];
   });
-  const names = pickNames({ typed: [parsed.data.nameA, parsed.data.nameB], used, draw });
   const seed = parsed.data.seed || surpriseSeed(draw);
+  const names = pickNames({ typed: [parsed.data.nameA, parsed.data.nameB], used, draw, seed });
+  // So are the bones of each life. Left to choose, the model wrote the same childhood and the same way of arguing every time.
+  const lives = drawLives({ seed, draw });
   try {
     configurePrivateLlm();
-    const personas = await generatePersonas({ seed, names, call: (role, input, schema, step) => callRole(role, input, schema, { coupleId: null, userId: user.id, jobStep: `sandbox:${step}` }) });
-    return { ok: true, personas, seedUsed: seed };
+    const personas = await generatePersonas({ seed, names, lives, call: (role, input, schema, step) => callRole(role, input, schema, { coupleId: null, userId: user.id, jobStep: `sandbox:${step}` }) });
+    return { ok: true, personas, seedUsed: seed, drawn: { a: describeGivens(lives.a), b: describeGivens(lives.b) } };
   } catch {
     return { ok: false, error: "That did not come through. Try again, or write them yourself." };
   }

@@ -15,6 +15,7 @@ export function SandboxForm({ initial }: { initial: Scenario | null }) {
   const [d, setD] = useState<Draft>(initial ? fromScenario(initial) : EMPTY);
   const [seed, setSeed] = useState("");
   const [situations, setSituations] = useState<string[]>([]);
+  const [drawn, setDrawn] = useState<{ a: string; b: string } | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [generating, startGenerate] = useTransition();
   const [starting, startCreate] = useTransition();
@@ -29,6 +30,7 @@ export function SandboxForm({ initial }: { initial: Scenario | null }) {
       if (!r.ok) return setError(r.error);
       setD((x) => ({ ...x, aName: r.personas.a_name, aNotes: r.personas.a_notes, bName: r.personas.b_name, bNotes: r.personas.b_notes, shared: r.personas.shared_history, situation: x.situation || r.personas.situations[0] || "" }));
       setSituations(r.personas.situations);
+      setDrawn(r.drawn);
       // A surprise is drawn from lists in code; showing it says where this couple came from, and it can be changed and run again.
       if (!seed.trim()) setSeed(r.seedUsed);
     });
@@ -47,7 +49,7 @@ export function SandboxForm({ initial }: { initial: Scenario | null }) {
         <label htmlFor="seed" className="reading block text-[19px]">
           Have two people written for you
         </label>
-        <p className="mt-1 text-sm text-muted">A few words is enough: &ldquo;together nine years, she&rsquo;s a nurse on nights, he hides purchases, they never talk about his mother.&rdquo; Leave it empty for a surprise: the outline is drawn at random and shown here afterwards. Names you type below are kept; otherwise they are drawn from a list, skipping any you have had before. Everything it writes lands in the boxes below, for you to change.</p>
+        <p className="mt-1 text-sm text-muted">A few words is enough: &ldquo;together nine years, she&rsquo;s a nurse on nights, he hides purchases, they never talk about his mother.&rdquo; Leave it empty for a surprise: the outline is drawn at random and shown here afterwards. Names you type below are kept; otherwise they are drawn from a list, skipping any you have had before. The bones of each life (the house they grew up in, a turning point, how they argue, what they are afraid of) are drawn from lists too, and shown under each history, because a model left to choose writes the same life every time. What you type here wins over anything drawn. Everything it writes lands in the boxes below, for you to change.</p>
         <textarea id="seed" rows={2} value={seed} onChange={(e) => setSeed(e.target.value)} className="mt-2 w-full" disabled={busy} />
         <div className="mt-3 flex flex-wrap items-center gap-3">
           <Button type="button" variant="secondary" disabled={busy} aria-busy={generating} onClick={generate}>
@@ -77,6 +79,12 @@ export function SandboxForm({ initial }: { initial: Scenario | null }) {
               </label>
               <p className="text-sm text-muted">What a therapist would hold in their notes. Only this avatar is given it.</p>
               <textarea id={`${side}-notes`} rows={14} value={side === "a" ? d.aNotes : d.bNotes} onChange={(e) => set(side === "a" ? "aNotes" : "bNotes", e.target.value)} className={`${field} text-[15px]`} disabled={busy} />
+              {drawn ? (
+                <details className="mt-2 text-sm text-muted">
+                  <summary className="cursor-pointer font-medium text-accent">What was drawn for them</summary>
+                  <p className="mt-1.5">{drawn[side]}</p>
+                </details>
+              ) : null}
             </fieldset>
           ))}
         </div>
