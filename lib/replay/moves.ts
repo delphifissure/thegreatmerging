@@ -4,7 +4,7 @@
  * words, and only the move their partner's avatar made. Recognition is scored here, in code.
  */
 
-export const MOVES = ["asks", "states_position", "explains", "criticizes", "defends", "owns", "appreciates", "proposes", "agrees", "disagrees", "withdraws", "deflects", "pauses", "leaves", "other"] as const;
+export const MOVES = ["asks", "states_position", "explains", "criticizes", "contempt", "defends", "owns", "appreciates", "proposes", "agrees", "disagrees", "withdraws", "deflects", "pauses", "leaves", "other"] as const;
 export type Move = (typeof MOVES)[number];
 
 /** What an avatar did, read off a timeline. */
@@ -13,6 +13,7 @@ export const MOVE_DID: Record<Move, string> = {
   states_position: "said what they wanted or thought",
   explains: "explained or justified",
   criticizes: "criticized or blamed",
+  contempt: "mocked, insulted or talked down",
   defends: "defended, or complained back",
   owns: "owned up or apologized",
   appreciates: "reassured or appreciated",
@@ -33,6 +34,7 @@ export const MOVE_I: Record<Exclude<Move, "other">, string> = {
   states_position: "I said what I wanted or thought",
   explains: "I explained or justified myself",
   criticizes: "I criticized or blamed",
+  contempt: "I mocked, insulted or talked down to them",
   defends: "I defended myself, or complained back",
   owns: "I owned up or apologized",
   appreciates: "I reassured or appreciated",
@@ -49,6 +51,7 @@ export const MOVE_THEY: Record<Exclude<Move, "other">, string> = {
   states_position: "said what they wanted or thought",
   explains: "explained or justified themselves",
   criticizes: "criticized or blamed",
+  contempt: "mocked, insulted or talked down to me",
   defends: "defended themselves, or complained back",
   owns: "owned up or apologized",
   appreciates: "reassured or appreciated",
@@ -92,7 +95,7 @@ export function endingOf(turns: CodedTurn[]): Ending {
   if (final === "leaves" || final === "withdraws" || (last.slice(-2).length === 2 && last.slice(-2).every((m) => m === "withdraws" || m === "pauses"))) return "one_left";
   if (last.slice(-2).includes("agrees") && last.some((m) => m === "proposes" || m === "agrees")) return "agreed";
   if (last.slice(-2).some((m) => m === "owns" || m === "appreciates")) return "repaired";
-  if (last.filter((m) => m === "criticizes" || m === "defends").length >= 3) return "escalated";
+  if (last.filter((m) => m === "criticizes" || m === "defends" || m === "contempt").length >= 3) return "escalated";
   return "unresolved";
 }
 

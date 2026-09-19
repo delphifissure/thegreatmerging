@@ -3,11 +3,11 @@ import { notFound } from "next/navigation";
 import { FEATURES } from "@/config/features";
 import { MOVE_DID } from "@/lib/replay/moves";
 import { readSandbox } from "@/lib/sandbox/read";
-import { briefFor, sandboxIsOver, SANDBOX_EXTEND_BY, SANDBOX_HARD_LIMIT } from "@/lib/sandbox/scenario";
+import { briefsReady, sandboxIsOver, SANDBOX_EXTEND_BY, SANDBOX_HARD_LIMIT } from "@/lib/sandbox/scenario";
 import { SAFETY_TEXT_MESSAGES, screenText } from "@/lib/safety_text";
 import { requireAppUser } from "@/app/_lib/session";
 import { LinkButton } from "@/app/_components/Button";
-import { AfterControls, SandboxRunner } from "./Controls";
+import { AfterControls, BriefBox, SandboxRunner, WriteBriefs } from "./Controls";
 
 export const metadata = { title: "Sandbox" };
 
@@ -22,7 +22,9 @@ export default async function SandboxPage({ params }: { params: Promise<{ thread
   const user = await requireAppUser();
   const box = await readSandbox(threadId, user.id);
   if (!box) notFound();
-  const { scenario: s, turns } = box;
+  const { scenario: s, turns, briefs } = box;
+  const ready = briefsReady(briefs);
+  const started = turns.length > 0;
   const over = sandboxIsOver(turns, box.maxTurns);
   const endedByThem = turns[turns.length - 1]?.ends === true;
   const safety = screenText([s.a.notes, s.b.notes, s.shared, s.situation].join("\n"));
@@ -46,18 +48,27 @@ export default async function SandboxPage({ params }: { params: Promise<{ thread
         </div>
       ) : null}
 
-      <details className="rounded-card border border-rule bg-surface p-5">
-        <summary className="cursor-pointer font-medium text-accent">What each avatar was told</summary>
-        <p className="mt-2 text-sm text-muted">Each is also given the house rules in <code>prompts/sandbox_avatar.v1.md</code>: be this person now, do not make it easier than it would be, no insults or labels, short turns. Neither has read the other&rsquo;s notes.</p>
-        <div className="mt-3 grid gap-4 md:grid-cols-2">
-          {(["a", "b"] as const).map((side) => (
-            <div key={side}>
-              <p className="eyebrow mb-1">{s[side].name}</p>
-              <pre className="reading max-h-96 overflow-auto whitespace-pre-wrap rounded-control border border-rule bg-paper p-3 text-[14px] leading-relaxed">{briefFor(s, side)}</pre>
+      {ready ? (
+        <details className="rounded-card border border-rule bg-surface p-5" open={!started}>
+          <summary className="cursor-pointer font-medium text-accent">What each of them is told</summary>
+          <p className="mt-2 max-w-prose text-sm text-muted">
+            Each brief is written to that person, from their own notes, the life they share and the situation, and never from the other&rsquo;s notes. Beyond it, each is told only this (<code>prompts/sandbox_avatar.v2.md</code>): you are this person and this is happening now; say what you would really say, however unfair, and don&rsquo;t make it easier than it would be; keep turns short. They can say whatever they like to each other. The one stop is physical violence, threats of it, or self-harm.
+            {started ? "" : " You can change either brief until someone speaks."}
+          </p>
+          <div className="mt-3 grid gap-4 md:grid-cols-2">
+            {(["a", "b"] as const).map((side) => (
+              <BriefBox key={`${side}-${briefs[side].length}`} threadId={box.threadId} side={side} name={s[side].name} brief={briefs[side]} locked={started} />
+            ))}
+          </div>
+          {started ? null : (
+            <div className="mt-3">
+              <WriteBriefs threadId={box.threadId} again />
             </div>
-          ))}
-        </div>
-      </details>
+          )}
+        </details>
+      ) : (
+        <WriteBriefs threadId={box.threadId} />
+      )}
 
       {turns.length > 0 ? (
         <ol className="space-y-2.5" aria-label="The conversation">
@@ -98,7 +109,7 @@ export default async function SandboxPage({ params }: { params: Promise<{ thread
         </div>
       ) : (
         <>
-          <SandboxRunner key={box.maxTurns} threadId={box.threadId} turns={turns.length} maxTurns={box.maxTurns} />
+          {ready ? <SandboxRunner key={box.maxTurns} threadId={box.threadId} turns={turns.length} maxTurns={box.maxTurns} /> : null}
           <AfterControls threadId={box.threadId} canExtend={false} />
         </>
       )}

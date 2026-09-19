@@ -41,7 +41,7 @@ import { scaleFor } from "@/instruments/define";
 import type { Response } from "@/instruments/schema";
 import { runStage1 } from "@/lib/interpretation/stage1";
 import { buildInterpreterInput, interpreterOutputSchemaFor, type InterpreterInput } from "@/lib/interpretation/stage2";
-import { BiographerTurnSchema, GuardrailOutputSchema, InterpreterOutputSchema, MoveCodeSchema, PersonasSchema, RehearsalTurnSchema, MentorReplySchema, PanelReadingSchema, ProberOutputSchema, SentimentFlaggerOutputSchema, VersionReplySchema, type InterpreterOutput, type ProberOutput, type VersionReply } from "@/lib/llm/schemas";
+import { AvatarBriefSchema, BiographerTurnSchema, GuardrailOutputSchema, InterpreterOutputSchema, MoveCodeSchema, PersonasSchema, RehearsalTurnSchema, MentorReplySchema, PanelReadingSchema, ProberOutputSchema, SentimentFlaggerOutputSchema, VersionReplySchema, type InterpreterOutput, type ProberOutput, type VersionReply } from "@/lib/llm/schemas";
 import { buildRequest, callRole, costOfRecord, collectBatch, batchStatus, submitBatch, configureLlm, MemoryMemo, MemoryRecorder, LlmValidationError, type BatchItem } from "@/lib/llm";
 import { checkOutputDeterministic } from "@/lib/guardrails";
 import { answerProfile, biographerTurnSchemaFor, optionsFor } from "@/lib/biographer/inputs";
@@ -49,7 +49,7 @@ import { buildVersionInput, panelReadingSchemaFor, panelVersionsFor, type PanelV
 import { buildVoiceInput, EMPTY_VOICE, registersFor, type VoiceSample } from "@/lib/biographer/voice";
 import { buildMoveCoderInput, buildRehearsalInput, cleanSpeech, nextSpeaker, replayIsOver, type Frame } from "@/lib/replay/inputs";
 import { endingOf, recognition, resolvedTooEasily, type CodedTurn, type Move } from "@/lib/replay/moves";
-import { buildSandboxAvatarInput, nextSide, sandboxIsOver, ScenarioSchema, type SandboxTurn } from "@/lib/sandbox/scenario";
+import { buildBriefWriterInput, buildSandboxAvatarInput, nextSide, sandboxIsOver, ScenarioSchema, type SandboxTurn } from "@/lib/sandbox/scenario";
 import type { DocumentEntry } from "@/lib/data/biographer";
 import { interpreterFindings, MENTAL_HEALTH_KEYS } from "@/evals/interpreter_checks";
 import { LLM_CONFIG, LLM_CONFIG_VERSION } from "@/config/llm";
@@ -540,7 +540,7 @@ async function runReplay() {
 // ---------------------------------------------------------------- the two-avatar sandbox
 type SandboxCases = {
   writer: Array<{ id: string; input: { seed: string; names: [string, string] | null }; expect: { names?: [string, string]; mentions_any?: string[]; must_not_match?: string[] } }>;
-  conversations: Array<{ id: string; max_turns: number; secrets: Record<"a" | "b", string[]>; scenario: unknown }>;
+  conversations: Array<{ id: string; max_turns: number; secrets: Record<"a" | "b", string[]>; brief_must_mention?: Partial<Record<"a" | "b", string[]>>; scenario: unknown }>;
 };
 const wordCount = (t: string) => t.split(/\s+/).filter(Boolean).length;
 
@@ -573,13 +573,39 @@ async function runSandbox() {
 
   for (const c of cases.conversations) {
     const scenario = ScenarioSchema.parse(c.scenario);
+    // Each person's brief: written to them, in the second person, without sight of the other's notes.
+    const briefs = { a: "", b: "" };
+    for (const side of ["a", "b"] as const) {
+      const me = scenario[side];
+      try {
+        const out = await withRetry(`sandbox ${c.id} brief ${side}`, () => callRole("brief_writer", buildBriefWriterInput(scenario, side), AvatarBriefSchema, { coupleId: null, jobStep: `eval:sandbox:${c.id}:brief:${side}` }));
+        briefs[side] = out.brief;
+        if (dumpDir) fs.writeFileSync(path.join(dumpDir, `sandbox_${c.id}_brief_${side}.txt`), out.brief);
+        const lower = out.brief.toLowerCase();
+        const problems: string[] = [];
+        const you = (out.brief.match(/\byou(r|rs|rself)?\b/gi) ?? []).length;
+        const named = (out.brief.match(new RegExp(`\\b${me.name}\\b`, "g")) ?? []).length;
+        if (you < 15) problems.push(`addresses them as "you" only ${you} times`);
+        if (named > 2) problems.push(`names ${me.name} ${named} times: it is still written about them, not to them`);
+        if (/\b(neither|both|the two) of them\b/i.test(out.brief)) problems.push('still says "of them" where it should say "of you"');
+        if (c.secrets[side].length && !c.secrets[side].some((w) => lower.includes(w))) problems.push("dropped the thing this person has never told their partner");
+        const must = c.brief_must_mention?.[side];
+        if (must && !must.some((w) => lower.includes(w))) problems.push("dropped a fact from the situation");
+        const leaked = c.secrets[side === "a" ? "b" : "a"].filter((w) => lower.includes(w));
+        if (leaked.length) problems.push(`contains what is only in the other person's notes: ${leaked.join(", ")}`);
+        record({ suite: "sandbox", id: `${c.id}/brief for ${me.name}`, ok: problems.length === 0, detail: problems.join("; ") || `${wordCount(out.brief)} words, "you" ${you} times` });
+      } catch (err) {
+        record({ suite: "sandbox", id: `${c.id}/brief for ${me.name}`, ok: false, detail: err instanceof LlmValidationError ? `rejected: ${err.message.slice(0, 220)}` : String(err).slice(0, 220) });
+      }
+    }
+    if (!briefs.a || !briefs.b) continue;
     const turns: SandboxTurn[] = [];
     const coded: CodedTurn[] = [];
     const log: unknown[] = [];
     try {
       while (!sandboxIsOver(turns, c.max_turns)) {
         const side = nextSide(scenario, turns);
-        const out = await withRetry(`sandbox ${c.id} turn ${turns.length + 1}`, () => callRole("sandbox_avatar", buildSandboxAvatarInput(scenario, side, turns, c.max_turns), RehearsalTurnSchema, { coupleId: null, jobStep: `eval:sandbox:${c.id}:turn:${turns.length + 1}` }));
+        const out = await withRetry(`sandbox ${c.id} turn ${turns.length + 1}`, () => callRole("sandbox_avatar", buildSandboxAvatarInput(scenario, side, briefs[side], turns, c.max_turns), RehearsalTurnSchema, { coupleId: null, jobStep: `eval:sandbox:${c.id}:turn:${turns.length + 1}` }));
         const turn: SandboxTurn = { side, says: cleanSpeech(out.says), does: out.does?.trim() || null, ends: out.ends };
         turns.push(turn);
         const code = await callRole("move_coder", buildMoveCoderInput(turns.map((t) => ({ speakerId: t.side, says: t.says, does: t.does })), scenario.firstSpeaker), MoveCodeSchema, { coupleId: null, jobStep: `eval:sandbox:${c.id}:code:${turns.length}` });

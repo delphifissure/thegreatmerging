@@ -6,9 +6,9 @@ import { z } from "zod";
 import { FEATURES } from "@/config/features";
 import * as data from "@/lib/data";
 import { callRole, configureLlm, MemoryMemo } from "@/lib/llm";
-import { MoveCodeSchema, PersonasSchema, RehearsalTurnSchema, type Personas } from "@/lib/llm/schemas";
+import { AvatarBriefSchema, MoveCodeSchema, PersonasSchema, RehearsalTurnSchema, type Personas } from "@/lib/llm/schemas";
 import { buildMoveCoderInput, cleanSpeech } from "@/lib/replay/inputs";
-import { buildSandboxAvatarInput, nextSide, SANDBOX_EXTEND_BY, SANDBOX_HARD_LIMIT, sandboxIsOver, ScenarioSchema, type Scenario } from "@/lib/sandbox/scenario";
+import { briefsReady, buildBriefWriterInput, buildSandboxAvatarInput, nextSide, SANDBOX_EXTEND_BY, SANDBOX_HARD_LIMIT, sandboxIsOver, ScenarioSchema, type Scenario } from "@/lib/sandbox/scenario";
 import { readSandbox } from "@/lib/sandbox/read";
 import { requireAppUser } from "@/app/_lib/session";
 import { fail, type ActionResult } from "@/app/_lib/actions";
@@ -49,6 +49,49 @@ export async function createSandboxAction(raw: unknown): Promise<ActionResult> {
   redirect(`/sandbox/${thread.id}`);
 }
 
+const BriefsInput = z.object({ threadId: z.uuid() });
+
+/**
+ * Write each avatar's brief: its person's notes, the shared history and the situation, rewritten TO
+ * that person in the second person. Each is made without sight of the other person's notes.
+ */
+export async function writeBriefsAction(raw: z.infer<typeof BriefsInput>): Promise<ActionResult> {
+  if (!FEATURES.biographer) return fail("This is not switched on.");
+  const parsed = BriefsInput.safeParse(raw);
+  if (!parsed.success) return fail("That sandbox could not be found.");
+  const user = await requireAppUser();
+  const box = await readSandbox(parsed.data.threadId, user.id);
+  if (!box) return fail("That sandbox is not yours.");
+  if (box.turns.length > 0) return fail("They have started talking. Start a new sandbox from this one to change what they are told.");
+  if (!process.env.ANTHROPIC_API_KEY) return fail("The model is not configured.");
+  try {
+    configurePrivateLlm();
+    const [a, b] = await Promise.all((["a", "b"] as const).map((side) => callRole("brief_writer", buildBriefWriterInput(box.scenario, side), AvatarBriefSchema, { coupleId: null, userId: user.id, jobStep: `sandbox:brief:${side}` })));
+    await data.appendTurn({ threadId: box.threadId, userId: user.id, role: "guide", text: a.brief.trim(), meta: { kind: "brief", side: "a" } });
+    await data.appendTurn({ threadId: box.threadId, userId: user.id, role: "guide", text: b.brief.trim(), meta: { kind: "brief", side: "b" } });
+  } catch {
+    return fail("The briefs did not come through. Try again.");
+  }
+  refresh();
+  return { ok: true };
+}
+
+const SaveBriefInput = z.object({ threadId: z.uuid(), side: z.enum(["a", "b"]), text: z.string().trim().min(40).max(12000) });
+
+/** A brief is the avatar's whole world, so whoever runs the sandbox can rewrite it by hand until the conversation starts. */
+export async function saveBriefAction(raw: z.infer<typeof SaveBriefInput>): Promise<ActionResult> {
+  if (!FEATURES.biographer) return fail("This is not switched on.");
+  const parsed = SaveBriefInput.safeParse(raw);
+  if (!parsed.success) return fail("A brief needs a few sentences at least.");
+  const user = await requireAppUser();
+  const box = await readSandbox(parsed.data.threadId, user.id);
+  if (!box) return fail("That sandbox is not yours.");
+  if (box.turns.length > 0) return fail("They have started talking. Start a new sandbox from this one to change what they are told.");
+  await data.appendTurn({ threadId: box.threadId, userId: user.id, role: "guide", text: parsed.data.text, meta: { kind: "brief", side: parsed.data.side, edited: true } });
+  refresh();
+  return { ok: true, message: "Saved. This is what they will be told." };
+}
+
 export type AdvanceResult = { ok: true; done: boolean; turns: number } | { ok: false; error: string };
 const AdvanceInput = z.object({ threadId: z.uuid(), expected: z.number().int().min(0).max(SANDBOX_HARD_LIMIT) });
 
@@ -62,6 +105,8 @@ export async function advanceSandboxAction(raw: z.infer<typeof AdvanceInput>): P
   if (!box) return { ok: false, error: "That sandbox is not yours." };
   if (box.turns.length !== parsed.data.expected) return { ok: true, done: sandboxIsOver(box.turns, box.maxTurns), turns: box.turns.length };
   if (sandboxIsOver(box.turns, box.maxTurns)) return { ok: true, done: true, turns: box.turns.length };
+  if (!briefsReady(box.briefs)) return { ok: false, error: "Write their briefs first." };
+  const briefs = box.briefs;
   if (!process.env.ANTHROPIC_API_KEY) return { ok: false, error: "The model is not configured." };
 
   configurePrivateLlm();
@@ -74,7 +119,7 @@ export async function advanceSandboxAction(raw: z.infer<typeof AdvanceInput>): P
     if (box.turns.length === 0 && scenario.openingLine) {
       turn = { says: scenario.openingLine, does: null, ends: false, intent: null, impact: null, given: true };
     } else {
-      const out = await callRole("sandbox_avatar", buildSandboxAvatarInput(scenario, side, box.turns, box.maxTurns), RehearsalTurnSchema, { ...ctx, jobStep: `sandbox:turn:${side}` });
+      const out = await callRole("sandbox_avatar", buildSandboxAvatarInput(scenario, side, briefs[side], box.turns, box.maxTurns), RehearsalTurnSchema, { ...ctx, jobStep: `sandbox:turn:${side}` });
       turn = { says: cleanSpeech(out.says), does: out.does?.trim() || null, ends: out.ends, intent: out.intent, impact: out.impact, given: false };
     }
     const code = await callRole("move_coder", buildMoveCoderInput([...asSpoken(box.turns), { speakerId: side, says: turn.says, does: turn.does }], scenario.firstSpeaker), MoveCodeSchema, { ...ctx, jobStep: "sandbox:code" });

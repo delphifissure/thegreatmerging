@@ -262,7 +262,7 @@ export const RehearsalTurnSchema = z
   });
 export type RehearsalTurn = z.infer<typeof RehearsalTurnSchema>;
 
-const MOVE_KEYS = ["asks", "states_position", "explains", "criticizes", "defends", "owns", "appreciates", "proposes", "agrees", "disagrees", "withdraws", "deflects", "pauses", "leaves", "other"] as const;
+const MOVE_KEYS = ["asks", "states_position", "explains", "criticizes", "contempt", "defends", "owns", "appreciates", "proposes", "agrees", "disagrees", "withdraws", "deflects", "pauses", "leaves", "other"] as const;
 /** The move a turn makes. An enum and nothing else, because this is what crosses between two people. */
 export const MoveCodeSchema = z.object({ move: z.enum(MOVE_KEYS), secondary: z.enum(MOVE_KEYS).nullable() });
 export type MoveCode = z.infer<typeof MoveCodeSchema>;
@@ -281,6 +281,10 @@ export const PersonasSchema = z.object({
   shared_history: Prose(3500, 100),
 });
 export type Personas = z.infer<typeof PersonasSchema>;
+
+/** One avatar's brief in the sandbox: its notes, the shared history and the situation, rewritten to it in the second person. */
+export const AvatarBriefSchema = z.object({ brief: Prose(9000, 200) });
+export type AvatarBrief = z.infer<typeof AvatarBriefSchema>;
 
 /** What held and what changed across the versions, as observations and one question. */
 export const PanelReadingSchema = z.object({

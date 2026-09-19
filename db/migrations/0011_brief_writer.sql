@@ -1,0 +1,1 @@
+ALTER TYPE "public"."llm_role" ADD VALUE 'brief_writer';

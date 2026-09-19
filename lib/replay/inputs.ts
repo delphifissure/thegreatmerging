@@ -67,8 +67,21 @@ export function buildRehearsalInput(input: {
   };
 }
 
-/** The model sometimes wraps speech in quotation marks, or leaves one hanging. The page adds its own. */
-export const cleanSpeech = (says: string | null | undefined) => says?.trim().replace(/^["\u201c\u201d]+|["\u201c\u201d]+$/g, "").trim() || null;
+/**
+ * The model sometimes wraps speech in quotation marks, or leaves one hanging; the page adds its own.
+ * A turn may also quote someone ("The whole face." Right.), and those marks have to survive, so a
+ * mark is only removed when it has no partner: both ends when what is inside is balanced, or the one
+ * stray mark at an end when the count is odd.
+ */
+export function cleanSpeech(says: string | null | undefined): string | null {
+  let s = says?.trim() ?? "";
+  const marks = (t: string) => (t.match(/["\u201c\u201d]/g) ?? []).length;
+  const opens = /^["\u201c\u201d]/.test(s);
+  const closes = /["\u201c\u201d]$/.test(s);
+  if (opens && closes && s.length >= 2 && marks(s.slice(1, -1)) % 2 === 0) s = s.slice(1, -1);
+  else if (marks(s) % 2 === 1) s = closes ? s.slice(0, -1) : opens ? s.slice(1) : s;
+  return s.trim() || null;
+}
 
 /** The move coder sees words and nothing about who the people are. */
 export function buildMoveCoderInput(turns: SpokenTurn[], firstSpeakerId: string) {

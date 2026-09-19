@@ -296,8 +296,9 @@ export async function validateResult<T>(
     return { ok: false, kind: "validation_failed", problem: `Your previous output failed schema validation: ${issues}. Fix these and call the tool again.` };
   }
   // The guardrail role's own output quotes offending text in `reason`; never scan it recursively.
+  // Sandbox roles (cfg.fiction) write about invented people, whom the guardrail does not protect.
   const guard =
-    role === "guardrail"
+    role === "guardrail" || cfg.fiction
       ? checkOutputDeterministic({})
       : await checkOutput(parsed.data, {
           reachesPerson: cfg.reaches_person,

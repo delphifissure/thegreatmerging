@@ -95,6 +95,10 @@ describe("speech", () => {
     expect(cleanSpeech("I'm eating, that's it.\"")).toBe("I'm eating, that's it.");
     expect(cleanSpeech("\u201cNow?\u201d")).toBe("Now?");
     expect(cleanSpeech('She said "later" again.')).toBe('She said "later" again.');
+    // A turn that opens by quoting the other person keeps both of those marks.
+    expect(cleanSpeech('"The whole face." Right. And when did you tell her?')).toBe('"The whole face." Right. And when did you tell her?');
+    expect(cleanSpeech('"It\'s fine," she says, doing that voice. Mum! Come in."')).toBe('"It\'s fine," she says, doing that voice. Mum! Come in.');
+    expect(cleanSpeech('"On your account? Fine, sue me."')).toBe("On your account? Fine, sue me.");
     expect(cleanSpeech("  ")).toBeNull();
     expect(cleanSpeech(null)).toBeNull();
   });

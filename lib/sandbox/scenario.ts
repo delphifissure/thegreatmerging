@@ -1,8 +1,10 @@
 /**
  * The sandbox: two made-up people, written or generated, each with a life history of the kind a
- * therapist would hold in their notes, plus the history they share. Each avatar is given its own
- * notes and the shared history, never the other's notes, and then a situation. Nothing here is
- * about a real person, so nothing is blinded: whoever set it up reads both sides.
+ * therapist would hold in their notes, plus the history they share. Those notes are written about
+ * the two of them; each avatar is given a brief written TO it, in the second person, made from its
+ * own notes, the shared history and the situation, and never from the other's notes. Nothing here
+ * is about a real person, so nothing is blinded and nothing is filtered: whoever set it up reads
+ * both sides, and the two can say whatever they would say.
  */
 import { z } from "zod";
 import type { Move } from "@/lib/replay/moves";
@@ -30,26 +32,25 @@ export type SandboxTurn = { side: Side; says: string | null; does: string | null
 
 export const other = (side: Side): Side => (side === "a" ? "b" : "a");
 
-/** What one avatar is given. Its own notes and the shared history; never the other person's notes. */
-export function buildSandboxAvatarInput(scenario: Scenario, side: Side, turns: SandboxTurn[], maxTurns: number) {
-  const me = scenario[side];
+/** What the brief writer is given for one person: their own notes, the shared history and the situation. Never the other person's notes. */
+export function buildBriefWriterInput(scenario: Scenario, side: Side) {
+  return { you: scenario[side].name, partner: scenario[other(side)].name, notes: scenario[side].notes, shared_history: scenario.shared, situation: scenario.situation };
+}
+
+/** What one avatar is given: the brief written to it, and what has been said since. */
+export function buildSandboxAvatarInput(scenario: Scenario, side: Side, brief: string, turns: SandboxTurn[], maxTurns: number) {
   const them = scenario[other(side)];
   return {
-    you: me.name,
+    you: scenario[side].name,
     partner: them.name,
-    your_notes: me.notes,
-    shared_history: scenario.shared,
-    situation: scenario.situation,
+    brief,
     so_far: turns.map((t) => ({ who: t.side === side ? "you" : them.name, says: t.says, does: t.does })),
     exchanges_left: Math.max(0, maxTurns - turns.length),
   };
 }
 
-/** The same thing in words, for the person running the sandbox to read: what this avatar was told about itself. */
-export function briefFor(scenario: Scenario, side: Side): string {
-  const me = scenario[side];
-  return [`You are ${me.name}. ${scenario[other(side)].name} is the person you share your life with.`, `Your history, and how you are:\n${me.notes}`, `The two of you:\n${scenario.shared}`, `What is happening now:\n${scenario.situation}`].join("\n\n");
-}
+export type Briefs = Record<Side, string | null>;
+export const briefsReady = (b: Briefs): b is Record<Side, string> => !!b.a?.trim() && !!b.b?.trim();
 
 export const nextSide = (scenario: Scenario, turns: SandboxTurn[]): Side => (turns.length === 0 ? scenario.firstSpeaker : other(turns[turns.length - 1].side));
 

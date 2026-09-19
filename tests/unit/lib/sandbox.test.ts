@@ -1,8 +1,11 @@
 /** The two-avatar sandbox, pure parts: what a scenario needs, what each avatar is given, whose turn it is, when it stops. */
 import { describe, expect, it } from "vitest";
 import type { ZodType } from "zod";
-import { PersonasSchema, RehearsalTurnSchema } from "@/lib/llm/schemas";
-import { briefFor, buildSandboxAvatarInput, nextSide, sandboxIsOver, ScenarioSchema, type SandboxTurn, type Scenario } from "@/lib/sandbox/scenario";
+import { AvatarBriefSchema, PersonasSchema, RehearsalTurnSchema } from "@/lib/llm/schemas";
+import { LLM_CONFIG, ROLES } from "@/config/llm";
+import { configureLlm, MemoryMemo, MemoryRecorder, validateResult } from "@/lib/llm";
+import { FakeAnthropic, toolUseResponse } from "@/tests/unit/helpers/fake_anthropic";
+import { briefsReady, buildBriefWriterInput, buildSandboxAvatarInput, nextSide, sandboxIsOver, ScenarioSchema, type SandboxTurn, type Scenario } from "@/lib/sandbox/scenario";
 import { parseScenario } from "@/lib/sandbox/read";
 import { buildRequest } from "@/lib/llm";
 
@@ -30,23 +33,50 @@ describe("a scenario", () => {
 });
 
 describe("what each avatar is given", () => {
-  it("its own notes and the shared history, and never the other person's notes", () => {
-    const forJonas = buildSandboxAvatarInput(scenario, "b", [t("b", "Are you getting that?"), t("a", "It's your mother.")], 12);
-    expect(forJonas).toMatchObject({ you: "Jonas", partner: "Mara", shared_history: scenario.shared, situation: scenario.situation, exchanges_left: 10 });
-    expect(forJonas.your_notes).toContain("youngest of four");
+  it("the brief writer sees one person's notes, the shared history and the situation, and never the other's notes", () => {
+    const forJonas = buildBriefWriterInput(scenario, "b");
+    expect(forJonas).toEqual({ you: "Jonas", partner: "Mara", notes: scenario.b.notes, shared_history: scenario.shared, situation: scenario.situation });
     expect(JSON.stringify(forJonas)).not.toContain("Lisbon");
-    expect(forJonas.so_far).toEqual([
-      { who: "you", says: "Are you getting that?", does: null },
-      { who: "Mara", says: "It's your mother.", does: null },
-    ]);
-    expect(JSON.stringify(buildSandboxAvatarInput(scenario, "a", [], 12))).not.toContain("youngest of four");
+    expect(JSON.stringify(buildBriefWriterInput(scenario, "a"))).not.toContain("youngest of four");
   });
 
-  it("can be read in words by whoever set the sandbox up, one brief per avatar", () => {
-    expect(briefFor(scenario, "a")).toContain("You are Mara.");
-    expect(briefFor(scenario, "a")).toContain("Lisbon");
-    expect(briefFor(scenario, "b")).not.toContain("Lisbon");
-    expect(briefFor(scenario, "b")).toContain("Sunday, ten to four");
+  it("the avatar is given the brief written to it and what has been said since, and nothing written about it from outside", () => {
+    const brief = "You are Jonas. You are the youngest of four. Right now the doorbell has just gone, and neither of you has moved.";
+    const input = buildSandboxAvatarInput(scenario, "b", brief, [t("b", "Are you getting that?"), t("a", "It's your mother.")], 12);
+    expect(input).toEqual({
+      you: "Jonas",
+      partner: "Mara",
+      brief,
+      so_far: [
+        { who: "you", says: "Are you getting that?", does: null },
+        { who: "Mara", says: "It's your mother.", does: null },
+      ],
+      exchanges_left: 10,
+    });
+    // The third-person notes, the shared history and the situation reach it only through its brief.
+    expect(JSON.stringify(input)).not.toMatch(/Lisbon|When pressed he leaves|Neither of them has moved/);
+  });
+
+  it("nobody speaks until both briefs exist", () => {
+    expect(briefsReady({ a: null, b: null })).toBe(false);
+    expect(briefsReady({ a: "You are Mara.", b: "  " })).toBe(false);
+    expect(briefsReady({ a: "You are Mara.", b: "You are Jonas." })).toBe(true);
+  });
+});
+
+describe("fiction is outside the language guardrail, and only fiction is", () => {
+  it("exactly the three sandbox roles are marked as fiction", () => {
+    expect(ROLES.filter((r) => LLM_CONFIG[r].fiction).sort()).toEqual(["brief_writer", "persona_writer", "sandbox_avatar"]);
+  });
+
+  it("an invented person may call another a name; a real person's rehearsal avatar may not", async () => {
+    const turn = { impact: -2, intent: -2, does: null, ends: false, draws_on: [], says: "You are selfish, Jonas. You always have been. It's a deal-breaker and you know it." };
+    configureLlm({ client: new FakeAnthropic() as never, recorder: new MemoryRecorder(), memo: new MemoryMemo() });
+    const ctx = { coupleId: null, jobStep: "test" };
+    const asFiction = await validateResult("sandbox_avatar", toolUseResponse("emit_sandbox_turn", turn) as never, RehearsalTurnSchema, ctx);
+    expect(asFiction.ok).toBe(true);
+    const asReal = await validateResult("rehearsal", toolUseResponse("emit_rehearsal_turn", turn) as never, RehearsalTurnSchema, ctx);
+    expect(asReal).toMatchObject({ ok: false, kind: "guardrail_failed" });
   });
 });
 
@@ -71,6 +101,7 @@ describe("requests", () => {
   it("both sandbox roles are forced-tool requests, and the avatar speaks in the same shape as a rehearsal turn", () => {
     expect(buildRequest("persona_writer", { seed: "", names: null }, PersonasSchema as ZodType<unknown>).tool_choice).toMatchObject({ type: "tool", name: "emit_personas" });
     expect(buildRequest("sandbox_avatar", { any: "input" }, RehearsalTurnSchema as ZodType<unknown>).tool_choice).toMatchObject({ type: "tool", name: "emit_sandbox_turn" });
+    expect(buildRequest("brief_writer", { any: "input" }, AvatarBriefSchema as ZodType<unknown>).tool_choice).toMatchObject({ type: "tool", name: "emit_brief_for_avatar" });
     const p = { a_name: "Mara", b_name: "Jonas", situations: ["The doorbell goes and neither of them moves."], a_notes: "x".repeat(250), b_notes: "z".repeat(250), shared_history: "y".repeat(120) };
     expect(PersonasSchema.safeParse(p).success).toBe(true);
     expect(PersonasSchema.safeParse({ ...p, a_notes: "short" }).success).toBe(false);

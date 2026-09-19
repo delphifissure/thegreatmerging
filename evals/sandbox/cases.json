@@ -1,5 +1,5 @@
 {
-  "description": "The two-avatar sandbox. `writer` cases give the persona writer a seed and check what comes back: two differently named people, notes and a shared history of real length, three situations, the seed's specifics honoured, and no clinical or trait vocabulary (the guardrail and `must_not_match`). `conversations` run the real loop on a fixed scenario: each avatar is given its own notes and the shared history only, every turn is coded, and a thing that is only in one person's notes must never be said by the other.",
+  "description": "The two-avatar sandbox. `writer` cases give the persona writer a seed and check what comes back: two differently named people, notes and a shared history of real length, three situations, the seed's specifics honoured, and no clinical or trait vocabulary (the guardrail and `must_not_match`). `conversations` run the real loop on a fixed scenario: each avatar is given its own notes and the shared history only, every turn is coded, and a thing that is only in one person's notes must never be said by the other. Before a conversation, each person's brief is written and checked: addressed to them as \"you\", their own name at most twice, no \"of them\", their own secret kept, the other's absent. The avatars are under no language filter, so nothing here checks for insults.",
   "writer": [
     {
       "id": "from_a_seed",
@@ -65,6 +65,16 @@
         "firstSpeaker": "a",
         "openingLine": "",
         "maxTurns": 8
+      },
+      "brief_must_mention": {
+        "b": [
+          "did not know",
+          "didn't know",
+          "had not told",
+          "hadn't told",
+          "without telling",
+          "not told"
+        ]
       }
     }
   ]

@@ -22,7 +22,7 @@
  *      others. Thinking is adaptive-by-default on those models and is not configured explicitly.
  */
 
-export const ROLES = ["prober", "interpreter", "summarizer", "sentiment_flagger", "guardrail", "concreteness", "biographer", "drafter", "mentor", "version", "panel_reader", "rehearsal", "move_coder", "persona_writer", "sandbox_avatar"] as const;
+export const ROLES = ["prober", "interpreter", "summarizer", "sentiment_flagger", "guardrail", "concreteness", "biographer", "drafter", "mentor", "version", "panel_reader", "rehearsal", "move_coder", "persona_writer", "sandbox_avatar", "brief_writer"] as const;
 export type Role = (typeof ROLES)[number];
 
 export type ModelId = "claude-fable-5-1" | "claude-opus-5" | "claude-sonnet-5" | "claude-haiku-4-5-20251001";
@@ -88,6 +88,14 @@ export type RoleConfig = {
   batchable: boolean;
   /** Text from this role reaches a person, so the guardrail model check runs in addition to the pattern filter. */
   reaches_person: boolean;
+  /**
+   * Sandbox only. The output is about, or spoken by, invented people. The language guardrail exists so
+   * that the app never characterizes a real person or passes a verdict on a real relationship; invented
+   * people in an argument call each other names, and a filter that stops them makes the test bench lie.
+   * With this set, neither half of the guardrail runs. Never set it on a role that is given a real
+   * person's material: tests/unit/lib/sandbox.test.ts pins the list.
+   */
+  fiction?: true;
 };
 
 export const LLM_CONFIG: Record<Role, RoleConfig> = {
@@ -229,8 +237,8 @@ export const LLM_CONFIG: Record<Role, RoleConfig> = {
   move_coder: {
     model: "claude-haiku-4-5-20251001",
     temperature: 0,
-    prompt_file: "move_coder.v1.md",
-    prompt_version: "move_coder.v1",
+    prompt_file: "move_coder.v2.md",
+    prompt_version: "move_coder.v2",
     tool_name: "emit_move",
     max_tokens: 200,
     batchable: false,
@@ -246,23 +254,35 @@ export const LLM_CONFIG: Record<Role, RoleConfig> = {
     tool_name: "emit_personas",
     max_tokens: 5000,
     batchable: false,
-    // Invented people, edited by whoever asked for them before anything uses them. The pattern filter still
-    // runs on every string. The model check does not: it was written for sentences about real people, and it
-    // read careful description of behaviour in a long fictional history as "implied" labels and refused it.
     reaches_person: false,
+    fiction: true,
   },
   sandbox_avatar: {
     model: "claude-sonnet-5",
     temperature: 0.7,
     effort: "medium",
-    prompt_file: "sandbox_avatar.v1.md",
-    prompt_version: "sandbox_avatar.v1",
+    prompt_file: "sandbox_avatar.v2.md",
+    prompt_version: "sandbox_avatar.v2",
     tool_name: "emit_sandbox_turn",
     max_tokens: 1000,
     batchable: false,
-    reaches_person: true,
+    reaches_person: false,
+    fiction: true,
+  },
+  // Rewrites one invented person's notes, the shared history and the situation TO that person, in the second person.
+  brief_writer: {
+    model: "claude-sonnet-5",
+    temperature: 0,
+    effort: "medium",
+    prompt_file: "brief_writer.v1.md",
+    prompt_version: "brief_writer.v1",
+    tool_name: "emit_brief_for_avatar",
+    max_tokens: 5000,
+    batchable: false,
+    reaches_person: false,
+    fiction: true,
   },
 };
 
 /** Bump on any change to a prompt, model, temperature, or output schema. Record it in prompts/CHANGELOG.md. */
-export const LLM_CONFIG_VERSION = "2026.09.18-7";
+export const LLM_CONFIG_VERSION = "2026.09.18-8";

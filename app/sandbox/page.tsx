@@ -27,7 +27,7 @@ export default async function SandboxIndex({ searchParams }: { searchParams: Pro
       <PageHeader
         eyebrow="Test bench"
         title="Sandbox"
-        lede="Two made-up people, each with a life history of the kind a therapist would hold in their notes, and the history they share. Each avatar is given its own notes and the shared history, never the other's. Then you give them a situation and watch. Nobody here is real, so nothing is hidden from you."
+        lede="Two made-up people, each with a life history of the kind a therapist would hold in their notes, and the history they share. Each avatar gets a brief written to it, as \u201cyou\u201d, from its own notes and the shared history, never from the other's. Then you give them a situation and watch. Nobody here is real, so nothing is hidden from you and nothing they say is filtered."
       />
       <SandboxForm key={source?.threadId ?? "new"} initial={source?.scenario ?? null} />
       {listed.length > 0 ? (
