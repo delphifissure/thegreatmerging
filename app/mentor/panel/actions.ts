@@ -11,6 +11,7 @@ import { mentorReadiness } from "@/lib/biographer/inputs";
 import { buildPanelReaderInput, buildVersionInput, panelReadingSchemaFor, panelVersionsFor, RATINGS_BEFORE_READING, VERSION_FALLBACK, versionByKey } from "@/lib/biographer/versions";
 import { SAFETY_TEXT_MESSAGES, screenText } from "@/lib/safety_text";
 import { requireAppUser } from "@/app/_lib/session";
+import { loadVoiceMaterial, voiceFor } from "@/app/_lib/voice";
 import { fail, type ActionResult } from "@/app/_lib/actions";
 
 /** Usage rows go to the database; outputs are never memoized there, because they echo what a person wrote. */
@@ -42,10 +43,12 @@ export async function askPanel(raw: z.infer<typeof AskInput>): Promise<ActionRes
 
   configurePrivateLlm();
   const versions = panelVersionsFor(entries);
+  const material = await loadVoiceMaterial(user.id);
   const ctx = { coupleId: user.couple?.id ?? null, userId: user.id };
   const replies = await Promise.allSettled(
     versions.map((version, i) => {
-      const built = buildVersionInput({ personName: user.displayName, entries, situation: parsed.data.text, version, replicate: i + 1 });
+      // Each version is shown the registers that suit it: only the one running on empty sees the heated one.
+      const built = buildVersionInput({ personName: user.displayName, entries, situation: parsed.data.text, version, replicate: i + 1, voice: voiceFor(material, { version: version.key }) });
       return callRole("version", built.input, VersionReplySchema, { ...ctx, jobStep: `panel:${version.key}` }).then((out) => ({ out, entryIdOf: built.entryIdOf }));
     }),
   );

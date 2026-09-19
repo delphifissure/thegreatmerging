@@ -33,6 +33,7 @@ export default async function PanelPage({ params }: { params: Promise<{ threadId
         unsureQuestion: t.meta.unsure === true ? t.note : null,
         drawsOn: Array.isArray(t.meta.draws_on) ? (t.meta.draws_on as string[]).flatMap((id) => (textOf.has(id) ? [textOf.get(id)!] : [])) : [],
         rating: t.rating,
+        correction: t.correction,
       },
     ];
   });

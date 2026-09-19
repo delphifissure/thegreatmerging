@@ -15,7 +15,7 @@ import type { DocumentEntry, Turn } from "@/lib/data/biographer";
 const key = loadKey(generateKeyBase64());
 const ctx = { user_id: "u1", instrument_key: "conversation", field: "content" };
 
-const turn = (seq: number, role: Turn["role"], text: string, more: Partial<Turn> = {}): Turn => ({ id: `id-${seq}`, seq, role, text, note: null, extras: null, meta: {}, rating: null, created_at: new Date(0), ...more });
+const turn = (seq: number, role: Turn["role"], text: string, more: Partial<Turn> = {}): Turn => ({ id: `id-${seq}`, seq, role, text, note: null, extras: null, meta: {}, rating: null, contentRating: null, correction: null, created_at: new Date(0), ...more });
 const entry = (id: string, document: DocumentEntry["document"], section: string, text: string, status: DocumentEntry["status"] = "ratified", mark: DocumentEntry["mark"] = "open"): DocumentEntry => ({
   id,
   document,

@@ -47,9 +47,17 @@ Avatar rehearsals are text, so they inherit this, with a twist: a language model
 - A good voice makes wrong content persuasive. "Sounds like me" currently mixes the two. Split it: "sounds like me" for voice, "I'd say that" for content.
 - Imported history is a biased sample and contains someone else's words. Strip the other side, label by register, and let the owner choose.
 
-## What I would build next
+## What is built
 
-Small and in this order: style exemplars from the person's own answers for the one-notch-ahead self; the split rating with a correction box; a paste-in sampler with register labels. The intent and impact fields wait for the rehearsal engine.
+Built on 18 September 2026, behind `BIOGRAPHER_ENABLED=1`:
+
+- **Samples in context.** The one-notch-ahead self and every panel version are shown up to fourteen samples of the person's own writing, labelled by register, and up to six corrections. The rule in the prompts is manner, never matter. In live tests the same lines and the same question came back lowercase and short with one set of samples and long and clause-heavy with another, and facts planted in the samples did not appear in any reply.
+- **Registers decide who sees what.** What a person writes to their biographer is the considered register, collected as they go. They can paste four more at `/documents/voice`: everyday messages, messages from an argument, something longer, something said out loud. The one-notch-ahead self never sees the argument register. Of the panel versions, only the one running on empty does.
+- **Only your side.** A pasted chat keeps the owner's messages and drops everyone else's in the browser, before anything is sent; the server checks again. Samples are encrypted, private to their owner, and overwritten when removed.
+- **Two verdicts and a correction.** "How it sounds" and "what it says" are asked apart on every one-notch-ahead reply. Under every avatar reply and panel card the person can put it in their own words, and that pair becomes the best sample they have.
+- **What can be counted.** The page shows counts from code: words in a typical sentence, questions, exclamation marks, trailing dots, lowercase starts, emoji. Counts, not a description.
+
+Not built: the voice section of the constitution (drafted lines about how you write, for you to ratify), voice interviews, the listener's filter, and the intent and impact fields, which wait for the rehearsal engine.
 
 ## References
 

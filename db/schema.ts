@@ -739,6 +739,10 @@ export const conversationKindEnum = pgEnum("conversation_kind", ["biographer", "
 export const conversationStatusEnum = pgEnum("conversation_status", ["open", "closed"]);
 export const conversationDepthEnum = pgEnum("conversation_depth", ["light", "deeper"]);
 export const turnRoleEnum = pgEnum("turn_role", ["guide", "person", "avatar"]);
+/** Whether the avatar got the substance right, asked apart from whether it sounded like the person. */
+export const contentRatingEnum = pgEnum("content_rating", ["would_say", "would_not_say"]);
+/** Registers a person can paste samples of. What they write to the biographer is the fifth, and is not stored twice. */
+export const voiceRegisterEnum = pgEnum("voice_register", ["everyday", "heated", "long_form", "spoken"]);
 /** A panel version can also be "me on a bad day", which is neither of the other two. */
 export const turnRatingEnum = pgEnum("turn_rating", ["like_me", "not_like_me", "bad_day"]);
 export const documentKindEnum = pgEnum("document_kind", ["history", "constitution"]);
@@ -786,11 +790,34 @@ export const conversation_turns = pgTable(
     note_enc: bytea("note_enc"),
     /** Encrypted JSON: tappable options and the running list of threads. Both echo the person's words. */
     extras_enc: bytea("extras_enc"),
-    /** The person's verdict on an avatar reply: the self-recognition test. */
+    /** The person's verdict on an avatar reply: the self-recognition test. For the one-notch-ahead self this is about voice. */
     rating: turnRatingEnum("rating"),
+    /** Whether they would say that, whatever it sounded like. A good voice makes wrong content persuasive, so the two are asked apart. */
+    content_rating: contentRatingEnum("content_rating"),
+    /** Encrypted: what the person would have said instead. The pair is a sample of their style with the content held still. */
+    correction_enc: bytea("correction_enc"),
     ...timestamps,
   },
   (t) => [uniqueIndex("conversation_turns_thread_seq").on(t.thread_id, t.seq)],
+);
+
+/**
+ * Things a person wrote or said before the app, pasted in so their avatars can pick up how they
+ * write. Only their own side of a conversation is ever stored. Private to the owner.
+ */
+export const voice_samples = pgTable(
+  "voice_samples",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    user_id: uuid("user_id")
+      .notNull()
+      .references(() => users.id),
+    register: voiceRegisterEnum("register").notNull(),
+    text_enc: bytea("text_enc").notNull(),
+    words: integer("words").notNull(),
+    ...timestamps,
+  },
+  (t) => [index("voice_samples_user_idx").on(t.user_id, t.register)],
 );
 
 export const document_entries = pgTable(

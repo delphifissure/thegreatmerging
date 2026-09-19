@@ -81,6 +81,9 @@ export default async function DocumentsPage({ searchParams }: { searchParams: Pr
         <LinkButton href="/mentor" variant="secondary">
           You, one notch ahead
         </LinkButton>
+        <LinkButton href="/documents/voice" variant="secondary">
+          How you write
+        </LinkButton>
       </div>
     </div>
   );

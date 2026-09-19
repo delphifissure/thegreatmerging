@@ -23,7 +23,7 @@ const entry = (id: string, document: DocumentEntry["document"], section: string,
   ratified_at: null,
   created_at: new Date(0),
 });
-const turn = (seq: number, role: Turn["role"], text: string, more: Partial<Turn> = {}): Turn => ({ id: `id-${seq}`, seq, role, text, note: null, extras: null, meta: {}, rating: null, created_at: new Date(0), ...more });
+const turn = (seq: number, role: Turn["role"], text: string, more: Partial<Turn> = {}): Turn => ({ id: `id-${seq}`, seq, role, text, note: null, extras: null, meta: {}, rating: null, contentRating: null, correction: null, created_at: new Date(0), ...more });
 
 const base = [
   entry("db-1", "constitution", "values", "Security comes first."),

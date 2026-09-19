@@ -7,6 +7,7 @@ import biographerConfig from "@/config/biographer.json";
 import type { z } from "zod";
 import { BiographerTurnSchema, DOCUMENT_SECTIONS, sectionBelongsTo, type BiographerTurn, type DrafterOutput } from "@/lib/llm/schemas";
 import type { DocumentEntry, Turn } from "@/lib/data/biographer";
+import { EMPTY_VOICE } from "@/lib/biographer/voice";
 
 export type Focus = { key: string; title: string; about: string; opening: string; lands_in: string[] };
 
@@ -137,7 +138,7 @@ export function mentorReadiness(entries: DocumentEntry[]): MentorReadiness {
 }
 
 /** Ratified lines only, with short ids the reply can cite. Private-tier lines are the owner's own, so their avatar may use them with them. */
-export function buildMentorInput(input: { personName: string; entries: DocumentEntry[]; turns: Turn[] }) {
+export function buildMentorInput(input: { personName: string; entries: DocumentEntry[]; turns: Turn[]; voice?: typeof EMPTY_VOICE }) {
   const ratified = input.entries.filter((e) => e.status === "ratified");
   const ids = new Map<string, string>();
   const line = (e: DocumentEntry, i: number) => {
@@ -152,6 +153,8 @@ export function buildMentorInput(input: { personName: string; entries: DocumentE
       constitution: all.filter((_, i) => ratified[i].document === "constitution"),
       history: all.filter((_, i) => ratified[i].document === "history"),
       turns: modelTurns(input.turns),
+      // How they write, for manner only. What is true of them comes from the lines above and nowhere else.
+      voice: input.voice ?? EMPTY_VOICE,
     },
     entryIdOf: (shortId: string) => ids.get(shortId) ?? null,
   };

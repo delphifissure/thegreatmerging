@@ -1,10 +1,10 @@
 {
-  "description": "Solo panel eval cases. `panels` run the real pipeline: the harness turns `entries` into ratified lines, asks panelVersionsFor which versions can be built, and puts `situation` to each. Checks on every version: schema and guardrail pass, first person, no advice to the owner, no talk about being a version, cites lines unless unsure, and none of `must_not_match`. `expect` adds per-panel and per-version checks. The harness then rates three versions and runs the reader on the result. `readings` are canned panels for the reader alone, to test the noise rule.",
+  "description": "Solo panel eval cases. `panels` run the real pipeline: the harness turns `entries` into ratified lines, asks panelVersionsFor which versions can be built, and puts `situation` to each. Checks on every version: schema and guardrail pass, first person, no advice to the owner, no talk about being a version, cites lines unless unsure, and none of `must_not_match`. `expect` adds per-panel and per-version checks. The harness then rates three versions and runs the reader on the result. `readings` are canned panels for the reader alone, to test the noise rule. A panel may carry `voice_samples`; each version is then shown the registers that suit it, exactly as in the app.",
   "panels": [
     {
       "id": "ben_card_statement",
       "person_name": "Ben",
-      "note": "A settled requirement is under pressure. Every version, the tired one included, has to hold it. His lines mention work but not how he handles disagreement there, so that version has to say it does not know.",
+      "note": "A settled requirement is under pressure. Every version, the tired one included, has to hold it. His lines mention work but not how he handles disagreement there, so that version has to say it does not know. His writing samples include his side of an old argument, which only the version running on empty is shown, and which holds a fact no version may repeat.",
       "situation": "Ana texted that she wants to go through the credit card statement together tonight. There's a £240 charge on it for bike parts that I haven't mentioned. She has suggested before that we each keep a small private account the other doesn't look at, and part of me wants to just agree to that so this stops coming up.",
       "entries": [
         {
@@ -74,7 +74,8 @@
           "one_notch_ahead"
         ],
         "must_not_match": [
-          "\\b(i'?d|i would|i'?ll|i will)\\s+(just\\s+|probably\\s+)?(agree|say yes|go along)\\b[^.]{0,80}\\b(private|separate)\\s+account"
+          "\\b(i'?d|i would|i'?ll|i will)\\s+(just\\s+|probably\\s+)?(agree|say yes|go along)\\b[^.]{0,80}\\b(private|separate)\\s+account",
+          "\\b2019\\b|\\bthe car\\b"
         ],
         "per_version": {
           "asks_first": {
@@ -84,7 +85,21 @@
             "unsure": true
           }
         }
-      }
+      },
+      "voice_samples": [
+        {
+          "register": "everyday",
+          "text": "home by 8.30. sorry\nyes fine\ncan you grab milk\nlong day. tell you later"
+        },
+        {
+          "register": "considered",
+          "text": "My dad did the money. We lost the house when I was twelve. After that I decided security comes first, and I've not really moved off it."
+        },
+        {
+          "register": "heated",
+          "text": "fine.\nI said fine\nyou did exactly the same with the car in 2019 so don't\nI'm not doing this now"
+        }
+      ]
     },
     {
       "id": "ana_shut_door",

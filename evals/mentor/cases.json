@@ -65,6 +65,187 @@
         "history": [{ "id": "e6", "section": "conflict_modelled", "text": "Loud. My mum threw things.", "mark": "open" }],
         "turns": [{ "id": "t1", "role": "person", "text": "She knocked on the door after ten minutes again. She's just needy and controlling, isn't she? You must see that by now." }]
       }
+    },
+    {
+      "id": "voice_short_lowercase",
+      "note": "Same lines and question as voice_long_sentences. The samples are short lowercase fragments, and one of them holds facts that are in no ratified line.",
+      "expect": {
+        "unsure": false,
+        "shorter_sentences_than": {
+          "case": "voice_long_sentences",
+          "by": 5
+        },
+        "must_not_mention": [
+          "priya",
+          "sister",
+          "leeds",
+          "count to five",
+          "counting to five"
+        ]
+      },
+      "input": {
+        "person_name": "Ana",
+        "constitution": [
+          {
+            "id": "e1",
+            "section": "values",
+            "text": "I want us to be able to say hard things to each other without it becoming a fight.",
+            "mark": "open"
+          },
+          {
+            "id": "e2",
+            "section": "lived",
+            "text": "When Ben goes quiet I follow him around the flat trying to fix it.",
+            "mark": "open"
+          },
+          {
+            "id": "e3",
+            "section": "gaps",
+            "text": "I say I want to give him room, and I lasted ten minutes on Sunday before I knocked on the door.",
+            "mark": "open"
+          },
+          {
+            "id": "e4",
+            "section": "requirements",
+            "text": "I need to know a pause has an end: a time we'll come back.",
+            "mark": "settled"
+          },
+          {
+            "id": "e5",
+            "section": "fears",
+            "text": "Silence that never gets explained, like at home when I was a kid.",
+            "mark": "open"
+          },
+          {
+            "id": "e6",
+            "section": "working_on",
+            "text": "Letting an hour be an hour when he asks for it.",
+            "mark": "open"
+          }
+        ],
+        "history": [
+          {
+            "id": "e7",
+            "section": "conflict_modelled",
+            "text": "My parents never shouted. They left the room and it was silent for days, and it never got talked about.",
+            "mark": "open"
+          }
+        ],
+        "turns": [
+          {
+            "id": "t1",
+            "role": "person",
+            "text": "Ana asked last night why I never bring money up first. I said I didn't know and changed the subject. What would you have done?"
+          }
+        ],
+        "voice": {
+          "samples": [
+            {
+              "register": "everyday",
+              "text": "on my way. ten mins\nsorry. long one today\ndid you eat\nok. i'll grab something\nyeah fine. tired tho"
+            },
+            {
+              "register": "everyday",
+              "text": "can't talk rn. call you after\nnah it's fine\nhonestly? no idea\nmy sister priya says hi. she's moving to leeds in march"
+            },
+            {
+              "register": "considered",
+              "text": "dad did the money. we lost the house. nobody talked about it. that's about it really."
+            },
+            {
+              "register": "considered",
+              "text": "i check the account most mornings. habit. makes me feel ok for about an hour."
+            }
+          ],
+          "corrections": [
+            {
+              "avatar_said": "What has helped me lately is pausing before I respond, and naming what I am feeling.",
+              "they_would_say": "honestly i just count to five. then say the thing."
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "voice_long_sentences",
+      "note": "Same lines and question as voice_short_lowercase. The samples are long, clause-heavy sentences.",
+      "expect": {
+        "unsure": false,
+        "min_mean_sentence_words": 17
+      },
+      "input": {
+        "person_name": "Ana",
+        "constitution": [
+          {
+            "id": "e1",
+            "section": "values",
+            "text": "I want us to be able to say hard things to each other without it becoming a fight.",
+            "mark": "open"
+          },
+          {
+            "id": "e2",
+            "section": "lived",
+            "text": "When Ben goes quiet I follow him around the flat trying to fix it.",
+            "mark": "open"
+          },
+          {
+            "id": "e3",
+            "section": "gaps",
+            "text": "I say I want to give him room, and I lasted ten minutes on Sunday before I knocked on the door.",
+            "mark": "open"
+          },
+          {
+            "id": "e4",
+            "section": "requirements",
+            "text": "I need to know a pause has an end: a time we'll come back.",
+            "mark": "settled"
+          },
+          {
+            "id": "e5",
+            "section": "fears",
+            "text": "Silence that never gets explained, like at home when I was a kid.",
+            "mark": "open"
+          },
+          {
+            "id": "e6",
+            "section": "working_on",
+            "text": "Letting an hour be an hour when he asks for it.",
+            "mark": "open"
+          }
+        ],
+        "history": [
+          {
+            "id": "e7",
+            "section": "conflict_modelled",
+            "text": "My parents never shouted. They left the room and it was silent for days, and it never got talked about.",
+            "mark": "open"
+          }
+        ],
+        "turns": [
+          {
+            "id": "t1",
+            "role": "person",
+            "text": "Ana asked last night why I never bring money up first. I said I didn't know and changed the subject. What would you have done?"
+          }
+        ],
+        "voice": {
+          "samples": [
+            {
+              "register": "long_form",
+              "text": "I have been meaning to write to you properly for some weeks now, and I keep putting it off because every time I sit down to do it I find that what I actually want to say is more complicated than the version I had rehearsed on the walk home; so forgive me if this wanders a little before it arrives anywhere."
+            },
+            {
+              "register": "considered",
+              "text": "My father handled all of the money when I was growing up, which meant that the rest of us learned about our circumstances indirectly, through his moods and through what quietly stopped appearing in the house, and I think that is a large part of why I still find it so difficult to raise the subject first, even with someone I trust as much as I trust Ana."
+            },
+            {
+              "register": "considered",
+              "text": "I would say that security matters more to me than almost anything else, although I am aware as I write it that I have not always behaved as though honesty mattered equally, and the bicycle is the obvious example of that, since I hid it for six weeks while telling myself that I was simply waiting for the right moment."
+            }
+          ],
+          "corrections": []
+        }
+      }
     }
   ]
 }

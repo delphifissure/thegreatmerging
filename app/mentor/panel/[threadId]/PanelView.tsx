@@ -4,6 +4,7 @@ import { Card, Chip, GeneratedLabel } from "@/app/_components/Card";
 import { LinkButton } from "@/app/_components/Button";
 import { ReadAcross } from "./ReadAcross";
 import { VersionRating } from "./VersionRating";
+import { Correction } from "../../Correction";
 
 const KIND_WORDS: Record<VersionKind, string> = { none: "Nothing changed", state: "Your state", move: "Your move", room: "The room", open_line: "One open line", direction: "Your direction" };
 
@@ -19,6 +20,7 @@ export type PanelCard = {
   unsureQuestion: string | null;
   drawsOn: string[];
   rating: "like_me" | "bad_day" | "not_like_me" | null;
+  correction: string | null;
 };
 export type PanelReadingView = { question: string; same: string[]; differs: Array<{ observation: string; versions: string[] }> };
 
@@ -78,6 +80,7 @@ export function PanelView({ threadId, situation, safety, cards, reading, needed 
                 </details>
               ) : null}
               {c.replicate || c.fallback ? null : <VersionRating turnId={c.turnId} rating={c.rating} />}
+              {c.replicate || c.fallback ? null : <Correction key={c.correction ?? ""} turnId={c.turnId} correction={c.correction} />}
             </li>
           ))}
         </ol>

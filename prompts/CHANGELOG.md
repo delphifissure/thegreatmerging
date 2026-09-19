@@ -2,6 +2,18 @@
 
 The LLM component is versioned as part of the instrument. Any change to a prompt file, a model identifier, a temperature, an effort setting, or an output schema requires a version bump here and, when it alters any eval result, a note of which evals changed.
 
+## 2026.09.18-4
+
+The avatars learn how their person writes (`docs/concept_voice.md`). Three things were built: writing samples, a second verdict with a correction box, and a page to paste samples into.
+
+- `mentor.v2` and `version.v2` gain a section, "How they write", and a new input, `voice`: up to fourteen samples of the person's own writing, each labelled with its register, and up to six corrections (what an avatar said, and what the person said they would have said instead). The rule is manner, never matter: sentence length, punctuation, capitals, pet words and hedges may be copied; no fact, name, habit or opinion may be taken from a sample or a correction, because only ratified lines say what is true of someone.
+- Registers: `considered` (what the person wrote to their biographer, collected as they go), and four a person can paste at `/documents/voice`: everyday messages, messages from an argument, something longer, and something said out loud. The one-notch-ahead self is the person at their best and is never shown the argument register; among the panel versions only the one running on empty is (`registersFor`). Samples are chosen in code, registers taking turns, newest first, each clipped to seventy words, so the same inputs give the same request.
+- A pasted conversation keeps only the owner's side. Chat exports and plain "Name: …" lines are recognized, the person says which name is theirs, the other side is dropped in the browser before anything is sent, and the server checks again. Samples are encrypted, owner-only under row-level security, screened for the two safety phrases, and overwritten when removed. Nothing is fine-tuned on them.
+- On the one-notch-ahead page the single rating is now two, asked apart: how it sounds (sounds like me, or doesn't) and what it says (I'd say that, or I wouldn't). "I wouldn't say that" points to the documents, since that is where what is true of a person changes. Under every avatar reply and every panel card: "put it in your own words".
+- Migration `0007_voice`: table `voice_samples`, and `content_rating` and `correction_enc` on turns.
+
+**Eval baseline (2026-09-18):** two new paired cases in the mentor suite use the same lines and the same question with two sets of writing samples. With short lowercase samples the reply came back lowercase at 12 to 23 words a sentence; with long clause-heavy samples, 26 to 31; the comparison passed on all three runs and an absolute cap did not, so only the comparison is kept. The first run borrowed a habit from a correction ("counting to five"), which led to the explicit example in the prompt; it did not recur in two further runs, and facts planted in samples ("Priya", "Leeds", "the car in 2019") appeared in no reply. Mentor 7/7, panel 21/21 with a heated sample in play. Existing fixtures carry no voice and are sent an empty one.
+
 ## 2026.09.18-3
 
 The solo panel, "ask all of me" (`docs/concept_simulation.md`, "Many versions of you, right now"): one situation put to several versions of the same person at once, behind `BIOGRAPHER_ENABLED=1` at `/mentor/panel`.

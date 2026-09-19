@@ -3,28 +3,75 @@
 import { useState, useTransition } from "react";
 import { Button } from "@/app/_components/Button";
 import { Notice } from "@/app/_components/Field";
-import { askMentor, rateReply } from "./actions";
+import Link from "next/link";
+import { askMentor, rateReply, rateReplyContent } from "./actions";
+import { Correction } from "./Correction";
 
-type ChatTurn = { id: string; role: "guide" | "person" | "avatar"; text: string; rating: "like_me" | "not_like_me" | null; safety: boolean; unsure: boolean; question: string | null; drawsOn: string[] };
+type ChatTurn = {
+  id: string;
+  role: "guide" | "person" | "avatar";
+  text: string;
+  rating: "like_me" | "not_like_me" | null;
+  contentRating: "would_say" | "would_not_say" | null;
+  correction: string | null;
+  safety: boolean;
+  unsure: boolean;
+  question: string | null;
+  drawsOn: string[];
+};
 
+const pill = (on: boolean) => `rounded-full border px-3 py-1.5 text-xs font-medium transition-colors ${on ? "border-accent bg-accent text-accent-ink" : "border-rule bg-paper hover:border-accent/60"}`;
+
+/**
+ * Two questions, asked apart. A reply can sound exactly like you and still say something you never
+ * would, and a good voice makes wrong content persuasive.
+ */
 function Rating({ turn }: { turn: ChatTurn }) {
   const [pending, start] = useTransition();
-  const [rating, setRating] = useState(turn.rating);
-  const rate = (r: "like_me" | "not_like_me") =>
+  const [voice, setVoice] = useState(turn.rating);
+  const [content, setContent] = useState(turn.contentRating);
+  const rateVoice = (r: "like_me" | "not_like_me") =>
     start(async () => {
-      setRating(r);
+      setVoice(r);
       const res = await rateReply({ turnId: turn.id, rating: r });
-      if (!res.ok) setRating(turn.rating);
+      if (!res.ok) setVoice(turn.rating);
     });
-  const cls = (on: boolean) => `rounded-full border px-3 py-1.5 text-xs font-medium transition-colors ${on ? "border-accent bg-accent text-accent-ink" : "border-rule bg-paper hover:border-accent/60"}`;
+  const rateContent = (r: "would_say" | "would_not_say") =>
+    start(async () => {
+      setContent(r);
+      const res = await rateReplyContent({ turnId: turn.id, rating: r });
+      if (!res.ok) setContent(turn.contentRating);
+    });
   return (
-    <div className="mt-3 flex flex-wrap items-center gap-2" role="group" aria-label="Does this sound like you?">
-      <button type="button" disabled={pending} aria-pressed={rating === "like_me"} onClick={() => rate("like_me")} className={cls(rating === "like_me")}>
-        Sounds like me
-      </button>
-      <button type="button" disabled={pending} aria-pressed={rating === "not_like_me"} onClick={() => rate("not_like_me")} className={cls(rating === "not_like_me")}>
-        Doesn&rsquo;t sound like me
-      </button>
+    <div className="mt-3 space-y-2">
+      <div className="flex flex-wrap items-center gap-2" role="group" aria-label="Does this sound like you?">
+        <span className="w-24 text-xs uppercase tracking-wide text-muted">How it sounds</span>
+        <button type="button" disabled={pending} aria-pressed={voice === "like_me"} onClick={() => rateVoice("like_me")} className={pill(voice === "like_me")}>
+          Sounds like me
+        </button>
+        <button type="button" disabled={pending} aria-pressed={voice === "not_like_me"} onClick={() => rateVoice("not_like_me")} className={pill(voice === "not_like_me")}>
+          Doesn&rsquo;t sound like me
+        </button>
+      </div>
+      <div className="flex flex-wrap items-center gap-2" role="group" aria-label="Would you say this?">
+        <span className="w-24 text-xs uppercase tracking-wide text-muted">What it says</span>
+        <button type="button" disabled={pending} aria-pressed={content === "would_say"} onClick={() => rateContent("would_say")} className={pill(content === "would_say")}>
+          I&rsquo;d say that
+        </button>
+        <button type="button" disabled={pending} aria-pressed={content === "would_not_say"} onClick={() => rateContent("would_not_say")} className={pill(content === "would_not_say")}>
+          I wouldn&rsquo;t say that
+        </button>
+      </div>
+      {content === "would_not_say" ? (
+        <p className="text-sm text-muted">
+          If it got you wrong, the fix is in{" "}
+          <Link href="/documents" className="underline">
+            your documents
+          </Link>
+          : amend the line it leaned on, or add the one that is missing. The avatar is rebuilt from them every time.
+        </p>
+      ) : null}
+      <Correction key={turn.correction ?? ""} turnId={turn.id} correction={turn.correction} open={voice === "not_like_me" && !turn.correction} />
     </div>
   );
 }

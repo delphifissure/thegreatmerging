@@ -25,7 +25,23 @@ export type TurnExtras = {
   change?: string | null;
   reading?: { same: string[]; differs: Array<{ observation: string; versions: string[] }> } | null;
 };
-export type Turn = { id: string; seq: number; role: TurnRole; text: string; note: string | null; extras: TurnExtras | null; meta: Record<string, unknown>; rating: TurnRating | null; created_at: Date };
+export type ContentRating = "would_say" | "would_not_say";
+export type Turn = {
+  id: string;
+  seq: number;
+  role: TurnRole;
+  text: string;
+  note: string | null;
+  extras: TurnExtras | null;
+  meta: Record<string, unknown>;
+  rating: TurnRating | null;
+  contentRating: ContentRating | null;
+  /** What the person would have said instead of an avatar's reply. */
+  correction: string | null;
+  created_at: Date;
+};
+export type PastedRegister = "everyday" | "heated" | "long_form" | "spoken";
+export type StoredVoiceSample = { id: string; register: PastedRegister; text: string; words: number; created_at: Date };
 export type DocumentEntry = {
   id: string;
   document: DocumentKindValue;
@@ -41,8 +57,9 @@ export type DocumentEntry = {
   created_at: Date;
 };
 
-const turnCtx = (userId: string, field: "content" | "note" | "extras") => ({ user_id: userId, instrument_key: "conversation", field });
+const turnCtx = (userId: string, field: "content" | "note" | "extras" | "correction") => ({ user_id: userId, instrument_key: "conversation", field });
 const entryCtx = (userId: string) => ({ user_id: userId, instrument_key: "document", field: "text" });
+const voiceCtx = (userId: string) => ({ user_id: userId, instrument_key: "voice", field: "text" });
 
 // ---------------------------------------------------------------- threads
 export async function createThread(input: { userId: string; kind: ThreadKind; focus: string | null }) {
@@ -110,6 +127,8 @@ function toTurn(userId: string, r: typeof schema.conversation_turns.$inferSelect
     extras: readExtras(userId, r.extras_enc),
     meta: (r.meta as Record<string, unknown>) ?? {},
     rating: r.rating,
+    contentRating: r.content_rating,
+    correction: r.correction_enc ? decryptText(r.correction_enc, turnCtx(userId, "correction")) : null,
     created_at: r.created_at,
   };
 }
@@ -159,6 +178,75 @@ export async function rateTurn(input: { turnId: string; userId: string; rating: 
     .update(schema.conversation_turns)
     .set({ rating: input.rating, updated_at: new Date() })
     .where(and(eq(schema.conversation_turns.id, input.turnId), eq(schema.conversation_turns.user_id, input.userId), eq(schema.conversation_turns.role, "avatar")));
+}
+
+/** Whether they would say that, asked apart from whether it sounded like them. Avatar replies only. */
+export async function rateTurnContent(input: { turnId: string; userId: string; rating: ContentRating }) {
+  await db()
+    .update(schema.conversation_turns)
+    .set({ content_rating: input.rating, updated_at: new Date() })
+    .where(and(eq(schema.conversation_turns.id, input.turnId), eq(schema.conversation_turns.user_id, input.userId), eq(schema.conversation_turns.role, "avatar")));
+}
+
+/** What the person would have said instead. An empty correction clears it. Avatar replies only. */
+export async function saveCorrection(input: { turnId: string; userId: string; text: string }) {
+  const text = input.text.trim();
+  await db()
+    .update(schema.conversation_turns)
+    .set({ correction_enc: text ? encryptText(text, turnCtx(input.userId, "correction")) : null, updated_at: new Date() })
+    .where(and(eq(schema.conversation_turns.id, input.turnId), eq(schema.conversation_turns.user_id, input.userId), eq(schema.conversation_turns.role, "avatar")));
+}
+
+/** Pairs of what an avatar said and what its owner would have said, newest first: style with the content held still. */
+export async function listCorrections(userId: string, limit = 12): Promise<Array<{ said: string; wouldSay: string }>> {
+  const rows = await db()
+    .select()
+    .from(schema.conversation_turns)
+    .where(and(eq(schema.conversation_turns.user_id, userId), eq(schema.conversation_turns.role, "avatar"), isNull(schema.conversation_turns.deleted_at), sql`${schema.conversation_turns.correction_enc} is not null`))
+    .orderBy(desc(schema.conversation_turns.updated_at))
+    .limit(limit);
+  return rows.map((r) => ({ said: decryptText(r.content_enc, turnCtx(userId, "content")), wouldSay: decryptText(r.correction_enc!, turnCtx(userId, "correction")) }));
+}
+
+/** What the person wrote to their biographer, newest first: their considered register, for style only. */
+export async function listOwnAnswers(userId: string, limit = 40): Promise<string[]> {
+  const rows = await db()
+    .select({ content_enc: schema.conversation_turns.content_enc })
+    .from(schema.conversation_turns)
+    .innerJoin(schema.conversation_threads, eq(schema.conversation_threads.id, schema.conversation_turns.thread_id))
+    .where(and(eq(schema.conversation_turns.user_id, userId), eq(schema.conversation_turns.role, "person"), eq(schema.conversation_threads.kind, "biographer"), isNull(schema.conversation_turns.deleted_at)))
+    .orderBy(desc(schema.conversation_turns.created_at))
+    .limit(limit);
+  return rows.map((r) => decryptText(r.content_enc, turnCtx(userId, "content")));
+}
+
+// ---------------------------------------------------------------- pasted writing samples
+export async function addVoiceSample(input: { userId: string; register: PastedRegister; text: string }): Promise<StoredVoiceSample> {
+  const text = input.text.trim();
+  const words = text.split(/\s+/).filter(Boolean).length;
+  const rows = await db().insert(schema.voice_samples).values({ user_id: input.userId, register: input.register, text_enc: encryptText(text, voiceCtx(input.userId)), words }).returning();
+  return { id: rows[0].id, register: rows[0].register, text, words, created_at: rows[0].created_at };
+}
+
+export async function listVoiceSamples(userId: string): Promise<StoredVoiceSample[]> {
+  const rows = await db()
+    .select()
+    .from(schema.voice_samples)
+    .where(and(eq(schema.voice_samples.user_id, userId), isNull(schema.voice_samples.deleted_at)))
+    .orderBy(desc(schema.voice_samples.created_at));
+  return rows.map((r) => ({ id: r.id, register: r.register, text: decryptText(r.text_enc, voiceCtx(userId)), words: r.words, created_at: r.created_at }));
+}
+
+/** Withdrawn for good: the words are overwritten, not only hidden, because the avatars must stop seeing them at once. */
+export async function removeVoiceSample(input: { sampleId: string; userId: string }) {
+  await db()
+    .update(schema.voice_samples)
+    .set({ deleted_at: new Date(), updated_at: new Date(), text_enc: encryptText("", voiceCtx(input.userId)), words: 0 })
+    .where(and(eq(schema.voice_samples.id, input.sampleId), eq(schema.voice_samples.user_id, input.userId)));
+}
+
+export async function recordVoiceSafetyEvent(input: { userId: string; kind: string }) {
+  await audit({ actorUserId: input.userId, action: `safety.text_screen.${input.kind}`, targetUserId: input.userId, targetTable: "voice_samples" });
 }
 
 /**

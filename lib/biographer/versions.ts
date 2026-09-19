@@ -7,6 +7,7 @@ import type { z } from "zod";
 import versionsConfig from "@/config/versions.json";
 import { PanelReadingSchema, type PanelReading } from "@/lib/llm/schemas";
 import type { DocumentEntry, Turn, TurnRating } from "@/lib/data/biographer";
+import { EMPTY_VOICE } from "@/lib/biographer/voice";
 
 export type VersionKind = "none" | "state" | "move" | "room" | "open_line" | "direction";
 type Requires = { section?: string; mark?: "settled" | "open"; mentions?: string };
@@ -43,7 +44,7 @@ export function panelVersionsFor(entries: DocumentEntry[]): PanelVersion[] {
 }
 
 /** Ratified lines with short ids the reply can cite, the situation, and the one change. */
-export function buildVersionInput(input: { personName: string; entries: DocumentEntry[]; situation: string; version: PanelVersion; replicate?: number }) {
+export function buildVersionInput(input: { personName: string; entries: DocumentEntry[]; situation: string; version: PanelVersion; replicate?: number; voice?: typeof EMPTY_VOICE }) {
   const ratified = ratifiedOf(input.entries);
   const toEntry = new Map<string, string>();
   const toShort = new Map<string, string>();
@@ -60,6 +61,8 @@ export function buildVersionInput(input: { personName: string; entries: Document
       history: all.filter((_, i) => ratified[i].document === "history"),
       situation: input.situation,
       version: { key: input.version.key, kind: input.version.kind, instruction: input.version.instruction, altered_line_id: input.version.alteredEntryId ? (toShort.get(input.version.alteredEntryId) ?? null) : null },
+      // How they write, for manner only. Each version is handed the registers that suit it (registersFor).
+      voice: input.voice ?? EMPTY_VOICE,
       // Two runs of the same version must not collapse into one memoized answer.
       replicate: input.replicate ?? 1,
     },

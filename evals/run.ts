@@ -41,6 +41,7 @@ import { buildRequest, callRole, costOfRecord, collectBatch, batchStatus, submit
 import { checkOutputDeterministic } from "@/lib/guardrails";
 import { answerProfile, biographerTurnSchemaFor, optionsFor } from "@/lib/biographer/inputs";
 import { buildVersionInput, panelReadingSchemaFor, panelVersionsFor, type PanelVersion } from "@/lib/biographer/versions";
+import { buildVoiceInput, EMPTY_VOICE, registersFor, type VoiceSample } from "@/lib/biographer/voice";
 import type { DocumentEntry } from "@/lib/data/biographer";
 import { interpreterFindings, MENTAL_HEALTH_KEYS } from "@/evals/interpreter_checks";
 import { LLM_CONFIG, LLM_CONFIG_VERSION } from "@/config/llm";
@@ -353,7 +354,16 @@ const LENGTH_REMARK = /\b(short|brief|long|lengthy|detailed) (answers?|repl(y|ie
 function completeBiographerInput(input: BiographerFixture) {
   return { ...input, depth: input.depth ?? "light", answer_profile: answerProfile(input.turns), threads_to_return_to: input.threads_to_return_to ?? [] };
 }
-type MentorCase = { id: string; expect: { unsure?: boolean; draws_on_any?: string[]; draws_on_all?: string[]; no_verdict?: boolean }; input: unknown };
+type MentorCase = {
+  id: string;
+  expect: { unsure?: boolean; draws_on_any?: string[]; draws_on_all?: string[]; no_verdict?: boolean; max_mean_sentence_words?: number; min_mean_sentence_words?: number; must_not_mention?: string[]; shorter_sentences_than?: { case: string; by: number } };
+  input: Record<string, unknown>;
+};
+/** A blunt measure of manner that is easy to read off a reply: how long its sentences run. */
+function meanSentenceWords(text: string) {
+  const sentences = text.split(/(?<=[.!?…])\s+|\n+/).filter((s) => /[a-z]/i.test(s));
+  return sentences.length ? sentences.reduce((n, s) => n + s.trim().split(/\s+/).length, 0) / sentences.length : 0;
+}
 
 async function runBiographer() {
   if (!process.env.ANTHROPIC_API_KEY) {
@@ -431,7 +441,9 @@ type PanelFixture = {
   situation: string;
   entries: Array<{ document: "history" | "constitution"; section: string; text: string; mark: "settled" | "open" }>;
   expect: { versions_include?: string[]; versions_exclude?: string[]; must_not_match?: string[]; per_version?: Record<string, { opening_is_question?: boolean; unsure?: boolean }> };
+  voice_samples?: VoiceSample[];
 };
+const panelVoice = (f: PanelFixture, version: PanelVersion) => buildVoiceInput({ samples: f.voice_samples ?? [], corrections: [], registers: registersFor({ version: version.key }) });
 type ReaderInput = { person_name: string; situation: string; versions: Array<{ key: string; label: string; kind: string; change: string; replicate_of: string | null; reply: string; opening_line: string | null; unsure: boolean; rating: string | null }> };
 type ReadingFixture = { id: string; expect: { max_differs?: number; min_differs?: number; differs_mentions?: string[] }; input: ReaderInput };
 type PanelCases = { panels: PanelFixture[]; readings: ReadingFixture[] };
@@ -481,7 +493,7 @@ async function runPanel() {
 
     const settled = await Promise.allSettled(
       versions.map((version, i) => {
-        const built = buildVersionInput({ personName: f.person_name, entries, situation: f.situation, version, replicate: i + 1 });
+        const built = buildVersionInput({ personName: f.person_name, entries, situation: f.situation, version, replicate: i + 1, voice: panelVoice(f, version) });
         return withRetry(`panel ${f.id}/${version.key}`, () => callRole("version", built.input, VersionReplySchema, { coupleId: null, jobStep: `eval:panel:${f.id}:${version.key}` }));
       }),
     );
@@ -500,7 +512,7 @@ async function runPanel() {
       if (ADVICE_TO_OWNER.test(stripRefusals(out.reply))) problems.push("advises the owner");
       if (ABOUT_BEING_A_VERSION.test(said)) problems.push("talks about being a version");
       if (!out.unsure && out.draws_on.length === 0) problems.push("cites none of their lines");
-      for (const pattern of f.expect.must_not_match ?? []) if (new RegExp(pattern, "i").test(said)) problems.push(`gives way on a settled line: /${pattern.slice(0, 40)}…/`);
+      for (const pattern of f.expect.must_not_match ?? []) if (new RegExp(pattern, "i").test(said)) problems.push(`gives way on a settled line, or repeats a fact from a writing sample: /${pattern.slice(0, 40)}…/`);
       const want = f.expect.per_version?.[version.key];
       if (want?.opening_is_question && !out.opening_line?.trim().endsWith("?")) problems.push(`opening line is not a question: ${out.opening_line}`);
       if (want?.unsure !== undefined && out.unsure !== want.unsure) problems.push(`unsure ${out.unsure}, expected ${want.unsure}`);
@@ -548,10 +560,13 @@ async function runMentor() {
     return;
   }
   const cases = JSON.parse(fs.readFileSync(path.join("evals", "mentor", "cases.json"), "utf8")) as { cases: MentorCase[] };
+  const means = new Map<string, number>();
   for (const c of cases.cases) {
     try {
-      const out = await withRetry(`mentor ${c.id}`, () => callRole("mentor", c.input, MentorReplySchema, { coupleId: null, jobStep: `eval:mentor:${c.id}` }));
-      if (dumpDir) fs.writeFileSync(path.join(dumpDir, `mentor_${c.id}.json`), JSON.stringify({ input: c.input, output: out }, null, 2));
+      // Fixtures written before the avatar was shown how its person writes carry no voice; the app would send an empty one.
+      const input = { ...c.input, voice: c.input.voice ?? EMPTY_VOICE };
+      const out = await withRetry(`mentor ${c.id}`, () => callRole("mentor", input, MentorReplySchema, { coupleId: null, jobStep: `eval:mentor:${c.id}` }));
+      if (dumpDir) fs.writeFileSync(path.join(dumpDir, `mentor_${c.id}.json`), JSON.stringify({ input, output: out }, null, 2));
       const problems: string[] = [];
       if (!/\b(I|I'm|I've|I'd|my|me)\b/.test(out.reply)) problems.push("not in the first person");
       if (ADVICE.test(stripRefusals(out.reply))) problems.push("instructs the person");
@@ -559,10 +574,24 @@ async function runMentor() {
       if (c.expect.unsure !== undefined && out.unsure !== c.expect.unsure) problems.push(`unsure ${out.unsure}, expected ${c.expect.unsure}`);
       if (c.expect.draws_on_any && !c.expect.draws_on_any.some((id) => out.draws_on.includes(id))) problems.push("draws on none of their lines");
       for (const id of c.expect.draws_on_all ?? []) if (!out.draws_on.includes(id)) problems.push(`does not draw on ${id}`);
-      record({ suite: "mentor", id: c.id, ok: problems.length === 0, detail: problems.join("; ") || (out.unsure ? "unsure" : `${out.draws_on.length} line(s)`) });
+      const mean = meanSentenceWords(out.reply);
+      means.set(c.id, mean);
+      if (c.expect.max_mean_sentence_words !== undefined && mean > c.expect.max_mean_sentence_words) problems.push(`sentences average ${mean.toFixed(1)} words; their samples are much shorter`);
+      if (c.expect.min_mean_sentence_words !== undefined && mean < c.expect.min_mean_sentence_words) problems.push(`sentences average ${mean.toFixed(1)} words; their samples run much longer`);
+      const borrowed = (c.expect.must_not_mention ?? []).filter((w) => out.reply.toLowerCase().includes(w));
+      if (borrowed.length) problems.push(`takes a fact from a writing sample: ${borrowed.join(", ")}`);
+      record({ suite: "mentor", id: c.id, ok: problems.length === 0, detail: problems.join("; ") || `${out.unsure ? "unsure" : `${out.draws_on.length} line(s)`}, ${mean.toFixed(1)} words a sentence` });
     } catch (err) {
       record({ suite: "mentor", id: c.id, ok: false, detail: err instanceof LlmValidationError ? `rejected: ${err.message.slice(0, 200)}` : String(err) });
     }
+  }
+  // The same lines and the same question, with two different sets of writing samples: manner has to follow the samples.
+  for (const c of cases.cases) {
+    const want = c.expect.shorter_sentences_than;
+    const [mine, theirs] = [means.get(c.id), want ? means.get(want.case) : undefined];
+    if (!want || mine === undefined || theirs === undefined) continue;
+    const ok = theirs - mine >= want.by;
+    record({ suite: "mentor", id: `${c.id}/manner`, ok, detail: `${mine.toFixed(1)} words a sentence against ${theirs.toFixed(1)} for ${want.case}${ok ? "" : `; expected at least ${want.by} fewer`}` });
   }
 }
 
@@ -622,7 +651,7 @@ async function runDryRun() {
   for (const f of panel.panels) {
     const entries = panelEntries(f);
     for (const [i, version] of panelVersionsFor(entries).entries()) {
-      const req = buildRequest("version", buildVersionInput({ personName: f.person_name, entries, situation: f.situation, version, replicate: i + 1 }).input, VersionReplySchema as ZodType<unknown>);
+      const req = buildRequest("version", buildVersionInput({ personName: f.person_name, entries, situation: f.situation, version, replicate: i + 1, voice: panelVoice(f, version) }).input, VersionReplySchema as ZodType<unknown>);
       const tokens = write(`version-${f.id}-${version.key}`, req);
       record({ suite: "dry_run", id: `version:${f.id}:${version.key}`, ok: req.tool_choice?.type === "tool", detail: `~${tokens} tokens` });
       n++;

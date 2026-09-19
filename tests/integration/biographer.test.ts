@@ -12,7 +12,7 @@ import { connect, DB_TESTS_ENABLED, deleteFixture, prepareDatabase, runAs, SKIP_
 process.env.FIELD_ENCRYPTION_KEY ||= generateKeyBase64();
 
 import { getSql } from "@/db/client";
-import { addOwnEntry, appendTurn, avatarRatings, closeThread, createThread, getOwnThread, listOpenQuestions, listOwnEntries, listTurns, proposeEntries, rateTurn, ratifyEntry, rejectEntry, removeEntry, saveNextTimeQuestions, setThreadDepth, listPanels, versionRatings } from "@/lib/data";
+import { addOwnEntry, appendTurn, avatarRatings, closeThread, createThread, getOwnThread, listOpenQuestions, listOwnEntries, listTurns, proposeEntries, rateTurn, ratifyEntry, rejectEntry, removeEntry, saveNextTimeQuestions, setThreadDepth, listPanels, versionRatings, addVoiceSample, listVoiceSamples, removeVoiceSample, listOwnAnswers, listCorrections, rateTurnContent, saveCorrection } from "@/lib/data";
 import { threadsToReturnTo } from "@/lib/biographer/inputs";
 
 const suite = DB_TESTS_ENABLED ? describe : describe.skip;
@@ -161,14 +161,57 @@ suite(`biographer data ${DB_TESTS_ENABLED ? "" : SKIP_MESSAGE}`, () => {
     expect(await listPanels(B)).toEqual([]);
   });
 
+  it("keeps how a person writes: pasted samples, corrections and a second verdict, all encrypted and all the owner's", async () => {
+    const sample = await addVoiceSample({ userId: A, register: "heated", text: "  fine.\nI said fine  " });
+    expect(sample).toMatchObject({ register: "heated", text: "fine.\nI said fine", words: 4 });
+    await addVoiceSample({ userId: A, register: "everyday", text: "on my way. ten mins" });
+    expect((await listVoiceSamples(A)).map((v) => v.register).sort()).toEqual(["everyday", "heated"]);
+    expect(await listVoiceSamples(B)).toEqual([]);
+    const [raw] = await sql<Array<{ text_enc: Buffer }>>`select text_enc from voice_samples where id = ${sample.id}`;
+    expect(raw.text_enc.toString("utf8")).not.toContain("fine");
+
+    // Removing a sample overwrites the words, and the partner cannot remove it.
+    await removeVoiceSample({ sampleId: sample.id, userId: B });
+    expect(await listVoiceSamples(A)).toHaveLength(2);
+    await removeVoiceSample({ sampleId: sample.id, userId: A });
+    expect((await listVoiceSamples(A)).map((v) => v.register)).toEqual(["everyday"]);
+    const [gone] = await sql<Array<{ words: number; deleted_at: Date | null }>>`select words, deleted_at from voice_samples where id = ${sample.id}`;
+    expect(gone.words).toBe(0);
+    expect(gone.deleted_at).not.toBeNull();
+
+    const bio = await createThread({ userId: A, kind: "biographer", focus: "money" });
+    await appendTurn({ threadId: bio.id, userId: A, role: "guide", text: "Who handled the money?" });
+    await appendTurn({ threadId: bio.id, userId: A, role: "person", text: "dad did. nobody talked about it" });
+    const mentor = await createThread({ userId: A, kind: "mentor", focus: null });
+    await appendTurn({ threadId: mentor.id, userId: A, role: "person", text: "What would I do about the card bill?" });
+    const reply = await appendTurn({ threadId: mentor.id, userId: A, role: "avatar", text: "What has helped me lately is pausing first.", meta: { draws_on: [], unsure: false } });
+    // Only what they wrote to the biographer counts as their considered register; what they asked an avatar does not.
+    expect(await listOwnAnswers(A)).toContain("dad did. nobody talked about it");
+    expect(await listOwnAnswers(A)).not.toContain("What would I do about the card bill?");
+    expect(await listOwnAnswers(B)).toEqual([]);
+
+    await rateTurnContent({ turnId: reply.id, userId: A, rating: "would_not_say" });
+    await saveCorrection({ turnId: reply.id, userId: A, text: "honestly i just wait a sec" });
+    await saveCorrection({ turnId: reply.id, userId: B, text: "written by someone else" });
+    const stored = (await listTurns(mentor.id, A)).find((t) => t.id === reply.id)!;
+    expect(stored).toMatchObject({ contentRating: "would_not_say", correction: "honestly i just wait a sec", rating: null });
+    expect(await listCorrections(A)).toContainEqual({ said: "What has helped me lately is pausing first.", wouldSay: "honestly i just wait a sec" });
+    expect(await listCorrections(B)).toEqual([]);
+    const [enc] = await sql<Array<{ correction_enc: Buffer }>>`select correction_enc from conversation_turns where id = ${reply.id}`;
+    expect(enc.correction_enc.toString("utf8")).not.toContain("honestly");
+    await saveCorrection({ turnId: reply.id, userId: A, text: "  " });
+    expect((await listCorrections(A)).some((c) => c.said === "What has helped me lately is pausing first.")).toBe(false);
+  });
+
   it("row-level security hides every table from the partner and from anonymous sessions", async () => {
     const counts = (tx: Parameters<Parameters<typeof runAs>[2]>[0]) =>
-      Promise.all([tx`select count(*)::int as n from conversation_threads`, tx`select count(*)::int as n from conversation_turns`, tx`select count(*)::int as n from document_entries`]).then((r) => r.map((x) => x[0].n));
+      Promise.all([tx`select count(*)::int as n from conversation_threads`, tx`select count(*)::int as n from conversation_turns`, tx`select count(*)::int as n from document_entries`, tx`select count(*)::int as n from voice_samples`]).then((r) => r.map((x) => x[0].n));
     const asOwner = await runAs(sql, A, counts);
     expect(asOwner.every((n) => n > 0)).toBe(true);
-    expect(await runAs(sql, B, counts)).toEqual([0, 0, 0]);
-    expect(await runAs(sql, null, counts)).toEqual([0, 0, 0]);
-    // The partner cannot plant a line in someone else's document either.
+    expect(await runAs(sql, B, counts)).toEqual([0, 0, 0, 0]);
+    expect(await runAs(sql, null, counts)).toEqual([0, 0, 0, 0]);
+    // The partner cannot plant a line in someone else's document, or a sample in their voice, either.
+    await expect(runAs(sql, B, (tx) => tx`insert into voice_samples (user_id, register, text_enc, words) values (${A}, 'everyday', ${Buffer.from([1, 2, 3])}, 3)`)).rejects.toThrow();
     await expect(runAs(sql, B, (tx) => tx`insert into document_entries (user_id, document, section, text_enc) values (${A}, 'constitution', 'values', ${Buffer.from([1, 2, 3])})`)).rejects.toThrow();
   });
 });

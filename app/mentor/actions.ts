@@ -9,6 +9,7 @@ import { MentorReplySchema } from "@/lib/llm/schemas";
 import { buildMentorInput, MENTOR_FALLBACK, mentorReadiness } from "@/lib/biographer/inputs";
 import { SAFETY_TEXT_MESSAGES, screenText } from "@/lib/safety_text";
 import { requireAppUser } from "@/app/_lib/session";
+import { loadVoiceMaterial, voiceFor } from "@/app/_lib/voice";
 import { fail, type ActionResult } from "@/app/_lib/actions";
 
 const AskInput = z.object({ text: z.string().trim().min(1).max(4000) });
@@ -37,7 +38,7 @@ export async function askMentor(raw: z.infer<typeof AskInput>): Promise<ActionRe
   if (!process.env.ANTHROPIC_API_KEY) return fail("Your message is saved, but the model is not configured.");
   // The last twenty turns keep the request small; the ratified lines carry the person, not the chat log.
   const turns = (await data.listTurns(thread.id, user.id)).filter((t) => t.role !== "guide").slice(-20);
-  const built = buildMentorInput({ personName: user.displayName, entries, turns });
+  const built = buildMentorInput({ personName: user.displayName, entries, turns, voice: voiceFor(await loadVoiceMaterial(user.id), "mentor") });
   try {
     configureLlm({ recorder: new data.DbRecorder(), memo: new MemoryMemo() });
     const out = await callRole("mentor", built.input, MentorReplySchema, { coupleId: user.couple?.id ?? null, userId: user.id, jobStep: "mentor:turn" });
@@ -52,7 +53,7 @@ export async function askMentor(raw: z.infer<typeof AskInput>): Promise<ActionRe
 
 const RateInput = z.object({ turnId: z.uuid(), rating: z.enum(["like_me", "not_like_me"]) });
 
-/** The self-recognition test: the person's own verdict on each reply. */
+/** Whether it sounded like them. Asked apart from whether they would say it: a good voice makes wrong content persuasive. */
 export async function rateReply(raw: z.infer<typeof RateInput>): Promise<ActionResult> {
   if (!FEATURES.biographer) return fail("This is not switched on.");
   const parsed = RateInput.safeParse(raw);
@@ -61,4 +62,38 @@ export async function rateReply(raw: z.infer<typeof RateInput>): Promise<ActionR
   await data.rateTurn({ ...parsed.data, userId: user.id });
   refresh();
   return { ok: true };
+}
+
+const ContentInput = z.object({ turnId: z.uuid(), rating: z.enum(["would_say", "would_not_say"]) });
+
+/** Whether they would say that, whatever it sounded like. */
+export async function rateReplyContent(raw: z.infer<typeof ContentInput>): Promise<ActionResult> {
+  if (!FEATURES.biographer) return fail("This is not switched on.");
+  const parsed = ContentInput.safeParse(raw);
+  if (!parsed.success) return fail("That reply could not be found.");
+  const user = await requireAppUser();
+  await data.rateTurnContent({ ...parsed.data, userId: user.id });
+  refresh();
+  return { ok: true };
+}
+
+const CorrectionInput = z.object({ turnId: z.uuid(), text: z.string().trim().max(2000) });
+
+/**
+ * "What would you have said?" The pair teaches the avatars how this person words things. It is
+ * never treated as a fact about them: what is true of them changes only in their documents.
+ */
+export async function saveReplyCorrection(raw: z.infer<typeof CorrectionInput>): Promise<ActionResult> {
+  if (!FEATURES.biographer) return fail("This is not switched on.");
+  const parsed = CorrectionInput.safeParse(raw);
+  if (!parsed.success) return fail("Keep it under 2,000 characters.");
+  const user = await requireAppUser();
+  const safety = screenText(parsed.data.text);
+  if (safety) {
+    await data.recordVoiceSafetyEvent({ userId: user.id, kind: safety });
+    return fail(SAFETY_TEXT_MESSAGES[safety]);
+  }
+  await data.saveCorrection({ turnId: parsed.data.turnId, userId: user.id, text: parsed.data.text });
+  refresh();
+  return { ok: true, message: parsed.data.text ? "Saved. Your avatars will learn from how you put it." : "Removed." };
 }
