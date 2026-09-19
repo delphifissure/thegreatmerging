@@ -51,6 +51,15 @@ describe("what a rehearsal avatar is shown", () => {
     expect(JSON.stringify(input)).not.toMatch(/ana-id|ben-id/);
   });
 
+  it("carries its person's coaching as things it knows about itself, a handful at most, and none when there is none", () => {
+    const base = { me: { id: BEN, name: "Ben" }, partnerName: "Ana", entries, frame, stateBefore: "tired", turns: [] };
+    expect(buildRehearsalInput(base).input.in_moments_like_this).toEqual([]);
+    const notes = ["  Here I don't explain. I say 'not now' and go and eat.  ", "", ...Array.from({ length: 8 }, (_, i) => `note ${i}`)];
+    const coached = buildRehearsalInput({ ...base, coaching: notes }).input.in_moments_like_this;
+    expect(coached[0]).toBe("Here I don't explain. I say 'not now' and go and eat.");
+    expect(coached).toHaveLength(6);
+  });
+
   it("needs five constitution lines it may use, and says how many there are without saying what they are", () => {
     expect(rehearsalReadiness(entries)).toMatchObject({ ready: false, usable: 3, constitution: 2, ratified: 4, needed: 5 });
     const five = Array.from({ length: 5 }, (_, i) => entry(`x${i}`, "values", `line ${i}`, "avatar_only"));

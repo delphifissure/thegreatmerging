@@ -148,7 +148,7 @@ export async function advanceReplayAction(raw: z.infer<typeof AdvanceInput>): Pr
       // The opening line is the couple's own memory, not an avatar's. It is coded like any other turn.
       const opening = { speakerId: first, says: replay.frame.openingLine, does: null };
       const code = await callRole("move_coder", buildMoveCoderInput([opening], first), MoveCodeSchema, { ...ctx, userId: user.id, jobStep: "replay:code" });
-      await data.appendReplayTurn({ replayId: replay.id, seq: 1, speakerId: first, words: { says: opening.says, does: null }, move: code.move, secondaryMove: code.secondary, intent: null, impact: null, ends: false, remembered: true });
+      await data.appendReplayTurn({ replayId: replay.id, take: replay.take, seq: 1, speakerId: first, words: { says: opening.says, does: null }, move: code.move, secondaryMove: code.secondary, intent: null, impact: null, ends: false, remembered: true });
       await data.setReplayStatus(replay.id, "running");
       refresh();
       return { ok: true, done: false, turns: 1 };
@@ -166,6 +166,7 @@ export async function advanceReplayAction(raw: z.infer<typeof AdvanceInput>): Pr
       voice: buildVoiceInput({ ...material.speaker.voice, registers: registersFor("rehearsal") }),
       frame: replay.frame,
       stateBefore: material.speaker.stateBefore,
+      coaching: material.speaker.coaching,
       turns: material.spoken,
       maxTurns: replay.maxTurns,
     });
@@ -174,6 +175,7 @@ export async function advanceReplayAction(raw: z.infer<typeof AdvanceInput>): Pr
     const code = await callRole("move_coder", buildMoveCoderInput([...material.spoken, turn], first), MoveCodeSchema, { ...ctx, userId: speakerId, jobStep: "replay:code" });
     await data.appendReplayTurn({
       replayId: replay.id,
+      take: replay.take,
       seq: material.spoken.length + 1,
       speakerId,
       words: { says: turn.says, does: turn.does },
@@ -208,9 +210,56 @@ export async function saveVerdictAction(raw: z.infer<typeof VerdictInput>): Prom
   return { ok: true };
 }
 
+const OpenInput = z.object({ replayId: z.uuid(), open: z.boolean() });
+
+/** "Watch it together": let my partner read what my avatar says. It takes both of us, and either of us can close it again. */
+export async function setOpenAction(raw: z.infer<typeof OpenInput>): Promise<ActionResult> {
+  if (!FEATURES.biographer) return fail("This is not switched on.");
+  const parsed = OpenInput.safeParse(raw);
+  if (!parsed.success) return fail("That replay could not be found.");
+  const user = await requireAppUser();
+  if (!(await data.setReplayOpen({ ...parsed.data, userId: user.id }))) return fail("That replay could not be changed.");
+  refresh();
+  return { ok: true };
+}
+
+const CoachInput = z.object({ replayId: z.uuid(), seq: z.number().int().min(2).max(40), note: z.string().trim().max(400) });
+
+/** Coach your own avatar at one of its turns: what you would really have done there, in the first person. */
+export async function saveCoachNoteAction(raw: z.infer<typeof CoachInput>): Promise<ActionResult> {
+  if (!FEATURES.biographer) return fail("This is not switched on.");
+  const parsed = CoachInput.safeParse(raw);
+  if (!parsed.success) return fail("Keep the note under 400 characters.");
+  const user = await requireAppUser();
+  const replay = await data.getReplayFor(parsed.data.replayId, user.id);
+  if (!replay) return fail("That replay could not be found.");
+  const stop = await safetyStop(user.id, parsed.data.note);
+  if (stop) return fail(stop);
+  if (!(await data.saveCoachNote({ replayId: replay.id, userId: user.id, take: replay.take, seq: parsed.data.seq, note: parsed.data.note }))) return fail("You can only coach your own avatar, on the current take.");
+  refresh();
+  return { ok: true, message: parsed.data.note ? "Saved. Run it again from here and your avatar will act on it." : "Removed." };
+}
+
+const RetakeInput = z.object({ replayId: z.uuid(), fromSeq: z.number().int().min(2).max(40) });
+
+/** Play it again from one of your own avatar's turns, with every coaching note so far. One replay is one draw, so this is also how to see another. */
+export async function retakeAction(raw: z.infer<typeof RetakeInput>): Promise<ActionResult> {
+  if (!FEATURES.biographer) return fail("This is not switched on.");
+  const parsed = RetakeInput.safeParse(raw);
+  if (!parsed.success) return fail("That turn could not be found.");
+  const user = await requireAppUser();
+  const take = await data.startRetake({ replayId: parsed.data.replayId, userId: user.id, fromSeq: parsed.data.fromSeq });
+  if (!take) return fail("You can only run it again from one of your own avatar's turns.");
+  redirect(`/replay/${parsed.data.replayId}`);
+}
+
 const TurnRatingInput = z.object({ replayId: z.uuid(), seq: z.number().int().min(1).max(40), rating: z.enum(["like_me", "not_like_me"]) });
 
-/** Turn by turn: did I do something like this? Only ever about the person's own avatar. */
+/**
+ * Turn by turn: did I do something like this? About the person's own avatar. While both have opened
+ * their words, a person can also say whether their partner's avatar did what they remember their
+ * partner doing. That is a flag for the partner to see, never a coaching of someone else's avatar.
+ */
 export async function rateReplayTurnAction(raw: z.infer<typeof TurnRatingInput>): Promise<ActionResult> {
   if (!FEATURES.biographer) return fail("This is not switched on.");
   const parsed = TurnRatingInput.safeParse(raw);
@@ -220,7 +269,8 @@ export async function rateReplayTurnAction(raw: z.infer<typeof TurnRatingInput>)
   const own = replay ? await data.getOwnAccount(replay.id, user.id) : null;
   if (!replay || !own) return fail("That replay could not be found.");
   const turns = await data.listReplayTurns(replay.id, user.id);
-  if (!turns.some((t) => t.seq === parsed.data.seq && t.speakerId === user.id && !t.remembered)) return fail("You can only rate what your own avatar did.");
+  const turn = turns.find((t) => t.seq === parsed.data.seq && !t.remembered);
+  if (!turn || (turn.speakerId !== user.id && !replay.open.both)) return fail("You can only rate what your own avatar did, unless you are watching it together.");
   await data.saveVerdict({ replayId: replay.id, userId: user.id, turnRatings: { ...own.turnRatings, [String(parsed.data.seq)]: parsed.data.rating } });
   refresh();
   return { ok: true };

@@ -3,7 +3,8 @@
  * the two people is decided here and nowhere else:
  *   - the frame, which the proposer writes for their partner to read;
  *   - the coded moves, the meant/landed numbers and each person's one-word verdict;
- *   - nothing else. A person's account, and what their avatar said, are returned to that person only.
+ *   - an avatar's words, only while BOTH people have opened theirs ("watch it together");
+ *   - nothing else. A person's account is theirs alone, and so is what their avatar said unless both have opened.
  * Every read of one person's material on behalf of the other's click is written to the audit log.
  */
 import { and, asc, desc, eq, inArray, or, sql } from "drizzle-orm";
@@ -16,14 +17,25 @@ import { listCorrections, listOwnAnswers, listOwnEntries, listVoiceSamples, type
 
 export type ReplayStatus = "proposed" | "declined" | "accepted" | "running" | "complete" | "withdrawn";
 export type ReplayVerdict = "yes" | "partly" | "no";
-export type Replay = { id: string; coupleId: string; proposerId: string; partnerId: string; frame: Frame; status: ReplayStatus; maxTurns: number; created_at: Date };
-export type ReplayTurnView = { seq: number; speakerId: string; move: Move; secondaryMove: Move | null; intent: number | null; impact: number | null; ends: boolean; remembered: boolean; words: { says: string | null; does: string | null } | null; drawsOn: string[] };
+export type Replay = { id: string; coupleId: string; proposerId: string; partnerId: string; frame: Frame; status: ReplayStatus; maxTurns: number; take: number; open: { proposer: boolean; partner: boolean; both: boolean }; created_at: Date };
+export type ReplayTurnView = { seq: number; speakerId: string; move: Move; secondaryMove: Move | null; intent: number | null; impact: number | null; ends: boolean; remembered: boolean; words: { says: string | null; does: string | null } | null; coachNote: string | null; drawsOn: string[] };
 
-const ctx = (userId: string, field: "frame" | "account" | "words") => ({ user_id: userId, instrument_key: "replay", field });
+const ctx = (userId: string, field: "frame" | "account" | "words" | "coach") => ({ user_id: userId, instrument_key: "replay", field });
 const isParticipant = (r: { proposer_id: string; partner_id: string }, userId: string) => r.proposer_id === userId || r.partner_id === userId;
 
 function toReplay(r: typeof schema.replays.$inferSelect): Replay {
-  return { id: r.id, coupleId: r.couple_id, proposerId: r.proposer_id, partnerId: r.partner_id, frame: JSON.parse(decryptText(r.frame_enc, ctx(r.proposer_id, "frame"))) as Frame, status: r.status, maxTurns: r.max_turns, created_at: r.created_at };
+  return {
+    id: r.id,
+    coupleId: r.couple_id,
+    proposerId: r.proposer_id,
+    partnerId: r.partner_id,
+    frame: JSON.parse(decryptText(r.frame_enc, ctx(r.proposer_id, "frame"))) as Frame,
+    status: r.status,
+    maxTurns: r.max_turns,
+    take: r.take,
+    open: { proposer: r.proposer_open, partner: r.partner_open, both: r.proposer_open && r.partner_open },
+    created_at: r.created_at,
+  };
 }
 
 // ---------------------------------------------------------------- proposing and consenting
@@ -88,6 +100,22 @@ export async function withdrawReplay(input: { replayId: string; userId: string }
   return true;
 }
 
+/**
+ * "Let my partner read what my avatar says in this replay." Each person sets only their own, and
+ * the words cross only while both are set, so closing yours closes it for both. Logged either way.
+ */
+export async function setReplayOpen(input: { replayId: string; userId: string; open: boolean }): Promise<boolean> {
+  const rows = await db().select().from(schema.replays).where(eq(schema.replays.id, input.replayId)).limit(1);
+  const r = rows[0];
+  if (!r || !isParticipant(r, input.userId) || r.status === "withdrawn" || r.status === "declined") return false;
+  await db()
+    .update(schema.replays)
+    .set({ ...(r.proposer_id === input.userId ? { proposer_open: input.open } : { partner_open: input.open }), updated_at: new Date() })
+    .where(eq(schema.replays.id, r.id));
+  await audit({ actorUserId: input.userId, action: input.open ? "consent.replay.open_words.on" : "consent.replay.open_words.off", targetUserId: r.proposer_id === input.userId ? r.partner_id : r.proposer_id, targetTable: "replays", targetId: r.id });
+  return true;
+}
+
 export async function setReplayStatus(replayId: string, status: "running" | "complete") {
   await db()
     .update(schema.replays)
@@ -134,18 +162,27 @@ export async function saveVerdict(input: { replayId: string; userId: string; ver
 
 // ---------------------------------------------------------------- turns
 /**
- * The replay as one participant may see it: every turn's move and numbers, and words only for
- * their own avatar's turns and for the opening line, which came from the shared frame.
+ * The replay as one participant may see it: every turn's move and numbers; words for their own
+ * avatar's turns and for the opening line, which came from the shared frame; and the other avatar's
+ * words only while both people have opened theirs. Which of a person's lines a turn drew on is
+ * never shown to the other person, open or not.
  */
-export async function listReplayTurns(replayId: string, viewerId: string): Promise<ReplayTurnView[]> {
+export async function listReplayTurns(replayId: string, viewerId: string, take?: number): Promise<ReplayTurnView[]> {
+  const head = (await db().select().from(schema.replays).where(eq(schema.replays.id, replayId)).limit(1))[0];
+  if (!head || !isParticipant(head, viewerId)) return [];
+  const bothOpen = head.proposer_open && head.partner_open;
   const rows = await db()
     .select({ turn: schema.replay_turns, words: schema.replay_turn_words })
     .from(schema.replay_turns)
     .leftJoin(schema.replay_turn_words, eq(schema.replay_turn_words.turn_id, schema.replay_turns.id))
-    .where(eq(schema.replay_turns.replay_id, replayId))
+    .where(and(eq(schema.replay_turns.replay_id, replayId), eq(schema.replay_turns.take, take ?? head.take)))
     .orderBy(asc(schema.replay_turns.seq));
+  if (bothOpen && rows.some(({ turn }) => turn.speaker_id !== viewerId && !turn.remembered)) {
+    await audit({ actorUserId: viewerId, action: "replay.words.read", targetUserId: head.proposer_id === viewerId ? head.partner_id : head.proposer_id, targetTable: "replay_turn_words", targetId: head.id, consentState: { proposer_open: head.proposer_open, partner_open: head.partner_open } });
+  }
   return rows.map(({ turn, words }) => {
-    const mine = turn.speaker_id === viewerId || turn.remembered;
+    const mine = turn.speaker_id === viewerId;
+    const readable = mine || turn.remembered || bothOpen;
     return {
       seq: turn.seq,
       speakerId: turn.speaker_id,
@@ -155,10 +192,74 @@ export async function listReplayTurns(replayId: string, viewerId: string): Promi
       impact: turn.impact,
       ends: turn.ends,
       remembered: turn.remembered,
-      words: mine && words ? (JSON.parse(decryptText(words.words_enc, ctx(words.user_id, "words"))) as { says: string | null; does: string | null }) : null,
-      drawsOn: mine && words && turn.speaker_id === viewerId ? ((words.draws_on as string[]) ?? []) : [],
+      words: readable && words ? (JSON.parse(decryptText(words.words_enc, ctx(words.user_id, "words"))) as { says: string | null; does: string | null }) : null,
+      coachNote: (mine || bothOpen) && words?.coach_note_enc ? decryptText(words.coach_note_enc, ctx(words.user_id, "coach")) : null,
+      drawsOn: mine && words ? ((words.draws_on as string[]) ?? []) : [],
     };
   });
+}
+
+/** A person coaches their own avatar, and nobody else's: "here I'd have gone quiet". An empty note removes it. */
+export async function saveCoachNote(input: { replayId: string; userId: string; take: number; seq: number; note: string }): Promise<boolean> {
+  const rows = await db()
+    .select({ id: schema.replay_turns.id })
+    .from(schema.replay_turns)
+    .where(and(eq(schema.replay_turns.replay_id, input.replayId), eq(schema.replay_turns.take, input.take), eq(schema.replay_turns.seq, input.seq), eq(schema.replay_turns.speaker_id, input.userId), eq(schema.replay_turns.remembered, false)))
+    .limit(1);
+  if (!rows[0]) return false;
+  const note = input.note.trim();
+  await db()
+    .update(schema.replay_turn_words)
+    .set({ coach_note_enc: note ? encryptText(note, ctx(input.userId, "coach")) : null })
+    .where(and(eq(schema.replay_turn_words.turn_id, rows[0].id), eq(schema.replay_turn_words.user_id, input.userId)));
+  return true;
+}
+
+/**
+ * Play it again from one of your own avatar's turns. The turns before it are copied into a new
+ * take and the replay runs on from there, with every coaching note so far. Both verdicts are
+ * cleared, because they were about a take that is no longer the current one.
+ */
+export async function startRetake(input: { replayId: string; userId: string; fromSeq: number }): Promise<number | null> {
+  const r = (await db().select().from(schema.replays).where(eq(schema.replays.id, input.replayId)).limit(1))[0];
+  if (!r || !isParticipant(r, input.userId) || (r.status !== "complete" && r.status !== "running")) return null;
+  const current = await db()
+    .select({ turn: schema.replay_turns, words: schema.replay_turn_words })
+    .from(schema.replay_turns)
+    .innerJoin(schema.replay_turn_words, eq(schema.replay_turn_words.turn_id, schema.replay_turns.id))
+    .where(and(eq(schema.replay_turns.replay_id, r.id), eq(schema.replay_turns.take, r.take)))
+    .orderBy(asc(schema.replay_turns.seq));
+  const pivot = current.find(({ turn }) => turn.seq === input.fromSeq);
+  if (!pivot || pivot.turn.remembered || pivot.turn.speaker_id !== input.userId) return null;
+  const next = r.take + 1;
+  for (const { turn, words } of current.filter(({ turn }) => turn.seq < input.fromSeq)) {
+    const copy = await db()
+      .insert(schema.replay_turns)
+      .values({ replay_id: r.id, take: next, seq: turn.seq, speaker_id: turn.speaker_id, move: turn.move, secondary_move: turn.secondary_move, intent: turn.intent, impact: turn.impact, ends: false, remembered: turn.remembered })
+      .returning({ id: schema.replay_turns.id });
+    await db().insert(schema.replay_turn_words).values({ turn_id: copy[0].id, user_id: words.user_id, words_enc: words.words_enc, draws_on: words.draws_on });
+  }
+  await db().update(schema.replays).set({ take: next, status: "running", completed_at: null, updated_at: new Date() }).where(eq(schema.replays.id, r.id));
+  await db().update(schema.replay_accounts).set({ verdict: null, turn_ratings: {}, updated_at: new Date() }).where(eq(schema.replay_accounts.replay_id, r.id));
+  await audit({ actorUserId: input.userId, action: "replay.retake", targetUserId: r.proposer_id === input.userId ? r.partner_id : r.proposer_id, targetTable: "replays", targetId: r.id, metadata: { take: next, from_seq: input.fromSeq } });
+  return next;
+}
+
+/**
+ * What the other person made of this person's avatar, turn by turn, while both have opened their
+ * words: "that's how I remember you" or not. A flag and nothing more; only its owner coaches an avatar.
+ */
+export async function partnerFlags(replayId: string, viewerId: string): Promise<Record<string, "like_me" | "not_like_me">> {
+  const r = (await db().select().from(schema.replays).where(eq(schema.replays.id, replayId)).limit(1))[0];
+  if (!r || !isParticipant(r, viewerId) || !(r.proposer_open && r.partner_open)) return {};
+  const other = r.proposer_id === viewerId ? r.partner_id : r.proposer_id;
+  const rows = await db()
+    .select({ ratings: schema.replay_accounts.turn_ratings })
+    .from(schema.replay_accounts)
+    .where(and(eq(schema.replay_accounts.replay_id, replayId), eq(schema.replay_accounts.user_id, other), sql`${schema.replay_accounts.deleted_at} is null`))
+    .limit(1);
+  await audit({ actorUserId: viewerId, action: "replay.flags.read", targetUserId: other, targetTable: "replay_accounts", targetId: r.id, consentState: { proposer_open: true, partner_open: true } });
+  return (rows[0]?.ratings as Record<string, "like_me" | "not_like_me">) ?? {};
 }
 
 /**
@@ -178,8 +279,10 @@ export async function replayRunnerMaterial(input: { replayId: string; actorUserI
     .from(schema.replay_turns)
     .innerJoin(schema.replay_turn_words, eq(schema.replay_turn_words.turn_id, schema.replay_turns.id))
     .where(eq(schema.replay_turns.replay_id, r.id))
-    .orderBy(asc(schema.replay_turns.seq));
-  const spoken = turns.map(({ turn, words }) => ({ seq: turn.seq, speakerId: turn.speaker_id, ends: turn.ends, ...(JSON.parse(decryptText(words.words_enc, ctx(words.user_id, "words"))) as { says: string | null; does: string | null }) }));
+    .orderBy(asc(schema.replay_turns.take), asc(schema.replay_turns.seq));
+  // What this person has told their own avatar, across every take, newest first. A note is about how they act in this kind of moment, so it holds for the whole replay.
+  const coaching = [...new Set(turns.filter(({ turn, words }) => turn.speaker_id === input.speakerId && words.coach_note_enc).map(({ words }) => decryptText(words.coach_note_enc!, ctx(words.user_id, "coach"))).reverse())].slice(0, 6);
+  const spoken = turns.filter(({ turn }) => turn.take === r.take).map(({ turn, words }) => ({ seq: turn.seq, speakerId: turn.speaker_id, ends: turn.ends, ...(JSON.parse(decryptText(words.words_enc, ctx(words.user_id, "words"))) as { says: string | null; does: string | null }) }));
 
   const [entries, answers, pasted, corrections, account, users] = await Promise.all([
     listOwnEntries(input.speakerId, { status: "ratified" }),
@@ -194,7 +297,7 @@ export async function replayRunnerMaterial(input: { replayId: string; actorUserI
     replay: toReplay(r),
     spoken,
     // Private lines never leave this module for a replay. The input builder filters again.
-    speaker: { id: input.speakerId, name: nameOf(input.speakerId), entries: (entries as DocumentEntry[]).filter((e) => e.tier !== "private"), stateBefore: account?.account.stateBefore ?? "", voice: { samples: [...answers.map((text) => ({ register: "considered" as const, text })), ...pasted.map((s) => ({ register: s.register, text: s.text }))], corrections } },
+    speaker: { id: input.speakerId, name: nameOf(input.speakerId), coaching, entries: (entries as DocumentEntry[]).filter((e) => e.tier !== "private"), stateBefore: account?.account.stateBefore ?? "", voice: { samples: [...answers.map((text) => ({ register: "considered" as const, text })), ...pasted.map((s) => ({ register: s.register, text: s.text }))], corrections } },
     partnerName: nameOf(r.proposer_id === input.speakerId ? r.partner_id : r.proposer_id),
   };
 }
@@ -219,10 +322,10 @@ export async function replayReadiness(input: { replayId: string; actorUserId: st
 }
 
 /** Add a turn at an exact position. Two browsers may ask for the same turn at once; the second is dropped. */
-export async function appendReplayTurn(input: { replayId: string; seq: number; speakerId: string; words: { says: string | null; does: string | null }; move: Move; secondaryMove: Move | null; intent: number | null; impact: number | null; ends: boolean; remembered?: boolean; drawsOn?: string[] }): Promise<boolean> {
+export async function appendReplayTurn(input: { replayId: string; take?: number; seq: number; speakerId: string; words: { says: string | null; does: string | null }; move: Move; secondaryMove: Move | null; intent: number | null; impact: number | null; ends: boolean; remembered?: boolean; drawsOn?: string[] }): Promise<boolean> {
   const rows = await db()
     .insert(schema.replay_turns)
-    .values({ replay_id: input.replayId, seq: input.seq, speaker_id: input.speakerId, move: input.move, secondary_move: input.secondaryMove, intent: input.intent, impact: input.impact, ends: input.ends, remembered: input.remembered ?? false })
+    .values({ replay_id: input.replayId, take: input.take ?? 1, seq: input.seq, speaker_id: input.speakerId, move: input.move, secondary_move: input.secondaryMove, intent: input.intent, impact: input.impact, ends: input.ends, remembered: input.remembered ?? false })
     .onConflictDoNothing()
     .returning();
   if (!rows[0]) return false;

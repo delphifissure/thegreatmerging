@@ -441,7 +441,7 @@ async function runGuardrail() {
 
 // ---------------------------------------------------------------- replay of a remembered argument
 type ReplayPerson = { key: "proposer" | "partner"; name: string; state_before: string; remembered: { mine: Move[]; theirs: Move[]; ending: string }; must_not_say: string[]; voice_samples?: VoiceSample[]; entries: Array<{ document: "history" | "constitution"; section: string; text: string; tier: "private" | "avatar_only" | "shareable"; mark: "settled" | "open" }> };
-type ReplayCases = { coder: Array<{ id: string; expect: Move[]; input: unknown }>; replays: Array<{ id: string; max_turns: number; frame: Frame; people: [ReplayPerson, ReplayPerson] }> };
+type ReplayCases = { coder: Array<{ id: string; expect: Move[]; input: unknown }>; replays: Array<{ id: string; max_turns: number; frame: Frame; people: [ReplayPerson, ReplayPerson]; coaching?: { person: "proposer" | "partner"; from_seq: number; note: string; expect_moves: Move[]; max_words: number; turns: number } }> };
 const ABOUT_BEING_SIMULATED = /\b(avatar|simulat|role-?play|as an ai|language model|test run|rehears)/i;
 
 async function runReplay() {
@@ -504,6 +504,33 @@ async function runReplay() {
       console.log(`  ${p.name}: own avatar ${own.matched.length} of ${own.matched.length + own.onlyRemembered.length + own.onlyAvatar.length} kinds of move in common (missing ${own.onlyRemembered.join(", ") || "none"}; extra ${own.onlyAvatar.join(", ") || "none"}); partner's avatar ${partner.matched.length} of ${partner.matched.length + partner.onlyRemembered.length + partner.onlyAvatar.length}`);
     }
     console.log(`  remembered ending ${r.people[0].remembered.ending}; the replay ended ${endingOf(coded)}`);
+
+    // A coached retake: keep the turns before one of this person's, hand their avatar the note, and play on.
+    if (r.coaching && spoken[r.coaching.from_seq - 1]?.speakerId === r.coaching.person) {
+      const k = r.coaching;
+      const retake = spoken.slice(0, k.from_seq - 1);
+      try {
+        for (let i = 0; i < k.turns && !replayIsOver(retake, r.max_turns); i++) {
+          const key = nextSpeaker(retake, order) as "proposer" | "partner";
+          const me = people[key];
+          const other = people[key === "proposer" ? "partner" : "proposer"];
+          const built = buildRehearsalInput({ me: { id: key, name: me.name }, partnerName: other.name, entries: entriesOf(me), voice: buildVoiceInput({ samples: me.voice_samples ?? [], corrections: [], registers: registersFor("rehearsal") }), frame: r.frame, stateBefore: me.state_before, coaching: key === k.person ? [k.note] : [], turns: retake, maxTurns: r.max_turns });
+          const out = await withRetry(`replay ${r.id} retake turn ${retake.length + 1}`, () => callRole("rehearsal", built.input, RehearsalTurnSchema, { coupleId: null, jobStep: `eval:replay:${r.id}:retake:${retake.length + 1}` }));
+          const turn = { speakerId: key, says: cleanSpeech(out.says), does: out.does?.trim() || null, ends: out.ends };
+          retake.push(turn);
+          if (i > 0) continue;
+          const code = await callRole("move_coder", buildMoveCoderInput(retake, first), MoveCodeSchema, { coupleId: null, jobStep: `eval:replay:${r.id}:retake:code` });
+          const words = (turn.says ?? "").split(/\s+/).filter(Boolean).length;
+          const problems: string[] = [];
+          if (![code.move, code.secondary].some((m) => m && k.expect_moves.includes(m))) problems.push(`coded ${code.move}, expected ${k.expect_moves.join(" or ")}`);
+          if (words > k.max_words) problems.push(`${words} words; the note says they barely speak here`);
+          if (/moments? like this|i don'?t explain anything/i.test(turn.says ?? "")) problems.push("recites the coaching instead of acting on it");
+          record({ suite: "replay", id: `${r.id}/coached retake`, ok: problems.length === 0, detail: problems.join("; ") || `${code.move}: ${turn.says ?? ""} ${turn.does ? `(${turn.does})` : ""}`.slice(0, 140) });
+        }
+      } catch (err) {
+        record({ suite: "replay", id: `${r.id}/coached retake`, ok: false, detail: err instanceof LlmValidationError ? `rejected: ${err.message.slice(0, 220)}` : String(err).slice(0, 220) });
+      }
+    }
   }
 }
 

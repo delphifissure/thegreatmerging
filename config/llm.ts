@@ -218,8 +218,8 @@ export const LLM_CONFIG: Record<Role, RoleConfig> = {
     model: "claude-sonnet-5",
     temperature: 0.7,
     effort: "medium",
-    prompt_file: "rehearsal.v1.md",
-    prompt_version: "rehearsal.v1",
+    prompt_file: "rehearsal.v2.md",
+    prompt_version: "rehearsal.v2",
     tool_name: "emit_rehearsal_turn",
     max_tokens: 1000,
     batchable: false,
@@ -239,4 +239,4 @@ export const LLM_CONFIG: Record<Role, RoleConfig> = {
 };
 
 /** Bump on any change to a prompt, model, temperature, or output schema. Record it in prompts/CHANGELOG.md. */
-export const LLM_CONFIG_VERSION = "2026.09.18-5";
+export const LLM_CONFIG_VERSION = "2026.09.18-6";

@@ -24,8 +24,12 @@ import {
   replayProgress,
   replayReadiness,
   replayRunnerMaterial,
+  partnerFlags,
   respondToReplay,
   saveAccount,
+  saveCoachNote,
+  setReplayOpen,
+  startRetake,
   saveVerdict,
   setEntryTier,
   setReplayStatus,
@@ -148,6 +152,84 @@ suite(`replay data ${DB_TESTS_ENABLED ? "" : SKIP_MESSAGE}`, () => {
     expect(await auditCount("consent.tier.allow_avatar_all", B)).toBe(1);
   });
 
+  it("watching together: words cross only while BOTH have opened theirs, closing one closes it for both, and it is logged", async () => {
+    const replay = (await listReplaysFor(A))[0];
+    expect(await setReplayOpen({ replayId: replay.id, userId: C, open: true })).toBe(false);
+    expect(await setReplayOpen({ replayId: replay.id, userId: A, open: true })).toBe(true);
+    expect((await getReplayFor(replay.id, B))?.open).toEqual({ proposer: true, partner: false, both: false });
+    // One-sided: nothing crosses yet, in either direction.
+    expect((await listReplayTurns(replay.id, B))[1].words).toBeNull();
+    expect((await listReplayTurns(replay.id, A))[2].words).toBeNull();
+
+    expect(await setReplayOpen({ replayId: replay.id, userId: B, open: true })).toBe(true);
+    const asAna = await listReplayTurns(replay.id, B);
+    expect(asAna[1].words?.says).toBe("It's the bike parts. I was going to tell you.");
+    // Which of Ben's lines the turn drew on is still Ben's alone.
+    expect(asAna[1].drawsOn).toEqual([]);
+    expect((await listReplayTurns(replay.id, A))[2].words?.says).toBe("You weren't, though. It's been weeks.");
+    expect(await auditCount("consent.replay.open_words.on", A)).toBe(1);
+    expect(await auditCount("replay.words.read", A)).toBeGreaterThanOrEqual(1);
+    // Row-level security agrees: while open, each participant can read both avatars' rows; a stranger still cannot.
+    const words = (tx: Parameters<Parameters<typeof runAs>[2]>[0]) => tx`select count(*)::int as n from replay_turn_words`.then((r) => r[0].n);
+    expect(await runAs(sql, A, words)).toBe(3);
+    expect(await runAs(sql, C, words)).toBe(0);
+
+    expect(await setReplayOpen({ replayId: replay.id, userId: A, open: false })).toBe(true);
+    expect((await listReplayTurns(replay.id, B))[1].words).toBeNull();
+    expect((await listReplayTurns(replay.id, A))[2].words).toBeNull();
+    expect(await runAs(sql, A, words)).toBe(1);
+    expect(await auditCount("consent.replay.open_words.off", B)).toBe(1);
+  });
+
+  it("a person coaches their own avatar and nobody else's; the note reaches their partner only while both are open, and always reaches their own avatar", async () => {
+    const replay = (await listReplaysFor(A))[0];
+    expect(await saveCoachNote({ replayId: replay.id, userId: A, take: 1, seq: 3, note: "coaching Ana's avatar" })).toBe(false);
+    expect(await saveCoachNote({ replayId: replay.id, userId: B, take: 1, seq: 1, note: "coaching the remembered opening line" })).toBe(false);
+    expect(await saveCoachNote({ replayId: replay.id, userId: A, take: 1, seq: 2, note: "  Here I don't explain. I say 'not now' and go and eat.  " })).toBe(true);
+    expect((await listReplayTurns(replay.id, A))[1].coachNote).toBe("Here I don't explain. I say 'not now' and go and eat.");
+    expect((await listReplayTurns(replay.id, B))[1].coachNote).toBeNull();
+    const [raw] = await sql<Array<{ coach_note_enc: Buffer }>>`select w.coach_note_enc from replay_turn_words w join replay_turns t on t.id = w.turn_id where t.replay_id = ${replay.id} and t.seq = 2`;
+    expect(raw.coach_note_enc.toString("utf8")).not.toContain("explain");
+
+    const material = await replayRunnerMaterial({ replayId: replay.id, actorUserId: B, speakerId: A });
+    expect(material?.speaker.coaching).toEqual(["Here I don't explain. I say 'not now' and go and eat."]);
+    expect((await replayRunnerMaterial({ replayId: replay.id, actorUserId: A, speakerId: B }))?.speaker.coaching).toEqual([]);
+  });
+
+  it("a retake keeps the turns before the chosen one, runs on as a new take, clears both verdicts, and leaves the old take readable", async () => {
+    const replay = (await listReplaysFor(A))[0];
+    await setReplayStatus(replay.id, "running");
+    await saveVerdict({ replayId: replay.id, userId: B, verdict: "no" });
+    expect(await startRetake({ replayId: replay.id, userId: B, fromSeq: 2 })).toBeNull();
+    expect(await startRetake({ replayId: replay.id, userId: C, fromSeq: 2 })).toBeNull();
+    expect(await startRetake({ replayId: replay.id, userId: A, fromSeq: 1 })).toBeNull();
+    expect(await startRetake({ replayId: replay.id, userId: A, fromSeq: 2 })).toBe(2);
+
+    const now = await getReplayFor(replay.id, A);
+    expect(now).toMatchObject({ take: 2, status: "running" });
+    expect((await listReplayTurns(replay.id, A)).map((t) => [t.seq, t.remembered])).toEqual([[1, true]]);
+    expect((await listReplayTurns(replay.id, A, 1)).map((t) => t.seq)).toEqual([1, 2, 3]);
+    expect((await replayProgress(replay.id)).every((p) => p.verdict === null)).toBe(true);
+    // The runner works on the current take only, and still carries the coaching given on the old one.
+    const material = await replayRunnerMaterial({ replayId: replay.id, actorUserId: A, speakerId: A });
+    expect(material?.spoken.map((t) => t.seq)).toEqual([1]);
+    expect(material?.speaker.coaching).toHaveLength(1);
+    expect(await appendReplayTurn({ replayId: replay.id, take: 2, seq: 2, speakerId: A, words: { says: "Not now.", does: "goes to the fridge" }, move: "withdraws", secondaryMove: null, intent: -1, impact: -1, ends: false })).toBe(true);
+    expect(await appendReplayTurn({ replayId: replay.id, take: 2, seq: 3, speakerId: B, words: { says: "When, then?", does: null }, move: "asks", secondaryMove: null, intent: 0, impact: -1, ends: false })).toBe(true);
+    expect(await auditCount("replay.retake", B)).toBe(1);
+  });
+
+  it("while both are open, a person can say their partner's avatar is not how they remember them: a flag, which only reaches the partner then", async () => {
+    const replay = (await listReplaysFor(A))[0];
+    await saveVerdict({ replayId: replay.id, userId: B, turnRatings: { "2": "not_like_me" } });
+    expect(await partnerFlags(replay.id, A)).toEqual({});
+    await setReplayOpen({ replayId: replay.id, userId: A, open: true });
+    expect(await partnerFlags(replay.id, A)).toEqual({ "2": "not_like_me" });
+    expect(await partnerFlags(replay.id, C)).toEqual({});
+    await setReplayOpen({ replayId: replay.id, userId: A, open: false });
+    await saveVerdict({ replayId: replay.id, userId: B, turnRatings: {} });
+  });
+
   it("a verdict is one word to the partner, and turn ratings stay with their owner", async () => {
     const replay = (await listReplaysFor(A))[0];
     await setReplayStatus(replay.id, "running");
@@ -161,8 +243,9 @@ suite(`replay data ${DB_TESTS_ENABLED ? "" : SKIP_MESSAGE}`, () => {
   it("row-level security: a stranger sees nothing, and a participant cannot read the other's words or account", async () => {
     const counts = (tx: Parameters<Parameters<typeof runAs>[2]>[0]) =>
       Promise.all([tx`select count(*)::int as n from replays`, tx`select count(*)::int as n from replay_turns`, tx`select count(*)::int as n from replay_turn_words`, tx`select count(*)::int as n from replay_accounts`]).then((r) => r.map((x) => x[0].n));
-    expect(await runAs(sql, A, counts)).toEqual([1, 3, 1, 1]);
-    expect(await runAs(sql, B, counts)).toEqual([1, 3, 2, 1]);
+    // Two takes by now: three turns in the first and three in the second. Words stay with their owner while it is closed.
+    expect(await runAs(sql, A, counts)).toEqual([1, 6, 2, 1]);
+    expect(await runAs(sql, B, counts)).toEqual([1, 6, 4, 1]);
     expect(await runAs(sql, C, counts)).toEqual([0, 0, 0, 0]);
     expect(await runAs(sql, null, counts)).toEqual([0, 0, 0, 0]);
     // Nobody can write an avatar's words or a move from a browser session: those come from the runner.

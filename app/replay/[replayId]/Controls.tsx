@@ -5,7 +5,7 @@ import { Button } from "@/app/_components/Button";
 import { Notice } from "@/app/_components/Field";
 import type { ActionResult } from "@/app/_lib/actions";
 import { ENDING_WORDS, ENDINGS, MOVE_I, MOVE_THEY, REMEMBERED_MOVES, type Ending } from "@/lib/replay/moves";
-import { advanceReplayAction, allowAllLinesAction, rateReplayTurnAction, respondAction, saveAccountAction, saveVerdictAction, withdrawAction } from "../actions";
+import { advanceReplayAction, allowAllLinesAction, rateReplayTurnAction, respondAction, retakeAction, saveAccountAction, saveCoachNoteAction, saveVerdictAction, setOpenAction, withdrawAction } from "../actions";
 
 const pill = (on: boolean) => `rounded-full border px-3 py-1.5 text-xs font-medium transition-colors ${on ? "border-accent bg-accent text-accent-ink" : "border-rule bg-paper hover:border-accent/60"}`;
 
@@ -162,7 +162,7 @@ export function AccountForm({ replayId, partnerName, initial }: { replayId: stri
 }
 
 /** Runs the replay a turn at a time from the browser, so the page fills in as it goes and either person can pick it up. */
-export function Runner({ replayId, turns, started }: { replayId: string; turns: number; started: boolean }) {
+export function Runner({ replayId, turns, started, retake = false }: { replayId: string; turns: number; started: boolean; retake?: boolean }) {
   const [error, setError] = useState<string | null>(null);
   const [count, setCount] = useState(turns);
   const [pending, start] = useTransition();
@@ -180,7 +180,7 @@ export function Runner({ replayId, turns, started }: { replayId: string; turns: 
     });
   return (
     <div className="rounded-card border border-dashed border-rule bg-surface p-5">
-      <p className="reading text-[17px]">{started ? "The replay stopped part way. It carries on from where it got to." : "Both accounts are in. Your avatars can replay it now, a turn at a time."}</p>
+      <p className="reading text-[17px]">{retake ? "A new take is ready. It keeps everything before the turn you chose and plays on from there, with your coaching." : started ? "The replay stopped part way. It carries on from where it got to." : "Both accounts are in. Your avatars can replay it now, a turn at a time."}</p>
       {error ? (
         <div className="mt-3">
           <Notice tone="warn">{error}</Notice>
@@ -188,7 +188,7 @@ export function Runner({ replayId, turns, started }: { replayId: string; turns: 
       ) : null}
       <div className="mt-3 flex flex-wrap items-center gap-3">
         <Button disabled={pending} aria-busy={pending} onClick={go}>
-          {pending ? `Turn ${count + 1}…` : started ? "Carry on" : "Run the replay"}
+          {pending ? `Turn ${count + 1}…` : retake ? "Run this take" : started ? "Carry on" : "Run the replay"}
         </Button>
         {pending ? <span className="text-sm text-muted">Each turn takes a few seconds. You can watch it fill in.</span> : null}
       </div>
@@ -196,7 +196,61 @@ export function Runner({ replayId, turns, started }: { replayId: string; turns: 
   );
 }
 
-export function TurnVerdict({ replayId, seq, rating }: { replayId: string; seq: number; rating: "like_me" | "not_like_me" | null }) {
+/** Each person opens only their own avatar's words, and they cross only while both are open. */
+export function WatchTogether({ replayId, partnerName, mine, theirs }: { replayId: string; partnerName: string; mine: boolean; theirs: boolean }) {
+  const { note, pending, run } = useAction();
+  return (
+    <div className={`rounded-card border p-5 ${mine && theirs ? "border-accent bg-tint" : "border-rule bg-surface"}`}>
+      <p className="eyebrow mb-1">Watch it together</p>
+      <p className="reading text-[17px]">
+        {mine && theirs
+          ? `Open. You can both read what both avatars say, and coach your own.`
+          : mine
+            ? `You have opened your avatar's words. Nothing crosses until ${partnerName} opens theirs too.`
+            : theirs
+              ? `${partnerName} has opened their avatar's words. Nothing crosses until you open yours too.`
+              : `Closed. Each of you reads your own avatar's words, and only the moves of the other's.`}
+      </p>
+      <p className="mt-1.5 text-sm text-muted">
+        Opening yours lets {partnerName} read what your avatar says, labelled as an avatar that can be wrong. It never sees your private lines, and it is told never to say the ones you marked &ldquo;act on, never say&rdquo;, but it can slip. Your account, and which of your lines a turn drew on, stay yours either way. Either of you can close it again, and that closes it for both.
+      </p>
+      <div className="mt-3">
+        <Button size="sm" variant={mine ? "secondary" : "primary"} disabled={pending} onClick={() => run(() => setOpenAction({ replayId, open: !mine }))}>
+          {mine ? "Close my avatar's words" : `Let ${partnerName} read what my avatar says`}
+        </Button>
+      </div>
+      <Note note={note} />
+    </div>
+  );
+}
+
+/** Coach your own avatar, then play it again from that turn. */
+export function Coach({ replayId, seq, note: saved, canRetake }: { replayId: string; seq: number; note: string | null; canRetake: boolean }) {
+  const [text, setText] = useState(saved ?? "");
+  const { note, pending, run } = useAction();
+  return (
+    <details className="mt-3 text-sm" open={!!saved}>
+      <summary className="cursor-pointer font-medium text-accent">{saved ? "Your coaching" : "Coach this turn"}</summary>
+      <label htmlFor={`coach-${seq}`} className="mt-2 block text-muted">
+        What would you really have done or said here? Write it as yourself: &ldquo;Here I don&rsquo;t explain. I say &lsquo;not now&rsquo; and go and eat.&rdquo; Your avatar will act on it in the next take.
+      </label>
+      <textarea id={`coach-${seq}`} rows={2} maxLength={400} value={text} onChange={(e) => setText(e.target.value)} className="mt-2 w-full" disabled={pending} />
+      <div className="mt-2 flex flex-wrap items-center gap-3">
+        <Button size="sm" variant="secondary" disabled={pending || text.trim() === (saved ?? "")} onClick={() => run(() => saveCoachNoteAction({ replayId, seq, note: text.trim() }))}>
+          Save
+        </Button>
+        {canRetake ? (
+          <Button size="sm" disabled={pending || text.trim() !== (saved ?? "")} onClick={() => run(() => retakeAction({ replayId, fromSeq: seq }))}>
+            Run it again from here
+          </Button>
+        ) : null}
+      </div>
+      <Note note={note} />
+    </details>
+  );
+}
+
+export function TurnVerdict({ replayId, seq, rating, theirs = false }: { replayId: string; seq: number; rating: "like_me" | "not_like_me" | null; theirs?: boolean }) {
   const [value, setValue] = useState(rating);
   const [pending, start] = useTransition();
   const rate = (r: "like_me" | "not_like_me") =>
@@ -206,12 +260,12 @@ export function TurnVerdict({ replayId, seq, rating }: { replayId: string; seq: 
       if (!res.ok) setValue(rating);
     });
   return (
-    <div className="mt-2 flex flex-wrap gap-2" role="group" aria-label="Did you do something like this?">
+    <div className="mt-2 flex flex-wrap gap-2" role="group" aria-label={theirs ? "Is this how you remember it?" : "Did you do something like this?"}>
       <button type="button" disabled={pending} aria-pressed={value === "like_me"} onClick={() => rate("like_me")} className={pill(value === "like_me")}>
-        I did something like this
+        {theirs ? "That's how I remember it" : "I did something like this"}
       </button>
       <button type="button" disabled={pending} aria-pressed={value === "not_like_me"} onClick={() => rate("not_like_me")} className={pill(value === "not_like_me")}>
-        I didn&rsquo;t do this
+        {theirs ? "Not how I remember it" : "I didn\u2019t do this"}
       </button>
     </div>
   );

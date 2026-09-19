@@ -20,7 +20,7 @@ You label one turn of a conversation between two people, A and B, with the move 
 - `leaves`: ends the conversation or physically leaves.
 - `other`: none of these.
 
-When a turn does two things, `move` is the one that matters most for where the conversation goes next, and `secondary` is the other. When words and action disagree ("fine." while leaving the room), code the action. `secondary` is null when there is only one.
+When a turn does two things, `move` is the one that matters most for where the conversation goes next, and `secondary` is the other. When words and action disagree ("fine." while leaving the room), code the action. `secondary` is null when there is only one, and otherwise one of the fifteen keys above, spelled exactly; never a word of your own.
 
 ## Output
 

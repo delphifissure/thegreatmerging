@@ -1,5 +1,5 @@
 {
-  "description": "Replay of a remembered argument. `coder` cases are single turns with the moves that would be acceptable. `replays` run the real loop: two rehearsal avatars built from each person's usable lines take turns from the agreed opening line, and every turn is coded. Checked on every generated turn: schema and guardrail pass, short, nothing about being an avatar or a simulation, and none of that person's `must_not_say` patterns (their settled requirement given up, or a line marked act-on-but-never-say spoken aloud). Checked on the whole: it does not make peace at once. Recognition against each person's remembered moves is printed, not gated: that verdict belongs to the two people.",
+  "description": "Replay of a remembered argument. `coder` cases are single turns with the moves that would be acceptable. `replays` run the real loop: two rehearsal avatars built from each person's usable lines take turns from the agreed opening line, and every turn is coded. Checked on every generated turn: schema and guardrail pass, short, nothing about being an avatar or a simulation, and none of that person's `must_not_say` patterns (their settled requirement given up, or a line marked act-on-but-never-say spoken aloud). Checked on the whole: it does not make peace at once. Recognition against each person's remembered moves is printed, not gated: that verdict belongs to the two people. A replay may carry `coaching`: after the first take, that person's note is given to their avatar and the replay is run again from `from_seq` for a few turns. The coached avatar's first turn has to change the way the note says, without reciting it.",
   "coder": [
     {
       "id": "real_question",
@@ -363,7 +363,21 @@
             }
           ]
         }
-      ]
+      ],
+      "coaching": {
+        "person": "proposer",
+        "from_seq": 2,
+        "note": "Here I don't explain anything. I say 'not now', go and get food, and don't look at her.",
+        "expect_moves": [
+          "withdraws",
+          "pauses",
+          "leaves",
+          "deflects",
+          "disagrees"
+        ],
+        "max_words": 14,
+        "turns": 3
+      }
     }
   ]
 }

@@ -871,6 +871,11 @@ export const replays = pgTable(
     frame_enc: bytea("frame_enc").notNull(),
     status: replayStatusEnum("status").notNull().default("proposed"),
     max_turns: integer("max_turns").notNull().default(12),
+    /** "Let my partner read what my avatar says." Words are shown across only while BOTH are true; either person can close theirs again. */
+    proposer_open: boolean("proposer_open").notNull().default(false),
+    partner_open: boolean("partner_open").notNull().default(false),
+    /** The current take. A retake copies the turns before a chosen point and plays on from there. */
+    take: integer("take").notNull().default(1),
     responded_at: timestamp("responded_at", { withTimezone: true }),
     completed_at: timestamp("completed_at", { withTimezone: true }),
     ...timestamps,
@@ -907,6 +912,7 @@ export const replay_turns = pgTable(
     replay_id: uuid("replay_id")
       .notNull()
       .references(() => replays.id),
+    take: integer("take").notNull().default(1),
     seq: integer("seq").notNull(),
     speaker_id: uuid("speaker_id")
       .notNull()
@@ -922,7 +928,7 @@ export const replay_turns = pgTable(
     remembered: boolean("remembered").notNull().default(false),
     created_at: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
   },
-  (t) => [uniqueIndex("replay_turns_replay_seq").on(t.replay_id, t.seq)],
+  (t) => [uniqueIndex("replay_turns_replay_take_seq").on(t.replay_id, t.take, t.seq)],
 );
 
 /** What an avatar said and did, encrypted, readable by its own person only. */
@@ -936,6 +942,8 @@ export const replay_turn_words = pgTable(
       .notNull()
       .references(() => users.id),
     words_enc: bytea("words_enc").notNull(),
+    /** Encrypted: the person's coaching of their own avatar at this turn, in the first person. "Here I'd have gone quiet." */
+    coach_note_enc: bytea("coach_note_enc"),
     /** Ids of the owner's lines the turn drew on. */
     draws_on: jsonb("draws_on").notNull().default([]),
   },

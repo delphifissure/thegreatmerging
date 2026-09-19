@@ -7,27 +7,33 @@ import { endingOf, recognition, resolvedTooEasily } from "@/lib/replay/moves";
 import { requireAppUser } from "@/app/_lib/session";
 import { Card } from "@/app/_components/Card";
 import { LinkButton } from "@/app/_components/Button";
-import { AccountForm, AllowAllLines, Respond, Runner, Withdraw } from "./Controls";
+import { AccountForm, AllowAllLines, Respond, Runner, WatchTogether, Withdraw } from "./Controls";
 import { ReplayView, type ViewTurn } from "./ReplayView";
 
 export const metadata = { title: "Replay an argument" };
 
-export default async function ReplayPage({ params }: { params: Promise<{ replayId: string }> }) {
+export default async function ReplayPage({ params, searchParams }: { params: Promise<{ replayId: string }>; searchParams: Promise<{ take?: string }> }) {
   if (!FEATURES.biographer) notFound();
   const { replayId } = await params;
   if (!/^[0-9a-f-]{36}$/i.test(replayId)) notFound();
   const user = await requireAppUser();
   const replay = await data.getReplayFor(replayId, user.id);
   if (!replay) notFound();
+  const asked = Number((await searchParams).take);
+  const take = Number.isInteger(asked) && asked >= 1 && asked <= replay.take ? asked : replay.take;
+  const current = take === replay.take;
 
   const partnerId = replay.proposerId === user.id ? replay.partnerId : replay.proposerId;
-  const [people, own, progress, turns, entries] = await Promise.all([
+  const [people, own, progress, turns, entries, flags] = await Promise.all([
     data.listCoupleUsers(replay.coupleId),
     data.getOwnAccount(replay.id, user.id),
     data.replayProgress(replay.id),
-    data.listReplayTurns(replay.id, user.id),
+    data.listReplayTurns(replay.id, user.id, take),
     data.listOwnEntries(user.id, { status: "ratified" }),
+    replay.open.both && current ? data.partnerFlags(replay.id, user.id) : Promise.resolve({} as Record<string, "like_me" | "not_like_me">),
   ]);
+  const iOpened = replay.proposerId === user.id ? replay.open.proposer : replay.open.partner;
+  const theyOpened = replay.proposerId === user.id ? replay.open.partner : replay.open.proposer;
   const partnerName = people.find((p) => p.id === partnerId)?.display_name ?? "your partner";
   const iProposed = replay.proposerId === user.id;
   const opener = (replay.frame.firstSpeaker === "proposer") === iProposed ? "you" : partnerName;
@@ -52,9 +58,11 @@ export default async function ReplayPage({ params }: { params: Promise<{ replayI
     landed: turns[i + 1]?.impact ?? null,
     ends: t.ends,
     drawsOn: t.drawsOn.flatMap((id) => (textOf.has(id) ? [textOf.get(id)!] : [])),
-    rating: own?.turnRatings[String(t.seq)] ?? null,
+    rating: current ? (own?.turnRatings[String(t.seq)] ?? null) : null,
+    partnerFlag: t.speakerId === user.id ? (flags[String(t.seq)] ?? null) : null,
+    coachNote: t.coachNote,
   }));
-  const complete = replay.status === "complete";
+  const complete = replay.status === "complete" || !current;
 
   return (
     <div className="space-y-5">
@@ -139,8 +147,20 @@ export default async function ReplayPage({ params }: { params: Promise<{ replayI
         </>
       ) : null}
 
-      {replay.status === "running" || complete ? (
+      {live ? <WatchTogether replayId={replay.id} partnerName={partnerName} mine={iOpened} theirs={theyOpened} /> : null}
+
+      {replay.status === "running" || replay.status === "complete" ? (
         <>
+          {replay.take > 1 ? (
+            <nav aria-label="Takes" className="flex flex-wrap items-center gap-2 text-sm">
+              <span className="text-muted">Takes:</span>
+              {Array.from({ length: replay.take }, (_, i) => i + 1).map((n) => (
+                <Link key={n} href={n === replay.take ? `/replay/${replay.id}` : `/replay/${replay.id}?take=${n}`} aria-current={n === take ? "page" : undefined} className={`rounded-full border px-3 py-1 ${n === take ? "border-accent bg-tint text-ink" : "border-rule text-muted hover:text-ink"}`}>
+                  {n === replay.take ? `${n} · current` : n}
+                </Link>
+              ))}
+            </nav>
+          ) : null}
           <ReplayView
             replayId={replay.id}
             partnerName={partnerName}
@@ -153,8 +173,10 @@ export default async function ReplayPage({ params }: { params: Promise<{ replayI
             tooEasy={complete && resolvedTooEasily(coded)}
             myVerdict={own?.verdict ?? null}
             partnerVerdict={own?.verdict ? (progress.find((p) => p.userId === partnerId)?.verdict ?? null) : null}
+            open={replay.open.both}
+            current={current}
           />
-          {replay.status === "running" ? <Runner replayId={replay.id} turns={turns.length} started /> : null}
+          {replay.status === "running" && current ? <Runner key={replay.take} replayId={replay.id} turns={turns.length} started retake={replay.take > 1} /> : null}
         </>
       ) : null}
 

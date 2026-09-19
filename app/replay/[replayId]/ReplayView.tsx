@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Card, Chip } from "@/app/_components/Card";
 import { Notice } from "@/app/_components/Field";
 import { ENDING_WORDS, MOVE_DID, type Ending, type Move, type Recognition } from "@/lib/replay/moves";
-import { OverallVerdict, TurnVerdict } from "./Controls";
+import { Coach, OverallVerdict, TurnVerdict } from "./Controls";
 
 const MEANT: Record<string, string> = { "-2": "to push back hard", "-1": "coolly", "0": "neutrally", "1": "warmly", "2": "to reach toward them" };
 const LANDED: Record<string, string> = { "-2": "it stung", "-1": "it grated", "0": "neither way", "1": "it eased things", "2": "it warmed them" };
@@ -22,6 +22,9 @@ export type ViewTurn = {
   ends: boolean;
   drawsOn: string[];
   rating: "like_me" | "not_like_me" | null;
+  /** While both have opened their words: what the other person made of this turn of my avatar's. */
+  partnerFlag: "like_me" | "not_like_me" | null;
+  coachNote: string | null;
 };
 
 function MoveList({ title, moves, tone = "quiet" }: { title: string; moves: Move[]; tone?: "accent" | "quiet" }) {
@@ -63,6 +66,8 @@ export function ReplayView({
   tooEasy,
   myVerdict,
   partnerVerdict,
+  open,
+  current,
 }: {
   replayId: string;
   partnerName: string;
@@ -75,6 +80,10 @@ export function ReplayView({
   tooEasy: boolean;
   myVerdict: "yes" | "partly" | "no" | null;
   partnerVerdict: "yes" | "partly" | "no" | null;
+  /** Both people have opened their avatar's words. */
+  open: boolean;
+  /** This is the current take, so it can be rated, coached and run again. */
+  current: boolean;
 }) {
   const both = myVerdict && partnerVerdict ? [myVerdict, partnerVerdict] : null;
   return (
@@ -88,7 +97,9 @@ export function ReplayView({
             </p>
             {t.says ? <p className="reading whitespace-pre-line text-[17px]">&ldquo;{t.says}&rdquo;</p> : null}
             {t.does ? <p className="reading text-[16px] italic text-muted">{t.does}</p> : null}
-            {!t.mine && !t.remembered ? <p className="text-sm text-muted">What it said is {partnerName}&rsquo;s to read, not yours.</p> : null}
+            {!t.mine && !t.remembered && !t.says && !t.does ? <p className="text-sm text-muted">What it said is {partnerName}&rsquo;s to read, not yours.</p> : null}
+            {!t.mine && t.coachNote ? <p className="mt-2 text-sm text-muted">{partnerName}&rsquo;s coaching: &ldquo;{t.coachNote}&rdquo;</p> : null}
+            {t.mine && t.partnerFlag === "not_like_me" ? <p className="mt-2 text-sm text-muted">{partnerName} doesn&rsquo;t remember you doing this.</p> : null}
             {t.mine && !t.remembered && (t.intent !== null || t.landed !== null) ? (
               <p className="mt-2 text-sm text-muted">
                 {t.intent !== null ? `Meant ${MEANT[String(t.intent)]} (${signed(t.intent)})` : ""}
@@ -106,12 +117,13 @@ export function ReplayView({
                 </ul>
               </details>
             ) : null}
-            {t.mine && !t.remembered && complete ? <TurnVerdict replayId={replayId} seq={t.seq} rating={t.rating} /> : null}
+            {current && !t.remembered && complete && (t.mine || open) ? <TurnVerdict replayId={replayId} seq={t.seq} rating={t.rating} theirs={!t.mine} /> : null}
+            {current && t.mine && !t.remembered ? <Coach key={t.coachNote ?? ""} replayId={replayId} seq={t.seq} note={t.coachNote} canRetake /> : null}
           </li>
         ))}
       </ol>
 
-      {complete ? (
+      {complete && current ? (
         <>
           {tooEasy ? <Notice tone="warn">This replay settled faster than real arguments do. Model avatars agree too easily, so treat this one with suspicion, whatever it looks like.</Notice> : null}
           {own ? <RecognitionCard eyebrow="What you remember doing, against what your avatar did" who="your avatar" r={own} /> : null}

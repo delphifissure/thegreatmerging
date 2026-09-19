@@ -37,6 +37,8 @@ export function buildRehearsalInput(input: {
   voice?: typeof EMPTY_VOICE;
   frame: Frame;
   stateBefore: string;
+  /** What the person has told their own avatar while watching it: first-person notes on how they act in a moment like this. */
+  coaching?: string[];
   turns: SpokenTurn[];
   maxTurns?: number;
 }) {
@@ -57,6 +59,7 @@ export function buildRehearsalInput(input: {
       voice: input.voice ?? EMPTY_VOICE,
       scene: { what_it_was_about: input.frame.label, where_and_when: input.frame.setting },
       your_state: input.stateBefore,
+      in_moments_like_this: (input.coaching ?? []).map((c) => c.trim()).filter(Boolean).slice(0, 6),
       so_far: input.turns.map((t) => ({ who: t.speakerId === input.me.id ? "you" : input.partnerName, says: t.says, does: t.does })),
       exchanges_left: Math.max(0, max - input.turns.length),
     },

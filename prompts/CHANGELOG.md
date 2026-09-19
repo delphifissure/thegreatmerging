@@ -2,6 +2,19 @@
 
 The LLM component is versioned as part of the instrument. Any change to a prompt file, a model identifier, a temperature, an effort setting, or an output schema requires a version bump here and, when it alters any eval result, a note of which evals changed.
 
+## 2026.09.18-6
+
+Watching a replay together, and coaching your own avatar (`/replay`). The owner found the blinded replay hard to follow and asked for a way to "watch our avatars fight, so we can coach them". This is done by consent, not by an admin view: there is no way to read another person's avatar without their say-so, for the demo couple or anyone else.
+
+- **Watch it together.** Each person can open their own avatar's words. They cross only while both are open, and either person closing theirs closes it for both; each change is logged as a consent decision, and so is each read. While open, each person also sees the other's coaching notes and can mark a turn of the other's avatar "that's how I remember it" or "not how I remember it". A person's account, and which of their lines a turn drew on, stay theirs either way. Row-level security has a matching policy.
+- **Coaching.** Under any turn of their own avatar a person can write what they would really have done there, in the first person. Nobody coaches someone else's avatar: a flag is as far as that goes, because only the person characterizes themselves.
+- **Retakes.** "Run it again from here" copies the turns before one of your own avatar's turns into a new take and plays on, with every coaching note so far. Earlier takes stay readable; both verdicts are cleared because they were about a take that is no longer current. A retake with no coaching is simply another draw, which matters because one replay is one draw.
+- `rehearsal.v2`: a new input, `in_moments_like_this`, carries the person's coaching as things the avatar knows about itself. They outrank its own guess and its lines where they apply, are acted on and never recited, and never loosen a requirement or license cruelty. The avatar is still not told it is an avatar.
+- `move_coder.v1`: one added sentence, that `secondary` must be one of the fifteen keys; it had been inventing one in about one call in twenty, which cost a retry.
+- Migration `0009_replay_open`: `proposer_open`, `partner_open` and `take` on `replays`; `take` on `replay_turns`; `coach_note_enc` on `replay_turn_words`; one more row-level policy.
+
+**Eval baseline (2026-09-18):** replay 20/20. The new check coaches one avatar after the first take ("Here I don't explain anything. I say 'not now', go and get food, and don't look at her.") and runs again from its first turn. Uncoached, that turn was a long defence; coached, it was "Not now. I haven't even eaten yet." with "goes to the fridge, doesn't look at her", coded as deflecting, and the note was not recited.
+
 ## 2026.09.18-5
 
 Replay of a remembered argument (`/replay`, behind `BIOGRAPHER_ENABLED=1`): the backtest in `docs/concept_simulation.md`. It is the first feature where two people's avatars meet, so most of it is about what does not cross between them.
