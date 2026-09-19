@@ -2,6 +2,18 @@
 
 The LLM component is versioned as part of the instrument. Any change to a prompt file, a model identifier, a temperature, an effort setting, or an output schema requires a version bump here and, when it alters any eval result, a note of which evals changed.
 
+## 2026.09.18-7
+
+The sandbox (`/sandbox`, in the top navigation behind `BIOGRAPHER_ENABLED=1`): a test bench where two made-up people are given a situation and talk. No real person's material is involved, so nothing is blinded: whoever sets it up reads both sides and can see what each avatar was told.
+
+- `persona_writer.v1` (new role, `claude-sonnet-5`): from a few words of seed, or none, writes what a therapist would hold in their notes. For each person, 250 to 400 words of history and how they are, in scenes and behaviour: the house they grew up in, a turning point, what they care about and where they fall short of it, what they fear, how they argue step by step, how they talk, and one thing they have never told their partner. Separately, the life the two share, including a disagreement that keeps coming back and an episode they remember differently, and three situations to put them in. No clinical, attachment or trait vocabulary; nobody is "the problem"; no violence or abuse even if the seed asks for it. Everything it writes lands in an editable form and nothing is stored until the person starts a conversation.
+- `sandbox_avatar.v1` (new role, `claude-sonnet-5`): the rehearsal avatar's rules with free-text notes in place of ratified lines. Each avatar is given its own notes and the shared history and never the other's notes; what it has never told its partner stays untold unless this is the moment. Same output shape as a rehearsal turn, and the same move coder labels each turn.
+- `persona_writer` is marked as not reaching a person, which switches off the model half of the guardrail for it; the pattern filter still runs on every string. The model check was written for sentences about real people, and it refused long fictional histories for "implied" labels ("'avoidant' (implied in Marcus's behavior pattern)") when the text only described behaviour. The prompt's own ban on clinical vocabulary is checked by the eval.
+- `PersonasSchema` is flat with its short fields first. Nested long strings followed by an array came back with the array empty, the same slip `lib/llm/repair.ts` handles, and the repair only reaches top-level fields.
+- A sandbox is a private thread of kind `sandbox`: the scenario is its first turn, each turn's words are encrypted, and deleting it overwrites them. Runs a turn at a time from the browser; a conversation that runs out of turns can be given six more; any sandbox can seed a new one. Migration `0010_sandbox` (enum values only).
+
+**Eval baseline (2026-09-18):** sandbox 11/11 after the two fixes above (9/11 before, both misses in the writer). The writer honoured the seed (a nurse on nights, hidden purchases, his mother) and used the names it was given; each set of notes ran about 300 to 350 words. In an eight-turn conversation between two hand-written people, every turn passed the guardrail and stayed short, neither avatar said the thing that was only in the other's notes (a job application in Lisbon; four thousand lent to a brother), and the pair did not make peace at once. About eight cents a run.
+
 ## 2026.09.18-6
 
 Watching a replay together, and coaching your own avatar (`/replay`). The owner found the blinded replay hard to follow and asked for a way to "watch our avatars fight, so we can coach them". This is done by consent, not by an admin view: there is no way to read another person's avatar without their say-so, for the demo couple or anyone else.

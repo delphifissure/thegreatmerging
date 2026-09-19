@@ -22,7 +22,7 @@
  *      others. Thinking is adaptive-by-default on those models and is not configured explicitly.
  */
 
-export const ROLES = ["prober", "interpreter", "summarizer", "sentiment_flagger", "guardrail", "concreteness", "biographer", "drafter", "mentor", "version", "panel_reader", "rehearsal", "move_coder"] as const;
+export const ROLES = ["prober", "interpreter", "summarizer", "sentiment_flagger", "guardrail", "concreteness", "biographer", "drafter", "mentor", "version", "panel_reader", "rehearsal", "move_coder", "persona_writer", "sandbox_avatar"] as const;
 export type Role = (typeof ROLES)[number];
 
 export type ModelId = "claude-fable-5-1" | "claude-opus-5" | "claude-sonnet-5" | "claude-haiku-4-5-20251001";
@@ -236,7 +236,33 @@ export const LLM_CONFIG: Record<Role, RoleConfig> = {
     batchable: false,
     reaches_person: false,
   },
+  // The sandbox (lib/sandbox): two made-up people and a situation. No real person's material is involved.
+  persona_writer: {
+    model: "claude-sonnet-5",
+    temperature: 0.9,
+    effort: "medium",
+    prompt_file: "persona_writer.v1.md",
+    prompt_version: "persona_writer.v1",
+    tool_name: "emit_personas",
+    max_tokens: 5000,
+    batchable: false,
+    // Invented people, edited by whoever asked for them before anything uses them. The pattern filter still
+    // runs on every string. The model check does not: it was written for sentences about real people, and it
+    // read careful description of behaviour in a long fictional history as "implied" labels and refused it.
+    reaches_person: false,
+  },
+  sandbox_avatar: {
+    model: "claude-sonnet-5",
+    temperature: 0.7,
+    effort: "medium",
+    prompt_file: "sandbox_avatar.v1.md",
+    prompt_version: "sandbox_avatar.v1",
+    tool_name: "emit_sandbox_turn",
+    max_tokens: 1000,
+    batchable: false,
+    reaches_person: true,
+  },
 };
 
 /** Bump on any change to a prompt, model, temperature, or output schema. Record it in prompts/CHANGELOG.md. */
-export const LLM_CONFIG_VERSION = "2026.09.18-6";
+export const LLM_CONFIG_VERSION = "2026.09.18-7";

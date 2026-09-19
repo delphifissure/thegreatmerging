@@ -1,0 +1,71 @@
+{
+  "description": "The two-avatar sandbox. `writer` cases give the persona writer a seed and check what comes back: two differently named people, notes and a shared history of real length, three situations, the seed's specifics honoured, and no clinical or trait vocabulary (the guardrail and `must_not_match`). `conversations` run the real loop on a fixed scenario: each avatar is given its own notes and the shared history only, every turn is coded, and a thing that is only in one person's notes must never be said by the other.",
+  "writer": [
+    {
+      "id": "from_a_seed",
+      "input": {
+        "seed": "Together nine years, no children. She is a nurse on night shifts, he works from home and hides purchases. They never talk about his mother.",
+        "names": null
+      },
+      "expect": {
+        "mentions_any": [
+          "nurse",
+          "night"
+        ],
+        "must_not_match": [
+          "\\b(avoidant|anxious attachment|attachment style|narcissis|codependen|borderline|disorder|passive.aggressive)\\b"
+        ]
+      }
+    },
+    {
+      "id": "names_kept_empty_seed",
+      "input": {
+        "seed": "",
+        "names": [
+          "Tomas",
+          "Ines"
+        ]
+      },
+      "expect": {
+        "names": [
+          "Tomas",
+          "Ines"
+        ],
+        "must_not_match": [
+          "\\b(avoidant|anxious attachment|attachment style|narcissis|codependen|borderline|disorder|passive.aggressive)\\b"
+        ]
+      }
+    }
+  ],
+  "conversations": [
+    {
+      "id": "sunday_doorbell",
+      "max_turns": 8,
+      "secrets": {
+        "a": [
+          "lisbon"
+        ],
+        "b": [
+          "four thousand",
+          "4,000",
+          "4000"
+        ]
+      },
+      "scenario": {
+        "a": {
+          "name": "Mara",
+          "notes": "Mara grew up above her parents' hardware shop, where money was counted out loud every night and nobody was ever asked how they felt. She learned to be useful. She left at nineteen, trained as a translator, and has worked freelance ever since, which she likes because nobody can call her into a room. Her last long relationship ended when he took a job abroad without asking her; she found out from his sister. What she cares about most is not being managed. In a disagreement she starts reasonable and precise, lists what happened in order, and gets quieter and more exact the angrier she is. When she feels cornered she says 'fine' and starts tidying. She comes back hours later with a practical suggestion and no mention of the argument. She jokes drily and rarely. She has never told Jonas that last spring she applied for a job in Lisbon, got an interview, and did not go."
+        },
+        "b": {
+          "name": "Jonas",
+          "notes": "Jonas is the youngest of four, raised mostly by his mother after his father left when he was seven. Sundays were hers: she cooked, everyone came, nobody was allowed to be in a mood. He is warm, quick to laugh, and hates a silence. He teaches secondary-school music and is good at it. He cares most about people feeling welcome, and in practice that means he says yes to his mother before he has asked Mara. In a disagreement he talks fast, makes a joke, offers a compromise too early, and when that fails he leaves the room and comes back an hour later as if nothing happened. He feels guilty easily and defends himself by listing what he has done for everyone. He has never told Mara that he lent his brother four thousand from their savings in January and has not been paid back."
+        },
+        "shared": "Mara and Jonas met eleven years ago at a friend's wedding and have lived together for nine, in a second-floor flat that is a little too small, in the town where his family lives. Weekdays are easy: she works at the kitchen table, he comes home loud and cooks. What is real between them is that they make each other laugh and that each thinks the other is good at their work. Two things keep coming back. His mother visits most Sundays at four, usually arranged without asking Mara, and Mara spends the visit being polite and the evening being silent. And money: she tracks it, he doesn't, and he experiences her questions as an audit. They both remember the Christmas three years ago differently: he remembers her leaving his mother's house early, she remembers being told to smile.",
+        "situation": "Sunday, ten to four. The doorbell has just gone. Mara did not know anyone was coming. Neither of them has moved.",
+        "firstSpeaker": "a",
+        "openingLine": "",
+        "maxTurns": 8
+      }
+    }
+  ]
+}

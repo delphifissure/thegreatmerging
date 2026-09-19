@@ -9,7 +9,7 @@ import { db, schema } from "@/db/client";
 import { decryptText, encryptText } from "@/lib/crypto";
 import { audit } from "./audit";
 
-export type ThreadKind = "biographer" | "mentor" | "panel";
+export type ThreadKind = "biographer" | "mentor" | "panel" | "sandbox";
 export type TurnRole = "guide" | "person" | "avatar";
 export type TurnRating = "like_me" | "not_like_me" | "bad_day";
 export type DocumentKindValue = "history" | "constitution";
@@ -312,6 +312,30 @@ export async function versionRatings(userId: string): Promise<Record<string, Ver
     (out[r.version] ??= { like_me: 0, bad_day: 0, not_like_me: 0 })[r.rating] = Number(r.n);
   }
   return out;
+}
+
+/** Every sandbox a person has set up, newest first, with the scenario stored in its first turn. */
+export async function listSandboxes(userId: string, limit = 20): Promise<Array<{ id: string; created_at: Date; scenario: string }>> {
+  const rows = await db()
+    .select({ id: schema.conversation_threads.id, created_at: schema.conversation_threads.created_at, content_enc: schema.conversation_turns.content_enc })
+    .from(schema.conversation_threads)
+    .innerJoin(schema.conversation_turns, and(eq(schema.conversation_turns.thread_id, schema.conversation_threads.id), eq(schema.conversation_turns.seq, 1)))
+    .where(and(eq(schema.conversation_threads.user_id, userId), eq(schema.conversation_threads.kind, "sandbox"), isNull(schema.conversation_threads.deleted_at)))
+    .orderBy(desc(schema.conversation_threads.created_at))
+    .limit(limit);
+  return rows.map((r) => ({ id: r.id, created_at: r.created_at, scenario: decryptText(r.content_enc, turnCtx(userId, "content")) }));
+}
+
+/** Remove a sandbox for good: its scenario and every turn are overwritten, not only hidden. */
+export async function deleteSandbox(input: { threadId: string; userId: string }) {
+  const thread = await getOwnThread(input.threadId, input.userId);
+  if (!thread || thread.kind !== "sandbox") return false;
+  await db()
+    .update(schema.conversation_turns)
+    .set({ content_enc: encryptText("", turnCtx(input.userId, "content")), note_enc: null, extras_enc: null, meta: {}, deleted_at: new Date(), updated_at: new Date() })
+    .where(and(eq(schema.conversation_turns.thread_id, thread.id), eq(schema.conversation_turns.user_id, input.userId)));
+  await db().update(schema.conversation_threads).set({ deleted_at: new Date(), updated_at: new Date() }).where(eq(schema.conversation_threads.id, thread.id));
+  return true;
 }
 
 /** The situation each panel was asked, newest first, for the list of earlier panels. */

@@ -11,7 +11,12 @@ const NAV = [
   { href: "/brief", label: "Brief" },
   { href: "/plan", label: "Plan" },
   // The intervention prototype: biographer, documents, avatars and the replay all hang off this page.
-  ...(FEATURES.biographer ? [{ href: "/biographer", label: "Biographer" }] : []),
+  ...(FEATURES.biographer
+    ? [
+        { href: "/biographer", label: "Biographer" },
+        { href: "/sandbox", label: "Sandbox" },
+      ]
+    : []),
 ];
 
 export async function SiteHeader() {

@@ -12,7 +12,7 @@ import { connect, DB_TESTS_ENABLED, deleteFixture, prepareDatabase, runAs, SKIP_
 process.env.FIELD_ENCRYPTION_KEY ||= generateKeyBase64();
 
 import { getSql } from "@/db/client";
-import { addOwnEntry, appendTurn, avatarRatings, closeThread, createThread, getOwnThread, listOpenQuestions, listOwnEntries, listTurns, proposeEntries, rateTurn, ratifyEntry, rejectEntry, removeEntry, saveNextTimeQuestions, setThreadDepth, listPanels, versionRatings, addVoiceSample, listVoiceSamples, removeVoiceSample, listOwnAnswers, listCorrections, rateTurnContent, saveCorrection } from "@/lib/data";
+import { addOwnEntry, appendTurn, avatarRatings, closeThread, createThread, getOwnThread, listOpenQuestions, listOwnEntries, listTurns, proposeEntries, rateTurn, ratifyEntry, rejectEntry, removeEntry, saveNextTimeQuestions, setThreadDepth, listPanels, versionRatings, deleteSandbox, listSandboxes, addVoiceSample, listVoiceSamples, removeVoiceSample, listOwnAnswers, listCorrections, rateTurnContent, saveCorrection } from "@/lib/data";
 import { threadsToReturnTo } from "@/lib/biographer/inputs";
 
 const suite = DB_TESTS_ENABLED ? describe : describe.skip;
@@ -201,6 +201,23 @@ suite(`biographer data ${DB_TESTS_ENABLED ? "" : SKIP_MESSAGE}`, () => {
     expect(enc.correction_enc.toString("utf8")).not.toContain("honestly");
     await saveCorrection({ turnId: reply.id, userId: A, text: "  " });
     expect((await listCorrections(A)).some((c) => c.said === "What has helped me lately is pausing first.")).toBe(false);
+  });
+
+  it("a sandbox is a private thread whose first turn is its scenario, and deleting it overwrites every word", async () => {
+    const thread = await createThread({ userId: A, kind: "sandbox", focus: null });
+    await appendTurn({ threadId: thread.id, userId: A, role: "guide", text: JSON.stringify({ a: { name: "Mara" }, situation: "The doorbell goes." }), meta: { kind: "scenario" } });
+    const said = await appendTurn({ threadId: thread.id, userId: A, role: "avatar", text: JSON.stringify({ says: "Are you getting that?", does: null }), meta: { kind: "turn", side: "b", move: "asks" } });
+    expect((await listSandboxes(A)).find((b) => b.id === thread.id)?.scenario).toContain("doorbell");
+    expect(await listSandboxes(B)).toEqual([]);
+    const [raw] = await sql<Array<{ content_enc: Buffer }>>`select content_enc from conversation_turns where id = ${said.id}`;
+    expect(raw.content_enc.toString("utf8")).not.toContain("getting that");
+
+    expect(await deleteSandbox({ threadId: thread.id, userId: B })).toBe(false);
+    expect(await deleteSandbox({ threadId: thread.id, userId: A })).toBe(true);
+    expect((await listSandboxes(A)).some((b) => b.id === thread.id)).toBe(false);
+    expect(await getOwnThread(thread.id, A)).toBeNull();
+    const rows = await sql<Array<{ meta: unknown; deleted_at: Date | null }>>`select meta, deleted_at from conversation_turns where thread_id = ${thread.id}`;
+    expect(rows.every((r) => r.deleted_at !== null && JSON.stringify(r.meta) === "{}")).toBe(true);
   });
 
   it("row-level security hides every table from the partner and from anonymous sessions", async () => {

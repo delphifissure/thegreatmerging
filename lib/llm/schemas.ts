@@ -267,6 +267,21 @@ const MOVE_KEYS = ["asks", "states_position", "explains", "criticizes", "defends
 export const MoveCodeSchema = z.object({ move: z.enum(MOVE_KEYS), secondary: z.enum(MOVE_KEYS).nullable() });
 export type MoveCode = z.infer<typeof MoveCodeSchema>;
 
+/**
+ * Two invented people and the life they share, for the sandbox. Flat, with the short fields first
+ * and the long prose last: nested long strings followed by an array came back with the array empty,
+ * the same slip lib/llm/repair.ts exists for, and the repair only reaches top-level fields.
+ */
+export const PersonasSchema = z.object({
+  a_name: Prose(40),
+  b_name: Prose(40),
+  situations: z.array(Prose(500, 10)).min(1).max(4),
+  a_notes: Prose(4500, 200),
+  b_notes: Prose(4500, 200),
+  shared_history: Prose(3500, 100),
+});
+export type Personas = z.infer<typeof PersonasSchema>;
+
 /** What held and what changed across the versions, as observations and one question. */
 export const PanelReadingSchema = z.object({
   same: z.array(Prose(300)).max(3),

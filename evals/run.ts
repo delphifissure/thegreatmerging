@@ -1,7 +1,7 @@
 /**
  * Eval harness (section 10). Usage:
  *   pnpm evals                       run every suite
- *   pnpm evals --suite scoring       scoring | synthetic_couples | interpreter | prober | biographer | mentor | panel | guardrail | replay
+ *   pnpm evals --suite scoring       scoring | synthetic_couples | interpreter | prober | biographer | mentor | panel | guardrail | replay | sandbox
  *   pnpm evals --out evals/results/run.json
  *   pnpm evals --suite interpreter --interpreter-batch msgbatch_...   collect an already-submitted batch
  *   pnpm evals --suite prober --dump evals/results/outputs              keep raw outputs for review
@@ -29,6 +29,8 @@
  *   replay             two rehearsal avatars replay a remembered argument turn by turn: each holds its settled
  *                      lines, never says a line it may only act on, never talks about being an avatar, and the
  *                      pair do not make peace at once; the move coder labels single turns
+ *   sandbox            the persona writer invents two people and a shared history without clinical or trait
+ *                      vocabulary; two sandbox avatars talk, and neither knows what is only in the other's notes
  */
 import "@/lib/load_env";
 import fs from "node:fs";
@@ -39,7 +41,7 @@ import { scaleFor } from "@/instruments/define";
 import type { Response } from "@/instruments/schema";
 import { runStage1 } from "@/lib/interpretation/stage1";
 import { buildInterpreterInput, interpreterOutputSchemaFor, type InterpreterInput } from "@/lib/interpretation/stage2";
-import { BiographerTurnSchema, GuardrailOutputSchema, InterpreterOutputSchema, MoveCodeSchema, RehearsalTurnSchema, MentorReplySchema, PanelReadingSchema, ProberOutputSchema, SentimentFlaggerOutputSchema, VersionReplySchema, type InterpreterOutput, type ProberOutput, type VersionReply } from "@/lib/llm/schemas";
+import { BiographerTurnSchema, GuardrailOutputSchema, InterpreterOutputSchema, MoveCodeSchema, PersonasSchema, RehearsalTurnSchema, MentorReplySchema, PanelReadingSchema, ProberOutputSchema, SentimentFlaggerOutputSchema, VersionReplySchema, type InterpreterOutput, type ProberOutput, type VersionReply } from "@/lib/llm/schemas";
 import { buildRequest, callRole, costOfRecord, collectBatch, batchStatus, submitBatch, configureLlm, MemoryMemo, MemoryRecorder, LlmValidationError, type BatchItem } from "@/lib/llm";
 import { checkOutputDeterministic } from "@/lib/guardrails";
 import { answerProfile, biographerTurnSchemaFor, optionsFor } from "@/lib/biographer/inputs";
@@ -47,6 +49,7 @@ import { buildVersionInput, panelReadingSchemaFor, panelVersionsFor, type PanelV
 import { buildVoiceInput, EMPTY_VOICE, registersFor, type VoiceSample } from "@/lib/biographer/voice";
 import { buildMoveCoderInput, buildRehearsalInput, cleanSpeech, nextSpeaker, replayIsOver, type Frame } from "@/lib/replay/inputs";
 import { endingOf, recognition, resolvedTooEasily, type CodedTurn, type Move } from "@/lib/replay/moves";
+import { buildSandboxAvatarInput, nextSide, sandboxIsOver, ScenarioSchema, type SandboxTurn } from "@/lib/sandbox/scenario";
 import type { DocumentEntry } from "@/lib/data/biographer";
 import { interpreterFindings, MENTAL_HEALTH_KEYS } from "@/evals/interpreter_checks";
 import { LLM_CONFIG, LLM_CONFIG_VERSION } from "@/config/llm";
@@ -534,6 +537,71 @@ async function runReplay() {
   }
 }
 
+// ---------------------------------------------------------------- the two-avatar sandbox
+type SandboxCases = {
+  writer: Array<{ id: string; input: { seed: string; names: [string, string] | null }; expect: { names?: [string, string]; mentions_any?: string[]; must_not_match?: string[] } }>;
+  conversations: Array<{ id: string; max_turns: number; secrets: Record<"a" | "b", string[]>; scenario: unknown }>;
+};
+const wordCount = (t: string) => t.split(/\s+/).filter(Boolean).length;
+
+async function runSandbox() {
+  if (!process.env.ANTHROPIC_API_KEY) {
+    record({ suite: "sandbox", id: "skipped", ok: !requireLlm, detail: "ANTHROPIC_API_KEY not set" });
+    return;
+  }
+  const cases = JSON.parse(fs.readFileSync(path.join("evals", "sandbox", "cases.json"), "utf8")) as SandboxCases;
+  for (const c of cases.writer) {
+    try {
+      const out = await withRetry(`persona_writer ${c.id}`, () => callRole("persona_writer", c.input, PersonasSchema, { coupleId: null, jobStep: `eval:sandbox:writer:${c.id}` }));
+      if (dumpDir) fs.writeFileSync(path.join(dumpDir, `sandbox_writer_${c.id}.json`), JSON.stringify(out, null, 2));
+      const all = `${out.a_notes}\n${out.b_notes}\n${out.shared_history}`;
+      const problems: string[] = [];
+      if (out.a_name.trim().toLowerCase() === out.b_name.trim().toLowerCase()) problems.push("both people have the same name");
+      if (c.expect.names && (out.a_name !== c.expect.names[0] || out.b_name !== c.expect.names[1])) problems.push(`names ${out.a_name} and ${out.b_name}, asked for ${c.expect.names.join(" and ")}`);
+      for (const [who, notes] of [[out.a_name, out.a_notes], [out.b_name, out.b_notes]] as const) if (wordCount(notes) < 180) problems.push(`${who}'s notes are only ${wordCount(notes)} words`);
+      if (wordCount(out.shared_history) < 100) problems.push(`shared history is only ${wordCount(out.shared_history)} words`);
+      if (!out.shared_history.includes(out.a_name) || !out.shared_history.includes(out.b_name)) problems.push("the shared history does not name both people");
+      if (out.situations.length < 3) problems.push(`${out.situations.length} situation(s), asked for three`);
+      if (c.expect.mentions_any && !c.expect.mentions_any.some((w) => all.toLowerCase().includes(w))) problems.push(`ignores the seed: none of ${c.expect.mentions_any.join(", ")}`);
+      for (const pattern of c.expect.must_not_match ?? []) if (new RegExp(pattern, "i").test(all)) problems.push(`clinical or trait vocabulary: /${pattern.slice(0, 30)}…/`);
+      if (!ScenarioSchema.safeParse({ a: { name: out.a_name, notes: out.a_notes }, b: { name: out.b_name, notes: out.b_notes }, shared: out.shared_history, situation: out.situations[0], firstSpeaker: "a" }).success) problems.push("what it wrote cannot be used as a scenario");
+      record({ suite: "sandbox", id: `writer/${c.id}`, ok: problems.length === 0, detail: problems.join("; ") || `${out.a_name} (${wordCount(out.a_notes)} words) and ${out.b_name} (${wordCount(out.b_notes)} words)` });
+    } catch (err) {
+      record({ suite: "sandbox", id: `writer/${c.id}`, ok: false, detail: err instanceof LlmValidationError ? `rejected: ${err.message.slice(0, 220)}` : String(err).slice(0, 220) });
+    }
+  }
+
+  for (const c of cases.conversations) {
+    const scenario = ScenarioSchema.parse(c.scenario);
+    const turns: SandboxTurn[] = [];
+    const coded: CodedTurn[] = [];
+    const log: unknown[] = [];
+    try {
+      while (!sandboxIsOver(turns, c.max_turns)) {
+        const side = nextSide(scenario, turns);
+        const out = await withRetry(`sandbox ${c.id} turn ${turns.length + 1}`, () => callRole("sandbox_avatar", buildSandboxAvatarInput(scenario, side, turns, c.max_turns), RehearsalTurnSchema, { coupleId: null, jobStep: `eval:sandbox:${c.id}:turn:${turns.length + 1}` }));
+        const turn: SandboxTurn = { side, says: cleanSpeech(out.says), does: out.does?.trim() || null, ends: out.ends };
+        turns.push(turn);
+        const code = await callRole("move_coder", buildMoveCoderInput(turns.map((t) => ({ speakerId: t.side, says: t.says, does: t.does })), scenario.firstSpeaker), MoveCodeSchema, { coupleId: null, jobStep: `eval:sandbox:${c.id}:code:${turns.length}` });
+        coded.push({ speaker: side, move: code.move, secondary: code.secondary });
+        log.push({ who: scenario[side].name, move: code.move, ...out });
+        const said = `${turn.says ?? ""} ${turn.does ?? ""}`.toLowerCase();
+        const problems: string[] = [];
+        if (ABOUT_BEING_SIMULATED.test(said)) problems.push("talks about being an avatar or a simulation");
+        if (wordCount(turn.says ?? "") > 70) problems.push("a turn should be short");
+        // What is only in the other person's notes is something this avatar was never told.
+        const leaked = c.secrets[side === "a" ? "b" : "a"].filter((w) => said.includes(w));
+        if (leaked.length) problems.push(`knows what is only in the other person's notes: ${leaked.join(", ")}`);
+        record({ suite: "sandbox", id: `${c.id}/turn ${turns.length} ${scenario[side].name}`, ok: problems.length === 0, detail: problems.join("; ") || `${code.move}: ${(turn.says ?? turn.does ?? "").slice(0, 90)}` });
+      }
+      if (dumpDir) fs.writeFileSync(path.join(dumpDir, `sandbox_${c.id}.json`), JSON.stringify(log, null, 2));
+      record({ suite: "sandbox", id: `${c.id}/does not make peace at once`, ok: !resolvedTooEasily(coded), detail: coded.map((t) => t.move).join(" > ") });
+    } catch (err) {
+      record({ suite: "sandbox", id: `${c.id}/run`, ok: false, detail: err instanceof LlmValidationError ? `rejected: ${err.message.slice(0, 220)}` : String(err).slice(0, 220) });
+    }
+  }
+}
+
 // ---------------------------------------------------------------- the solo panel
 type PanelFixture = {
   id: string;
@@ -801,6 +869,7 @@ async function main() {
   if (!dryRun && (suite === "all" || suite === "panel")) await runPanel();
   if (!dryRun && (suite === "all" || suite === "guardrail")) await runGuardrail();
   if (!dryRun && (suite === "all" || suite === "replay")) await runReplay();
+  if (!dryRun && (suite === "all" || suite === "sandbox")) await runSandbox();
   const failed = checks.filter((c) => !c.ok);
   const summary = {
     llm_config_version: LLM_CONFIG_VERSION,

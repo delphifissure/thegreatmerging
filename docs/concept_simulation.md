@@ -96,6 +96,10 @@ Built on 18 September 2026 as "Ask all of me" (`/mentor/panel`, behind `BIOGRAPH
 - Mischel, W., & Shoda, Y. (1995). A cognitive-affective system theory of personality. *Psychological Review, 102*(2), 246–268. https://psycnet.apa.org/record/1995-25136-001
 - Harry, T., Ngong, I., Nweke, C., Feng, Y., & Near, J. (2026). *Beyond fixed psychological personas: State beats trait, but language models are state-blind.* arXiv:2601.15395. https://arxiv.org/abs/2601.15395
 
+## A sandbox for the machinery
+
+Built on 18 September 2026 at `/sandbox`: two made-up people, written by hand or generated from a few words, each with a life history of the kind a therapist would hold in their notes, plus the history they share. Each avatar is given its own notes and the shared history, never the other's notes, and then a situation. Whoever set it up reads both sides, sees what each avatar was told, and sees each turn coded as a move with how it was meant and how it landed. It exists to look at the conversational machinery without anyone's real material in it: whether avatars hold their positions, whether a secret stays a secret, whether two runs of the same scene resemble each other. It says nothing about fidelity to a real person, which is what the replay is for.
+
 ## The hundred-by-hundred design
 
 The owner's thesis: let 100 permutations of you negotiate a hard topic with 100 permutations of your partner. If few succeed, what is different about the versions that did, and, if the real people like that outcome, how would each have to adjust?
