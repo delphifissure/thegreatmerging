@@ -63,7 +63,7 @@ export default async function DocumentsPage({ searchParams }: { searchParams: Pr
                   <h3 className="text-[19px]">{SECTION_TITLES[section] ?? section}</h3>
                   <ul className="mt-1 divide-y divide-rule">
                     {lines.map((e) => (
-                      <RatifiedLine key={e.id} entry={{ id: e.id, text: e.text, mark: e.mark }} />
+                      <RatifiedLine key={e.id} entry={{ id: e.id, text: e.text, mark: e.mark, tier: e.tier }} />
                     ))}
                   </ul>
                 </section>

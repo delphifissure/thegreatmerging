@@ -94,6 +94,18 @@ export default async function BiographerIndex() {
       </Card>
 
       <Card>
+        <h2 className="text-[22px]">Replay an argument</h2>
+        <p className="reading mt-1 max-w-prose text-[16px] text-muted">
+          A test of the app, for the two of you. You each describe the same past argument, your avatars play it out, and each of you says whether your avatar moved the way you did.
+        </p>
+        <div className="mt-3">
+          <LinkButton href="/replay" variant="secondary">
+            Open
+          </LinkButton>
+        </div>
+      </Card>
+
+      <Card>
         <h2 className="text-[22px]">You, one notch ahead</h2>
         <p className="reading mt-1 max-w-prose text-[16px] text-muted">
           An avatar built only from lines you have ratified: you, rested, a little further along on what you said you are working on. It can be wrong, and it never speaks for you.

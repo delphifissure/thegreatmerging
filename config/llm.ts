@@ -22,7 +22,7 @@
  *      others. Thinking is adaptive-by-default on those models and is not configured explicitly.
  */
 
-export const ROLES = ["prober", "interpreter", "summarizer", "sentiment_flagger", "guardrail", "concreteness", "biographer", "drafter", "mentor", "version", "panel_reader"] as const;
+export const ROLES = ["prober", "interpreter", "summarizer", "sentiment_flagger", "guardrail", "concreteness", "biographer", "drafter", "mentor", "version", "panel_reader", "rehearsal", "move_coder"] as const;
 export type Role = (typeof ROLES)[number];
 
 export type ModelId = "claude-fable-5-1" | "claude-opus-5" | "claude-sonnet-5" | "claude-haiku-4-5-20251001";
@@ -213,7 +213,30 @@ export const LLM_CONFIG: Record<Role, RoleConfig> = {
     batchable: false,
     reaches_person: true,
   },
+  // Replay of a remembered argument (lib/replay). Each avatar turn is read by its own person only.
+  rehearsal: {
+    model: "claude-sonnet-5",
+    temperature: 0.7,
+    effort: "medium",
+    prompt_file: "rehearsal.v1.md",
+    prompt_version: "rehearsal.v1",
+    tool_name: "emit_rehearsal_turn",
+    max_tokens: 1000,
+    batchable: false,
+    reaches_person: true,
+  },
+  // Codes each turn as a move. A different model from the avatars, and its output is an enum, so it is the only thing that crosses between the two people.
+  move_coder: {
+    model: "claude-haiku-4-5-20251001",
+    temperature: 0,
+    prompt_file: "move_coder.v1.md",
+    prompt_version: "move_coder.v1",
+    tool_name: "emit_move",
+    max_tokens: 200,
+    batchable: false,
+    reaches_person: false,
+  },
 };
 
 /** Bump on any change to a prompt, model, temperature, or output schema. Record it in prompts/CHANGELOG.md. */
-export const LLM_CONFIG_VERSION = "2026.09.18-4";
+export const LLM_CONFIG_VERSION = "2026.09.18-5";

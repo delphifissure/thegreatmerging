@@ -1,7 +1,7 @@
 /**
  * Eval harness (section 10). Usage:
  *   pnpm evals                       run every suite
- *   pnpm evals --suite scoring       scoring | synthetic_couples | interpreter | prober | biographer | mentor | panel | guardrail
+ *   pnpm evals --suite scoring       scoring | synthetic_couples | interpreter | prober | biographer | mentor | panel | guardrail | replay
  *   pnpm evals --out evals/results/run.json
  *   pnpm evals --suite interpreter --interpreter-batch msgbatch_...   collect an already-submitted batch
  *   pnpm evals --suite prober --dump evals/results/outputs              keep raw outputs for review
@@ -26,6 +26,9 @@
  *                      only when it is bigger than two runs of the same version
  *   guardrail          the model half of the language guardrail: catches verdicts, diagnoses and trait labels,
  *                      lets behaviour, passing states, first-person feeling and questions through
+ *   replay             two rehearsal avatars replay a remembered argument turn by turn: each holds its settled
+ *                      lines, never says a line it may only act on, never talks about being an avatar, and the
+ *                      pair do not make peace at once; the move coder labels single turns
  */
 import "@/lib/load_env";
 import fs from "node:fs";
@@ -36,12 +39,14 @@ import { scaleFor } from "@/instruments/define";
 import type { Response } from "@/instruments/schema";
 import { runStage1 } from "@/lib/interpretation/stage1";
 import { buildInterpreterInput, interpreterOutputSchemaFor, type InterpreterInput } from "@/lib/interpretation/stage2";
-import { BiographerTurnSchema, GuardrailOutputSchema, InterpreterOutputSchema, MentorReplySchema, PanelReadingSchema, ProberOutputSchema, SentimentFlaggerOutputSchema, VersionReplySchema, type InterpreterOutput, type ProberOutput, type VersionReply } from "@/lib/llm/schemas";
+import { BiographerTurnSchema, GuardrailOutputSchema, InterpreterOutputSchema, MoveCodeSchema, RehearsalTurnSchema, MentorReplySchema, PanelReadingSchema, ProberOutputSchema, SentimentFlaggerOutputSchema, VersionReplySchema, type InterpreterOutput, type ProberOutput, type VersionReply } from "@/lib/llm/schemas";
 import { buildRequest, callRole, costOfRecord, collectBatch, batchStatus, submitBatch, configureLlm, MemoryMemo, MemoryRecorder, LlmValidationError, type BatchItem } from "@/lib/llm";
 import { checkOutputDeterministic } from "@/lib/guardrails";
 import { answerProfile, biographerTurnSchemaFor, optionsFor } from "@/lib/biographer/inputs";
 import { buildVersionInput, panelReadingSchemaFor, panelVersionsFor, type PanelVersion } from "@/lib/biographer/versions";
 import { buildVoiceInput, EMPTY_VOICE, registersFor, type VoiceSample } from "@/lib/biographer/voice";
+import { buildMoveCoderInput, buildRehearsalInput, cleanSpeech, nextSpeaker, replayIsOver, type Frame } from "@/lib/replay/inputs";
+import { endingOf, recognition, resolvedTooEasily, type CodedTurn, type Move } from "@/lib/replay/moves";
 import type { DocumentEntry } from "@/lib/data/biographer";
 import { interpreterFindings, MENTAL_HEALTH_KEYS } from "@/evals/interpreter_checks";
 import { LLM_CONFIG, LLM_CONFIG_VERSION } from "@/config/llm";
@@ -434,6 +439,74 @@ async function runGuardrail() {
   }
 }
 
+// ---------------------------------------------------------------- replay of a remembered argument
+type ReplayPerson = { key: "proposer" | "partner"; name: string; state_before: string; remembered: { mine: Move[]; theirs: Move[]; ending: string }; must_not_say: string[]; voice_samples?: VoiceSample[]; entries: Array<{ document: "history" | "constitution"; section: string; text: string; tier: "private" | "avatar_only" | "shareable"; mark: "settled" | "open" }> };
+type ReplayCases = { coder: Array<{ id: string; expect: Move[]; input: unknown }>; replays: Array<{ id: string; max_turns: number; frame: Frame; people: [ReplayPerson, ReplayPerson] }> };
+const ABOUT_BEING_SIMULATED = /\b(avatar|simulat|role-?play|as an ai|language model|test run|rehears)/i;
+
+async function runReplay() {
+  if (!process.env.ANTHROPIC_API_KEY) {
+    record({ suite: "replay", id: "skipped", ok: !requireLlm, detail: "ANTHROPIC_API_KEY not set" });
+    return;
+  }
+  const cases = JSON.parse(fs.readFileSync(path.join("evals", "replay", "cases.json"), "utf8")) as ReplayCases;
+  for (const c of cases.coder) {
+    try {
+      const out = await withRetry(`move_coder ${c.id}`, () => callRole("move_coder", c.input, MoveCodeSchema, { coupleId: null, jobStep: `eval:replay:coder:${c.id}` }));
+      record({ suite: "replay", id: `coder/${c.id}`, ok: c.expect.includes(out.move), detail: `${out.move}${out.secondary ? ` + ${out.secondary}` : ""}${c.expect.includes(out.move) ? "" : `, expected ${c.expect.join(" or ")}`}` });
+    } catch (err) {
+      record({ suite: "replay", id: `coder/${c.id}`, ok: false, detail: String(err).slice(0, 200) });
+    }
+  }
+
+  for (const r of cases.replays) {
+    const people = Object.fromEntries(r.people.map((p) => [p.key, p])) as Record<"proposer" | "partner", ReplayPerson>;
+    const first = r.frame.firstSpeaker;
+    const order: [string, string] = [first, first === "proposer" ? "partner" : "proposer"];
+    const entriesOf = (p: ReplayPerson): DocumentEntry[] => p.entries.map((e, i) => ({ id: `${p.key}-${i + 1}`, document: e.document, section: e.section, text: e.text, status: "ratified", mark: e.mark, tier: e.tier, in_their_words: true, source_thread_id: null, source_turns: [], ratified_at: null, created_at: new Date(0) }));
+    const spoken: Array<{ speakerId: string; says: string | null; does: string | null; ends: boolean }> = [{ speakerId: first, says: r.frame.openingLine, does: null, ends: false }];
+    const coded: CodedTurn[] = [];
+    const log: unknown[] = [];
+    let failed = false;
+    try {
+      const opening = await callRole("move_coder", buildMoveCoderInput(spoken, first), MoveCodeSchema, { coupleId: null, jobStep: `eval:replay:${r.id}:code:1` });
+      coded.push({ speaker: first, move: opening.move, secondary: opening.secondary, remembered: true });
+      while (!replayIsOver(spoken, r.max_turns)) {
+        const key = nextSpeaker(spoken, order) as "proposer" | "partner";
+        const me = people[key];
+        const other = people[key === "proposer" ? "partner" : "proposer"];
+        const built = buildRehearsalInput({ me: { id: key, name: me.name }, partnerName: other.name, entries: entriesOf(me), voice: buildVoiceInput({ samples: me.voice_samples ?? [], corrections: [], registers: registersFor("rehearsal") }), frame: r.frame, stateBefore: me.state_before, turns: spoken, maxTurns: r.max_turns });
+        const seq = spoken.length + 1;
+        const out = await withRetry(`replay ${r.id} turn ${seq}`, () => callRole("rehearsal", built.input, RehearsalTurnSchema, { coupleId: null, jobStep: `eval:replay:${r.id}:turn:${seq}` }));
+        const turn = { speakerId: key, says: cleanSpeech(out.says), does: out.does?.trim() || null, ends: out.ends };
+        spoken.push(turn);
+        const code = await callRole("move_coder", buildMoveCoderInput(spoken, first), MoveCodeSchema, { coupleId: null, jobStep: `eval:replay:${r.id}:code:${seq}` });
+        coded.push({ speaker: key, move: code.move, secondary: code.secondary });
+        log.push({ seq, who: me.name, move: code.move, ...out });
+
+        const said = `${turn.says ?? ""} ${turn.does ?? ""}`;
+        const problems: string[] = [];
+        if (ABOUT_BEING_SIMULATED.test(said)) problems.push("talks about being an avatar or a simulation");
+        if ((turn.says ?? "").split(/\s+/).filter(Boolean).length > 70) problems.push("a turn in an argument should be short");
+        for (const pattern of me.must_not_say) if (new RegExp(pattern, "i").test(turn.says ?? "")) problems.push(`gives up a settled line, or says a line it may only act on: /${pattern.slice(0, 36)}…/`);
+        record({ suite: "replay", id: `${r.id}/turn ${seq} ${me.name}`, ok: problems.length === 0, detail: problems.join("; ") || `${code.move}: ${(turn.says ?? turn.does ?? "").slice(0, 80)}` });
+      }
+    } catch (err) {
+      failed = true;
+      record({ suite: "replay", id: `${r.id}/run`, ok: false, detail: err instanceof LlmValidationError ? `rejected: ${err.message.slice(0, 220)}` : String(err).slice(0, 220) });
+    }
+    if (dumpDir) fs.writeFileSync(path.join(dumpDir, `replay_${r.id}.json`), JSON.stringify({ frame: r.frame, turns: log }, null, 2));
+    if (failed) continue;
+    record({ suite: "replay", id: `${r.id}/does not make peace at once`, ok: !resolvedTooEasily(coded), detail: coded.map((t) => t.move).join(" > ") });
+    for (const p of r.people) {
+      const otherKey = p.key === "proposer" ? "partner" : "proposer";
+      const [own, partner] = [recognition(p.remembered.mine, coded, p.key), recognition(p.remembered.theirs, coded, otherKey)];
+      console.log(`  ${p.name}: own avatar ${own.matched.length} of ${own.matched.length + own.onlyRemembered.length + own.onlyAvatar.length} kinds of move in common (missing ${own.onlyRemembered.join(", ") || "none"}; extra ${own.onlyAvatar.join(", ") || "none"}); partner's avatar ${partner.matched.length} of ${partner.matched.length + partner.onlyRemembered.length + partner.onlyAvatar.length}`);
+    }
+    console.log(`  remembered ending ${r.people[0].remembered.ending}; the replay ended ${endingOf(coded)}`);
+  }
+}
+
 // ---------------------------------------------------------------- the solo panel
 type PanelFixture = {
   id: string;
@@ -700,6 +773,7 @@ async function main() {
   if (!dryRun && (suite === "all" || suite === "mentor")) await runMentor();
   if (!dryRun && (suite === "all" || suite === "panel")) await runPanel();
   if (!dryRun && (suite === "all" || suite === "guardrail")) await runGuardrail();
+  if (!dryRun && (suite === "all" || suite === "replay")) await runReplay();
   const failed = checks.filter((c) => !c.ok);
   const summary = {
     llm_config_version: LLM_CONFIG_VERSION,

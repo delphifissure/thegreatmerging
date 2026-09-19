@@ -71,8 +71,9 @@ const HEATED_ONLY_FOR = new Set(["depleted"]);
  * The one-notch-ahead self is the person at their best, so it never learns from their worst
  * texts. Only a version that is running on empty may see the heated register.
  */
-export function registersFor(avatar: "mentor" | { version: string }): Register[] {
-  const heated = avatar !== "mentor" && HEATED_ONLY_FOR.has(avatar.version);
+export function registersFor(avatar: "mentor" | "rehearsal" | { version: string }): Register[] {
+  // A replayed argument is an argument: the avatar of record needs to know how its person sounds in one.
+  const heated = avatar === "rehearsal" || (avatar !== "mentor" && HEATED_ONLY_FOR.has(avatar.version));
   return REGISTERS.filter((r) => r !== "heated" || heated);
 }
 

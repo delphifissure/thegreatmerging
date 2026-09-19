@@ -4,9 +4,11 @@ import { useState, useTransition } from "react";
 import { Button } from "@/app/_components/Button";
 import { Notice } from "@/app/_components/Field";
 import { Toggle } from "@/app/_components/Toggle";
-import { addOwn, ratify, reject, remove } from "./actions";
+import { addOwn, ratify, reject, remove, setTier } from "./actions";
 
 type Mark = "settled" | "open";
+type Tier = "private" | "avatar_only" | "shareable";
+const TIER_WORDS: Record<Tier, string> = { private: "Private", avatar_only: "My avatar may act on it", shareable: "My avatar may say it" };
 
 function MarkSwitch({ id, mark, onChange, disabled }: { id: string; mark: Mark; onChange: (m: Mark) => void; disabled?: boolean }) {
   return (
@@ -56,7 +58,7 @@ export function ProposedLine({ entry, sectionTitle }: { entry: { id: string; tex
   );
 }
 
-export function RatifiedLine({ entry }: { entry: { id: string; text: string; mark: Mark } }) {
+export function RatifiedLine({ entry }: { entry: { id: string; text: string; mark: Mark; tier: Tier } }) {
   const [editing, setEditing] = useState(false);
   const [text, setText] = useState(entry.text);
   const [mark, setMark] = useState<Mark>(entry.mark);
@@ -75,6 +77,7 @@ export function RatifiedLine({ entry }: { entry: { id: string; text: string; mar
         <p className="reading max-w-prose text-[17px]">{entry.text}</p>
         <span className="flex items-center gap-3 text-sm text-muted">
           <span>{entry.mark === "settled" ? "Settled" : "Open"}</span>
+          <span>{TIER_WORDS[entry.tier]}</span>
           <button type="button" onClick={() => setEditing(true)} className="underline decoration-rule underline-offset-4 hover:text-ink">
             Amend
           </button>
@@ -90,6 +93,17 @@ export function RatifiedLine({ entry }: { entry: { id: string; text: string; mar
       <textarea id={`amend-${entry.id}`} rows={2} value={text} onChange={(e) => setText(e.target.value)} className="w-full" disabled={pending} />
       <div className="mt-2">
         <MarkSwitch id={`r-${entry.id}`} mark={mark} onChange={setMark} disabled={pending} />
+      </div>
+      <div className="mt-3 text-sm">
+        <label htmlFor={`tier-${entry.id}`} className="block font-medium">
+          When your avatar meets your partner&rsquo;s avatar
+        </label>
+        <select id={`tier-${entry.id}`} value={entry.tier} disabled={pending} onChange={(e) => run(() => setTier({ entryId: entry.id, tier: e.target.value as Tier }))} className="mt-1">
+          <option value="private">Private: leave this line out of the room</option>
+          <option value="avatar_only">My avatar may act on it, and never say it</option>
+          <option value="shareable">My avatar may say it</option>
+        </select>
+        <p className="mt-1 text-muted">Your own avatars, the ones only you talk to, always use every line. This only matters in a replay or a rehearsal.</p>
       </div>
       {error ? (
         <div className="mt-2">

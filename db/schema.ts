@@ -75,6 +75,8 @@ export const llmRoleEnum = pgEnum("llm_role", [
   "mentor",
   "version",
   "panel_reader",
+  "rehearsal",
+  "move_coder",
 ]);
 export const runStatusEnum = pgEnum("run_status", ["pending", "running", "complete", "failed"]);
 export const exportKindEnum = pgEnum("export_kind", ["brief", "plan", "profile"]);
@@ -843,4 +845,99 @@ export const document_entries = pgTable(
     ...timestamps,
   },
   (t) => [index("document_entries_user_idx").on(t.user_id, t.document, t.status)],
+);
+
+// ---------------------------------------------------------------- replay of a remembered argument
+// The first feature where two people's avatars meet. What each person may read is decided by the
+// table it sits in: the frame and the coded moves are shared by both participants; accounts and an
+// avatar's words belong to one person and have owner-only policies.
+export const replayStatusEnum = pgEnum("replay_status", ["proposed", "declined", "accepted", "running", "complete", "withdrawn"]);
+export const replayVerdictEnum = pgEnum("replay_verdict", ["yes", "partly", "no"]);
+
+export const replays = pgTable(
+  "replays",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    couple_id: uuid("couple_id")
+      .notNull()
+      .references(() => couples.id),
+    proposer_id: uuid("proposer_id")
+      .notNull()
+      .references(() => users.id),
+    partner_id: uuid("partner_id")
+      .notNull()
+      .references(() => users.id),
+    /** Encrypted JSON written by the proposer for their partner to read: what it was about, where and when, who spoke first, and the opening line. */
+    frame_enc: bytea("frame_enc").notNull(),
+    status: replayStatusEnum("status").notNull().default("proposed"),
+    max_turns: integer("max_turns").notNull().default(12),
+    responded_at: timestamp("responded_at", { withTimezone: true }),
+    completed_at: timestamp("completed_at", { withTimezone: true }),
+    ...timestamps,
+  },
+  (t) => [index("replays_couple_idx").on(t.couple_id)],
+);
+
+/** One person's private memory of the argument, and afterwards their verdict on the replay. Never shown to the other person or to any avatar, except `state_before`, which goes to the owner's own avatar. */
+export const replay_accounts = pgTable(
+  "replay_accounts",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    replay_id: uuid("replay_id")
+      .notNull()
+      .references(() => replays.id),
+    user_id: uuid("user_id")
+      .notNull()
+      .references(() => users.id),
+    account_enc: bytea("account_enc").notNull(),
+    /** Did the replay have the shape of what happened? The one thing about a verdict that the partner is told. */
+    verdict: replayVerdictEnum("verdict"),
+    /** Per-turn ratings of the owner's own avatar, {seq: "like_me" | "not_like_me"}. Structure only. */
+    turn_ratings: jsonb("turn_ratings").notNull().default({}),
+    ...timestamps,
+  },
+  (t) => [uniqueIndex("replay_accounts_replay_user").on(t.replay_id, t.user_id)],
+);
+
+/** The shared shape of the replay: who spoke, the coded move, how it was meant and how it landed. No words. */
+export const replay_turns = pgTable(
+  "replay_turns",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    replay_id: uuid("replay_id")
+      .notNull()
+      .references(() => replays.id),
+    seq: integer("seq").notNull(),
+    speaker_id: uuid("speaker_id")
+      .notNull()
+      .references(() => users.id),
+    move: text("move").notNull(),
+    secondary_move: text("secondary_move"),
+    /** -2 to 2: how the speaker meant this turn. */
+    intent: integer("intent"),
+    /** -2 to 2: how the turn before this one landed on this speaker. */
+    impact: integer("impact"),
+    ends: boolean("ends").notNull().default(false),
+    /** The opening line both people agreed to start from, not something an avatar produced. */
+    remembered: boolean("remembered").notNull().default(false),
+    created_at: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [uniqueIndex("replay_turns_replay_seq").on(t.replay_id, t.seq)],
+);
+
+/** What an avatar said and did, encrypted, readable by its own person only. */
+export const replay_turn_words = pgTable(
+  "replay_turn_words",
+  {
+    turn_id: uuid("turn_id")
+      .primaryKey()
+      .references(() => replay_turns.id, { onDelete: "cascade" }),
+    user_id: uuid("user_id")
+      .notNull()
+      .references(() => users.id),
+    words_enc: bytea("words_enc").notNull(),
+    /** Ids of the owner's lines the turn drew on. */
+    draws_on: jsonb("draws_on").notNull().default([]),
+  },
+  (t) => [index("replay_turn_words_user_idx").on(t.user_id)],
 );

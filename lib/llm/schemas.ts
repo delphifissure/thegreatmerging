@@ -243,6 +243,30 @@ export const VersionReplySchema = z
   });
 export type VersionReply = z.infer<typeof VersionReplySchema>;
 
+const Valence = z.number().int().min(-2).max(2);
+
+/** One turn by a rehearsal avatar in a replay. Read by its own person only; the long field comes last (see lib/llm/repair.ts). */
+export const RehearsalTurnSchema = z
+  .object({
+    /** How the partner's last turn landed, -2 to 2. Null on the first turn. */
+    impact: Valence.nullable(),
+    /** How this turn is meant, -2 to 2. */
+    intent: Valence,
+    does: Prose(200).nullable(),
+    ends: z.boolean(),
+    draws_on: z.array(z.string().min(1).max(40)).max(8),
+    says: Prose(700).nullable(),
+  })
+  .superRefine((t, ctx) => {
+    if (!t.says?.trim() && !t.does?.trim()) ctx.addIssue({ code: "custom", path: ["says"], message: "a turn must say or do something; going quiet is something you do" });
+  });
+export type RehearsalTurn = z.infer<typeof RehearsalTurnSchema>;
+
+const MOVE_KEYS = ["asks", "states_position", "explains", "criticizes", "defends", "owns", "appreciates", "proposes", "agrees", "disagrees", "withdraws", "deflects", "pauses", "leaves", "other"] as const;
+/** The move a turn makes. An enum and nothing else, because this is what crosses between two people. */
+export const MoveCodeSchema = z.object({ move: z.enum(MOVE_KEYS), secondary: z.enum(MOVE_KEYS).nullable() });
+export type MoveCode = z.infer<typeof MoveCodeSchema>;
+
 /** What held and what changed across the versions, as observations and one question. */
 export const PanelReadingSchema = z.object({
   same: z.array(Prose(300)).max(3),

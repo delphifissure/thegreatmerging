@@ -166,7 +166,13 @@ Agents agree too readily. Personas drift over long dialogues, so re-ground every
 ## How to find out cheaply whether it works
 
 1. Single-avatar fidelity, as above.
-2. **Backtest a remembered fight.** Each of you separately describes a past disagreement. Rehearse it from the state before. If neither of you recognizes the shape, the engine is not ready for future ones.
+2. **Backtest a remembered fight.** Each of you separately describes a past disagreement. Rehearse it from the state before. If neither of you recognizes the shape, the engine is not ready for future ones. Built on 18 September 2026 at `/replay`:
+   - One of you names an argument you both remember, where and when, who spoke first and roughly what they said. That frame is the one thing written for the other to read. The other says yes or no, and consent is logged.
+   - Each writes a private account: the state they were in, what they did and what their partner did (ticked from a fixed list of moves), and how it ended. Each avatar is told only its own person's state. No avatar sees what anyone remembers doing, because that is the answer being tested.
+   - The avatars of record take turns from the agreed opening line, one turn per request. They are written as the person in the moment and are not told they are avatars. A different model codes each turn as one of fifteen moves.
+   - Each person reads their own avatar's words and only the moves of the other's, plus how each turn was meant and how it landed, as numbers from -2 to 2. Private lines are left out of a rehearsal avatar altogether; a person has to allow lines, one by one or all at once.
+   - Recognition is scored in code, ignoring order, with explaining and defending counted as one act and going quiet and leaving as one. Then each gives a one-word verdict on the shape, and sees the other's only after giving their own. Either can withdraw at any point, which deletes the turns and both avatars' words.
+   - Not built: partner recognition with words (it is done on moves only), branching at the rupture, the evaluator, and any replay of a conversation that has not happened.
 3. Prospective check: rehearse, then talk for real, then compare.
 
 Cost is small at this scale. With avatars on Claude Sonnet 5, the Aligner and evaluator on Claude Opus 5, and prompt caching, a full rehearsal is about sixty cents and a branch about fifteen. A topic cycle is roughly five to ten dollars.

@@ -1,0 +1,369 @@
+{
+  "description": "Replay of a remembered argument. `coder` cases are single turns with the moves that would be acceptable. `replays` run the real loop: two rehearsal avatars built from each person's usable lines take turns from the agreed opening line, and every turn is coded. Checked on every generated turn: schema and guardrail pass, short, nothing about being an avatar or a simulation, and none of that person's `must_not_say` patterns (their settled requirement given up, or a line marked act-on-but-never-say spoken aloud). Checked on the whole: it does not make peace at once. Recognition against each person's remembered moves is printed, not gated: that verdict belongs to the two people.",
+  "coder": [
+    {
+      "id": "real_question",
+      "expect": [
+        "asks"
+      ],
+      "input": {
+        "earlier": [],
+        "turn_to_code": {
+          "speaker": "A",
+          "says": "What are you hoping we sort out tonight?",
+          "does": null
+        }
+      }
+    },
+    {
+      "id": "complaint_as_question",
+      "expect": [
+        "criticizes"
+      ],
+      "input": {
+        "earlier": [
+          {
+            "speaker": "A",
+            "says": "Can we go through the statement?",
+            "does": null
+          }
+        ],
+        "turn_to_code": {
+          "speaker": "B",
+          "says": "Why do you always do this the second I walk in?",
+          "does": null
+        }
+      }
+    },
+    {
+      "id": "explains",
+      "expect": [
+        "explains",
+        "defends"
+      ],
+      "input": {
+        "earlier": [
+          {
+            "speaker": "A",
+            "says": "There's a £240 charge here I don't recognize.",
+            "does": null
+          }
+        ],
+        "turn_to_code": {
+          "speaker": "B",
+          "says": "It was bike parts, the old ones were worn through and the sale ended that day, I was going to mention it.",
+          "does": null
+        }
+      }
+    },
+    {
+      "id": "counter_complaint",
+      "expect": [
+        "defends",
+        "criticizes"
+      ],
+      "input": {
+        "earlier": [
+          {
+            "speaker": "A",
+            "says": "You didn't tell me about it for weeks.",
+            "does": null
+          }
+        ],
+        "turn_to_code": {
+          "speaker": "B",
+          "says": "You didn't tell me about the coat either, so.",
+          "does": null
+        }
+      }
+    },
+    {
+      "id": "owns_it",
+      "expect": [
+        "owns"
+      ],
+      "input": {
+        "earlier": [
+          {
+            "speaker": "A",
+            "says": "You didn't tell me about it for weeks.",
+            "does": null
+          }
+        ],
+        "turn_to_code": {
+          "speaker": "B",
+          "says": "No. I didn't, and I should have. I'm sorry.",
+          "does": null
+        }
+      }
+    },
+    {
+      "id": "action_beats_words",
+      "expect": [
+        "leaves",
+        "withdraws"
+      ],
+      "input": {
+        "earlier": [
+          {
+            "speaker": "A",
+            "says": "So are we going to talk about it or not?",
+            "does": null
+          }
+        ],
+        "turn_to_code": {
+          "speaker": "B",
+          "says": "Fine.",
+          "does": "picks up his keys and walks out"
+        }
+      }
+    },
+    {
+      "id": "goes_quiet",
+      "expect": [
+        "withdraws"
+      ],
+      "input": {
+        "earlier": [
+          {
+            "speaker": "A",
+            "says": "I just want to understand why.",
+            "does": null
+          }
+        ],
+        "turn_to_code": {
+          "speaker": "B",
+          "says": null,
+          "does": "looks at the table and says nothing"
+        }
+      }
+    },
+    {
+      "id": "asks_for_a_pause",
+      "expect": [
+        "pauses"
+      ],
+      "input": {
+        "earlier": [
+          {
+            "speaker": "A",
+            "says": "I just want to understand why.",
+            "does": null
+          }
+        ],
+        "turn_to_code": {
+          "speaker": "B",
+          "says": "I can't do this well right now. Can we come back to it after I've eaten?",
+          "does": null
+        }
+      }
+    },
+    {
+      "id": "proposes",
+      "expect": [
+        "proposes"
+      ],
+      "input": {
+        "earlier": [
+          {
+            "speaker": "A",
+            "says": "I don't want to keep finding things on the statement.",
+            "does": null
+          }
+        ],
+        "turn_to_code": {
+          "speaker": "B",
+          "says": "What if anything over a hundred, we text each other first?",
+          "does": null
+        }
+      }
+    }
+  ],
+  "replays": [
+    {
+      "id": "card_statement",
+      "max_turns": 10,
+      "frame": {
+        "label": "The card statement in March",
+        "setting": "A weeknight, in the kitchen, just after Ben got home",
+        "firstSpeaker": "partner",
+        "openingLine": "Can we go through the card statement tonight? There's a charge on it I don't recognize."
+      },
+      "people": [
+        {
+          "key": "proposer",
+          "name": "Ben",
+          "state_before": "Got home after eight, hadn't eaten, already knew what the charge was and had been dreading this for weeks.",
+          "remembered": {
+            "mine": [
+              "explains",
+              "defends",
+              "withdraws"
+            ],
+            "theirs": [
+              "asks",
+              "criticizes"
+            ],
+            "ending": "one_left"
+          },
+          "must_not_say": [
+            "\\b(ok(ay)?|fine|yes|sure)\\b[^.?!]{0,40}\\b(separate|private) accounts?\\b",
+            "lost the house|losing the house"
+          ],
+          "voice_samples": [
+            {
+              "register": "everyday",
+              "text": "home by 8.30. sorry\nyes fine\ncan you grab milk\nlong day. tell you later"
+            },
+            {
+              "register": "heated",
+              "text": "fine.\nI said fine\nI'm not doing this now"
+            }
+          ],
+          "entries": [
+            {
+              "document": "constitution",
+              "section": "values",
+              "text": "Security comes first. Saving matters more to me than almost anything.",
+              "tier": "avatar_only",
+              "mark": "open"
+            },
+            {
+              "document": "constitution",
+              "section": "requirements",
+              "text": "Ana and I never hide anything about money from each other.",
+              "tier": "shareable",
+              "mark": "settled"
+            },
+            {
+              "document": "constitution",
+              "section": "gaps",
+              "text": "I bought bike parts and didn't tell Ana for weeks.",
+              "tier": "avatar_only",
+              "mark": "open"
+            },
+            {
+              "document": "constitution",
+              "section": "lived",
+              "text": "I check the joint account most mornings.",
+              "tier": "avatar_only",
+              "mark": "open"
+            },
+            {
+              "document": "constitution",
+              "section": "conflict",
+              "text": "When money comes up I explain myself at length before I ask anything, and then I go quiet for the rest of the evening.",
+              "tier": "avatar_only",
+              "mark": "open"
+            },
+            {
+              "document": "constitution",
+              "section": "fears",
+              "text": "That one bad year puts us where my parents were, losing the house.",
+              "tier": "avatar_only",
+              "mark": "open"
+            },
+            {
+              "document": "constitution",
+              "section": "working_on",
+              "text": "Telling Ana about a purchase before I make it, not after.",
+              "tier": "shareable",
+              "mark": "open"
+            },
+            {
+              "document": "constitution",
+              "section": "fears",
+              "text": "That Ana thinks less of me every time this happens.",
+              "tier": "private",
+              "mark": "open"
+            },
+            {
+              "document": "history",
+              "section": "money_modelled",
+              "text": "We lost the house when I was twelve.",
+              "tier": "avatar_only",
+              "mark": "open"
+            }
+          ]
+        },
+        {
+          "key": "partner",
+          "name": "Ana",
+          "state_before": "Had found the charge that afternoon and been turning it over for hours. Calm on the surface, not underneath.",
+          "remembered": {
+            "mine": [
+              "asks",
+              "criticizes",
+              "states_position"
+            ],
+            "theirs": [
+              "explains",
+              "withdraws"
+            ],
+            "ending": "one_left"
+          },
+          "must_not_say": [
+            "already decided to leave|decided to leave"
+          ],
+          "voice_samples": [
+            {
+              "register": "everyday",
+              "text": "Are you nearly home? Dinner's in the oven.\nOk! No rush.\nDid you remember the thing for Saturday?"
+            }
+          ],
+          "entries": [
+            {
+              "document": "constitution",
+              "section": "values",
+              "text": "Being able to say anything to each other matters more to me than being comfortable.",
+              "tier": "shareable",
+              "mark": "open"
+            },
+            {
+              "document": "constitution",
+              "section": "requirements",
+              "text": "We don't go to bed without at least saying where we each are, even if it isn't solved.",
+              "tier": "shareable",
+              "mark": "settled"
+            },
+            {
+              "document": "constitution",
+              "section": "lived",
+              "text": "When Ben goes quiet I follow him from room to room until he talks.",
+              "tier": "avatar_only",
+              "mark": "open"
+            },
+            {
+              "document": "constitution",
+              "section": "conflict",
+              "text": "I raise things the moment I notice them, usually while he's in the middle of something else.",
+              "tier": "avatar_only",
+              "mark": "open"
+            },
+            {
+              "document": "constitution",
+              "section": "fears",
+              "text": "That silence means he's already decided to leave.",
+              "tier": "avatar_only",
+              "mark": "open"
+            },
+            {
+              "document": "constitution",
+              "section": "working_on",
+              "text": "Giving Ben the hour he asks for without knocking on the door.",
+              "tier": "shareable",
+              "mark": "open"
+            },
+            {
+              "document": "history",
+              "section": "conflict_modelled",
+              "text": "My parents never shouted. They left the room and it was silent for days.",
+              "tier": "avatar_only",
+              "mark": "open"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

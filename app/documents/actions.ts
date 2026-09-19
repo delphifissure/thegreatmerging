@@ -57,3 +57,19 @@ export async function addOwn(raw: z.infer<typeof OwnInput>): Promise<ActionResul
   refresh();
   return { ok: true };
 }
+
+const TierInput = z.object({ entryId: z.uuid(), tier: Tier });
+
+/**
+ * Who may use a line once someone else's avatar is in the room: nobody (private), my avatar to act
+ * on but never say, or my avatar to say. Logged, because it changes what can reach another person.
+ */
+export async function setTier(raw: z.infer<typeof TierInput>): Promise<ActionResult> {
+  if (!FEATURES.biographer) return fail("This is not switched on.");
+  const parsed = TierInput.safeParse(raw);
+  if (!parsed.success) return fail("That line could not be found.");
+  const user = await requireAppUser();
+  await data.setEntryTier({ entryId: parsed.data.entryId, userId: user.id, tier: parsed.data.tier });
+  refresh();
+  return { ok: true };
+}
