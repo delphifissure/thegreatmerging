@@ -6,9 +6,9 @@ import { Notice } from "@/app/_components/Field";
 import type { Scenario } from "@/lib/sandbox/scenario";
 import { createSandboxAction, generatePersonasAction } from "./actions";
 
-type Draft = { aName: string; aNotes: string; bName: string; bNotes: string; shared: string; situation: string; firstSpeaker: "a" | "b"; openingLine: string; maxTurns: number };
-const EMPTY: Draft = { aName: "", aNotes: "", bName: "", bNotes: "", shared: "", situation: "", firstSpeaker: "a", openingLine: "", maxTurns: 12 };
-const fromScenario = (s: Scenario): Draft => ({ aName: s.a.name, aNotes: s.a.notes, bName: s.b.name, bNotes: s.b.notes, shared: s.shared, situation: s.situation, firstSpeaker: s.firstSpeaker, openingLine: s.openingLine, maxTurns: s.maxTurns });
+type Draft = { aName: string; aNotes: string; bName: string; bNotes: string; shared: string; situation: string; firstSpeaker: "a" | "b"; openingLine: string };
+const EMPTY: Draft = { aName: "", aNotes: "", bName: "", bNotes: "", shared: "", situation: "", firstSpeaker: "a", openingLine: "" };
+const fromScenario = (s: Scenario): Draft => ({ aName: s.a.name, aNotes: s.a.notes, bName: s.b.name, bNotes: s.b.notes, shared: s.shared, situation: s.situation, firstSpeaker: s.firstSpeaker, openingLine: s.openingLine });
 
 /** Write two people, or have them written, then put them in a situation. Everything stays editable until the conversation starts. */
 export function SandboxForm({ initial }: { initial: Scenario | null }) {
@@ -34,7 +34,7 @@ export function SandboxForm({ initial }: { initial: Scenario | null }) {
   const create = () =>
     startCreate(async () => {
       setError(null);
-      const r = await createSandboxAction({ a: { name: d.aName, notes: d.aNotes }, b: { name: d.bName, notes: d.bNotes }, shared: d.shared, situation: d.situation, firstSpeaker: d.firstSpeaker, openingLine: d.openingLine, maxTurns: d.maxTurns });
+      const r = await createSandboxAction({ a: { name: d.aName, notes: d.aNotes }, b: { name: d.bName, notes: d.bNotes }, shared: d.shared, situation: d.situation, firstSpeaker: d.firstSpeaker, openingLine: d.openingLine });
       if (r && !r.ok) setError(r.error);
     });
 
@@ -91,7 +91,7 @@ export function SandboxForm({ initial }: { initial: Scenario | null }) {
           <label htmlFor="situation" className="reading block text-[19px]">
             The situation
           </label>
-          <p className="text-sm text-muted">What is happening, up to the moment before someone speaks.</p>
+          <p className="text-sm text-muted">What is happening, up to the moment before someone speaks. They talk until one of them ends it.</p>
           <textarea id="situation" rows={3} value={d.situation} onChange={(e) => set("situation", e.target.value)} className={field} disabled={busy} />
           {situations.length > 0 ? (
             <div className="mt-2 flex flex-col gap-1.5">
@@ -103,7 +103,7 @@ export function SandboxForm({ initial }: { initial: Scenario | null }) {
             </div>
           ) : null}
 
-          <div className="mt-4 grid gap-4 sm:grid-cols-[auto_1fr_auto]">
+          <div className="mt-4 grid gap-4 sm:grid-cols-[auto_1fr]">
             <fieldset>
               <legend className="text-sm font-medium">Who speaks first</legend>
               <div className="mt-1 flex gap-2">
@@ -120,18 +120,6 @@ export function SandboxForm({ initial }: { initial: Scenario | null }) {
                 Their first line <span className="font-normal text-muted">(optional; otherwise they choose it)</span>
               </label>
               <input id="opening" type="text" maxLength={300} value={d.openingLine} onChange={(e) => set("openingLine", e.target.value)} className={field} disabled={busy} />
-            </div>
-            <div>
-              <label htmlFor="max-turns" className="block text-sm font-medium">
-                Turns
-              </label>
-              <select id="max-turns" value={d.maxTurns} onChange={(e) => set("maxTurns", Number(e.target.value))} className="mt-1" disabled={busy}>
-                {[6, 8, 12, 16, 20].map((n) => (
-                  <option key={n} value={n}>
-                    {n}
-                  </option>
-                ))}
-              </select>
             </div>
           </div>
         </div>

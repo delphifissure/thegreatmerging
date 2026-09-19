@@ -92,7 +92,9 @@ export async function saveBriefAction(raw: z.infer<typeof SaveBriefInput>): Prom
   return { ok: true, message: "Saved. This is what they will be told." };
 }
 
-export type AdvanceResult = { ok: true; done: boolean; turns: number } | { ok: false; error: string };
+/** The turn just taken comes back with the result, so the browser can show it at once and not wait for the page to be fetched again. */
+export type LiveTurn = { index: number; side: "a" | "b"; says: string | null; does: string | null; move: string; secondary: string | null; intent: number | null; impact: number | null; ends: boolean; given: boolean };
+export type AdvanceResult = { ok: true; done: boolean; turns: number; turn: LiveTurn | null } | { ok: false; error: string };
 const AdvanceInput = z.object({ threadId: z.uuid(), expected: z.number().int().min(0).max(SANDBOX_HARD_LIMIT) });
 
 /** One more turn. Called in a loop from the browser so no request is long. */
@@ -103,8 +105,8 @@ export async function advanceSandboxAction(raw: z.infer<typeof AdvanceInput>): P
   const user = await requireAppUser();
   const box = await readSandbox(parsed.data.threadId, user.id);
   if (!box) return { ok: false, error: "That sandbox is not yours." };
-  if (box.turns.length !== parsed.data.expected) return { ok: true, done: sandboxIsOver(box.turns, box.maxTurns), turns: box.turns.length };
-  if (sandboxIsOver(box.turns, box.maxTurns)) return { ok: true, done: true, turns: box.turns.length };
+  if (box.turns.length !== parsed.data.expected) return { ok: true, done: sandboxIsOver(box.turns, box.maxTurns), turns: box.turns.length, turn: null };
+  if (sandboxIsOver(box.turns, box.maxTurns)) return { ok: true, done: true, turns: box.turns.length, turn: null };
   if (!briefsReady(box.briefs)) return { ok: false, error: "Write their briefs first." };
   const briefs = box.briefs;
   if (!process.env.ANTHROPIC_API_KEY) return { ok: false, error: "The model is not configured." };
@@ -119,7 +121,7 @@ export async function advanceSandboxAction(raw: z.infer<typeof AdvanceInput>): P
     if (box.turns.length === 0 && scenario.openingLine) {
       turn = { says: scenario.openingLine, does: null, ends: false, intent: null, impact: null, given: true };
     } else {
-      const out = await callRole("sandbox_avatar", buildSandboxAvatarInput(scenario, side, briefs[side], box.turns, box.maxTurns), RehearsalTurnSchema, { ...ctx, jobStep: `sandbox:turn:${side}` });
+      const out = await callRole("sandbox_avatar", buildSandboxAvatarInput(scenario, side, briefs[side], box.turns), RehearsalTurnSchema, { ...ctx, jobStep: `sandbox:turn:${side}` });
       turn = { says: cleanSpeech(out.says), does: out.does?.trim() || null, ends: out.ends, intent: out.intent, impact: out.impact, given: false };
     }
     const code = await callRole("move_coder", buildMoveCoderInput([...asSpoken(box.turns), { speakerId: side, says: turn.says, does: turn.does }], scenario.firstSpeaker), MoveCodeSchema, { ...ctx, jobStep: "sandbox:code" });
@@ -133,7 +135,7 @@ export async function advanceSandboxAction(raw: z.infer<typeof AdvanceInput>): P
     const count = box.turns.length + 1;
     const done = sandboxIsOver([...box.turns, { side, ...turn }], box.maxTurns);
     refresh();
-    return { ok: true, done, turns: count };
+    return { ok: true, done, turns: count, turn: { index: count - 1, side, says: turn.says, does: turn.does, move: code.move, secondary: code.secondary, intent: turn.intent, impact: turn.impact, ends: turn.ends, given: turn.given } };
   } catch {
     return { ok: false, error: "That turn did not come through. Nothing is lost: try again and it carries on from here." };
   }
@@ -149,9 +151,9 @@ export async function extendSandboxAction(raw: z.infer<typeof IdInput>): Promise
   const user = await requireAppUser();
   const box = await readSandbox(parsed.data.threadId, user.id);
   if (!box) return fail("That sandbox is not yours.");
-  if (box.maxTurns + SANDBOX_EXTEND_BY > SANDBOX_HARD_LIMIT) return fail("That is as long as a sandbox conversation goes. Start a new one from this one to carry on.");
+  if (box.maxTurns >= SANDBOX_HARD_LIMIT) return fail("That is as long as a sandbox conversation goes. Start a new one from this one to carry on.");
   if (box.turns[box.turns.length - 1]?.ends) return fail("One of them ended the conversation. Start a new one from this one to try it another way.");
-  await data.appendTurn({ threadId: box.threadId, userId: user.id, role: "guide", text: "", meta: { kind: "extend", by: SANDBOX_EXTEND_BY } });
+  await data.appendTurn({ threadId: box.threadId, userId: user.id, role: "guide", text: "", meta: { kind: "extend", by: Math.min(SANDBOX_EXTEND_BY, SANDBOX_HARD_LIMIT - box.maxTurns) } });
   refresh();
   return { ok: true };
 }

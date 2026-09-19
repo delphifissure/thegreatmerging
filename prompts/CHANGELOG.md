@@ -2,6 +2,15 @@
 
 The LLM component is versioned as part of the instrument. Any change to a prompt file, a model identifier, a temperature, an effort setting, or an output schema requires a version bump here and, when it alters any eval result, a note of which evals changed.
 
+## 2026.09.18-9
+
+The sandbox runs until the conversation is over, and shows each turn as it arrives. Both from the owner using it: the page sat on "They are in the room. Nothing has been said yet." for the whole run and then showed every turn at once, and a fixed number of turns was the wrong control.
+
+- `sandbox_avatar.v3`: the avatar is no longer told how many exchanges are left (the field is gone from its input), because a number makes it wrap up to fit. It is told that conversations end, that this one ends when one of them ends it, what over looks like (someone has left or refused to go on, it has been settled or dropped, or there is nothing more either would say right now), and not to end early to be tidy. `maxTurns` stays in a scenario as a safety cap only (default 40, up to 100 in steps of 20); the form no longer asks for a number, and the runner has a Pause button.
+- The live display was a React problem, not a model one. The browser loop that asks for one turn at a time ran inside a single transition, and a transition holds every update back until all of its awaits have finished. The loop is now plain async code, and the action returns the turn it just wrote so the runner draws it at once; the page's own list takes over when it next refreshes. The replay's runner had the same fault and is fixed the same way, and the replay page now has one runner at one place in the tree, so the loop survives the status changing from accepted to running under it.
+
+**Eval baseline (2026-09-18):** sandbox 20/20, with a new check that one of the two ends the conversation before the cap. On the doorbell scene with a cap of 30, Jonas ended it after 14 turns ("Fine, stay in here and scrub a clean counter, then. Great. I'll tell her you're not feeling well, shall I, again."), which is a fair picture of how that argument would stop.
+
 ## 2026.09.18-8
 
 Two corrections to the sandbox from the owner, who read what the avatars were being told: "why no insults etc? they can say whatever", and "the prompt for each is mostly written for BOTH of them, not TO the individual, e.g. 'they are standing' vs. 'You are standing'".

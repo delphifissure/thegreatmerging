@@ -63,6 +63,7 @@ export default async function ReplayPage({ params, searchParams }: { params: Pro
     coachNote: t.coachNote,
   }));
   const complete = replay.status === "complete" || !current;
+  const canRun = current && ((replay.status === "accepted" && !!own && partnerHasAccount && bothReady) || replay.status === "running");
 
   return (
     <div className="space-y-5">
@@ -129,9 +130,7 @@ export default async function ReplayPage({ params, searchParams }: { params: Pro
           <AccountForm key={own ? "edit" : "new"} replayId={replay.id} partnerName={partnerName} initial={own ? own.account : null} />
           {own ? (
             partnerHasAccount ? (
-              bothReady ? (
-                <Runner replayId={replay.id} turns={turns.length} started={false} />
-              ) : (
+              bothReady ? null : (
                 <Card dashed as="div">
                   <p className="reading text-[17px]">
                     Both accounts are in. {mine && mine.constitution < REPLAY_LIMITS.minLines ? "Your rehearsal avatar needs more lines it may use (see above)." : `${partnerName}'s rehearsal avatar does not have enough lines it may use yet. That is theirs to change.`}
@@ -176,9 +175,12 @@ export default async function ReplayPage({ params, searchParams }: { params: Pro
             open={replay.open.both}
             current={current}
           />
-          {replay.status === "running" && current ? <Runner key={replay.take} replayId={replay.id} turns={turns.length} started retake={replay.take > 1} /> : null}
+
         </>
       ) : null}
+
+      {/* One Runner for both "accepted" and "running", at one place in the tree: the status changes under it on the first turn, and a second instance would lose the loop. */}
+      {canRun ? <Runner key={replay.take} replayId={replay.id} turns={turns.length} started={replay.status === "running"} retake={replay.take > 1} /> : null}
 
       {replay.status !== "withdrawn" && replay.status !== "declined" ? (
         <div className="border-t border-rule/70 pt-4">

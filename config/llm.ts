@@ -261,8 +261,8 @@ export const LLM_CONFIG: Record<Role, RoleConfig> = {
     model: "claude-sonnet-5",
     temperature: 0.7,
     effort: "medium",
-    prompt_file: "sandbox_avatar.v2.md",
-    prompt_version: "sandbox_avatar.v2",
+    prompt_file: "sandbox_avatar.v3.md",
+    prompt_version: "sandbox_avatar.v3",
     tool_name: "emit_sandbox_turn",
     max_tokens: 1000,
     batchable: false,
@@ -285,4 +285,4 @@ export const LLM_CONFIG: Record<Role, RoleConfig> = {
 };
 
 /** Bump on any change to a prompt, model, temperature, or output schema. Record it in prompts/CHANGELOG.md. */
-export const LLM_CONFIG_VERSION = "2026.09.18-8";
+export const LLM_CONFIG_VERSION = "2026.09.18-9";

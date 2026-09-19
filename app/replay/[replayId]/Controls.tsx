@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useRef, useState, useTransition } from "react";
+import { useRouter } from "next/navigation";
 import { Button } from "@/app/_components/Button";
 import { Notice } from "@/app/_components/Field";
 import type { ActionResult } from "@/app/_lib/actions";
@@ -161,36 +162,72 @@ export function AccountForm({ replayId, partnerName, initial }: { replayId: stri
   );
 }
 
-/** Runs the replay a turn at a time from the browser, so the page fills in as it goes and either person can pick it up. */
+/**
+ * Runs the replay a turn at a time from the browser, so either person can pick it up. The loop is
+ * deliberately not inside a React transition: a transition holds every page update back until the
+ * whole loop has finished, and the turns would all appear at once at the end. After each turn the
+ * page is asked for again, so what this person may see of it shows up as it happens.
+ */
 export function Runner({ replayId, turns, started, retake = false }: { replayId: string; turns: number; started: boolean; retake?: boolean }) {
+  const router = useRouter();
   const [error, setError] = useState<string | null>(null);
   const [count, setCount] = useState(turns);
-  const [pending, start] = useTransition();
-  const go = () =>
-    start(async () => {
-      setError(null);
-      let expected = Math.max(count, turns);
-      for (let i = 0; i < 40; i++) {
-        const r = await advanceReplayAction({ replayId, expected });
-        if (!r.ok) return setError(r.error);
-        expected = r.turns;
-        setCount(r.turns);
-        if (r.done) return;
+  const [running, setRunning] = useState(false);
+  const stop = useRef(false);
+  const [stopping, setStopping] = useState(false);
+  const shown = Math.max(count, turns);
+  const go = async () => {
+    setRunning(true);
+    setStopping(false);
+    setError(null);
+    stop.current = false;
+    let expected = shown;
+    for (let i = 0; i < 40; i++) {
+      const r = await advanceReplayAction({ replayId, expected });
+      if (!r.ok) {
+        setError(r.error);
+        break;
       }
-    });
+      expected = r.turns;
+      setCount(r.turns);
+      router.refresh();
+      if (r.done || stop.current) break;
+    }
+    setRunning(false);
+    router.refresh();
+  };
   return (
     <div className="rounded-card border border-dashed border-rule bg-surface p-5">
-      <p className="reading text-[17px]">{retake ? "A new take is ready. It keeps everything before the turn you chose and plays on from there, with your coaching." : started ? "The replay stopped part way. It carries on from where it got to." : "Both accounts are in. Your avatars can replay it now, a turn at a time."}</p>
+      <p className="reading text-[17px]">
+        {running
+          ? `Turn ${shown + 1} is being written…`
+          : retake && shown <= turns
+            ? "A new take is ready. It keeps everything before the turn you chose and plays on from there, with your coaching."
+            : started || shown > 0
+              ? `Paused after ${shown} ${shown === 1 ? "turn" : "turns"}. It carries on from where it got to.`
+              : "Both accounts are in. Your avatars can replay it now, a turn at a time."}
+      </p>
       {error ? (
         <div className="mt-3">
           <Notice tone="warn">{error}</Notice>
         </div>
       ) : null}
       <div className="mt-3 flex flex-wrap items-center gap-3">
-        <Button disabled={pending} aria-busy={pending} onClick={go}>
-          {pending ? `Turn ${count + 1}…` : retake ? "Run this take" : started ? "Carry on" : "Run the replay"}
-        </Button>
-        {pending ? <span className="text-sm text-muted">Each turn takes a few seconds. You can watch it fill in.</span> : null}
+        {running ? (
+          <Button
+            variant="secondary"
+            disabled={stopping}
+            onClick={() => {
+              stop.current = true;
+              setStopping(true);
+            }}
+          >
+            {stopping ? "Stopping after this turn…" : "Pause"}
+          </Button>
+        ) : (
+          <Button onClick={go}>{retake && shown <= turns ? "Run this take" : started || shown > 0 ? "Carry on" : "Run the replay"}</Button>
+        )}
+        {running ? <span className="text-sm text-muted">Each turn takes a few seconds, and appears as it is written.</span> : null}
       </div>
     </div>
   );

@@ -10,6 +10,8 @@ import { z } from "zod";
 import type { Move } from "@/lib/replay/moves";
 
 const Text = (min: number, max: number) => z.string().trim().min(min).max(max);
+const SANDBOX_DEFAULT_CAP = 40;
+const SANDBOX_HARD_LIMIT_VALUE = 100;
 
 export const PersonaSchema = z.object({ name: Text(1, 40), notes: Text(40, 6000) });
 export const ScenarioSchema = z
@@ -22,7 +24,8 @@ export const ScenarioSchema = z
     firstSpeaker: z.enum(["a", "b"]),
     /** Optional. When given, the conversation starts from this line and nothing is generated for it. */
     openingLine: z.string().trim().max(300).default(""),
-    maxTurns: z.number().int().min(4).max(24).default(12),
+    /** A safety cap, not a length: the two of them decide when it is over. Older sandboxes stored a short fixed number here. */
+    maxTurns: z.number().int().min(4).max(SANDBOX_HARD_LIMIT_VALUE).default(SANDBOX_DEFAULT_CAP),
   })
   .refine((s) => s.a.name.toLowerCase() !== s.b.name.toLowerCase(), { message: "The two people need different names.", path: ["b", "name"] });
 export type Scenario = z.infer<typeof ScenarioSchema>;
@@ -38,15 +41,10 @@ export function buildBriefWriterInput(scenario: Scenario, side: Side) {
 }
 
 /** What one avatar is given: the brief written to it, and what has been said since. */
-export function buildSandboxAvatarInput(scenario: Scenario, side: Side, brief: string, turns: SandboxTurn[], maxTurns: number) {
+export function buildSandboxAvatarInput(scenario: Scenario, side: Side, brief: string, turns: SandboxTurn[]) {
   const them = scenario[other(side)];
-  return {
-    you: scenario[side].name,
-    partner: them.name,
-    brief,
-    so_far: turns.map((t) => ({ who: t.side === side ? "you" : them.name, says: t.says, does: t.does })),
-    exchanges_left: Math.max(0, maxTurns - turns.length),
-  };
+  // No count of turns left: they end it themselves, and a number makes them wrap up to fit it.
+  return { you: scenario[side].name, partner: them.name, brief, so_far: turns.map((t) => ({ who: t.side === side ? "you" : them.name, says: t.says, does: t.does })) };
 }
 
 export type Briefs = Record<Side, string | null>;
@@ -61,5 +59,5 @@ export function sandboxIsOver(turns: SandboxTurn[], maxTurns: number): boolean {
   return tail.length === 2 && tail.every((t) => !t.says?.trim());
 }
 
-export const SANDBOX_EXTEND_BY = 6;
-export const SANDBOX_HARD_LIMIT = 48;
+export const SANDBOX_EXTEND_BY = 20;
+export const SANDBOX_HARD_LIMIT = SANDBOX_HARD_LIMIT_VALUE;

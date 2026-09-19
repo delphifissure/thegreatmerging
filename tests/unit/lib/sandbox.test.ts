@@ -20,12 +20,14 @@ const t = (side: "a" | "b", says: string | null, ends = false): SandboxTurn => (
 
 describe("a scenario", () => {
   it("needs two differently named people with notes, a shared history and a situation, and fills in the rest", () => {
-    expect(scenario).toMatchObject({ openingLine: "", maxTurns: 12, firstSpeaker: "b" });
+    // maxTurns is a safety cap now, not a length.
+    expect(scenario).toMatchObject({ openingLine: "", maxTurns: 40, firstSpeaker: "b" });
     const raw = { a: scenario.a, b: scenario.b, shared: scenario.shared, situation: scenario.situation, firstSpeaker: "a" };
     expect(ScenarioSchema.safeParse({ ...raw, b: { ...scenario.b, name: " mara " } }).success).toBe(false);
     expect(ScenarioSchema.safeParse({ ...raw, a: { name: "Mara", notes: "too short" } }).success).toBe(false);
     expect(ScenarioSchema.safeParse({ ...raw, situation: "" }).success).toBe(false);
-    expect(ScenarioSchema.safeParse({ ...raw, maxTurns: 100 }).success).toBe(false);
+    expect(ScenarioSchema.safeParse({ ...raw, maxTurns: 1000 }).success).toBe(false);
+    expect(ScenarioSchema.safeParse({ ...raw, maxTurns: 8 }).success).toBe(true);
     expect(parseScenario(JSON.stringify(scenario))).toEqual(scenario);
     expect(parseScenario("not json")).toBeNull();
     expect(parseScenario("{}")).toBeNull();
@@ -42,7 +44,7 @@ describe("what each avatar is given", () => {
 
   it("the avatar is given the brief written to it and what has been said since, and nothing written about it from outside", () => {
     const brief = "You are Jonas. You are the youngest of four. Right now the doorbell has just gone, and neither of you has moved.";
-    const input = buildSandboxAvatarInput(scenario, "b", brief, [t("b", "Are you getting that?"), t("a", "It's your mother.")], 12);
+    const input = buildSandboxAvatarInput(scenario, "b", brief, [t("b", "Are you getting that?"), t("a", "It's your mother.")]);
     expect(input).toEqual({
       you: "Jonas",
       partner: "Mara",
@@ -51,8 +53,9 @@ describe("what each avatar is given", () => {
         { who: "you", says: "Are you getting that?", does: null },
         { who: "Mara", says: "It's your mother.", does: null },
       ],
-      exchanges_left: 10,
     });
+    // No count of turns left: they end it themselves.
+    expect(Object.keys(input)).not.toContain("exchanges_left");
     // The third-person notes, the shared history and the situation reach it only through its brief.
     expect(JSON.stringify(input)).not.toMatch(/Lisbon|When pressed he leaves|Neither of them has moved/);
   });

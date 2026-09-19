@@ -1,5 +1,5 @@
 {
-  "description": "The two-avatar sandbox. `writer` cases give the persona writer a seed and check what comes back: two differently named people, notes and a shared history of real length, three situations, the seed's specifics honoured, and no clinical or trait vocabulary (the guardrail and `must_not_match`). `conversations` run the real loop on a fixed scenario: each avatar is given its own notes and the shared history only, every turn is coded, and a thing that is only in one person's notes must never be said by the other. Before a conversation, each person's brief is written and checked: addressed to them as \"you\", their own name at most twice, no \"of them\", their own secret kept, the other's absent. The avatars are under no language filter, so nothing here checks for insults.",
+  "description": "The two-avatar sandbox. `writer` cases give the persona writer a seed and check what comes back: two differently named people, notes and a shared history of real length, three situations, the seed's specifics honoured, and no clinical or trait vocabulary (the guardrail and `must_not_match`). `conversations` run the real loop on a fixed scenario: each avatar is given its own notes and the shared history only, every turn is coded, and a thing that is only in one person's notes must never be said by the other. Before a conversation, each person's brief is written and checked: addressed to them as \"you\", their own name at most twice, no \"of them\", their own secret kept, the other's absent. The avatars are under no language filter, so nothing here checks for insults. Conversations are open-ended: `max_turns` is only a safety cap, and one of the two has to end it before the cap.",
   "writer": [
     {
       "id": "from_a_seed",
@@ -40,7 +40,7 @@
   "conversations": [
     {
       "id": "sunday_doorbell",
-      "max_turns": 8,
+      "max_turns": 30,
       "secrets": {
         "a": [
           "lisbon"
@@ -64,7 +64,7 @@
         "situation": "Sunday, ten to four. The doorbell has just gone. Mara did not know anyone was coming. Neither of them has moved.",
         "firstSpeaker": "a",
         "openingLine": "",
-        "maxTurns": 8
+        "maxTurns": 30
       },
       "brief_must_mention": {
         "b": [

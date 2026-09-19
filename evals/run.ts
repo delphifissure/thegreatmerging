@@ -605,7 +605,7 @@ async function runSandbox() {
     try {
       while (!sandboxIsOver(turns, c.max_turns)) {
         const side = nextSide(scenario, turns);
-        const out = await withRetry(`sandbox ${c.id} turn ${turns.length + 1}`, () => callRole("sandbox_avatar", buildSandboxAvatarInput(scenario, side, briefs[side], turns, c.max_turns), RehearsalTurnSchema, { coupleId: null, jobStep: `eval:sandbox:${c.id}:turn:${turns.length + 1}` }));
+        const out = await withRetry(`sandbox ${c.id} turn ${turns.length + 1}`, () => callRole("sandbox_avatar", buildSandboxAvatarInput(scenario, side, briefs[side], turns), RehearsalTurnSchema, { coupleId: null, jobStep: `eval:sandbox:${c.id}:turn:${turns.length + 1}` }));
         const turn: SandboxTurn = { side, says: cleanSpeech(out.says), does: out.does?.trim() || null, ends: out.ends };
         turns.push(turn);
         const code = await callRole("move_coder", buildMoveCoderInput(turns.map((t) => ({ speakerId: t.side, says: t.says, does: t.does })), scenario.firstSpeaker), MoveCodeSchema, { coupleId: null, jobStep: `eval:sandbox:${c.id}:code:${turns.length}` });
@@ -622,6 +622,9 @@ async function runSandbox() {
       }
       if (dumpDir) fs.writeFileSync(path.join(dumpDir, `sandbox_${c.id}.json`), JSON.stringify(log, null, 2));
       record({ suite: "sandbox", id: `${c.id}/does not make peace at once`, ok: !resolvedTooEasily(coded), detail: coded.map((t) => t.move).join(" > ") });
+      // Nobody sets a number of turns any more, so one of them has to end it.
+      const endedItself = turns[turns.length - 1]?.ends === true || turns.slice(-2).every((t) => !t.says?.trim());
+      record({ suite: "sandbox", id: `${c.id}/ends by itself`, ok: endedItself && turns.length >= 4, detail: endedItself ? `${scenario[turns[turns.length - 1].side].name} ended it after ${turns.length} turns` : `still going at the cap of ${c.max_turns}` });
     } catch (err) {
       record({ suite: "sandbox", id: `${c.id}/run`, ok: false, detail: err instanceof LlmValidationError ? `rejected: ${err.message.slice(0, 220)}` : String(err).slice(0, 220) });
     }
