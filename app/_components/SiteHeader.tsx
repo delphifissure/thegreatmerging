@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { currentUser } from "@/lib/supabase/server";
 import { APP_NAME } from "@/lib/brand";
+import { FEATURES } from "@/config/features";
 import { Mark } from "./Mark";
 
 const NAV = [
@@ -9,6 +10,8 @@ const NAV = [
   { href: "/results", label: "Results" },
   { href: "/brief", label: "Brief" },
   { href: "/plan", label: "Plan" },
+  // The intervention prototype: biographer, documents, avatars and the replay all hang off this page.
+  ...(FEATURES.biographer ? [{ href: "/biographer", label: "Biographer" }] : []),
 ];
 
 export async function SiteHeader() {

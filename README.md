@@ -37,6 +37,8 @@ pnpm install
 cp .env.example .env.local   # fill in Supabase, Anthropic, Inngest, FIELD_ENCRYPTION_KEY, APP_URL
 pnpm db:migrate              # applies db/migrations (schema + RLS) to DATABASE_URL
 pnpm db:seed                 # syncs instrument definitions; E2E_SEED=1 adds two test users in one couple
+                             # E2E_SEED=1 DEMO_DOCUMENTS=1 also gives them signed lines and writing samples,
+                             # so the biographer prototype's avatars and the replay can be tried at once
 pnpm dev
 ```
 

@@ -7,6 +7,8 @@
  * Without it (plain Postgres), fixed UUIDs are inserted into `users` for integration tests.
  */
 import "@/lib/load_env";
+import fs from "node:fs";
+import path from "node:path";
 import { createClient } from "@supabase/supabase-js";
 import { db, schema } from "@/db/client";
 import { INSTRUMENTS } from "@/instruments/registry";
@@ -73,12 +75,35 @@ export async function seedE2E() {
   return { anaId, benId, soloId };
 }
 
+/**
+ * DEMO_DOCUMENTS=1 (with E2E_SEED=1): give Ana and Ben ratified lines, tiers and a few writing
+ * samples, so the one-notch-ahead self, "Ask all of me" and the replay can be tried without hours
+ * of biographer conversations. The lines are the synthetic couple from evals/replay/cases.json.
+ * Skips anyone who already has a ratified line.
+ */
+export async function seedDemoDocuments(ids: { anaId: string; benId: string }) {
+  const fixture = JSON.parse(fs.readFileSync(path.join("evals", "replay", "cases.json"), "utf8")) as {
+    replays: Array<{ people: Array<{ name: string; entries: Array<{ document: "history" | "constitution"; section: string; text: string; tier: "private" | "avatar_only" | "shareable"; mark: "settled" | "open" }>; voice_samples?: Array<{ register: string; text: string }> }> }>;
+  };
+  for (const person of fixture.replays[0].people) {
+    const userId = person.name === "Ana" ? ids.anaId : ids.benId;
+    if ((await data.listOwnEntries(userId, { status: "ratified" })).length > 0) continue;
+    for (const e of person.entries) {
+      const entry = await data.addOwnEntry({ userId, document: e.document, section: e.section, text: e.text, mark: e.mark });
+      if (e.tier !== "private") await data.setEntryTier({ entryId: entry.id, userId, tier: e.tier });
+    }
+    for (const v of person.voice_samples ?? []) if (v.register !== "considered") await data.addVoiceSample({ userId, register: v.register as data.PastedRegister, text: v.text });
+    console.log(`demo documents for ${person.name}: ${person.entries.length} lines`);
+  }
+}
+
 async function main() {
   await syncInstrumentDefinitions();
   console.log("instrument definitions synced");
   if (process.env.E2E_SEED === "1") {
     const ids = await seedE2E();
     console.log("seeded test users", ids);
+    if (process.env.DEMO_DOCUMENTS === "1") await seedDemoDocuments(ids);
   }
   process.exit(0);
 }

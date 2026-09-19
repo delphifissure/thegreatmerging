@@ -3,6 +3,7 @@ import { currentUser } from "@/lib/supabase/server";
 import { APP_NAME } from "@/lib/brand";
 import { GENERATED_NOTE } from "@/lib/copy";
 import { requireAppUser } from "@/app/_lib/session";
+import { FEATURES } from "@/config/features";
 import { buildJourney, type Step } from "@/app/_lib/journey";
 import { Card } from "@/app/_components/Card";
 import { PageHeader } from "@/app/_components/PageHeader";
@@ -100,6 +101,31 @@ function Landing() {
           </LinkButton>
         </div>
       </Card>
+      {FEATURES.biographer ? (
+        <Card eyebrow="Prototype">
+          <h2 className="text-[22px]">The biographer and your avatars</h2>
+          <p className="reading mt-2 max-w-prose text-[17px]">
+            A different way in, with no questionnaires. Talk to a biographer whose only aim is to understand you, sign the lines it drafts, and meet avatars built from nothing but those lines.
+          </p>
+          <ul className="mt-3 grid gap-x-6 gap-y-1.5 text-[15px] sm:grid-cols-2">
+            {[
+              ["/biographer", "Your biographer", "start here"],
+              ["/documents", "Your documents", "history and constitution"],
+              ["/documents/voice", "How you write", "paste things you wrote"],
+              ["/mentor", "You, one notch ahead", "needs five signed lines"],
+              ["/mentor/panel", "Ask all of me", "several versions of you at once"],
+              ["/replay", "Replay an argument", "needs both of you"],
+            ].map(([href, label, note]) => (
+              <li key={href}>
+                <Link href={href} className="underline decoration-rule underline-offset-4 hover:decoration-accent">
+                  {label}
+                </Link>
+                <span className="text-muted"> · {note}</span>
+              </li>
+            ))}
+          </ul>
+        </Card>
+      ) : null}
       <Card>
         <h2 className="text-[22px]">What you won&rsquo;t find here</h2>
         <p className="reading mt-2 text-[17px]">
