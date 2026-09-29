@@ -1,1 +1,2 @@
 {"ts": 1790695180.469111, "kind": "runpod", "run_id": "hd-gemma4", "usd": 2.724205, "detail": {"pod_id": "ro5tasuqw2jjla", "gpu": "RTX PRO 6000", "seconds": 4692}}
+{"ts": 1790704612.8081014, "kind": "runpod", "run_id": "hd-gemma4", "usd": 5.453529, "detail": {"pod_id": "5cd1pqqudc5mjl", "gpu": "RTX PRO 6000", "seconds": 9394}}
