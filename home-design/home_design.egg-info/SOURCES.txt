@@ -1,0 +1,11 @@
+README.md
+pyproject.toml
+home_design.egg-info/PKG-INFO
+home_design.egg-info/SOURCES.txt
+home_design.egg-info/dependency_links.txt
+home_design.egg-info/requires.txt
+home_design.egg-info/top_level.txt
+tests/test_agent.py
+tests/test_budget.py
+tests/test_ifc_bench.py
+tests/test_sandbox.py

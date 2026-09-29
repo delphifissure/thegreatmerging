@@ -1,0 +1,20 @@
+[project]
+name = "home-design"
+version = "0.0.1"
+description = "Proof of principle: plain-language brief to an IFC 4.3 house model (see docs/PLAN.md)"
+requires-python = ">=3.13"
+dependencies = [
+  "ifcopenshell>=0.8,<0.9",
+  "anthropic>=1.9",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+markers = ["network: needs the Hugging Face datasets (downloaded on first use)"]
+
+[tool.setuptools]
+packages = []

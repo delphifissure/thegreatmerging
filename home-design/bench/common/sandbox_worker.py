@@ -1,0 +1,88 @@
+"""Worker process for the read-only IFC code sandbox.
+
+Protocol: one JSON object per line on stdin, {"code": "..."}; one JSON object per
+line on stdout, {"ok": bool, "output": "..."}. The IFC file named in argv[1] is
+opened once; each request runs in a fresh namespace holding `ifc`, `ifcopenshell`
+and the ifcopenshell util modules.
+
+Writes are blocked by an audit hook (file opens for writing, deletes, renames,
+directory changes, subprocesses, sockets) and by disabling ifcopenshell's writer.
+This keeps an honest model from changing anything; it is not a security boundary
+against deliberately hostile code (ctypes can still reach native calls).
+"""
+
+import contextlib
+import io
+import json
+import os
+import sys
+import traceback
+
+import ifcopenshell
+import ifcopenshell.util.element
+import ifcopenshell.util.placement
+import ifcopenshell.util.selector
+import ifcopenshell.util.unit
+
+MAX_OUTPUT = int(os.environ.get("SANDBOX_MAX_OUTPUT", "20000"))
+
+BLOCKED_EVENTS = {
+    "os.remove", "os.rename", "os.rmdir", "os.mkdir", "os.chmod", "os.chown", "os.truncate",
+    "os.link", "os.symlink", "os.utime", "shutil.rmtree", "shutil.move", "shutil.copyfile",
+    "subprocess.Popen", "os.system", "os.exec", "os.posix_spawn", "os.spawn", "os.fork",
+    "os.forkpty", "os.kill", "socket.connect", "socket.bind", "pty.spawn",
+}
+WRITE_FLAGS = os.O_WRONLY | os.O_RDWR | os.O_CREAT | os.O_APPEND | os.O_TRUNC
+
+
+class ReadOnlyViolation(PermissionError):
+    pass
+
+
+def _hook(event, args):
+    if event in BLOCKED_EVENTS:
+        raise ReadOnlyViolation(f"read-only sandbox: {event} is not allowed")
+    if event == "open":
+        mode = args[1] if len(args) > 1 else "r"
+        flags = args[2] if len(args) > 2 else 0
+        if (isinstance(mode, str) and any(c in mode for c in "wax+")) or (isinstance(flags, int) and flags & WRITE_FLAGS):
+            raise ReadOnlyViolation("read-only sandbox: opening a file for writing is not allowed")
+
+
+def _no_write(*_a, **_k):
+    raise ReadOnlyViolation("read-only sandbox: ifc.write() is not allowed")
+
+
+def main() -> None:
+    path = sys.argv[1]
+    model = ifcopenshell.open(path)
+    ifcopenshell.file.write = _no_write
+    out = sys.stdout
+    sys.stdout = io.StringIO()  # keep stray prints off the protocol channel
+    sys.addaudithook(_hook)
+    out.write(json.dumps({"ready": True, "schema": model.schema}) + "\n")
+    out.flush()
+    for line in sys.stdin:
+        req = json.loads(line)
+        buf = io.StringIO()
+        ns = {
+            "ifc": model,
+            "ifcopenshell": ifcopenshell,
+            "__name__": "__sandbox__",
+        }
+        ok = True
+        with contextlib.redirect_stdout(buf), contextlib.redirect_stderr(buf):
+            try:
+                exec(compile(req["code"], "<tool>", "exec"), ns)
+            except BaseException:  # the model sees its own traceback
+                ok = False
+                traceback.print_exc(limit=4, file=buf)
+        text = buf.getvalue()
+        if len(text) > MAX_OUTPUT:
+            text = text[:MAX_OUTPUT] + f"\n... [output truncated at {MAX_OUTPUT} characters]"
+        out.write(json.dumps({"ok": ok, "output": text}) + "\n")
+        out.flush()
+
+
+if __name__ == "__main__":
+    main()

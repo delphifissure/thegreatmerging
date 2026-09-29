@@ -1,0 +1,191 @@
+{
+  "claude-sonnet": {
+    "model": "anthropic:claude-sonnet-4-6",
+    "max_tool_calls": 20,
+    "n_tasks": 324,
+    "mean_final_score": 0.4531,
+    "geometry": 0.559,
+    "semantics": 0.3385,
+    "topology": 0.4619,
+    "solved_exact": 5,
+    "solved_ge_0.98": 15,
+    "solved_ge_0.98_pct": 4.6,
+    "hit_20_calls": 148,
+    "hit_20_calls_pct": 45.7,
+    "cost_usd_total": 197.94,
+    "mean_seconds": 247.2,
+    "mean_input_tokens": 160041,
+    "by_category": {
+      "direct": 0.4601,
+      "spatial": 0.4155,
+      "topological": 0.4839
+    },
+    "by_operation": {
+      "create": 0.1986,
+      "update": 0.5903,
+      "delete": 0.5705
+    }
+  },
+  "deepseek-v3.2": {
+    "model": "openrouter:deepseek/deepseek-v3.2",
+    "max_tool_calls": 20,
+    "n_tasks": 324,
+    "mean_final_score": 0.4321,
+    "geometry": 0.5097,
+    "semantics": 0.348,
+    "topology": 0.4386,
+    "solved_exact": 7,
+    "solved_ge_0.98": 20,
+    "solved_ge_0.98_pct": 6.2,
+    "hit_20_calls": 1,
+    "hit_20_calls_pct": 0.3,
+    "cost_usd_total": 0.0,
+    "mean_seconds": 456.4,
+    "mean_input_tokens": 67554,
+    "by_category": {
+      "direct": 0.4638,
+      "spatial": 0.414,
+      "topological": 0.4185
+    },
+    "by_operation": {
+      "create": 0.1591,
+      "update": 0.5894,
+      "delete": 0.5478
+    }
+  },
+  "gemini-flash-3.0": {
+    "model": "google_genai:gemini-3-flash-preview",
+    "max_tool_calls": 20,
+    "n_tasks": 324,
+    "mean_final_score": 0.4948,
+    "geometry": 0.6887,
+    "semantics": 0.4181,
+    "topology": 0.3777,
+    "solved_exact": 4,
+    "solved_ge_0.98": 15,
+    "solved_ge_0.98_pct": 4.6,
+    "hit_20_calls": 39,
+    "hit_20_calls_pct": 12.0,
+    "cost_usd_total": 8.13,
+    "mean_seconds": 93.7,
+    "mean_input_tokens": 79512,
+    "by_category": {
+      "direct": 0.4824,
+      "spatial": 0.4638,
+      "topological": 0.5383
+    },
+    "by_operation": {
+      "create": 0.4727,
+      "update": 0.5554,
+      "delete": 0.4564
+    }
+  },
+  "gemma4-31B": {
+    "model": "openrouter:google/gemma-4-31b-it",
+    "max_tool_calls": 20,
+    "n_tasks": 324,
+    "mean_final_score": 0.3754,
+    "geometry": 0.4494,
+    "semantics": 0.2994,
+    "topology": 0.3775,
+    "solved_exact": 3,
+    "solved_ge_0.98": 15,
+    "solved_ge_0.98_pct": 4.6,
+    "hit_20_calls": 24,
+    "hit_20_calls_pct": 7.4,
+    "cost_usd_total": 0.0,
+    "mean_seconds": 690.4,
+    "mean_input_tokens": 79724,
+    "by_category": {
+      "direct": 0.4037,
+      "spatial": 0.3561,
+      "topological": 0.3665
+    },
+    "by_operation": {
+      "create": 0.0058,
+      "update": 0.5808,
+      "delete": 0.5397
+    }
+  },
+  "gpt-5.4-mini": {
+    "model": "openai:gpt-5.4-mini",
+    "max_tool_calls": 20,
+    "n_tasks": 324,
+    "mean_final_score": 0.3979,
+    "geometry": 0.4518,
+    "semantics": 0.388,
+    "topology": 0.3538,
+    "solved_exact": 2,
+    "solved_ge_0.98": 16,
+    "solved_ge_0.98_pct": 4.9,
+    "hit_20_calls": 0,
+    "hit_20_calls_pct": 0.0,
+    "cost_usd_total": 2.12,
+    "mean_seconds": 30.4,
+    "mean_input_tokens": 7438,
+    "by_category": {
+      "direct": 0.4408,
+      "spatial": 0.3766,
+      "topological": 0.3761
+    },
+    "by_operation": {
+      "create": 0.1298,
+      "update": 0.5719,
+      "delete": 0.4918
+    }
+  },
+  "gpt-5.4": {
+    "model": "openai:gpt-5.4",
+    "max_tool_calls": 20,
+    "n_tasks": 324,
+    "mean_final_score": 0.4394,
+    "geometry": 0.5014,
+    "semantics": 0.3869,
+    "topology": 0.4297,
+    "solved_exact": 4,
+    "solved_ge_0.98": 19,
+    "solved_ge_0.98_pct": 5.9,
+    "hit_20_calls": 0,
+    "hit_20_calls_pct": 0.0,
+    "cost_usd_total": 26.81,
+    "mean_seconds": 91.2,
+    "mean_input_tokens": 15486,
+    "by_category": {
+      "direct": 0.4599,
+      "spatial": 0.4192,
+      "topological": 0.439
+    },
+    "by_operation": {
+      "create": 0.2377,
+      "update": 0.5658,
+      "delete": 0.5146
+    }
+  },
+  "qwen3.6-plus": {
+    "model": "openrouter:qwen/qwen3.6-plus",
+    "max_tool_calls": 20,
+    "n_tasks": 323,
+    "mean_final_score": 0.4778,
+    "geometry": 0.594,
+    "semantics": 0.3604,
+    "topology": 0.4791,
+    "solved_exact": 10,
+    "solved_ge_0.98": 25,
+    "solved_ge_0.98_pct": 7.7,
+    "hit_20_calls": 54,
+    "hit_20_calls_pct": 16.7,
+    "cost_usd_total": 0.0,
+    "mean_seconds": 826.4,
+    "mean_input_tokens": 112618,
+    "by_category": {
+      "direct": 0.4959,
+      "spatial": 0.446,
+      "topological": 0.4912
+    },
+    "by_operation": {
+      "create": 0.2234,
+      "update": 0.6587,
+      "delete": 0.5531
+    }
+  }
+}

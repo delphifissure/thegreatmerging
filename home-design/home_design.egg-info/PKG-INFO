@@ -1,0 +1,9 @@
+Metadata-Version: 2.4
+Name: home-design
+Version: 0.0.1
+Summary: Proof of principle: plain-language brief to an IFC 4.3 house model (see docs/PLAN.md)
+Requires-Python: >=3.13
+Requires-Dist: ifcopenshell<0.9,>=0.8
+Requires-Dist: anthropic>=1.9
+Provides-Extra: dev
+Requires-Dist: pytest>=8; extra == "dev"
