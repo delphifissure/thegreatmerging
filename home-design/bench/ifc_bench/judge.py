@@ -40,7 +40,9 @@ def main(argv=None) -> None:
     args = ap.parse_args(argv)
 
     run_dir = RUNS_DIR / args.run_id
-    answers = [json.loads(l) for l in (run_dir / "answers.jsonl").read_text().splitlines() if l.strip()]
+    # Last record per question wins, so retried questions replace their errored attempts.
+    answers = list({a["id"]: a for a in map(json.loads, filter(str.strip,
+                    (run_dir / "answers.jsonl").read_text().splitlines()))}.values())
     refs = {q.id: q for q in test_split()}
     out = run_dir / f"judged-{args.judge_model}.jsonl"
     done = set()

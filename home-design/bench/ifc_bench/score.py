@@ -54,7 +54,8 @@ def main(argv=None) -> None:
     args = ap.parse_args(argv)
     d = RUNS_DIR / args.run_id
     judged = [json.loads(l) for l in (d / f"judged-{args.judge_model}.jsonl").read_text().splitlines() if l.strip()]
-    answers = [json.loads(l) for l in (d / "answers.jsonl").read_text().splitlines() if l.strip()]
+    answers = list({a["id"]: a for a in map(json.loads, filter(str.strip,
+                    (d / "answers.jsonl").read_text().splitlines()))}.values())
     result = score(judged, answers)
     (d / f"score-{args.judge_model}.json").write_text(json.dumps(result, indent=2))
     print(json.dumps(result, indent=2))

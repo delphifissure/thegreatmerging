@@ -60,7 +60,9 @@ def main(argv=None) -> None:
     answers_file = out_dir / "answers.jsonl"
     done = set()
     if answers_file.exists():
-        done = {json.loads(l)["id"] for l in answers_file.read_text().splitlines() if l.strip()}
+        # Errored questions (endpoint or network failures) are retried on resume.
+        done = {r["id"] for r in map(json.loads, filter(str.strip, answers_file.read_text().splitlines()))
+                if r["stop"] != "error"}
 
     qs = test_split()
     if args.ids:
