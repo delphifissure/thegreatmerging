@@ -45,12 +45,25 @@ PAPER_SYSTEM_PROMPT = (
 )
 
 
+ELEMENT_TYPES = ("COL", "DOR", "ROM", "SLB", "WAL", "WIN")  # task id prefixes
+
+
 def stratified(tasks: list[dict], per_cell: int) -> list[dict]:
-    """First `per_cell` tasks (by id) of each operation x category x scene cell: 18 cells."""
+    """`per_cell` tasks from each operation x category x scene cell (18 cells), rotating
+    through the six element types so each type appears equally often."""
     cells: dict[tuple, list] = defaultdict(list)
     for t in sorted(tasks, key=lambda t: t["task_id"]):
         cells[(t["operation"], t["category"], t["scene"])].append(t)
-    return [t for c in sorted(cells) for t in cells[c][:per_cell]]
+    picked, k = [], 0
+    for c in sorted(cells):
+        pool = list(cells[c])
+        for _ in range(min(per_cell, len(pool))):
+            want = ELEMENT_TYPES[k % len(ELEMENT_TYPES)]
+            k += 1
+            t = next((t for t in pool if t["task_id"].startswith(want)), pool[0])
+            pool.remove(t)
+            picked.append(t)
+    return picked
 
 
 def main(argv=None) -> None:

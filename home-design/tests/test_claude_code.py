@@ -42,9 +42,12 @@ def test_mcp_config_names_the_tool_server():
 
 
 def test_stratified_subset_covers_every_cell():
+    from collections import Counter
+
     s = stratified(load(), 1)
     assert len(s) == 18
     assert len({(t["operation"], t["category"], t["scene"]) for t in s}) == 18
+    assert Counter(t["task_id"][:3] for t in s) == {p: 3 for p in ("COL", "DOR", "ROM", "SLB", "WAL", "WIN")}
 
 
 def test_paper_prompt_is_verbatim_start():
