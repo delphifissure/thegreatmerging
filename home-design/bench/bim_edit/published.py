@@ -18,7 +18,7 @@ RUNS_REPO = "BIM-Edit/BIM-Edit-runs"
 MODELS = ["claude-sonnet", "deepseek-v3.2", "gemini-flash-3.0", "gemma4-31B", "gpt-5.4-mini", "gpt-5.4", "qwen3.6-plus"]
 DATA_DIR = Path(__file__).resolve().parents[2] / "data" / "bim_edit" / "runs"
 OUT = Path(__file__).resolve().parent / "results" / "published_runs.json"
-# The harness's "fully solved" cut: the plan quotes a 98% threshold.
+# Paper, Table 2: a task is solved when geometry, semantics and topology are each >= 0.98.
 SOLVED = 0.98
 
 
@@ -53,6 +53,8 @@ def summarize(model: str) -> dict:
         "geometry": round(sum(_f(r["geometry"]) for r in rows) / len(rows), 4),
         "semantics": round(sum(_f(r["semantics"]) for r in rows) / len(rows), 4),
         "topology": round(sum(_f(r["topology"]) for r in rows) / len(rows), 4),
+        "solve_rate_pct": round(100 * sum(all(_f(r[k]) >= SOLVED for k in ("geometry", "semantics", "topology"))
+                                          for r in rows) / len(rows), 1),
         "solved_exact": sum(x >= 0.99995 for x in fs),
         f"solved_ge_{SOLVED}": sum(x >= SOLVED for x in fs),
         "solved_ge_0.98_pct": round(100 * sum(x >= SOLVED for x in fs) / len(fs), 1),
@@ -70,7 +72,7 @@ def main() -> None:
     table = {m: summarize(m) for m in MODELS}
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(table, indent=2))
-    cols = ["mean_final_score", "solved_exact", "solved_ge_0.98", "hit_20_calls_pct", "cost_usd_total", "mean_seconds", "mean_input_tokens"]
+    cols = ["mean_final_score", "solve_rate_pct", "solved_exact", "solved_ge_0.98", "hit_20_calls_pct", "cost_usd_total", "mean_seconds", "mean_input_tokens"]
     print("model".ljust(18) + "".join(c[:16].rjust(18) for c in cols))
     for m, s in table.items():
         print(m.ljust(18) + "".join(str(s[c]).rjust(18) for c in cols))

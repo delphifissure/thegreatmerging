@@ -23,6 +23,9 @@ import sys
 import traceback
 
 import ifcopenshell
+import ifcopenshell.api
+import ifcopenshell.guid
+import ifcopenshell.util
 import ifcopenshell.util.element
 import ifcopenshell.util.placement
 import ifcopenshell.util.selector
@@ -85,6 +88,13 @@ def main() -> None:
             "ifcopenshell": ifcopenshell,
             "__name__": "__sandbox__",
         }
+        if mode == "edit":
+            # BIM-Edit tool namespace (paper, appendix F.4): api, util, element_util, guid,
+            # `result` returned to the model, and commit(). Edits live in memory and the
+            # host saves the final state, so commit() only confirms.
+            ns.update(api=ifcopenshell.api, util=ifcopenshell.util, element_util=ifcopenshell.util.element,
+                      guid=ifcopenshell.guid, result=None,
+                      commit=lambda: print("Changes committed."))
         ok = True
         with contextlib.redirect_stdout(buf), contextlib.redirect_stderr(buf):
             try:
@@ -93,6 +103,8 @@ def main() -> None:
                 ok = False
                 traceback.print_exc(limit=4, file=buf)
         text = buf.getvalue()
+        if mode == "edit" and ns.get("result") is not None:
+            text += ("" if not text or text.endswith("\n") else "\n") + f"result: {ns['result']!r}"
         if len(text) > MAX_OUTPUT:
             text = text[:MAX_OUTPUT] + f"\n... [output truncated at {MAX_OUTPUT} characters]"
         out.write(json.dumps({"ok": ok, "output": text}) + "\n")

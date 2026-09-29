@@ -87,3 +87,10 @@ def test_finish_saved_rejects_truncated_file(tmp_path):
     dest = tmp_path / "x.ifc"
     (tmp_path / "x.ifc.part").write_text("ISO-10303-21;\nHEADER;\n" + "x" * 100)
     assert not finish_saved(dest, timeout_s=5) and not dest.exists()
+
+
+def test_edit_mode_has_the_bim_edit_namespace(tiny_ifc):
+    with IfcSandbox(tiny_ifc, mode="edit") as sb:
+        ok, out = sb.run("result = len(element_util.get_decomposition(ifc.by_type('IfcBuildingStorey')[0]))\n"
+                         "g = guid.new(); commit()")
+        assert ok and "Changes committed." in out and "result: 2" in out

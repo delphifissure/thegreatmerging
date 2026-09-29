@@ -28,11 +28,12 @@ READ_DESCRIPTION = (
     "(an ifcopenshell.file) and the `ifcopenshell` module is imported. Use print() to see results. "
     "Each call starts with a fresh namespace. The model is read-only: writing files is blocked."
 )
+# Verbatim from the BIM-Edit paper, appendix F.4 (arXiv 2606.20146v3).
 EDIT_DESCRIPTION = (
-    "Execute Python code against the loaded IFC model. The opened model is available as `ifc` "
-    "(an ifcopenshell.file) and the `ifcopenshell` module is imported. Use print() to see results. "
-    "Each call starts with a fresh namespace, but changes you make to `ifc` persist between calls "
-    "and are saved automatically; do not write files yourself."
+    "Execute Python code against the current IFC file. Input: {code: str}. The IFC model is pre-loaded as "
+    "ifc (ifcopenshell.file). Also available: ifcopenshell, api (ifcopenshell.api), util (ifcopenshell.util), "
+    "element_util (ifcopenshell.util.element), and guid (ifcopenshell.guid). Assign to result to return data. "
+    "Call commit() to save modifications."
 )
 
 
