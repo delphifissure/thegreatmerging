@@ -30,9 +30,11 @@ class IfcSandbox:
     """
 
     def __init__(self, ifc_path: str | Path, timeout_s: float = 120.0, load_timeout_s: float = 600.0,
-                 mode: str = "read"):
+                 mode: str = "read", save_on_exit: str | Path | None = None):
         assert mode in ("read", "edit")
+        assert save_on_exit is None or mode == "edit"
         self.mode = mode
+        self.save_on_exit = str(save_on_exit) if save_on_exit else None
         self.ifc_path = str(ifc_path)
         self.timeout_s = timeout_s
         self.load_timeout_s = load_timeout_s
@@ -48,9 +50,11 @@ class IfcSandbox:
 
     def _start(self) -> None:
         self.proc = subprocess.Popen(
-            [sys.executable, str(WORKER), self.ifc_path, self.mode],
+            [sys.executable, str(WORKER), self.ifc_path, self.mode] + ([self.save_on_exit] if self.save_on_exit else []),
             stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL,
             text=True, cwd=self.workdir, env={**os.environ, "PYTHONDONTWRITEBYTECODE": "1"},
+            # A worker that saves on exit must outlive a killed host.
+            start_new_session=bool(self.save_on_exit),
         )
         line = self._readline(self.load_timeout_s)
         if not line:
@@ -85,6 +89,15 @@ class IfcSandbox:
         os.replace(tmp, dest)
         return True
 
+    def detach(self) -> None:
+        """Close the worker's stdin and leave it running; a save_on_exit worker then writes its file."""
+        if self.proc is not None:
+            try:
+                self.proc.stdin.close()
+            except OSError:
+                pass
+            self.proc = None
+
     def close(self) -> None:
         if self.proc is not None:
             self.proc.kill()
@@ -96,3 +109,31 @@ class IfcSandbox:
 
     def __exit__(self, *exc):
         self.close()
+
+
+def finish_saved(dest: str | Path, timeout_s: float = 900.0) -> bool:
+    """Wait for a save_on_exit worker to finish writing `<dest>.part`, check it, rename it.
+
+    The worker is found by its command line, which carries the destination path. The file
+    must end with the STEP terminator, so a worker killed mid-write is not accepted.
+    """
+    import time
+
+    dest = Path(dest)
+    part = Path(f"{dest}.part")
+    t0 = time.time()
+    while time.time() - t0 < timeout_s:
+        busy = subprocess.run(["pgrep", "-f", str(dest)], capture_output=True).returncode == 0
+        if not busy:
+            break
+        time.sleep(2)
+    else:
+        return False
+    if not part.exists() or part.stat().st_size < 32:
+        return False
+    with part.open("rb") as f:
+        f.seek(-64, os.SEEK_END)
+        if b"END-ISO-10303-21;" not in f.read():
+            return False
+    os.replace(part, dest)
+    return True

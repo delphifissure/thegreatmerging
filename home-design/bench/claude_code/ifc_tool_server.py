@@ -4,9 +4,10 @@
     python -m bench.claude_code.ifc_tool_server --ifc in.ifc --mode edit --save out.ifc --budget 20 --log calls.jsonl
 
 The server owns the call budget: once it is spent, calls are refused with a message
-asking for a final answer. In edit mode the edited model is saved to --save when
-Claude Code closes the server (stdin EOF or SIGTERM), or after every call with
---save-every-call.
+asking for a final answer. In edit mode the sandbox worker runs in its own session and
+writes the model to "<save>.part" when the server goes away (closed cleanly or killed);
+the runner checks and renames it with bench.common.sandbox.finish_saved. With
+--save-every-call the model is instead saved after every call.
 """
 
 from __future__ import annotations
@@ -36,7 +37,8 @@ EDIT_DESCRIPTION = (
 
 
 def build(args) -> tuple[MCPServer, IfcSandbox]:
-    sandbox = IfcSandbox(args.ifc, timeout_s=args.timeout, mode=args.mode)
+    sandbox = IfcSandbox(args.ifc, timeout_s=args.timeout, mode=args.mode,
+                         save_on_exit=args.save if args.mode == "edit" and not args.save_every_call else None)
     state = {"calls": 0}
     server = MCPServer(name="ifc")
 
@@ -78,11 +80,10 @@ def main(argv=None) -> None:
         if finished["done"]:
             return
         finished["done"] = True
-        if args.mode == "edit" and args.save:
-            ok = sandbox.save(args.save)
-            with open(args.log, "a") as f:
-                f.write(json.dumps({"t": time.time(), "final_save": ok}) + "\n")
-        sandbox.close()
+        if sandbox.save_on_exit:
+            sandbox.detach()  # the worker writes <save>.part itself, even if we are killed next
+        else:
+            sandbox.close()
 
     def on_term(*_):
         finish()

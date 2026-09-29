@@ -3,7 +3,9 @@
 Protocol: one JSON object per line on stdin, {"code": "..."}; one JSON object per
 line on stdout, {"ok": bool, "output": "..."}. In edit mode (argv[2] == "edit") the
 code may change the in-memory model, and the host (never the model's code) can send
-{"save": path} to write it out. The IFC file named in argv[1] is
+{"save": path} to write it out. If argv[3] names a path, an edit-mode worker also writes
+the model to "<path>.part" when its stdin closes, so the edit survives the host being
+killed; the host checks the file and renames it. The IFC file named in argv[1] is
 opened once; each request runs in a fresh namespace holding `ifc`, `ifcopenshell`
 and the ifcopenshell util modules.
 
@@ -58,6 +60,7 @@ def _no_write(*_a, **_k):
 def main() -> None:
     path = sys.argv[1]
     mode = sys.argv[2] if len(sys.argv) > 2 else "read"
+    save_on_exit = sys.argv[3] if len(sys.argv) > 3 and mode == "edit" else None
     model = ifcopenshell.open(path)
     host_write = ifcopenshell.file.write
     ifcopenshell.file.write = _no_write
@@ -94,6 +97,8 @@ def main() -> None:
             text = text[:MAX_OUTPUT] + f"\n... [output truncated at {MAX_OUTPUT} characters]"
         out.write(json.dumps({"ok": ok, "output": text}) + "\n")
         out.flush()
+    if save_on_exit:
+        host_write(model, save_on_exit + ".part")
 
 
 if __name__ == "__main__":

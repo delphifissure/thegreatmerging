@@ -25,7 +25,9 @@ from bench.bim_edit.tasks import DATA_REPO, load
 from bench.common.hf import dataset_sha, download
 
 from .cli import mcp_config, run_claude
-from .common import record, wait_for_final_save
+from bench.common.sandbox import finish_saved
+
+from .common import record
 from .loop import load_done, run_items
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -85,13 +87,14 @@ def main(argv=None) -> None:
         edited = out_dir / "edited" / t["task_id"] / f"{src.stem}_0.ifc"
         edited.parent.mkdir(parents=True, exist_ok=True)
         edited.unlink(missing_ok=True)
+        Path(f"{edited}.part").unlink(missing_ok=True)
         log = out_dir / "calls" / f"{t['task_id']}.jsonl"
         log.unlink(missing_ok=True)
         mcp = mcp_config(str(src), "edit", MAX_TOOL_CALLS, str(log), save=str(edited))
         mcp["mcpServers"]["ifc"]["args"] += ["--timeout", str(TOOL_TIMEOUT_S)]
         run = run_claude(t["prompt"], PAPER_SYSTEM_PROMPT, args.model, effort=args.effort, mcp=mcp,
                          timeout_s=args.timeout)
-        saved = wait_for_final_save(log) if run.subtype != "timeout" else None
+        saved = finish_saved(edited)
         rec = record(run, log)
         rec.update({"task_id": t["task_id"], "operation": t["operation"], "category": t["category"],
                     "scene": t["scene"], "prompt": t["prompt"], "input_ifc": t["input_ifc"],

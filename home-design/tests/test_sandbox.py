@@ -65,3 +65,25 @@ def test_read_mode_refuses_save(tiny_ifc, tmp_path):
     with IfcSandbox(tiny_ifc) as sb:
         sb.run("print(1)")
         assert not sb.save(tmp_path / "x.ifc")
+
+
+def test_save_on_exit_survives_a_killed_host(tiny_ifc, tmp_path):
+    import ifcopenshell
+
+    from bench.common.sandbox import finish_saved
+
+    dest = tmp_path / "edited.ifc"
+    sb = IfcSandbox(tiny_ifc, mode="edit", save_on_exit=dest)
+    ok, _ = sb.run("ifc.by_type('IfcWall')[0].Name = 'Kept'")
+    assert ok
+    sb.detach()  # as when the MCP server is killed: stdin closes, the worker saves
+    assert finish_saved(dest, timeout_s=60)
+    assert ifcopenshell.open(str(dest)).by_type("IfcWall")[0].Name == "Kept"
+
+
+def test_finish_saved_rejects_truncated_file(tmp_path):
+    from bench.common.sandbox import finish_saved
+
+    dest = tmp_path / "x.ifc"
+    (tmp_path / "x.ifc.part").write_text("ISO-10303-21;\nHEADER;\n" + "x" * 100)
+    assert not finish_saved(dest, timeout_s=5) and not dest.exists()

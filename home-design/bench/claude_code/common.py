@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import json
-import time
 from pathlib import Path
 
 from .cli import ClaudeRun
@@ -13,17 +12,6 @@ def read_log(log: Path) -> list[dict]:
     if not log.exists():
         return []
     return [json.loads(l) for l in log.read_text().splitlines() if l.strip()]
-
-
-def wait_for_final_save(log: Path, timeout_s: float = 600) -> bool | None:
-    """Edit runs: the tool server saves after Claude Code closes it. Wait for that line."""
-    t0 = time.time()
-    while time.time() - t0 < timeout_s:
-        for rec in read_log(log):
-            if "final_save" in rec:
-                return rec["final_save"]
-        time.sleep(2)
-    return None
 
 
 def record(run: ClaudeRun, log: Path) -> dict:
