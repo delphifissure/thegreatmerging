@@ -5,12 +5,12 @@ Carried from [PLAN.md](PLAN.md), with what Phase 0 added. Owner in brackets.
 ## Blocking Phase 0
 
 - [x] Set the RunPod spending cap for benchmark runs: $50 for Phase 0, API and GPU together [Dane]
-- [ ] Add an Anthropic API key to the cloud environment as `ANTHROPIC_API_KEY`, then start a
-      new session so it is picked up. Needed for the Claude runs and for the IFC-Bench judge [Dane]
+- [x] Claude runs and the judge: no API key. They go through headless Claude Code on the
+      Claude plan (decided by Dane 2026-09-29)
 - [ ] Give the BIM-Edit harness repository URL (it is linked in the arXiv paper), or allow
       `arxiv.org` in the environment's network settings [Dane]
-- [ ] Decide whether a Claude BIM-Edit run may use a subset: the paper's full Sonnet 4.6 run
-      cost $197.94, about four times the cap (see docs/gates/phase-0.md) [Dane]
+- [ ] Decide which Claude model(s) to run and whether BIM-Edit runs in full (324 tasks) or as a
+      stratified subset, given the plan's usage limits [Dane]
 
 ## Blocking later phases
 

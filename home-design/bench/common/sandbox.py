@@ -20,12 +20,19 @@ class CallBudgetExhausted(RuntimeError):
 class IfcSandbox:
     """One worker process holding one opened IFC file.
 
+    mode "read": the model is never written. mode "edit": code may change the
+    in-memory model, and `save()` writes it out. In both modes the model's code
+    cannot write files itself.
+
     `run(code)` executes read-only Python against `ifc` and returns (ok, output).
     A call that exceeds `timeout_s` kills the worker, which is restarted (the file
     is re-opened) on the next call.
     """
 
-    def __init__(self, ifc_path: str | Path, timeout_s: float = 120.0, load_timeout_s: float = 600.0):
+    def __init__(self, ifc_path: str | Path, timeout_s: float = 120.0, load_timeout_s: float = 600.0,
+                 mode: str = "read"):
+        assert mode in ("read", "edit")
+        self.mode = mode
         self.ifc_path = str(ifc_path)
         self.timeout_s = timeout_s
         self.load_timeout_s = load_timeout_s
@@ -41,7 +48,7 @@ class IfcSandbox:
 
     def _start(self) -> None:
         self.proc = subprocess.Popen(
-            [sys.executable, str(WORKER), self.ifc_path],
+            [sys.executable, str(WORKER), self.ifc_path, self.mode],
             stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL,
             text=True, cwd=self.workdir, env={**os.environ, "PYTHONDONTWRITEBYTECODE": "1"},
         )
@@ -64,6 +71,19 @@ class IfcSandbox:
             return False, "The interpreter crashed; it was restarted."
         resp = json.loads(line)
         return resp["ok"], resp["output"]
+
+    def save(self, dest: str | Path) -> bool:
+        """Edit mode only: write the in-memory model to `dest` atomically. False if the worker is gone."""
+        if self.proc is None or self.proc.poll() is not None:
+            return False
+        tmp = f"{dest}.part"
+        self.proc.stdin.write(json.dumps({"save": tmp}) + "\n")
+        self.proc.stdin.flush()
+        line = self._readline(self.load_timeout_s)
+        if not line or not json.loads(line)["ok"]:
+            return False
+        os.replace(tmp, dest)
+        return True
 
     def close(self) -> None:
         if self.proc is not None:

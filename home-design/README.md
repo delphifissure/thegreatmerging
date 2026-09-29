@@ -32,9 +32,30 @@ uv pip install --python .venv/bin/python -e '.[dev]'
 | `engines/` | Energy, moisture, framing, daylight and takeoff adapters | Phase 4 |
 | `ledger/` | Hashing and change log | Phase 1 onward |
 
+## Claude runs go through Claude Code, not the API
+
+Dane's decision (2026-09-29): Claude benchmark runs use the Claude plan through headless
+Claude Code (`claude -p`), so there is no API bill. Each task is one isolated `claude -p`
+call: our system prompt replaces Claude Code's, the built-in tools are switched off, and the
+only tool is `execute_ifc_code` from our MCP server (`bench/claude_code/ifc_tool_server.py`).
+Runs pause and retry when the plan's usage limit is hit, and resume where they stopped.
+
+```bash
+# IFC-Bench, fixed 514-question split
+.venv/bin/python -m bench.claude_code.run_ifc_bench --model claude-sonnet-5-5 --run-id cc-sonnet55
+# BIM-Edit, all 324 tasks (or --per-cell 1 for an 18-task stratified subset)
+.venv/bin/python -m bench.claude_code.run_bim_edit --model claude-sonnet-5-5 --run-id cc-sonnet55
+# Judge any IFC-Bench run, then score it (partial answers count as wrong)
+.venv/bin/python -m bench.claude_code.judge --run-id gemma4-31b --judge-model claude-opus-5-5
+.venv/bin/python -m bench.ifc_bench.score --run-id gemma4-31b --judge-model cc-claude-opus-5-5
+```
+
+The API code paths (`bench/common/llm.py` AnthropicChat, `bench/ifc_bench/judge.py`) stay for
+later use but are not used for Phase 0.
+
 ## Spending
 
-Every paid call (Anthropic API, RunPod GPU time) is written to `bench/spend.jsonl`
+Every paid call (RunPod GPU time; the Anthropic API if it is ever used) is written to `bench/spend.jsonl`
 through `bench/common/budget.py`, which refuses to start work once the recorded
 total would pass the cap in `bench/budget.json` (currently $50, set by Dane on
 2026-09-29).

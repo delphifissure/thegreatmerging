@@ -46,3 +46,22 @@ def test_output_is_truncated(tiny_ifc):
     with IfcSandbox(tiny_ifc) as sb:
         ok, out = sb.run("print('a' * 50000)")
         assert ok and "truncated" in out and len(out) < 21000
+
+
+def test_edit_mode_saves_changes_but_code_still_cannot_write(tiny_ifc, tmp_path):
+    import ifcopenshell
+
+    out = tmp_path / "edited.ifc"
+    with IfcSandbox(tiny_ifc, mode="edit") as sb:
+        ok, _ = sb.run("ifc.by_type('IfcWall')[0].Name = 'Renamed'")
+        assert ok
+        ok, msg = sb.run(f"ifc.write({str(out)!r})")
+        assert not ok and "read-only sandbox" in msg
+        assert sb.save(out)
+    assert ifcopenshell.open(str(out)).by_type("IfcWall")[0].Name == "Renamed"
+
+
+def test_read_mode_refuses_save(tiny_ifc, tmp_path):
+    with IfcSandbox(tiny_ifc) as sb:
+        sb.run("print(1)")
+        assert not sb.save(tmp_path / "x.ifc")

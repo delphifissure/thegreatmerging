@@ -1,7 +1,9 @@
 """Worker process for the read-only IFC code sandbox.
 
 Protocol: one JSON object per line on stdin, {"code": "..."}; one JSON object per
-line on stdout, {"ok": bool, "output": "..."}. The IFC file named in argv[1] is
+line on stdout, {"ok": bool, "output": "..."}. In edit mode (argv[2] == "edit") the
+code may change the in-memory model, and the host (never the model's code) can send
+{"save": path} to write it out. The IFC file named in argv[1] is
 opened once; each request runs in a fresh namespace holding `ifc`, `ifcopenshell`
 and the ifcopenshell util modules.
 
@@ -55,7 +57,9 @@ def _no_write(*_a, **_k):
 
 def main() -> None:
     path = sys.argv[1]
+    mode = sys.argv[2] if len(sys.argv) > 2 else "read"
     model = ifcopenshell.open(path)
+    host_write = ifcopenshell.file.write
     ifcopenshell.file.write = _no_write
     out = sys.stdout
     sys.stdout = io.StringIO()  # keep stray prints off the protocol channel
@@ -64,6 +68,14 @@ def main() -> None:
     out.flush()
     for line in sys.stdin:
         req = json.loads(line)
+        if "save" in req:
+            if mode != "edit":
+                out.write(json.dumps({"ok": False, "output": "save is only allowed in edit mode"}) + "\n")
+            else:
+                host_write(model, req["save"])  # native writer: not routed through the audit hook
+                out.write(json.dumps({"ok": True, "output": ""}) + "\n")
+            out.flush()
+            continue
         buf = io.StringIO()
         ns = {
             "ifc": model,

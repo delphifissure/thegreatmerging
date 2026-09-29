@@ -4,6 +4,17 @@ Newest first. Each entry says what was decided, by whom, and why.
 
 ## 2026-09-29
 
+- **Claude runs use the Claude plan through headless Claude Code, not the API.** Dane's call:
+  no API key and no API bill. Consequences:
+  - BIM-Edit on Claude is run with the paper's system prompt, tool, 20-call budget and 420 s
+    tool timeout, but inside Claude Code's agent loop rather than the authors' LangGraph agent.
+    It is reported as "Claude Code harness" and is not a like-for-like reproduction of the
+    paper's Claude number. The open-weights comparison (Gemma 4 31B) is unaffected.
+  - The plan's usage limits, not dollars, bound the run. Runners pause when the limit is hit
+    and resume later. The notional list-price cost Claude Code reports is recorded for
+    reference and is not counted against the $50 cap, which now covers RunPod only.
+  - The IFC-Bench judge also runs through Claude Code, with `--json-schema` for the label.
+
 - **Project lives in `home-design/` inside the thegreatmerging repository.** Dane chose this
   over a new repository. The folder shares nothing with The Plan app and can be split out
   with `git subtree split --prefix home-design`.
