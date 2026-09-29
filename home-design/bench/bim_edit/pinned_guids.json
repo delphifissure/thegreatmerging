@@ -1,0 +1,1082 @@
+{
+ "COL-DEL-DIR-A-001": {
+  "entity_type": "IfcColumn",
+  "pin_status": "ok",
+  "pinned_guid": "0JseLab3T6bx_3inDW04yI"
+ },
+ "COL-DEL-DIR-A-002": {
+  "entity_type": "IfcColumn",
+  "pin_status": "ok",
+  "pinned_guid": "0cm1WpCe1EIBJKHP63CNyp"
+ },
+ "COL-DEL-DIR-R-001": {
+  "entity_type": "IfcColumn",
+  "pin_status": "ok",
+  "pinned_guid": "16lgaIqan5BeMYyMYTHdSc"
+ },
+ "COL-DEL-DIR-R-002": {
+  "entity_type": "IfcColumn",
+  "pin_status": "ok",
+  "pinned_guid": "20eFvYZgfAFuYWgpNoJitX"
+ },
+ "COL-DEL-SPA-A-001": {
+  "entity_type": "IfcColumn",
+  "pin_status": "ok",
+  "pinned_guid": "0JseLab3T6bx_3inDW04yI"
+ },
+ "COL-DEL-SPA-A-002": {
+  "entity_type": "IfcColumn",
+  "pin_status": "ok",
+  "pinned_guid": "0cm1WpCe1EIBJKHP63CNyp"
+ },
+ "COL-DEL-SPA-R-001": {
+  "entity_type": "IfcColumn",
+  "pin_status": "ok",
+  "pinned_guid": "16lgaIqan5BeMYyMYTHdSc"
+ },
+ "COL-DEL-SPA-R-002": {
+  "entity_type": "IfcColumn",
+  "pin_status": "ok",
+  "pinned_guid": "20eFvYZgfAFuYWgpNoJitX"
+ },
+ "COL-DEL-TOP-A-001": {
+  "entity_type": "IfcColumn",
+  "pin_status": "ok",
+  "pinned_guid": "0JseLab3T6bx_3inDW04yI"
+ },
+ "COL-DEL-TOP-A-002": {
+  "entity_type": "IfcColumn",
+  "pin_status": "ok",
+  "pinned_guid": "0cm1WpCe1EIBJKHP63CNyp"
+ },
+ "COL-DEL-TOP-R-001": {
+  "entity_type": "IfcColumn",
+  "pin_status": "ok",
+  "pinned_guid": "16lgaIqan5BeMYyMYTHdSc"
+ },
+ "COL-DEL-TOP-R-002": {
+  "entity_type": "IfcColumn",
+  "pin_status": "ok",
+  "pinned_guid": "20eFvYZgfAFuYWgpNoJitX"
+ },
+ "COL-UPD-DIR-A-001": {
+  "entity_type": "IfcColumn",
+  "pin_status": "ok",
+  "pinned_guid": "0JseLab3T6bx_3inDW04yI"
+ },
+ "COL-UPD-DIR-A-002": {
+  "entity_type": "IfcColumn",
+  "pin_status": "ok",
+  "pinned_guid": "2$e8udr$D3w9y2FOxedsKA"
+ },
+ "COL-UPD-DIR-R-001": {
+  "entity_type": "IfcColumn",
+  "pin_status": "ok",
+  "pinned_guid": "16lgaIqan5BeMYyMYTHdSc"
+ },
+ "COL-UPD-DIR-R-002": {
+  "entity_type": "IfcColumn",
+  "pin_status": "ok",
+  "pinned_guid": "00yrLiRn90MQI8Q5LMWRlo"
+ },
+ "COL-UPD-SPA-A-001": {
+  "entity_type": "IfcColumn",
+  "pin_status": "ok",
+  "pinned_guid": "0JseLab3T6bx_3inDW04yI"
+ },
+ "COL-UPD-SPA-A-002": {
+  "entity_type": "IfcColumn",
+  "pin_status": "ok",
+  "pinned_guid": "2$e8udr$D3w9y2FOxedsKA"
+ },
+ "COL-UPD-SPA-R-001": {
+  "entity_type": "IfcColumn",
+  "pin_status": "ok",
+  "pinned_guid": "16lgaIqan5BeMYyMYTHdSc"
+ },
+ "COL-UPD-SPA-R-002": {
+  "entity_type": "IfcColumn",
+  "pin_status": "ok",
+  "pinned_guid": "00yrLiRn90MQI8Q5LMWRlo"
+ },
+ "COL-UPD-TOP-A-001": {
+  "entity_type": "IfcColumn",
+  "pin_status": "ok",
+  "pinned_guid": "0JseLab3T6bx_3inDW04yI"
+ },
+ "COL-UPD-TOP-A-002": {
+  "entity_type": "IfcColumn",
+  "pin_status": "ok",
+  "pinned_guid": "2$e8udr$D3w9y2FOxedsKA"
+ },
+ "COL-UPD-TOP-R-001": {
+  "entity_type": "IfcColumn",
+  "pin_status": "ok",
+  "pinned_guid": "16lgaIqan5BeMYyMYTHdSc"
+ },
+ "COL-UPD-TOP-R-002": {
+  "entity_type": "IfcColumn",
+  "pin_status": "ok",
+  "pinned_guid": "00yrLiRn90MQI8Q5LMWRlo"
+ },
+ "DOR-DEL-DIR-A-001": {
+  "entity_type": "IfcDoor",
+  "pin_status": "ok",
+  "pinned_guid": "10VmbDUP13YPWiYkMLgRuN"
+ },
+ "DOR-DEL-DIR-A-002": {
+  "entity_type": "IfcDoor",
+  "pin_status": "ok",
+  "pinned_guid": "2th65gsmv1afVKLdYW9kz9"
+ },
+ "DOR-DEL-DIR-R-001": {
+  "entity_type": "IfcDoor",
+  "pin_status": "ok",
+  "pinned_guid": "1pXrfMR4v8K8chjqA0Tnlj"
+ },
+ "DOR-DEL-DIR-R-002": {
+  "entity_type": "IfcDoor",
+  "pin_status": "ok",
+  "pinned_guid": "01Bk4LJZf9FuQYnODsu$is"
+ },
+ "DOR-DEL-SPA-A-001": {
+  "entity_type": "IfcDoor",
+  "pin_status": "ok",
+  "pinned_guid": "10VmbDUP13YPWiYkMLgRuN"
+ },
+ "DOR-DEL-SPA-A-002": {
+  "entity_type": "IfcDoor",
+  "pin_status": "missing_in_input_and_gt",
+  "pinned_guid": "2th65gsmv1afVKLdYW9kz10"
+ },
+ "DOR-DEL-SPA-R-001": {
+  "entity_type": "IfcDoor",
+  "pin_status": "ok",
+  "pinned_guid": "1pXrfMR4v8K8chjqA0Tnlj"
+ },
+ "DOR-DEL-SPA-R-002": {
+  "entity_type": "IfcDoor",
+  "pin_status": "ok",
+  "pinned_guid": "01Bk4LJZf9FuQYnODsu$is"
+ },
+ "DOR-DEL-TOP-A-001": {
+  "entity_type": "IfcDoor",
+  "pin_status": "ok",
+  "pinned_guid": "10VmbDUP13YPWiYkMLgRuN"
+ },
+ "DOR-DEL-TOP-A-002": {
+  "entity_type": "IfcDoor",
+  "pin_status": "missing_in_input_and_gt",
+  "pinned_guid": "2th65gsmv1afVKLdYW9kz11"
+ },
+ "DOR-DEL-TOP-R-001": {
+  "entity_type": "IfcDoor",
+  "pin_status": "ok",
+  "pinned_guid": "1pXrfMR4v8K8chjqA0Tnlj"
+ },
+ "DOR-DEL-TOP-R-002": {
+  "entity_type": "IfcDoor",
+  "pin_status": "ok",
+  "pinned_guid": "01Bk4LJZf9FuQYnODsu$is"
+ },
+ "DOR-UPD-DIR-A-001": {
+  "entity_type": "IfcDoor",
+  "pin_status": "ok",
+  "pinned_guid": "3weZ9R4j52LPSdY$3bzEMo"
+ },
+ "DOR-UPD-DIR-R-001": {
+  "entity_type": "IfcDoor",
+  "pin_status": "ok",
+  "pinned_guid": "2AGvcvmtT5tuw78WQbzQMZ"
+ },
+ "DOR-UPD-SPA-A-001": {
+  "entity_type": "IfcDoor",
+  "pin_status": "ok",
+  "pinned_guid": "3weZ9R4j52LPSdY$3bzEMo"
+ },
+ "DOR-UPD-SPA-R-001": {
+  "entity_type": "IfcDoor",
+  "pin_status": "ok",
+  "pinned_guid": "2AGvcvmtT5tuw78WQbzQMZ"
+ },
+ "DOR-UPD-TOP-A-001": {
+  "entity_type": "IfcDoor",
+  "pin_status": "ok",
+  "pinned_guid": "3weZ9R4j52LPSdY$3bzEMo"
+ },
+ "DOR-UPD-TOP-R-001": {
+  "entity_type": "IfcDoor",
+  "pin_status": "ok",
+  "pinned_guid": "2AGvcvmtT5tuw78WQbzQMZ"
+ },
+ "ROM-DEL-DIR-A-001": {
+  "entity_type": "IfcSpace",
+  "pin_status": "ok",
+  "pinned_guid": "10VmbDUP13YPWiYkMLgRpN"
+ },
+ "ROM-DEL-DIR-A-002": {
+  "entity_type": "IfcSpace",
+  "pin_status": "ok",
+  "pinned_guid": "1BXMVsL3b4YOpeNFnqRn3h"
+ },
+ "ROM-DEL-DIR-A-003": {
+  "entity_type": "IfcSpace",
+  "pin_status": "ok",
+  "pinned_guid": "0TdJ$TWoL2cAeMVD_4_n8b"
+ },
+ "ROM-DEL-DIR-A-004": {
+  "entity_type": "IfcSpace",
+  "pin_status": "ok",
+  "pinned_guid": "0YgauDlZr9qBliw6ujquqd"
+ },
+ "ROM-DEL-DIR-R-001": {
+  "entity_type": "IfcSpace",
+  "pin_status": "ok",
+  "pinned_guid": "2975y8FcXF2RDxYtSJf7rS"
+ },
+ "ROM-DEL-DIR-R-002": {
+  "entity_type": "IfcSpace",
+  "pin_status": "ok",
+  "pinned_guid": "1fW7pzY$1E$uIfNS1NTuX7"
+ },
+ "ROM-DEL-DIR-R-003": {
+  "entity_type": "IfcSpace",
+  "pin_status": "ok",
+  "pinned_guid": "2pmk7OKR5DZuiLcSbvolHU"
+ },
+ "ROM-DEL-DIR-R-004": {
+  "entity_type": "IfcSpace",
+  "pin_status": "ok",
+  "pinned_guid": "1FTaCiZdnEZh_RpO3q0nHY"
+ },
+ "ROM-DEL-SPA-A-001": {
+  "entity_type": "IfcSpace",
+  "pin_status": "ok",
+  "pinned_guid": "10VmbDUP13YPWiYkMLgRpN"
+ },
+ "ROM-DEL-SPA-A-002": {
+  "entity_type": "IfcSpace",
+  "pin_status": "ok",
+  "pinned_guid": "1BXMVsL3b4YOpeNFnqRn3h"
+ },
+ "ROM-DEL-SPA-A-003": {
+  "entity_type": "IfcSpace",
+  "pin_status": "ok",
+  "pinned_guid": "0TdJ$TWoL2cAeMVD_4_n8b"
+ },
+ "ROM-DEL-SPA-A-004": {
+  "entity_type": "IfcSpace",
+  "pin_status": "ok",
+  "pinned_guid": "0YgauDlZr9qBliw6ujquqd"
+ },
+ "ROM-DEL-SPA-R-001": {
+  "entity_type": "IfcSpace",
+  "pin_status": "ok",
+  "pinned_guid": "2975y8FcXF2RDxYtSJf7rS"
+ },
+ "ROM-DEL-SPA-R-002": {
+  "entity_type": "IfcSpace",
+  "pin_status": "ok",
+  "pinned_guid": "1fW7pzY$1E$uIfNS1NTuX7"
+ },
+ "ROM-DEL-SPA-R-003": {
+  "entity_type": "IfcSpace",
+  "pin_status": "ok",
+  "pinned_guid": "2pmk7OKR5DZuiLcSbvolHU"
+ },
+ "ROM-DEL-SPA-R-004": {
+  "entity_type": "IfcSpace",
+  "pin_status": "ok",
+  "pinned_guid": "1FTaCiZdnEZh_RpO3q0nHY"
+ },
+ "ROM-DEL-TOP-A-001": {
+  "entity_type": "IfcSpace",
+  "pin_status": "ok",
+  "pinned_guid": "10VmbDUP13YPWiYkMLgRpN"
+ },
+ "ROM-DEL-TOP-A-002": {
+  "entity_type": "IfcSpace",
+  "pin_status": "ok",
+  "pinned_guid": "1BXMVsL3b4YOpeNFnqRn3h"
+ },
+ "ROM-DEL-TOP-A-003": {
+  "entity_type": "IfcSpace",
+  "pin_status": "ok",
+  "pinned_guid": "0TdJ$TWoL2cAeMVD_4_n8b"
+ },
+ "ROM-DEL-TOP-A-004": {
+  "entity_type": "IfcSpace",
+  "pin_status": "ok",
+  "pinned_guid": "0YgauDlZr9qBliw6ujquqd"
+ },
+ "ROM-DEL-TOP-R-001": {
+  "entity_type": "IfcSpace",
+  "pin_status": "ok",
+  "pinned_guid": "2975y8FcXF2RDxYtSJf7rS"
+ },
+ "ROM-DEL-TOP-R-002": {
+  "entity_type": "IfcSpace",
+  "pin_status": "ok",
+  "pinned_guid": "1fW7pzY$1E$uIfNS1NTuX7"
+ },
+ "ROM-DEL-TOP-R-003": {
+  "entity_type": "IfcSpace",
+  "pin_status": "ok",
+  "pinned_guid": "2pmk7OKR5DZuiLcSbvolHU"
+ },
+ "ROM-DEL-TOP-R-004": {
+  "entity_type": "IfcSpace",
+  "pin_status": "ok",
+  "pinned_guid": "1FTaCiZdnEZh_RpO3q0nHY"
+ },
+ "ROM-UPD-DIR-A-001": {
+  "entity_type": "IfcSpace",
+  "pin_status": "ok",
+  "pinned_guid": "10VmbDUP13YPWiYkMLgRpN"
+ },
+ "ROM-UPD-DIR-A-002": {
+  "entity_type": "IfcSpace",
+  "pin_status": "ok",
+  "pinned_guid": "1BXMVsL3b4YOpeNFnqRn3h"
+ },
+ "ROM-UPD-DIR-A-003": {
+  "entity_type": "IfcSpace",
+  "pin_status": "ok",
+  "pinned_guid": "0TdJ$TWoL2cAeMVD_4_n8b"
+ },
+ "ROM-UPD-DIR-A-004": {
+  "entity_type": "IfcSpace",
+  "pin_status": "ok",
+  "pinned_guid": "3wxyd75Er8HBGYGI9jDteL"
+ },
+ "ROM-UPD-DIR-R-001": {
+  "entity_type": "IfcSpace",
+  "pin_status": "ok",
+  "pinned_guid": "2975y8FcXF2RDxYtSJf7rT"
+ },
+ "ROM-UPD-DIR-R-002": {
+  "entity_type": "IfcSpace",
+  "pin_status": "ok",
+  "pinned_guid": "1fW7pzY$1E$uIfNS1NTuXH"
+ },
+ "ROM-UPD-DIR-R-003": {
+  "entity_type": "IfcSpace",
+  "pin_status": "ok",
+  "pinned_guid": "2pmk7OKR5DZuiLcSbvolRG"
+ },
+ "ROM-UPD-DIR-R-004": {
+  "entity_type": "IfcSpace",
+  "pin_status": "ok",
+  "pinned_guid": "1FTaCiZdnEZh_RpO3q0nGr"
+ },
+ "ROM-UPD-SPA-A-001": {
+  "entity_type": "IfcSpace",
+  "pin_status": "ok",
+  "pinned_guid": "10VmbDUP13YPWiYkMLgRpN"
+ },
+ "ROM-UPD-SPA-A-002": {
+  "entity_type": "IfcSpace",
+  "pin_status": "ok",
+  "pinned_guid": "1BXMVsL3b4YOpeNFnqRn3h"
+ },
+ "ROM-UPD-SPA-A-003": {
+  "entity_type": "IfcSpace",
+  "pin_status": "ok",
+  "pinned_guid": "0TdJ$TWoL2cAeMVD_4_n8b"
+ },
+ "ROM-UPD-SPA-A-004": {
+  "entity_type": "IfcSpace",
+  "pin_status": "ok",
+  "pinned_guid": "3wxyd75Er8HBGYGI9jDteL"
+ },
+ "ROM-UPD-SPA-R-001": {
+  "entity_type": "IfcSpace",
+  "pin_status": "ok",
+  "pinned_guid": "2975y8FcXF2RDxYtSJf7rT"
+ },
+ "ROM-UPD-SPA-R-002": {
+  "entity_type": "IfcSpace",
+  "pin_status": "ok",
+  "pinned_guid": "1fW7pzY$1E$uIfNS1NTuXH"
+ },
+ "ROM-UPD-SPA-R-003": {
+  "entity_type": "IfcSpace",
+  "pin_status": "ok",
+  "pinned_guid": "2pmk7OKR5DZuiLcSbvolRG"
+ },
+ "ROM-UPD-SPA-R-004": {
+  "entity_type": "IfcSpace",
+  "pin_status": "ok",
+  "pinned_guid": "1FTaCiZdnEZh_RpO3q0nGr"
+ },
+ "ROM-UPD-TOP-A-001": {
+  "entity_type": "IfcSpace",
+  "pin_status": "ok",
+  "pinned_guid": "10VmbDUP13YPWiYkMLgRpN"
+ },
+ "ROM-UPD-TOP-A-002": {
+  "entity_type": "IfcSpace",
+  "pin_status": "ok",
+  "pinned_guid": "1BXMVsL3b4YOpeNFnqRn3h"
+ },
+ "ROM-UPD-TOP-A-003": {
+  "entity_type": "IfcSpace",
+  "pin_status": "ok",
+  "pinned_guid": "0TdJ$TWoL2cAeMVD_4_n8b"
+ },
+ "ROM-UPD-TOP-A-004": {
+  "entity_type": "IfcSpace",
+  "pin_status": "ok",
+  "pinned_guid": "3wxyd75Er8HBGYGI9jDteL"
+ },
+ "ROM-UPD-TOP-R-001": {
+  "entity_type": "IfcSpace",
+  "pin_status": "ok",
+  "pinned_guid": "2975y8FcXF2RDxYtSJf7rT"
+ },
+ "ROM-UPD-TOP-R-002": {
+  "entity_type": "IfcSpace",
+  "pin_status": "ok",
+  "pinned_guid": "1fW7pzY$1E$uIfNS1NTuXH"
+ },
+ "ROM-UPD-TOP-R-003": {
+  "entity_type": "IfcSpace",
+  "pin_status": "ok",
+  "pinned_guid": "2pmk7OKR5DZuiLcSbvolRG"
+ },
+ "ROM-UPD-TOP-R-004": {
+  "entity_type": "IfcSpace",
+  "pin_status": "ok",
+  "pinned_guid": "1FTaCiZdnEZh_RpO3q0nGr"
+ },
+ "SLB-DEL-DIR-A-001": {
+  "entity_type": "IfcSlab",
+  "pin_status": "ok",
+  "pinned_guid": "0okaGdY4n1xulccRQajp6C"
+ },
+ "SLB-DEL-DIR-A-002": {
+  "entity_type": "IfcSlab",
+  "pin_status": "ok",
+  "pinned_guid": "11kJIqz$n2Jf_DfJV1SCVP"
+ },
+ "SLB-DEL-DIR-A-003": {
+  "entity_type": "IfcSlab",
+  "pin_status": "ok",
+  "pinned_guid": "1YFesBujH2gOEC_rLPiADs"
+ },
+ "SLB-DEL-DIR-A-004": {
+  "entity_type": "IfcSlab",
+  "pin_status": "ok",
+  "pinned_guid": "1EtSEJ09vC_fyfv7r7jHfT"
+ },
+ "SLB-DEL-DIR-R-001": {
+  "entity_type": "IfcSlab",
+  "pin_status": "ok",
+  "pinned_guid": "0bqRrMdOXEnON1o90BM2ec"
+ },
+ "SLB-DEL-DIR-R-002": {
+  "entity_type": "IfcSlab",
+  "pin_status": "ok",
+  "pinned_guid": "3o2OEZ4R1CNe$4DSxkxEcZ"
+ },
+ "SLB-DEL-DIR-R-003": {
+  "entity_type": "IfcSlab",
+  "pin_status": "ok",
+  "pinned_guid": "00yrLiRn90MQI8Q5LMWRQP"
+ },
+ "SLB-DEL-DIR-R-004": {
+  "entity_type": "IfcSlab",
+  "pin_status": "ok",
+  "pinned_guid": "1NdPj2psv3Pg$6d7CB_VK8"
+ },
+ "SLB-DEL-SPA-A-001": {
+  "entity_type": "IfcSlab",
+  "pin_status": "ok",
+  "pinned_guid": "0okaGdY4n1xulccRQajp6C"
+ },
+ "SLB-DEL-SPA-A-002": {
+  "entity_type": "IfcSlab",
+  "pin_status": "ok",
+  "pinned_guid": "11kJIqz$n2Jf_DfJV1SCVP"
+ },
+ "SLB-DEL-SPA-A-003": {
+  "entity_type": "IfcSlab",
+  "pin_status": "ok",
+  "pinned_guid": "1YFesBujH2gOEC_rLPiADs"
+ },
+ "SLB-DEL-SPA-A-004": {
+  "entity_type": "IfcSlab",
+  "pin_status": "ok",
+  "pinned_guid": "1EtSEJ09vC_fyfv7r7jHfT"
+ },
+ "SLB-DEL-SPA-R-001": {
+  "entity_type": "IfcSlab",
+  "pin_status": "ok",
+  "pinned_guid": "0bqRrMdOXEnON1o90BM2ec"
+ },
+ "SLB-DEL-SPA-R-002": {
+  "entity_type": "IfcSlab",
+  "pin_status": "ok",
+  "pinned_guid": "3o2OEZ4R1CNe$4DSxkxEcZ"
+ },
+ "SLB-DEL-SPA-R-003": {
+  "entity_type": "IfcSlab",
+  "pin_status": "ok",
+  "pinned_guid": "00yrLiRn90MQI8Q5LMWRQP"
+ },
+ "SLB-DEL-SPA-R-004": {
+  "entity_type": "IfcSlab",
+  "pin_status": "ok",
+  "pinned_guid": "1NdPj2psv3Pg$6d7CB_VK8"
+ },
+ "SLB-DEL-TOP-A-001": {
+  "entity_type": "IfcSlab",
+  "pin_status": "ok",
+  "pinned_guid": "0okaGdY4n1xulccRQajp6C"
+ },
+ "SLB-DEL-TOP-A-002": {
+  "entity_type": "IfcSlab",
+  "pin_status": "ok",
+  "pinned_guid": "11kJIqz$n2Jf_DfJV1SCVP"
+ },
+ "SLB-DEL-TOP-A-003": {
+  "entity_type": "IfcSlab",
+  "pin_status": "ok",
+  "pinned_guid": "1YFesBujH2gOEC_rLPiADs"
+ },
+ "SLB-DEL-TOP-A-004": {
+  "entity_type": "IfcSlab",
+  "pin_status": "ok",
+  "pinned_guid": "1EtSEJ09vC_fyfv7r7jHfT"
+ },
+ "SLB-DEL-TOP-R-001": {
+  "entity_type": "IfcSlab",
+  "pin_status": "ok",
+  "pinned_guid": "0bqRrMdOXEnON1o90BM2ec"
+ },
+ "SLB-DEL-TOP-R-002": {
+  "entity_type": "IfcSlab",
+  "pin_status": "ok",
+  "pinned_guid": "3o2OEZ4R1CNe$4DSxkxEcZ"
+ },
+ "SLB-DEL-TOP-R-003": {
+  "entity_type": "IfcSlab",
+  "pin_status": "ok",
+  "pinned_guid": "00yrLiRn90MQI8Q5LMWRQP"
+ },
+ "SLB-DEL-TOP-R-004": {
+  "entity_type": "IfcSlab",
+  "pin_status": "ok",
+  "pinned_guid": "1NdPj2psv3Pg$6d7CB_VK8"
+ },
+ "SLB-UPD-DIR-A-001": {
+  "entity_type": "IfcSlab",
+  "pin_status": "ok",
+  "pinned_guid": "0okaGdY4n1xulccRQajp6C"
+ },
+ "SLB-UPD-DIR-A-002": {
+  "entity_type": "IfcSlab",
+  "pin_status": "ok",
+  "pinned_guid": "11kJIqz$n2Jf_DfJV1SCVP"
+ },
+ "SLB-UPD-DIR-A-003": {
+  "entity_type": "IfcSlab",
+  "pin_status": "ok",
+  "pinned_guid": "1YFesBujH2gOEC_rLPiADs"
+ },
+ "SLB-UPD-DIR-A-004": {
+  "entity_type": "IfcSlab",
+  "pin_status": "ok",
+  "pinned_guid": "0ppF$bDP5DHhqwDP7ReEMo"
+ },
+ "SLB-UPD-DIR-R-001": {
+  "entity_type": "IfcSlab",
+  "pin_status": "ok",
+  "pinned_guid": "0bqRrMdOXEnON1o90BM2ec"
+ },
+ "SLB-UPD-DIR-R-002": {
+  "entity_type": "IfcSlab",
+  "pin_status": "ok",
+  "pinned_guid": "3o2OEZ4R1CNe$4DSxkxEcZ"
+ },
+ "SLB-UPD-DIR-R-003": {
+  "entity_type": "IfcSlab",
+  "pin_status": "ok",
+  "pinned_guid": "00yrLiRn90MQI8Q5LMWRQP"
+ },
+ "SLB-UPD-DIR-R-004": {
+  "entity_type": "IfcSlab",
+  "pin_status": "ok",
+  "pinned_guid": "1NdPj2psv3Pg$6d7CB_VNd"
+ },
+ "SLB-UPD-SPA-A-001": {
+  "entity_type": "IfcSlab",
+  "pin_status": "ok",
+  "pinned_guid": "0okaGdY4n1xulccRQajp6C"
+ },
+ "SLB-UPD-SPA-A-002": {
+  "entity_type": "IfcSlab",
+  "pin_status": "ok",
+  "pinned_guid": "11kJIqz$n2Jf_DfJV1SCVP"
+ },
+ "SLB-UPD-SPA-A-003": {
+  "entity_type": "IfcSlab",
+  "pin_status": "ok",
+  "pinned_guid": "1YFesBujH2gOEC_rLPiADs"
+ },
+ "SLB-UPD-SPA-A-004": {
+  "entity_type": "IfcSlab",
+  "pin_status": "ok",
+  "pinned_guid": "0ppF$bDP5DHhqwDP7ReEMo"
+ },
+ "SLB-UPD-SPA-R-001": {
+  "entity_type": "IfcSlab",
+  "pin_status": "ok",
+  "pinned_guid": "0bqRrMdOXEnON1o90BM2ec"
+ },
+ "SLB-UPD-SPA-R-002": {
+  "entity_type": "IfcSlab",
+  "pin_status": "ok",
+  "pinned_guid": "3o2OEZ4R1CNe$4DSxkxEcZ"
+ },
+ "SLB-UPD-SPA-R-003": {
+  "entity_type": "IfcSlab",
+  "pin_status": "ok",
+  "pinned_guid": "00yrLiRn90MQI8Q5LMWRQP"
+ },
+ "SLB-UPD-SPA-R-004": {
+  "entity_type": "IfcSlab",
+  "pin_status": "ok",
+  "pinned_guid": "1NdPj2psv3Pg$6d7CB_VNd"
+ },
+ "SLB-UPD-TOP-A-001": {
+  "entity_type": "IfcSlab",
+  "pin_status": "ok",
+  "pinned_guid": "0okaGdY4n1xulccRQajp6C"
+ },
+ "SLB-UPD-TOP-A-002": {
+  "entity_type": "IfcSlab",
+  "pin_status": "ok",
+  "pinned_guid": "11kJIqz$n2Jf_DfJV1SCVP"
+ },
+ "SLB-UPD-TOP-A-003": {
+  "entity_type": "IfcSlab",
+  "pin_status": "ok",
+  "pinned_guid": "1YFesBujH2gOEC_rLPiADs"
+ },
+ "SLB-UPD-TOP-A-004": {
+  "entity_type": "IfcSlab",
+  "pin_status": "ok",
+  "pinned_guid": "0ppF$bDP5DHhqwDP7ReEMo"
+ },
+ "SLB-UPD-TOP-R-001": {
+  "entity_type": "IfcSlab",
+  "pin_status": "ok",
+  "pinned_guid": "0bqRrMdOXEnON1o90BM2ec"
+ },
+ "SLB-UPD-TOP-R-002": {
+  "entity_type": "IfcSlab",
+  "pin_status": "ok",
+  "pinned_guid": "3o2OEZ4R1CNe$4DSxkxEcZ"
+ },
+ "SLB-UPD-TOP-R-003": {
+  "entity_type": "IfcSlab",
+  "pin_status": "ok",
+  "pinned_guid": "00yrLiRn90MQI8Q5LMWRQP"
+ },
+ "SLB-UPD-TOP-R-004": {
+  "entity_type": "IfcSlab",
+  "pin_status": "ok",
+  "pinned_guid": "1NdPj2psv3Pg$6d7CB_VNd"
+ },
+ "WAL-DEL-DIR-A-001": {
+  "entity_type": "IfcWall",
+  "pin_status": "ok",
+  "pinned_guid": "0okaGdY4n1xulccRQajmzQ"
+ },
+ "WAL-DEL-DIR-A-002": {
+  "entity_type": "IfcWall",
+  "pin_status": "ok",
+  "pinned_guid": "0okaGdY4n1xulccRQajpx9"
+ },
+ "WAL-DEL-DIR-A-003": {
+  "entity_type": "IfcWall",
+  "pin_status": "ok",
+  "pinned_guid": "000irGlVjApOlI2apOJp9x"
+ },
+ "WAL-DEL-DIR-A-004": {
+  "entity_type": "IfcWall",
+  "pin_status": "ok",
+  "pinned_guid": "2vuAbibijBffFYjZdHmDts"
+ },
+ "WAL-DEL-DIR-R-001": {
+  "entity_type": "IfcWall",
+  "pin_status": "ok",
+  "pinned_guid": "2AOGoBTWz3ieiE459aLhPN"
+ },
+ "WAL-DEL-DIR-R-002": {
+  "entity_type": "IfcWall",
+  "pin_status": "ok",
+  "pinned_guid": "11mAdCNzP9eu3JzTroO$Er"
+ },
+ "WAL-DEL-DIR-R-003": {
+  "entity_type": "IfcWall",
+  "pin_status": "ok",
+  "pinned_guid": "2QS621lD51vfaO5mAA7uAR"
+ },
+ "WAL-DEL-DIR-R-004": {
+  "entity_type": "IfcWall",
+  "pin_status": "ok",
+  "pinned_guid": "2ZBSpxJWn5s9fhGuQxf3MI"
+ },
+ "WAL-DEL-SPA-A-001": {
+  "entity_type": "IfcWall",
+  "pin_status": "ok",
+  "pinned_guid": "0okaGdY4n1xulccRQajmzQ"
+ },
+ "WAL-DEL-SPA-A-002": {
+  "entity_type": "IfcWall",
+  "pin_status": "ok",
+  "pinned_guid": "0okaGdY4n1xulccRQajpx9"
+ },
+ "WAL-DEL-SPA-A-003": {
+  "entity_type": "IfcWall",
+  "pin_status": "ok",
+  "pinned_guid": "000irGlVjApOlI2apOJp9x"
+ },
+ "WAL-DEL-SPA-A-004": {
+  "entity_type": "IfcWall",
+  "pin_status": "ok",
+  "pinned_guid": "2vuAbibijBffFYjZdHmDts"
+ },
+ "WAL-DEL-SPA-R-001": {
+  "entity_type": "IfcWall",
+  "pin_status": "ok",
+  "pinned_guid": "2AOGoBTWz3ieiE459aLhPN"
+ },
+ "WAL-DEL-SPA-R-002": {
+  "entity_type": "IfcWall",
+  "pin_status": "ok",
+  "pinned_guid": "11mAdCNzP9eu3JzTroO$Er"
+ },
+ "WAL-DEL-SPA-R-003": {
+  "entity_type": "IfcWall",
+  "pin_status": "ok",
+  "pinned_guid": "2QS621lD51vfaO5mAA7uAR"
+ },
+ "WAL-DEL-SPA-R-004": {
+  "entity_type": "IfcWall",
+  "pin_status": "ok",
+  "pinned_guid": "2ZBSpxJWn5s9fhGuQxf3MI"
+ },
+ "WAL-DEL-TOP-A-001": {
+  "entity_type": "IfcWall",
+  "pin_status": "ok",
+  "pinned_guid": "0okaGdY4n1xulccRQajmzQ"
+ },
+ "WAL-DEL-TOP-A-002": {
+  "entity_type": "IfcWall",
+  "pin_status": "ok",
+  "pinned_guid": "0okaGdY4n1xulccRQajpx9"
+ },
+ "WAL-DEL-TOP-A-003": {
+  "entity_type": "IfcWall",
+  "pin_status": "ok",
+  "pinned_guid": "000irGlVjApOlI2apOJp9x"
+ },
+ "WAL-DEL-TOP-A-004": {
+  "entity_type": "IfcWall",
+  "pin_status": "ok",
+  "pinned_guid": "2vuAbibijBffFYjZdHmDts"
+ },
+ "WAL-DEL-TOP-R-001": {
+  "entity_type": "IfcWall",
+  "pin_status": "ok",
+  "pinned_guid": "2AOGoBTWz3ieiE459aLhPN"
+ },
+ "WAL-DEL-TOP-R-002": {
+  "entity_type": "IfcWall",
+  "pin_status": "ok",
+  "pinned_guid": "11mAdCNzP9eu3JzTroO$Er"
+ },
+ "WAL-DEL-TOP-R-003": {
+  "entity_type": "IfcWall",
+  "pin_status": "ok",
+  "pinned_guid": "2QS621lD51vfaO5mAA7uAR"
+ },
+ "WAL-DEL-TOP-R-004": {
+  "entity_type": "IfcWall",
+  "pin_status": "ok",
+  "pinned_guid": "2ZBSpxJWn5s9fhGuQxf3MI"
+ },
+ "WAL-UPD-DIR-A-001": {
+  "entity_type": "IfcWall",
+  "pin_status": "ok",
+  "pinned_guid": "0okaGdY4n1xulccRQajpx9"
+ },
+ "WAL-UPD-DIR-A-002": {
+  "entity_type": "IfcWall",
+  "pin_status": "ok",
+  "pinned_guid": "0JseLab3T6bx_3inDW04pz"
+ },
+ "WAL-UPD-DIR-A-003": {
+  "entity_type": "IfcWall",
+  "pin_status": "ok",
+  "pinned_guid": "000irGlVjApOlI2apOJp9x"
+ },
+ "WAL-UPD-DIR-A-004": {
+  "entity_type": "IfcWall",
+  "pin_status": "ok",
+  "pinned_guid": "0SW1L9fQP9xeGsED2XHlvo"
+ },
+ "WAL-UPD-DIR-R-001": {
+  "entity_type": "IfcWall",
+  "pin_status": "ok",
+  "pinned_guid": "30a7nM35T5pgZzaItbPb1c"
+ },
+ "WAL-UPD-DIR-R-002": {
+  "entity_type": "IfcWall",
+  "pin_status": "missing_in_gt",
+  "pinned_guid": "1pUd$18rZd98AjEd9pV6_jMu$XT"
+ },
+ "WAL-UPD-DIR-R-003": {
+  "entity_type": "IfcWall",
+  "pin_status": "ok",
+  "pinned_guid": "2QS621lD51vfaO5mAA7tdk"
+ },
+ "WAL-UPD-DIR-R-004": {
+  "entity_type": "IfcWall",
+  "pin_status": "ok",
+  "pinned_guid": "2Nq3EKEYP8kfBFwGBhtRhO"
+ },
+ "WAL-UPD-SPA-A-001": {
+  "entity_type": "IfcWall",
+  "pin_status": "ok",
+  "pinned_guid": "0okaGdY4n1xulccRQajpx9"
+ },
+ "WAL-UPD-SPA-A-002": {
+  "entity_type": "IfcWall",
+  "pin_status": "ok",
+  "pinned_guid": "0JseLab3T6bx_3inDW04pz"
+ },
+ "WAL-UPD-SPA-A-003": {
+  "entity_type": "IfcWall",
+  "pin_status": "ok",
+  "pinned_guid": "000irGlVjApOlI2apOJp9x"
+ },
+ "WAL-UPD-SPA-A-004": {
+  "entity_type": "IfcWall",
+  "pin_status": "ok",
+  "pinned_guid": "0SW1L9fQP9xeGsED2XHlvo"
+ },
+ "WAL-UPD-SPA-R-001": {
+  "entity_type": "IfcWall",
+  "pin_status": "ok",
+  "pinned_guid": "30a7nM35T5pgZzaItbPb1c"
+ },
+ "WAL-UPD-SPA-R-002": {
+  "entity_type": "IfcWall",
+  "pin_status": "missing_in_gt",
+  "pinned_guid": "1pUd$18rZd98AjEd9pV6_jMu$XT"
+ },
+ "WAL-UPD-SPA-R-003": {
+  "entity_type": "IfcWall",
+  "pin_status": "ok",
+  "pinned_guid": "2QS621lD51vfaO5mAA7tdk"
+ },
+ "WAL-UPD-SPA-R-004": {
+  "entity_type": "IfcWall",
+  "pin_status": "ok",
+  "pinned_guid": "2Nq3EKEYP8kfBFwGBhtRhO"
+ },
+ "WAL-UPD-TOP-A-001": {
+  "entity_type": "IfcWall",
+  "pin_status": "ok",
+  "pinned_guid": "0okaGdY4n1xulccRQajpx9"
+ },
+ "WAL-UPD-TOP-A-002": {
+  "entity_type": "IfcWall",
+  "pin_status": "ok",
+  "pinned_guid": "0JseLab3T6bx_3inDW04pz"
+ },
+ "WAL-UPD-TOP-A-003": {
+  "entity_type": "IfcWall",
+  "pin_status": "ok",
+  "pinned_guid": "000irGlVjApOlI2apOJp9x"
+ },
+ "WAL-UPD-TOP-A-004": {
+  "entity_type": "IfcWall",
+  "pin_status": "ok",
+  "pinned_guid": "0SW1L9fQP9xeGsED2XHlvo"
+ },
+ "WAL-UPD-TOP-R-001": {
+  "entity_type": "IfcWall",
+  "pin_status": "ok",
+  "pinned_guid": "30a7nM35T5pgZzaItbPb1c"
+ },
+ "WAL-UPD-TOP-R-002": {
+  "entity_type": "IfcWall",
+  "pin_status": "missing_in_gt",
+  "pinned_guid": "1pUd$18rZd98AjEd9pV6_jMu$XT"
+ },
+ "WAL-UPD-TOP-R-003": {
+  "entity_type": "IfcWall",
+  "pin_status": "ok",
+  "pinned_guid": "2QS621lD51vfaO5mAA7tdk"
+ },
+ "WAL-UPD-TOP-R-004": {
+  "entity_type": "IfcWall",
+  "pin_status": "ok",
+  "pinned_guid": "2Nq3EKEYP8kfBFwGBhtRhO"
+ },
+ "WIN-DEL-DIR-A-001": {
+  "entity_type": "IfcWindow",
+  "pin_status": "ok",
+  "pinned_guid": "0okaGdY4n1xulccRQajpyj"
+ },
+ "WIN-DEL-DIR-A-002": {
+  "entity_type": "IfcWindow",
+  "pin_status": "ok",
+  "pinned_guid": "00Q96FYDLC7A$JCmG1v0z6"
+ },
+ "WIN-DEL-DIR-R-001": {
+  "entity_type": "IfcWindow",
+  "pin_status": "ok",
+  "pinned_guid": "3nIe_FFgf4Vg9OnX4KtvkQ"
+ },
+ "WIN-DEL-DIR-R-002": {
+  "entity_type": "IfcWindow",
+  "pin_status": "ok",
+  "pinned_guid": "2JsRSBbh53LeGcXsUnFgMM"
+ },
+ "WIN-DEL-SPA-A-001": {
+  "entity_type": "IfcWindow",
+  "pin_status": "ok",
+  "pinned_guid": "0okaGdY4n1xulccRQajpyj"
+ },
+ "WIN-DEL-SPA-A-002": {
+  "entity_type": "IfcWindow",
+  "pin_status": "missing_in_input_and_gt",
+  "pinned_guid": "00Q96FYDLC7A$JCmG1v0z7"
+ },
+ "WIN-DEL-SPA-R-001": {
+  "entity_type": "IfcWindow",
+  "pin_status": "ok",
+  "pinned_guid": "3nIe_FFgf4Vg9OnX4KtvkQ"
+ },
+ "WIN-DEL-SPA-R-002": {
+  "entity_type": "IfcWindow",
+  "pin_status": "ok",
+  "pinned_guid": "2JsRSBbh53LeGcXsUnFgMM"
+ },
+ "WIN-DEL-TOP-A-001": {
+  "entity_type": "IfcWindow",
+  "pin_status": "ok",
+  "pinned_guid": "0okaGdY4n1xulccRQajpyj"
+ },
+ "WIN-DEL-TOP-A-002": {
+  "entity_type": "IfcWindow",
+  "pin_status": "missing_in_input_and_gt",
+  "pinned_guid": "00Q96FYDLC7A$JCmG1v0z8"
+ },
+ "WIN-DEL-TOP-R-001": {
+  "entity_type": "IfcWindow",
+  "pin_status": "ok",
+  "pinned_guid": "3nIe_FFgf4Vg9OnX4KtvkQ"
+ },
+ "WIN-DEL-TOP-R-002": {
+  "entity_type": "IfcWindow",
+  "pin_status": "ok",
+  "pinned_guid": "2JsRSBbh53LeGcXsUnFgMM"
+ },
+ "WIN-UPD-DIR-A-001": {
+  "entity_type": "IfcWindow",
+  "pin_status": "ok",
+  "pinned_guid": "3V7aXQZ4DAiBUCTilxuAvr"
+ },
+ "WIN-UPD-DIR-A-002": {
+  "entity_type": "IfcWindow",
+  "pin_status": "ok",
+  "pinned_guid": "0okaGdY4n1xulccRQajpyj"
+ },
+ "WIN-UPD-DIR-A-003": {
+  "entity_type": "IfcWindow",
+  "pin_status": "ok",
+  "pinned_guid": "00Q96FYDLC7A$JCmG1v0oW"
+ },
+ "WIN-UPD-DIR-R-001": {
+  "entity_type": "IfcWindow",
+  "pin_status": "ok",
+  "pinned_guid": "3WO3oiZff6mQyGU4WU6cyx"
+ },
+ "WIN-UPD-DIR-R-002": {
+  "entity_type": "IfcWindow",
+  "pin_status": "ok",
+  "pinned_guid": "3nIe_FFgf4Vg9OnX4KtvkQ"
+ },
+ "WIN-UPD-DIR-R-003": {
+  "entity_type": "IfcWindow",
+  "pin_status": "ok",
+  "pinned_guid": "2JsRSBbh53LeGcXsUnFg8G"
+ },
+ "WIN-UPD-SPA-A-001": {
+  "entity_type": "IfcWindow",
+  "pin_status": "ok",
+  "pinned_guid": "3V7aXQZ4DAiBUCTilxuAvr"
+ },
+ "WIN-UPD-SPA-A-002": {
+  "entity_type": "IfcWindow",
+  "pin_status": "ok",
+  "pinned_guid": "0okaGdY4n1xulccRQajpyj"
+ },
+ "WIN-UPD-SPA-A-003": {
+  "entity_type": "IfcWindow",
+  "pin_status": "ok",
+  "pinned_guid": "00Q96FYDLC7A$JCmG1v0oW"
+ },
+ "WIN-UPD-SPA-R-001": {
+  "entity_type": "IfcWindow",
+  "pin_status": "ok",
+  "pinned_guid": "3WO3oiZff6mQyGU4WU6cyx"
+ },
+ "WIN-UPD-SPA-R-002": {
+  "entity_type": "IfcWindow",
+  "pin_status": "ok",
+  "pinned_guid": "3nIe_FFgf4Vg9OnX4KtvkQ"
+ },
+ "WIN-UPD-SPA-R-003": {
+  "entity_type": "IfcWindow",
+  "pin_status": "ok",
+  "pinned_guid": "2JsRSBbh53LeGcXsUnFg8G"
+ },
+ "WIN-UPD-TOP-A-001": {
+  "entity_type": "IfcWindow",
+  "pin_status": "ok",
+  "pinned_guid": "3V7aXQZ4DAiBUCTilxuAvr"
+ },
+ "WIN-UPD-TOP-A-002": {
+  "entity_type": "IfcWindow",
+  "pin_status": "ok",
+  "pinned_guid": "0okaGdY4n1xulccRQajpyj"
+ },
+ "WIN-UPD-TOP-A-003": {
+  "entity_type": "IfcWindow",
+  "pin_status": "ok",
+  "pinned_guid": "00Q96FYDLC7A$JCmG1v0oW"
+ },
+ "WIN-UPD-TOP-R-001": {
+  "entity_type": "IfcWindow",
+  "pin_status": "ok",
+  "pinned_guid": "3WO3oiZff6mQyGU4WU6cyx"
+ },
+ "WIN-UPD-TOP-R-002": {
+  "entity_type": "IfcWindow",
+  "pin_status": "ok",
+  "pinned_guid": "3nIe_FFgf4Vg9OnX4KtvkQ"
+ },
+ "WIN-UPD-TOP-R-003": {
+  "entity_type": "IfcWindow",
+  "pin_status": "ok",
+  "pinned_guid": "2JsRSBbh53LeGcXsUnFg8G"
+ }
+}
