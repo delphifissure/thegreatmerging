@@ -10,6 +10,7 @@ New predicted nodes are aligned to new reference nodes greedily by class and pos
 from __future__ import annotations
 
 import hashlib
+import re
 
 import numpy as np
 import ifcopenshell
@@ -36,23 +37,19 @@ def _round(v):
     return v
 
 
+_REF = re.compile(r"#\d+")
+
+
 def _shape_fingerprint(model, entity) -> str:
+    """Hash of the representation subgraph's STEP text with instance ids blanked out.
+
+    Differences here only flag a candidate; _modified confirms a real change by geometry."""
     rep = getattr(entity, "Representation", None)
     if rep is None:
         return ""
     h = hashlib.sha1()
     for e in model.traverse(rep):
-        info = e.get_info(recursive=False)
-        vals = []
-        for k, v in info.items():
-            if k in ("id",):
-                continue
-            if isinstance(v, ifcopenshell.entity_instance):
-                v = v.is_a()
-            elif isinstance(v, (list, tuple)):
-                v = tuple(x.is_a() if isinstance(x, ifcopenshell.entity_instance) else _round(x) for x in v)
-            vals.append((k, _round(v)))
-        h.update(repr(vals).encode())
+        h.update(_REF.sub("#", str(e)).encode())
     return h.hexdigest()
 
 
