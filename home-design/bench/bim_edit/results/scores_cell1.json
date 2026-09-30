@@ -1,0 +1,1486 @@
+{
+ "tasks": [
+  "COL-CRE-DIR-A-001",
+  "DOR-CRE-DIR-R-001",
+  "ROM-CRE-SPA-A-001",
+  "SLB-CRE-SPA-R-001",
+  "WAL-CRE-TOP-A-001",
+  "WIN-CRE-TOP-R-001",
+  "COL-DEL-DIR-A-001",
+  "DOR-DEL-DIR-R-001",
+  "ROM-DEL-SPA-A-001",
+  "SLB-DEL-SPA-R-001",
+  "WAL-DEL-TOP-A-001",
+  "WIN-DEL-TOP-R-001",
+  "COL-UPD-DIR-A-001",
+  "DOR-UPD-DIR-R-001",
+  "ROM-UPD-SPA-A-001",
+  "SLB-UPD-SPA-R-001",
+  "WAL-UPD-TOP-A-001",
+  "WIN-UPD-TOP-R-001"
+ ],
+ "summary": {
+  "cc-sonnet55-cell1": {
+   "n": 18,
+   "edited_found": 18,
+   "released": {
+    "geometry": 0.879,
+    "semantics": 0.4469,
+    "topology": 0.7618,
+    "final_score": 0.6959,
+    "solved": 2
+   },
+   "paper": {
+    "geometry": 0.9438,
+    "semantics": 0.7802,
+    "topology": 0.744,
+    "final_score": 0.8227,
+    "solved": 6
+   }
+  },
+  "gpt-5.4": {
+   "n": 18,
+   "edited_found": 18,
+   "released": {
+    "geometry": 0.5146,
+    "semantics": 0.4668,
+    "topology": 0.401,
+    "final_score": 0.4608,
+    "solved": 0
+   },
+   "paper": {
+    "geometry": 0.6286,
+    "semantics": 0.4668,
+    "topology": 0.5747,
+    "final_score": 0.5567,
+    "solved": 1
+   },
+   "authors_final_score": 0.3952
+  },
+  "claude-sonnet": {
+   "n": 18,
+   "edited_found": 18,
+   "released": {
+    "geometry": 0.4089,
+    "semantics": 0.3333,
+    "topology": 0.3595,
+    "final_score": 0.3673,
+    "solved": 1
+   },
+   "paper": {
+    "geometry": 0.5823,
+    "semantics": 0.4444,
+    "topology": 0.4281,
+    "final_score": 0.485,
+    "solved": 3
+   },
+   "authors_final_score": 0.331
+  }
+ },
+ "rows": [
+  {
+   "run": "cc-sonnet55-cell1",
+   "kind": "ours",
+   "task_id": "COL-CRE-DIR-A-001",
+   "scene": "artificial",
+   "edited_found": true,
+   "released": {
+    "geometry": 0.0,
+    "semantics": 0.0,
+    "topology": 0.0,
+    "final_score": 0.0,
+    "solved": false
+   },
+   "topology_approximate": false,
+   "paper": {
+    "geometry": 0.5773298582128192,
+    "semantics": 0.0,
+    "topology": 0.6499999999999999,
+    "final_score": 0.40910995273760636,
+    "solved": false
+   }
+  },
+  {
+   "run": "cc-sonnet55-cell1",
+   "kind": "ours",
+   "task_id": "DOR-CRE-DIR-R-001",
+   "scene": "realistic",
+   "edited_found": true,
+   "released": {
+    "geometry": 0.9385214822851075,
+    "semantics": 0.55,
+    "topology": 0.8678571428571429,
+    "final_score": 0.7854595417140834,
+    "solved": false
+   },
+   "topology_approximate": false,
+   "paper": {
+    "geometry": 0.9385214822851075,
+    "semantics": 0.55,
+    "topology": 0.7098901098901099,
+    "final_score": 0.7328038640584058,
+    "solved": false
+   }
+  },
+  {
+   "run": "cc-sonnet55-cell1",
+   "kind": "ours",
+   "task_id": "ROM-CRE-SPA-A-001",
+   "scene": "artificial",
+   "edited_found": true,
+   "released": {
+    "geometry": 0.982379548266174,
+    "semantics": 0.5,
+    "topology": 0.7074829931972789,
+    "final_score": 0.7299541804878177,
+    "solved": false
+   },
+   "topology_approximate": false,
+   "paper": {
+    "geometry": 0.982379548266174,
+    "semantics": 0.5,
+    "topology": 0.5,
+    "final_score": 0.6607931827553913,
+    "solved": false
+   }
+  },
+  {
+   "run": "cc-sonnet55-cell1",
+   "kind": "ours",
+   "task_id": "SLB-CRE-SPA-R-001",
+   "scene": "realistic",
+   "edited_found": true,
+   "released": {
+    "geometry": 0.9690909298821391,
+    "semantics": 0.55,
+    "topology": 0.4714285714285714,
+    "final_score": 0.6635065004369035,
+    "solved": false
+   },
+   "topology_approximate": false,
+   "paper": {
+    "geometry": 0.9690909298821391,
+    "semantics": 0.55,
+    "topology": 0.3,
+    "final_score": 0.6063636432940464,
+    "solved": false
+   }
+  },
+  {
+   "run": "cc-sonnet55-cell1",
+   "kind": "ours",
+   "task_id": "WAL-CRE-TOP-A-001",
+   "scene": "artificial",
+   "edited_found": true,
+   "released": {
+    "geometry": 0.9484429976483685,
+    "semantics": 0.5,
+    "topology": 0.8821428571428571,
+    "final_score": 0.7768619515970752,
+    "solved": false
+   },
+   "topology_approximate": false,
+   "paper": {
+    "geometry": 0.9484429976483685,
+    "semantics": 0.5,
+    "topology": 0.825,
+    "final_score": 0.7578143325494562,
+    "solved": false
+   }
+  },
+  {
+   "run": "cc-sonnet55-cell1",
+   "kind": "ours",
+   "task_id": "WIN-CRE-TOP-R-001",
+   "scene": "realistic",
+   "edited_found": true,
+   "released": {
+    "geometry": 0.9999999999999842,
+    "semantics": 0.9444444444444444,
+    "topology": 0.6476190476190476,
+    "final_score": 0.8640211640211587,
+    "solved": false
+   },
+   "topology_approximate": false,
+   "paper": {
+    "geometry": 0.9999999999999842,
+    "semantics": 0.9444444444444444,
+    "topology": 0.62,
+    "final_score": 0.8548148148148096,
+    "solved": false
+   }
+  },
+  {
+   "run": "cc-sonnet55-cell1",
+   "kind": "ours",
+   "task_id": "COL-DEL-DIR-A-001",
+   "scene": "artificial",
+   "edited_found": true,
+   "released": {
+    "geometry": 1.0,
+    "semantics": 0.0,
+    "topology": 1.0,
+    "final_score": 0.6666666666666666,
+    "solved": false
+   },
+   "topology_approximate": false,
+   "paper": {
+    "geometry": 1.0,
+    "semantics": 1.0,
+    "topology": 1.0,
+    "final_score": 1.0,
+    "solved": true
+   }
+  },
+  {
+   "run": "cc-sonnet55-cell1",
+   "kind": "ours",
+   "task_id": "DOR-DEL-DIR-R-001",
+   "scene": "realistic",
+   "edited_found": true,
+   "released": {
+    "geometry": 1.0,
+    "semantics": 0.0,
+    "topology": 1.0,
+    "final_score": 0.6666666666666666,
+    "solved": false
+   },
+   "topology_approximate": false,
+   "paper": {
+    "geometry": 1.0,
+    "semantics": 1.0,
+    "topology": 0.8999999999999999,
+    "final_score": 0.9666666666666667,
+    "solved": false
+   }
+  },
+  {
+   "run": "cc-sonnet55-cell1",
+   "kind": "ours",
+   "task_id": "ROM-DEL-SPA-A-001",
+   "scene": "artificial",
+   "edited_found": true,
+   "released": {
+    "geometry": 1.0,
+    "semantics": 0.0,
+    "topology": 1.0,
+    "final_score": 0.6666666666666666,
+    "solved": false
+   },
+   "topology_approximate": false,
+   "paper": {
+    "geometry": 1.0,
+    "semantics": 1.0,
+    "topology": 1.0,
+    "final_score": 1.0,
+    "solved": true
+   }
+  },
+  {
+   "run": "cc-sonnet55-cell1",
+   "kind": "ours",
+   "task_id": "SLB-DEL-SPA-R-001",
+   "scene": "realistic",
+   "edited_found": true,
+   "released": {
+    "geometry": 1.0,
+    "semantics": 0.0,
+    "topology": 1.0,
+    "final_score": 0.6666666666666666,
+    "solved": false
+   },
+   "topology_approximate": false,
+   "paper": {
+    "geometry": 1.0,
+    "semantics": 1.0,
+    "topology": 1.0,
+    "final_score": 1.0,
+    "solved": true
+   }
+  },
+  {
+   "run": "cc-sonnet55-cell1",
+   "kind": "ours",
+   "task_id": "WAL-DEL-TOP-A-001",
+   "scene": "artificial",
+   "edited_found": true,
+   "released": {
+    "geometry": 1.0,
+    "semantics": 0.0,
+    "topology": 1.0,
+    "final_score": 0.6666666666666666,
+    "solved": false
+   },
+   "topology_approximate": false,
+   "paper": {
+    "geometry": 1.0,
+    "semantics": 1.0,
+    "topology": 1.0,
+    "final_score": 1.0,
+    "solved": true
+   }
+  },
+  {
+   "run": "cc-sonnet55-cell1",
+   "kind": "ours",
+   "task_id": "WIN-DEL-TOP-R-001",
+   "scene": "realistic",
+   "edited_found": true,
+   "released": {
+    "geometry": 1.0,
+    "semantics": 0.0,
+    "topology": 1.0,
+    "final_score": 0.6666666666666666,
+    "solved": false
+   },
+   "topology_approximate": false,
+   "paper": {
+    "geometry": 1.0,
+    "semantics": 1.0,
+    "topology": 0.8222222222222222,
+    "final_score": 0.9407407407407407,
+    "solved": false
+   }
+  },
+  {
+   "run": "cc-sonnet55-cell1",
+   "kind": "ours",
+   "task_id": "COL-UPD-DIR-A-001",
+   "scene": "artificial",
+   "edited_found": true,
+   "released": {
+    "geometry": 0.0,
+    "semantics": 0.0,
+    "topology": 0.0,
+    "final_score": 0.0,
+    "solved": false
+   },
+   "topology_approximate": false,
+   "paper": {
+    "geometry": 0.5891117679496407,
+    "semantics": 0.0,
+    "topology": 0.19999999999999998,
+    "final_score": 0.26303725598321354,
+    "solved": false
+   }
+  },
+  {
+   "run": "cc-sonnet55-cell1",
+   "kind": "ours",
+   "task_id": "DOR-UPD-DIR-R-001",
+   "scene": "realistic",
+   "edited_found": true,
+   "released": {
+    "geometry": 0.9999999999999847,
+    "semantics": 1.0,
+    "topology": 1.0,
+    "final_score": 0.999999999999995,
+    "solved": true
+   },
+   "topology_approximate": false,
+   "paper": {
+    "geometry": 0.9999999999999847,
+    "semantics": 1.0,
+    "topology": 1.0,
+    "final_score": 0.999999999999995,
+    "solved": true
+   }
+  },
+  {
+   "run": "cc-sonnet55-cell1",
+   "kind": "ours",
+   "task_id": "ROM-UPD-SPA-A-001",
+   "scene": "artificial",
+   "edited_found": true,
+   "released": {
+    "geometry": 0.9999999999999807,
+    "semantics": 1.0,
+    "topology": 0.9295918367346937,
+    "final_score": 0.9765306122448915,
+    "solved": false
+   },
+   "topology_approximate": false,
+   "paper": {
+    "geometry": 0.9999999999999807,
+    "semantics": 1.0,
+    "topology": 0.9740740740740741,
+    "final_score": 0.9913580246913516,
+    "solved": false
+   }
+  },
+  {
+   "run": "cc-sonnet55-cell1",
+   "kind": "ours",
+   "task_id": "SLB-UPD-SPA-R-001",
+   "scene": "realistic",
+   "edited_found": true,
+   "released": {
+    "geometry": 0.9999668827624928,
+    "semantics": 1.0,
+    "topology": 1.0,
+    "final_score": 0.999988960920831,
+    "solved": true
+   },
+   "topology_approximate": false,
+   "paper": {
+    "geometry": 0.9999668827624928,
+    "semantics": 1.0,
+    "topology": 1.0,
+    "final_score": 0.999988960920831,
+    "solved": true
+   }
+  },
+  {
+   "run": "cc-sonnet55-cell1",
+   "kind": "ours",
+   "task_id": "WAL-UPD-TOP-A-001",
+   "scene": "artificial",
+   "edited_found": true,
+   "released": {
+    "geometry": 0.9827958482919023,
+    "semantics": 1.0,
+    "topology": 0.4714285714285714,
+    "final_score": 0.8180748065734913,
+    "solved": false
+   },
+   "topology_approximate": false,
+   "paper": {
+    "geometry": 0.9827958482919023,
+    "semantics": 1.0,
+    "topology": 0.3,
+    "final_score": 0.760931949430634,
+    "solved": false
+   }
+  },
+  {
+   "run": "cc-sonnet55-cell1",
+   "kind": "ours",
+   "task_id": "WIN-UPD-TOP-R-001",
+   "scene": "realistic",
+   "edited_found": true,
+   "released": {
+    "geometry": 1.0,
+    "semantics": 1.0,
+    "topology": 0.7357142857142858,
+    "final_score": 0.9119047619047619,
+    "solved": false
+   },
+   "topology_approximate": false,
+   "paper": {
+    "geometry": 1.0,
+    "semantics": 1.0,
+    "topology": 0.59,
+    "final_score": 0.8633333333333333,
+    "solved": false
+   }
+  },
+  {
+   "run": "gpt-5.4",
+   "kind": "published",
+   "task_id": "COL-CRE-DIR-A-001",
+   "scene": "artificial",
+   "edited_found": true,
+   "released": {
+    "geometry": 0.0,
+    "semantics": 0.0,
+    "topology": 0.0,
+    "final_score": 0.0,
+    "solved": false
+   },
+   "topology_approximate": false,
+   "paper": {
+    "geometry": 0.2790215092854065,
+    "semantics": 0.0,
+    "topology": 0.6499999999999999,
+    "final_score": 0.3096738364284688,
+    "solved": false
+   },
+   "authors_score": {
+    "geometry": 0.0,
+    "semantics": 0.0,
+    "topology": 0.0,
+    "final_score": 0.0
+   }
+  },
+  {
+   "run": "gpt-5.4",
+   "kind": "published",
+   "task_id": "DOR-CRE-DIR-R-001",
+   "scene": "realistic",
+   "edited_found": true,
+   "released": {
+    "geometry": 0.0,
+    "semantics": 0.0,
+    "topology": 0.0,
+    "final_score": 0.0,
+    "solved": false
+   },
+   "topology_approximate": false,
+   "paper": {
+    "geometry": 0.1729977162240223,
+    "semantics": 0.0,
+    "topology": 0.7098901098901099,
+    "final_score": 0.29429594203804404,
+    "solved": false
+   },
+   "authors_score": {
+    "geometry": 0.0,
+    "semantics": 0.0,
+    "topology": 0.0,
+    "final_score": 0.0
+   }
+  },
+  {
+   "run": "gpt-5.4",
+   "kind": "published",
+   "task_id": "ROM-CRE-SPA-A-001",
+   "scene": "artificial",
+   "edited_found": true,
+   "released": {
+    "geometry": 0.9541421002860713,
+    "semantics": 0.625,
+    "topology": 0.7074829931972789,
+    "final_score": 0.7622083644944501,
+    "solved": false
+   },
+   "topology_approximate": false,
+   "paper": {
+    "geometry": 0.9541421002860713,
+    "semantics": 0.625,
+    "topology": 0.5,
+    "final_score": 0.6930473667620237,
+    "solved": false
+   },
+   "authors_score": {
+    "geometry": 0.9536844873081068,
+    "semantics": 0.625,
+    "topology": 0.8746444032158317,
+    "final_score": 0.8177762968413128
+   }
+  },
+  {
+   "run": "gpt-5.4",
+   "kind": "published",
+   "task_id": "SLB-CRE-SPA-R-001",
+   "scene": "realistic",
+   "edited_found": true,
+   "released": {
+    "geometry": 0.0,
+    "semantics": 0.0,
+    "topology": 0.0,
+    "final_score": 0.0,
+    "solved": false
+   },
+   "topology_approximate": false,
+   "paper": {
+    "geometry": 0.9621603489336843,
+    "semantics": 0.0,
+    "topology": 1.0,
+    "final_score": 0.6540534496445615,
+    "solved": false
+   },
+   "authors_score": {
+    "geometry": 0.0,
+    "semantics": 0.0,
+    "topology": 0.0,
+    "final_score": 0.0
+   }
+  },
+  {
+   "run": "gpt-5.4",
+   "kind": "published",
+   "task_id": "WAL-CRE-TOP-A-001",
+   "scene": "artificial",
+   "edited_found": true,
+   "released": {
+    "geometry": 0.0,
+    "semantics": 0.0,
+    "topology": 0.0,
+    "final_score": 0.0,
+    "solved": false
+   },
+   "topology_approximate": false,
+   "paper": {
+    "geometry": 0.03989041803056558,
+    "semantics": 0.0,
+    "topology": 0.825,
+    "final_score": 0.28829680601018853,
+    "solved": false
+   },
+   "authors_score": {
+    "geometry": 0.0,
+    "semantics": 0.0,
+    "topology": 0.0,
+    "final_score": 0.0
+   }
+  },
+  {
+   "run": "gpt-5.4",
+   "kind": "published",
+   "task_id": "WIN-CRE-TOP-R-001",
+   "scene": "realistic",
+   "edited_found": true,
+   "released": {
+    "geometry": 0.9999999999999842,
+    "semantics": 0.7777777777777778,
+    "topology": 0.6876190476190477,
+    "final_score": 0.8217989417989365,
+    "solved": false
+   },
+   "topology_approximate": false,
+   "paper": {
+    "geometry": 0.9999999999999842,
+    "semantics": 0.7777777777777778,
+    "topology": 0.5499999999999999,
+    "final_score": 0.7759259259259207,
+    "solved": false
+   },
+   "authors_score": {
+    "geometry": 0.33114543548226455,
+    "semantics": 0.75,
+    "topology": 0.6604761904761904,
+    "final_score": 0.5805405419861517
+   }
+  },
+  {
+   "run": "gpt-5.4",
+   "kind": "published",
+   "task_id": "COL-DEL-DIR-A-001",
+   "scene": "artificial",
+   "edited_found": true,
+   "released": {
+    "geometry": 0.0,
+    "semantics": 1.0,
+    "topology": 0.3761904761904762,
+    "final_score": 0.4587301587301587,
+    "solved": false
+   },
+   "topology_approximate": false,
+   "paper": {
+    "geometry": 0.0,
+    "semantics": 0.0,
+    "topology": 0.175,
+    "final_score": 0.05833333333333333,
+    "solved": false
+   },
+   "authors_score": {
+    "geometry": 0.0,
+    "semantics": 1.0,
+    "topology": 0.15595238095238093,
+    "final_score": 0.3853174603174603
+   }
+  },
+  {
+   "run": "gpt-5.4",
+   "kind": "published",
+   "task_id": "DOR-DEL-DIR-R-001",
+   "scene": "realistic",
+   "edited_found": true,
+   "released": {
+    "geometry": 1.0,
+    "semantics": 0.0,
+    "topology": 1.0,
+    "final_score": 0.6666666666666666,
+    "solved": false
+   },
+   "topology_approximate": false,
+   "paper": {
+    "geometry": 1.0,
+    "semantics": 1.0,
+    "topology": 0.8999999999999999,
+    "final_score": 0.9666666666666667,
+    "solved": false
+   },
+   "authors_score": {
+    "geometry": 1.0,
+    "semantics": 0.0,
+    "topology": 1.0,
+    "final_score": 0.6666666666666666
+   }
+  },
+  {
+   "run": "gpt-5.4",
+   "kind": "published",
+   "task_id": "ROM-DEL-SPA-A-001",
+   "scene": "artificial",
+   "edited_found": true,
+   "released": {
+    "geometry": 1.0,
+    "semantics": 0.0,
+    "topology": 1.0,
+    "final_score": 0.6666666666666666,
+    "solved": false
+   },
+   "topology_approximate": false,
+   "paper": {
+    "geometry": 1.0,
+    "semantics": 1.0,
+    "topology": 1.0,
+    "final_score": 1.0,
+    "solved": true
+   },
+   "authors_score": {
+    "geometry": 1.0,
+    "semantics": 0.0,
+    "topology": 1.0,
+    "final_score": 0.6666666666666666
+   }
+  },
+  {
+   "run": "gpt-5.4",
+   "kind": "published",
+   "task_id": "SLB-DEL-SPA-R-001",
+   "scene": "realistic",
+   "edited_found": true,
+   "released": {
+    "geometry": 0.9647408237827862,
+    "semantics": 1.0,
+    "topology": 0.0,
+    "final_score": 0.6549136079275955,
+    "solved": false
+   },
+   "topology_approximate": false,
+   "paper": {
+    "geometry": 0.9647408237827862,
+    "semantics": 0.0,
+    "topology": 0.0,
+    "final_score": 0.3215802745942621,
+    "solved": false
+   },
+   "authors_score": {
+    "geometry": 0.0,
+    "semantics": 1.0,
+    "topology": 0.0,
+    "final_score": 0.3333333333333333
+   }
+  },
+  {
+   "run": "gpt-5.4",
+   "kind": "published",
+   "task_id": "WAL-DEL-TOP-A-001",
+   "scene": "artificial",
+   "edited_found": true,
+   "released": {
+    "geometry": 1.0,
+    "semantics": 0.0,
+    "topology": 0.7002699055330633,
+    "final_score": 0.5667566351776877,
+    "solved": false
+   },
+   "topology_approximate": false,
+   "paper": {
+    "geometry": 1.0,
+    "semantics": 1.0,
+    "topology": 0.523076923076923,
+    "final_score": 0.841025641025641,
+    "solved": false
+   },
+   "authors_score": {
+    "geometry": 1.0,
+    "semantics": 0.0,
+    "topology": 0.65,
+    "final_score": 0.5499999999999999
+   }
+  },
+  {
+   "run": "gpt-5.4",
+   "kind": "published",
+   "task_id": "WIN-DEL-TOP-R-001",
+   "scene": "realistic",
+   "edited_found": true,
+   "released": {
+    "geometry": 0.0,
+    "semantics": 1.0,
+    "topology": 0.0,
+    "final_score": 0.3333333333333333,
+    "solved": false
+   },
+   "topology_approximate": false,
+   "paper": {
+    "geometry": 0.0,
+    "semantics": 0.0,
+    "topology": 0.0,
+    "final_score": 0.0,
+    "solved": false
+   },
+   "authors_score": {
+    "geometry": 0.0,
+    "semantics": 1.0,
+    "topology": 0.0,
+    "final_score": 0.3333333333333333
+   }
+  },
+  {
+   "run": "gpt-5.4",
+   "kind": "published",
+   "task_id": "COL-UPD-DIR-A-001",
+   "scene": "artificial",
+   "edited_found": true,
+   "released": {
+    "geometry": 0.0,
+    "semantics": 0.0,
+    "topology": 0.0,
+    "final_score": 0.0,
+    "solved": false
+   },
+   "topology_approximate": false,
+   "paper": {
+    "geometry": 0.5891117679496407,
+    "semantics": 0.0,
+    "topology": 0.19999999999999998,
+    "final_score": 0.26303725598321354,
+    "solved": false
+   },
+   "authors_score": {
+    "geometry": 0.0,
+    "semantics": 0.0,
+    "topology": 0.0,
+    "final_score": 0.0
+   }
+  },
+  {
+   "run": "gpt-5.4",
+   "kind": "published",
+   "task_id": "DOR-UPD-DIR-R-001",
+   "scene": "realistic",
+   "edited_found": true,
+   "released": {
+    "geometry": 0.428810072220441,
+    "semantics": 1.0,
+    "topology": 1.0,
+    "final_score": 0.8096033574068137,
+    "solved": false
+   },
+   "topology_approximate": false,
+   "paper": {
+    "geometry": 0.428810072220441,
+    "semantics": 1.0,
+    "topology": 1.0,
+    "final_score": 0.8096033574068137,
+    "solved": false
+   },
+   "authors_score": {
+    "geometry": 0.0,
+    "semantics": 0.0,
+    "topology": 0.0,
+    "final_score": 0.0
+   }
+  },
+  {
+   "run": "gpt-5.4",
+   "kind": "published",
+   "task_id": "ROM-UPD-SPA-A-001",
+   "scene": "artificial",
+   "edited_found": true,
+   "released": {
+    "geometry": 0.963990571602531,
+    "semantics": 1.0,
+    "topology": 0.7471428571428572,
+    "final_score": 0.9037111429151294,
+    "solved": false
+   },
+   "topology_approximate": false,
+   "paper": {
+    "geometry": 0.963990571602531,
+    "semantics": 1.0,
+    "topology": 0.9159999999999999,
+    "final_score": 0.9599968572008436,
+    "solved": false
+   },
+   "authors_score": {
+    "geometry": 0.9637075605472644,
+    "semantics": 1.0,
+    "topology": 0.9541125541125541,
+    "final_score": 0.9726067048866062
+   }
+  },
+  {
+   "run": "gpt-5.4",
+   "kind": "published",
+   "task_id": "SLB-UPD-SPA-R-001",
+   "scene": "realistic",
+   "edited_found": true,
+   "released": {
+    "geometry": 0.9689674389228434,
+    "semantics": 1.0,
+    "topology": 0.5285714285714286,
+    "final_score": 0.832512955831424,
+    "solved": false
+   },
+   "topology_approximate": false,
+   "paper": {
+    "geometry": 0.9689674389228434,
+    "semantics": 1.0,
+    "topology": 0.7,
+    "final_score": 0.8896558129742811,
+    "solved": false
+   },
+   "authors_score": {
+    "geometry": 0.9687064067009769,
+    "semantics": 1.0,
+    "topology": 1.0,
+    "final_score": 0.989568802233659
+   }
+  },
+  {
+   "run": "gpt-5.4",
+   "kind": "published",
+   "task_id": "WAL-UPD-TOP-A-001",
+   "scene": "artificial",
+   "edited_found": true,
+   "released": {
+    "geometry": 0.9827958482919023,
+    "semantics": 1.0,
+    "topology": 0.4714285714285714,
+    "final_score": 0.8180748065734913,
+    "solved": false
+   },
+   "topology_approximate": false,
+   "paper": {
+    "geometry": 0.9827958482919023,
+    "semantics": 1.0,
+    "topology": 0.3,
+    "final_score": 0.760931949430634,
+    "solved": false
+   },
+   "authors_score": {
+    "geometry": 0.9829203197861938,
+    "semantics": 1.0,
+    "topology": 0.4714285714285714,
+    "final_score": 0.8181162970715884
+   }
+  },
+  {
+   "run": "gpt-5.4",
+   "kind": "published",
+   "task_id": "WIN-UPD-TOP-R-001",
+   "scene": "realistic",
+   "edited_found": true,
+   "released": {
+    "geometry": 0.0,
+    "semantics": 0.0,
+    "topology": 0.0,
+    "final_score": 0.0,
+    "solved": false
+   },
+   "topology_approximate": false,
+   "paper": {
+    "geometry": 0.008398407472163716,
+    "semantics": 0.0,
+    "topology": 0.39555555555555555,
+    "final_score": 0.13465132100923974,
+    "solved": false
+   },
+   "authors_score": {
+    "geometry": 0.0,
+    "semantics": 0.0,
+    "topology": 0.0,
+    "final_score": 0.0
+   }
+  },
+  {
+   "run": "claude-sonnet",
+   "kind": "published",
+   "task_id": "COL-CRE-DIR-A-001",
+   "scene": "artificial",
+   "edited_found": true,
+   "released": {
+    "geometry": 0.0,
+    "semantics": 0.0,
+    "topology": 0.0,
+    "final_score": 0.0,
+    "solved": false
+   },
+   "topology_approximate": false,
+   "paper": {
+    "geometry": 0.6627446258260492,
+    "semantics": 0.0,
+    "topology": 0.6499999999999999,
+    "final_score": 0.43758154194201637,
+    "solved": false
+   },
+   "authors_score": {
+    "geometry": 0.0,
+    "semantics": 0.0,
+    "topology": 0.0,
+    "final_score": 0.0
+   }
+  },
+  {
+   "run": "claude-sonnet",
+   "kind": "published",
+   "task_id": "DOR-CRE-DIR-R-001",
+   "scene": "realistic",
+   "edited_found": true,
+   "released": {
+    "geometry": 0.0,
+    "semantics": 0.0,
+    "topology": 0.0,
+    "final_score": 0.0,
+    "solved": false
+   },
+   "topology_approximate": false,
+   "paper": {
+    "geometry": 0.0,
+    "semantics": 0.0,
+    "topology": 0.0,
+    "final_score": 0.0,
+    "solved": false
+   },
+   "authors_score": {
+    "geometry": 0.0,
+    "semantics": 0.0,
+    "topology": 0.0,
+    "final_score": 0.0
+   }
+  },
+  {
+   "run": "claude-sonnet",
+   "kind": "published",
+   "task_id": "ROM-CRE-SPA-A-001",
+   "scene": "artificial",
+   "edited_found": true,
+   "released": {
+    "geometry": 0.0,
+    "semantics": 0.0,
+    "topology": 0.0,
+    "final_score": 0.0,
+    "solved": false
+   },
+   "topology_approximate": false,
+   "paper": {
+    "geometry": 0.0,
+    "semantics": 0.0,
+    "topology": 0.0,
+    "final_score": 0.0,
+    "solved": false
+   },
+   "authors_score": {
+    "geometry": 0.0,
+    "semantics": 0.0,
+    "topology": 0.0,
+    "final_score": 0.0
+   }
+  },
+  {
+   "run": "claude-sonnet",
+   "kind": "published",
+   "task_id": "SLB-CRE-SPA-R-001",
+   "scene": "realistic",
+   "edited_found": true,
+   "released": {
+    "geometry": 0.0,
+    "semantics": 0.0,
+    "topology": 0.0,
+    "final_score": 0.0,
+    "solved": false
+   },
+   "topology_approximate": false,
+   "paper": {
+    "geometry": 0.962546090388101,
+    "semantics": 0.0,
+    "topology": 0.3,
+    "final_score": 0.42084869679603365,
+    "solved": false
+   },
+   "authors_score": {
+    "geometry": 0.0,
+    "semantics": 0.0,
+    "topology": 0.0,
+    "final_score": 0.0
+   }
+  },
+  {
+   "run": "claude-sonnet",
+   "kind": "published",
+   "task_id": "WAL-CRE-TOP-A-001",
+   "scene": "artificial",
+   "edited_found": true,
+   "released": {
+    "geometry": 0.0,
+    "semantics": 0.0,
+    "topology": 0.0,
+    "final_score": 0.0,
+    "solved": false
+   },
+   "topology_approximate": false,
+   "paper": {
+    "geometry": 0.8190631319614122,
+    "semantics": 0.0,
+    "topology": 0.5333333333333333,
+    "final_score": 0.4507988217649152,
+    "solved": false
+   },
+   "authors_score": {
+    "geometry": 0.0,
+    "semantics": 0.0,
+    "topology": 0.0,
+    "final_score": 0.0
+   }
+  },
+  {
+   "run": "claude-sonnet",
+   "kind": "published",
+   "task_id": "WIN-CRE-TOP-R-001",
+   "scene": "realistic",
+   "edited_found": true,
+   "released": {
+    "geometry": 0.0,
+    "semantics": 0.0,
+    "topology": 0.0,
+    "final_score": 0.0,
+    "solved": false
+   },
+   "topology_approximate": false,
+   "paper": {
+    "geometry": 0.0,
+    "semantics": 0.0,
+    "topology": 0.0,
+    "final_score": 0.0,
+    "solved": false
+   },
+   "authors_score": {
+    "geometry": 0.0,
+    "semantics": 0.0,
+    "topology": 0.0,
+    "final_score": 0.0
+   }
+  },
+  {
+   "run": "claude-sonnet",
+   "kind": "published",
+   "task_id": "COL-DEL-DIR-A-001",
+   "scene": "artificial",
+   "edited_found": true,
+   "released": {
+    "geometry": 0.0,
+    "semantics": 1.0,
+    "topology": 0.0,
+    "final_score": 0.3333333333333333,
+    "solved": false
+   },
+   "topology_approximate": false,
+   "paper": {
+    "geometry": 0.0,
+    "semantics": 0.0,
+    "topology": 0.0,
+    "final_score": 0.0,
+    "solved": false
+   },
+   "authors_score": {
+    "geometry": 0.0,
+    "semantics": 1.0,
+    "topology": 0.0,
+    "final_score": 0.3333333333333333
+   }
+  },
+  {
+   "run": "claude-sonnet",
+   "kind": "published",
+   "task_id": "DOR-DEL-DIR-R-001",
+   "scene": "realistic",
+   "edited_found": true,
+   "released": {
+    "geometry": 1.0,
+    "semantics": 0.0,
+    "topology": 1.0,
+    "final_score": 0.6666666666666666,
+    "solved": false
+   },
+   "topology_approximate": false,
+   "paper": {
+    "geometry": 1.0,
+    "semantics": 1.0,
+    "topology": 0.8999999999999999,
+    "final_score": 0.9666666666666667,
+    "solved": false
+   },
+   "authors_score": {
+    "geometry": 1.0,
+    "semantics": 0.0,
+    "topology": 1.0,
+    "final_score": 0.6666666666666666
+   }
+  },
+  {
+   "run": "claude-sonnet",
+   "kind": "published",
+   "task_id": "ROM-DEL-SPA-A-001",
+   "scene": "artificial",
+   "edited_found": true,
+   "released": {
+    "geometry": 0.0,
+    "semantics": 1.0,
+    "topology": 0.0,
+    "final_score": 0.3333333333333333,
+    "solved": false
+   },
+   "topology_approximate": false,
+   "paper": {
+    "geometry": 0.0,
+    "semantics": 0.0,
+    "topology": 0.0,
+    "final_score": 0.0,
+    "solved": false
+   },
+   "authors_score": {
+    "geometry": 0.0,
+    "semantics": 1.0,
+    "topology": 0.0,
+    "final_score": 0.3333333333333333
+   }
+  },
+  {
+   "run": "claude-sonnet",
+   "kind": "published",
+   "task_id": "SLB-DEL-SPA-R-001",
+   "scene": "realistic",
+   "edited_found": true,
+   "released": {
+    "geometry": 1.0,
+    "semantics": 0.0,
+    "topology": 1.0,
+    "final_score": 0.6666666666666666,
+    "solved": false
+   },
+   "topology_approximate": false,
+   "paper": {
+    "geometry": 1.0,
+    "semantics": 1.0,
+    "topology": 1.0,
+    "final_score": 1.0,
+    "solved": true
+   },
+   "authors_score": {
+    "geometry": 1.0,
+    "semantics": 0.0,
+    "topology": 1.0,
+    "final_score": 0.6666666666666666
+   }
+  },
+  {
+   "run": "claude-sonnet",
+   "kind": "published",
+   "task_id": "WAL-DEL-TOP-A-001",
+   "scene": "artificial",
+   "edited_found": true,
+   "released": {
+    "geometry": 1.0,
+    "semantics": 0.0,
+    "topology": 1.0,
+    "final_score": 0.6666666666666666,
+    "solved": false
+   },
+   "topology_approximate": false,
+   "paper": {
+    "geometry": 1.0,
+    "semantics": 1.0,
+    "topology": 1.0,
+    "final_score": 1.0,
+    "solved": true
+   },
+   "authors_score": {
+    "geometry": 1.0,
+    "semantics": 0.0,
+    "topology": 1.0,
+    "final_score": 0.6666666666666666
+   }
+  },
+  {
+   "run": "claude-sonnet",
+   "kind": "published",
+   "task_id": "WIN-DEL-TOP-R-001",
+   "scene": "realistic",
+   "edited_found": true,
+   "released": {
+    "geometry": 1.0,
+    "semantics": 0.0,
+    "topology": 1.0,
+    "final_score": 0.6666666666666666,
+    "solved": false
+   },
+   "topology_approximate": false,
+   "paper": {
+    "geometry": 1.0,
+    "semantics": 1.0,
+    "topology": 0.8222222222222222,
+    "final_score": 0.9407407407407407,
+    "solved": false
+   },
+   "authors_score": {
+    "geometry": 1.0,
+    "semantics": 0.0,
+    "topology": 0.8596825396825397,
+    "final_score": 0.6198941798941799
+   }
+  },
+  {
+   "run": "claude-sonnet",
+   "kind": "published",
+   "task_id": "COL-UPD-DIR-A-001",
+   "scene": "artificial",
+   "edited_found": true,
+   "released": {
+    "geometry": 0.0,
+    "semantics": 0.0,
+    "topology": 0.0,
+    "final_score": 0.0,
+    "solved": false
+   },
+   "topology_approximate": false,
+   "paper": {
+    "geometry": 0.5891117679496407,
+    "semantics": 0.0,
+    "topology": 0.19999999999999998,
+    "final_score": 0.26303725598321354,
+    "solved": false
+   },
+   "authors_score": {
+    "geometry": 0.017589754831495472,
+    "semantics": 1.0,
+    "topology": 0.4714285714285714,
+    "final_score": 0.4963394420866889
+   }
+  },
+  {
+   "run": "claude-sonnet",
+   "kind": "published",
+   "task_id": "DOR-UPD-DIR-R-001",
+   "scene": "realistic",
+   "edited_found": true,
+   "released": {
+    "geometry": 0.428810072220441,
+    "semantics": 1.0,
+    "topology": 1.0,
+    "final_score": 0.8096033574068137,
+    "solved": false
+   },
+   "topology_approximate": false,
+   "paper": {
+    "geometry": 0.428810072220441,
+    "semantics": 1.0,
+    "topology": 1.0,
+    "final_score": 0.8096033574068137,
+    "solved": false
+   },
+   "authors_score": {
+    "geometry": 0.0,
+    "semantics": 0.0,
+    "topology": 0.0,
+    "final_score": 0.0
+   }
+  },
+  {
+   "run": "claude-sonnet",
+   "kind": "published",
+   "task_id": "ROM-UPD-SPA-A-001",
+   "scene": "artificial",
+   "edited_found": true,
+   "released": {
+    "geometry": 0.948720161369525,
+    "semantics": 1.0,
+    "topology": 0.0,
+    "final_score": 0.649573387123175,
+    "solved": false
+   },
+   "topology_approximate": false,
+   "paper": {
+    "geometry": 0.948720161369525,
+    "semantics": 1.0,
+    "topology": 0.0,
+    "final_score": 0.649573387123175,
+    "solved": false
+   },
+   "authors_score": {
+    "geometry": 0.8642568668841679,
+    "semantics": 1.0,
+    "topology": 0.0,
+    "final_score": 0.6214189556280559
+   }
+  },
+  {
+   "run": "claude-sonnet",
+   "kind": "published",
+   "task_id": "SLB-UPD-SPA-R-001",
+   "scene": "realistic",
+   "edited_found": true,
+   "released": {
+    "geometry": 0.9999668827624928,
+    "semantics": 1.0,
+    "topology": 1.0,
+    "final_score": 0.999988960920831,
+    "solved": true
+   },
+   "topology_approximate": false,
+   "paper": {
+    "geometry": 0.9999668827624928,
+    "semantics": 1.0,
+    "topology": 1.0,
+    "final_score": 0.999988960920831,
+    "solved": true
+   },
+   "authors_score": {
+    "geometry": 0.9687064067009769,
+    "semantics": 1.0,
+    "topology": 1.0,
+    "final_score": 0.989568802233659
+   }
+  },
+  {
+   "run": "claude-sonnet",
+   "kind": "published",
+   "task_id": "WAL-UPD-TOP-A-001",
+   "scene": "artificial",
+   "edited_found": true,
+   "released": {
+    "geometry": 0.9827958482919023,
+    "semantics": 1.0,
+    "topology": 0.4714285714285714,
+    "final_score": 0.8180748065734913,
+    "solved": false
+   },
+   "topology_approximate": false,
+   "paper": {
+    "geometry": 0.9827958482919023,
+    "semantics": 1.0,
+    "topology": 0.3,
+    "final_score": 0.760931949430634,
+    "solved": false
+   },
+   "authors_score": {
+    "geometry": 0.21864271659311837,
+    "semantics": 1.0,
+    "topology": 0.4714285714285714,
+    "final_score": 0.5633570960072299
+   }
+  },
+  {
+   "run": "claude-sonnet",
+   "kind": "published",
+   "task_id": "WIN-UPD-TOP-R-001",
+   "scene": "realistic",
+   "edited_found": true,
+   "released": {
+    "geometry": 0.0,
+    "semantics": 0.0,
+    "topology": 0.0,
+    "final_score": 0.0,
+    "solved": false
+   },
+   "topology_approximate": false,
+   "paper": {
+    "geometry": 0.08802124671397811,
+    "semantics": 0.0,
+    "topology": 0.0,
+    "final_score": 0.029340415571326037,
+    "solved": false
+   },
+   "authors_score": {
+    "geometry": 0.0,
+    "semantics": 0.0,
+    "topology": 0.0,
+    "final_score": 0.0
+   }
+  }
+ ]
+}

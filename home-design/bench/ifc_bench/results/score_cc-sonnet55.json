@@ -1,0 +1,66 @@
+{
+  "all": {
+    "n": 514,
+    "correct": 274,
+    "partial": 187,
+    "accuracy_strict": 0.5330739299610895,
+    "ci95": [
+      0.4898568783430428,
+      0.575800264690657
+    ],
+    "accuracy_partial_as_correct": 0.896887159533074
+  },
+  "cat1": {
+    "n": 72,
+    "correct": 45,
+    "partial": 22,
+    "accuracy_strict": 0.625,
+    "ci95": [
+      0.5095268590406966,
+      0.7278099060064543
+    ],
+    "accuracy_partial_as_correct": 0.9305555555555556
+  },
+  "cat2": {
+    "n": 289,
+    "correct": 141,
+    "partial": 125,
+    "accuracy_strict": 0.48788927335640137,
+    "ci95": [
+      0.4307970337939119,
+      0.5452992585361396
+    ],
+    "accuracy_partial_as_correct": 0.9204152249134948
+  },
+  "cat3": {
+    "n": 50,
+    "correct": 26,
+    "partial": 14,
+    "accuracy_strict": 0.52,
+    "ci95": [
+      0.3851151225880844,
+      0.6520308760449429
+    ],
+    "accuracy_partial_as_correct": 0.8
+  },
+  "cat4": {
+    "n": 103,
+    "correct": 62,
+    "partial": 26,
+    "accuracy_strict": 0.6019417475728155,
+    "ci95": [
+      0.5053850789080787,
+      0.6911675747399384
+    ],
+    "accuracy_partial_as_correct": 0.8543689320388349
+  },
+  "per_question": {
+    "mean_seconds": 20.088473610840882,
+    "mean_tool_calls": 2.9961089494163424,
+    "mean_input_tokens": 20479.083657587547,
+    "mean_output_tokens": 1330.4494163424124,
+    "mean_cost_usd": 0.0,
+    "hit_call_budget": 0,
+    "errors": 0
+  }
+}

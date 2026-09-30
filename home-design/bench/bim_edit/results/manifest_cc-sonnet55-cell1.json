@@ -1,0 +1,32 @@
+{
+  "run_id": "cc-sonnet55-cell1",
+  "harness": "claude-code-headless",
+  "model": "claude-sonnet-5-5",
+  "effort": null,
+  "system_prompt": "You are a BIM assistant, with a deep knowledge in Building Information Modeling. You are working with IFC files and need to create IFCOpenshell calls to fulfill the task. Make sure to understand the current model before modification and modify the model always correctly on geometry, topology and semantics. Always understand the unit scale of the model. Use sensible defaults for unspecified values. Execute commands directly and never ask for confirmation.",
+  "max_tool_calls": 20,
+  "tool_timeout_s": 420,
+  "dataset": "BIM-Edit/BIM-Edit",
+  "dataset_sha": "0ae510bd21865def4e2c6145c1244f01a1e3bcb9",
+  "task_ids": [
+    "COL-CRE-DIR-A-001",
+    "DOR-CRE-DIR-R-001",
+    "ROM-CRE-SPA-A-001",
+    "SLB-CRE-SPA-R-001",
+    "WAL-CRE-TOP-A-001",
+    "WIN-CRE-TOP-R-001",
+    "COL-DEL-DIR-A-001",
+    "DOR-DEL-DIR-R-001",
+    "ROM-DEL-SPA-A-001",
+    "SLB-DEL-SPA-R-001",
+    "WAL-DEL-TOP-A-001",
+    "WIN-DEL-TOP-R-001",
+    "COL-UPD-DIR-A-001",
+    "DOR-UPD-DIR-R-001",
+    "ROM-UPD-SPA-A-001",
+    "SLB-UPD-SPA-R-001",
+    "WAL-UPD-TOP-A-001",
+    "WIN-UPD-TOP-R-001"
+  ],
+  "started": "2026-09-29T22:49:04"
+}

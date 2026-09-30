@@ -7,10 +7,15 @@ Carried from [PLAN.md](PLAN.md), with what Phase 0 added. Owner in brackets.
 - [x] Set the RunPod spending cap for benchmark runs: $50 for Phase 0, API and GPU together [Dane]
 - [x] Claude runs and the judge: no API key. They go through headless Claude Code on the
       Claude plan (decided by Dane 2026-09-29)
-- [ ] Give the BIM-Edit harness repository URL (it is linked in the arXiv paper), or allow
-      `arxiv.org` in the environment's network settings [Dane]
-- [ ] Decide which Claude model(s) to run and whether BIM-Edit runs in full (324 tasks) or as a
-      stratified subset, given the plan's usage limits [Dane]
+- [x] BIM-Edit harness: the paper (v3) links no code repository; the scorer was rebuilt from
+      appendix E and calibrated on the published runs (docs/gates/phase-0.md)
+- [ ] Ask the BIM-Edit authors for the release package (harness, evaluator, task metadata)
+      and report the delete-task semantics bug [Dane]
+- [ ] Read the IFC-Bench paper's protocol (arXiv 2605.01698, still blocked in this session)
+- [x] Sonnet 5.5 on IFC-Bench and the 18-task BIM-Edit subset (done)
+- [ ] Decide whether to extend BIM-Edit to all 162 artificial or all 324 tasks, and whether to
+      add a second Claude model [Dane]
+- [ ] Approve or reject the Phase 0 gate (docs/gates/phase-0.md) [Dane]
 
 ## Blocking later phases
 
@@ -36,6 +41,4 @@ Carried from [PLAN.md](PLAN.md), with what Phase 0 added. Owner in brackets.
 - [ ] Check the rebuilt BIM-Edit `tasks.jsonl` against the official one
 - [ ] Read the IFC-Bench paper's judging protocol (Hellin et al. 2026, arXiv 2605.01698, also
       blocked here) and align our judge with it, or report both
-- [ ] The BIM-Edit paper's "no model fully solves more than 3.4%": the published runs give
-      at most 10 of 323 tasks (3.1%, Qwen 3.6 Plus) at a score of exactly 1. Find the
-      paper's threshold
+- [x] The BIM-Edit paper's 3.4%: solved means all three metrics >= 0.98; reproduced exactly

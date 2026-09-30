@@ -1,0 +1,15 @@
+{
+  "run_id": "gemma4-31b",
+  "backend": "vllm",
+  "model": "google/gemma-4-31B-it",
+  "effort": null,
+  "temperature": null,
+  "max_tool_calls": 20,
+  "dataset": "sylvainHellin/ifc-bench",
+  "dataset_sha": "9ad1ff0201da409d965d713ea785cb8fd2a01b41",
+  "agent_prompt_version": "ifcb-agent-v1",
+  "agent_prompt_sha256": "ae5acc2087b95dbf6d2d1294abab229882fdf4fb8720f100e8749a542420448f",
+  "started": "2026-09-29T15:24:20",
+  "n_selected": 514,
+  "n_todo": 486
+}
